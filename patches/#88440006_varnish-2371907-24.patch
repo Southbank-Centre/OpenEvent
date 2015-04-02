@@ -1,0 +1,46 @@
+diff --git a/varnish.admin.inc b/varnish.admin.inc
+index 66a897b..c2ac50a 100644
+--- a/varnish.admin.inc
++++ b/varnish.admin.inc
+@@ -100,7 +100,10 @@ function varnish_admin_settings_form() {
+   $form['varnish_stats'] = array(
+     '#type' => 'item',
+     '#title' => t('Status'),
+-    '#markup' => theme('varnish_status', varnish_get_status(), floatval(variable_get('varnish_version', 2.1))),
++    '#markup' => theme('varnish_status', array(
++      'status' => varnish_get_status(),
++      'version' => floatval(variable_get('varnish_version', 2.1)),
++    )),
+   );
+ 
+   return system_settings_form($form);
+diff --git a/varnish.module b/varnish.module
+index 633f9b0..f5ad34a 100644
+--- a/varnish.module
++++ b/varnish.module
+@@ -60,7 +60,7 @@ function varnish_menu() {
+ function varnish_theme() {
+   return array(
+     'varnish_status' => array(
+-      'arguments' => array('status' => array(), 'version' => 2.1),
++      'variables' => array('status' => array(), 'version' => 2.1),
+     )
+   );
+ }
+@@ -258,13 +258,14 @@ function varnish_get_status() {
+ /**
+  * Theme handler for theme('varnish_status').
+  */
+-function theme_varnish_status($status) {
++function theme_varnish_status($variables) {
+   $items = array();
++  $status = $variables['status'];
+   foreach ($status as $terminal => $state) {
+     list($server, $port) = explode(':', $terminal);
+     if ($state == VARNISH_SERVER_STATUS_UP) {
+       $icon = theme('image', array('path' => 'misc/watchdog-ok.png', 'alt' => t("Server OK: @server:@port", array('@server' => $server, '@port' => $port)), 'title' => "{$server}:{$port}"));
+-      $version = floatval(variable_get('varnish_version', 2.1));
++      $version = $variables['version'];
+       if ($version < 3) {
+         $items[] = t('!status_icon Varnish running. Observe more detailed statistics !link.',
+                 array('!status_icon' => $icon, '!link' => l(t('here'), 'admin/reports/varnish')));

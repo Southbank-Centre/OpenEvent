@@ -1,0 +1,10 @@
+# Ignore MacOSX temporary files
+.DS_Store
+
+# Ignore Linux temporary files
+*~
+
+# Ignore IDE specific files
+.idea/
+.project/
+.settings/

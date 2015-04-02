@@ -1,0 +1,35 @@
+
+master 7.x-2.x-dev
+==================
+-
+
+master 7.x-2.0-beta3 (2014-Jan-17)
+==================================
+#2174833 by ndolley: Fixing README documentation has incorrect variable name.
+#2170969: Fixing "Missing argument 1 for master_get_uninstall_blacklist()."
+
+master 7.x-2.0-beta2 (2014-Jan-09)
+==================================
+-: Fixing merge of scope specific master modules.
+-: Fixing missing drush_master_execute()
+-: Fixing master_config for master_version = 2: punctuation error.
+-: Changed 'master-ensure-modules' to more generic 'master-execute'.
+
+master 7.x-2.0-beta1 (2013-Dec-23)
+==================================
+#2068731: Introduced master_current_scope as default scope for commands.
+          Introduced master_version (current: 2) for configuration format.
+          New configuration format as nested scope specific array.
+          Empty scope replaced by "base" scope.
+          Added admin form to set current scope.
+          Added command to set current scope (drush 'master-set-current-scope').
+          Added drush prompt to retrieve or select current scope.
+          Added scope overview to 'drush master-status'.
+#2032867 by derhasi | ceng: 'drush master-absent' added.
+#2067983: 'drush master-removables' added.
+#2160697: Fixed master export and added tests.
+#2067985 by lucastockmann: added basic master admin UI
+
+master 7.x-2.x-alpha1 (2013-Dec-20)
+===================================
+Initiated changelog (see git log for history).
