@@ -16,19 +16,22 @@ dependencies:
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
     - sudo cp $HOME/southbankcentre.org/drupal/sites/default/settings.php $HOME/southbankcentre.org/drupal/sites/default/settings.php.ci
-    - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/southbankcentre.org/drupal site-install festival -y --account-mail=alexb@cogapp.com --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
+    # This step should install the Open Event profile when it has been created
+    # I.e. ... site-install OpenEvent -y --account-mail= ...
+    - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/southbankcentre.org-CMS/drupal site-install --account-mail=alexb@cogapp.com --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
     - sudo cp $HOME/southbankcentre.org/drupal/sites/default/settings.php.ci $HOME/southbankcentre.org/drupal/sites/default/settings.php
     - sudo cp $HOME/southbankcentre.org/drupal/sites/default/local.settings.php.ci $HOME/southbankcentre.org/drupal/sites/default/local.settings.php
     - drush -r $HOME/southbankcentre.org/drupal en -y master
     - drush -r $HOME/southbankcentre.org/drupal master-execute -y --scope=dev
-    - drush -r $HOME/southbankcentre.org/drupal fra -y
+    # Features module isn't currently installed, but will be when Open Event profile has been created
+    #- drush -r $HOME/southbankcentre.org/drupal fra -y
     - drush -r $HOME/southbankcentre.org/drupal cc all
 
   post:
     # apache module setup
     - a2enmod rewrite
     # apache vhost setup
-    - cp $HOME/southbankcentre.org/ci/api.vhost /etc/apache2/sites-available/api
+    - cp $HOME/southbankcentre.org-CMS/ci/api.vhost /etc/apache2/sites-available/api
     - a2ensite api
     - sudo service apache2 restart
     # protractor setup
@@ -44,7 +47,7 @@ test:
         pwd: sc-*-linux
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
-    - protractor $HOME/southbankcentre.org/test/functional/conf.js --params.url 'http://api.sc.circle:8080'
+    - protractor $HOME/southbankcentre.org-CMS/test/functional/conf.js --params.url 'http://api.sc.circle:8080'
 
 general:
   branches:
