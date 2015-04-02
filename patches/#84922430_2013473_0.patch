@@ -1,0 +1,12 @@
+diff --git a/modules/field.info.inc b/modules/field.info.inc
+--- a/modules/field.info.inc
++++ b/modules/field.info.inc
+@@ -164,7 +164,7 @@
+   if (empty($instance['settings']['alt_field'])) {
+     unset($property['property info']['alt']);
+   }
+-  if (empty($field['settings']['title_field'])) {
++  if (empty($instance['settings']['title_field'])) {
+     unset($property['property info']['title']);
+   }
+ }

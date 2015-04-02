@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Install and update behavior for the master module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function master_requirements($phase) {
+  $requirements = array();
+
+  // Show some status on master configuration.
+  if ($phase == 'runtime') {
+    $t = get_t();
+
+    $master_modules = variable_get('master_modules', array());
+    $version = variable_get('master_version', 0);
+
+    $no_modules = empty($master_modules) || ($version >= 2 &&  empty($master_modules['base']));
+    $version_old = ($version < 2);
+
+    if (!$no_modules) {
+      $base_modules = ($version < 2) ? $master_modules : $master_modules['base'];
+    }
+
+    // Master module state.
+    if ($no_modules) {
+      $description = $t('No master modules are configured. For more information go to !link.', array('!link' => l($t('Master settings'), 'admin/modules/master/settings')));
+    }
+    else {
+      $description = $t('Master modules are configured (see !link).', array('!link' => l($t('status'), 'admin/modules/master')));
+    }
+    $requirements['master_modules'] = array(
+      'title' => t('Master modules'),
+      'description' => $description,
+      'severity' => ($no_modules) ? REQUIREMENT_WARNING : REQUIREMENT_OK,
+      'value' => ($no_modules) ? $t('No master modules set.') : implode(', ', $base_modules),
+    );
+
+    // Master version state.
+    if ($version_old) {
+      $description = $t('The master version is not set or is too old. For an up-to-date configuration example, go to !link.', array('!link' => l($t('Master settings'), 'admin/modules/master/settings')));
+    }
+    else {
+      $description = $t('The master version is up to date');
+    }
+    $requirements['master_version'] = array(
+      'title' => $t('Master version'),
+      'description' => $description,
+      'severity' => ($version_old) ? REQUIREMENT_WARNING : REQUIREMENT_OK,
+      'value' => $version,
+    );
+  }
+
+  return $requirements;
+}
+
+/**
+ * Notice for updating master configuration.
+ */
+function master_update_7201() {
+  $t = get_t();
+  drupal_set_message($t('The master configuration variable structure has changed. You have to make sure, your master configuration fits the newest version (2). For more information look in the README or on the !link.', array('!link' => l($t('Master settings page'), 'admin/modules/master/settings'))));
+}

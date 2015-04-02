@@ -1,0 +1,1049 @@
+<?php
+
+/**
+ * @file
+ * Master module provides a tool to ensure only intended modules are set.
+ */
+
+/**
+ * The current version of master config API.
+ */
+define('MASTER_VERSION', 2);
+
+/**
+ * Status marking a module being a master.
+ */
+define('MASTER_STATUS_MASTER', 'master');
+
+/**
+ * Status marking a module as required by a master.
+ */
+define('MASTER_STATUS_REQUIRED', 'required');
+
+/**
+ * Status marking a module that is not but shall be enabled.
+ */
+define('MASTER_STATUS_MISSING', 'missing');
+
+/**
+ * Status marking a module that is enabled, but needs not to be enabled.
+ */
+define('MASTER_STATUS_REDUNDANT', 'redundant');
+
+/**
+ * Status marking a module that is disabled and shall be uninstalled.
+ */
+define('MASTER_STATUS_UNINSTALL', 'uninstall');
+
+/**
+ * The key for providing the base configuration.
+ */
+define('MASTER_BASE', 'base');
+
+/**
+ * Implements hook_menu().
+ */
+function master_menu() {
+  return array(
+    'admin/modules/master' => array(
+      'title' => 'Master',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('master_admin_list'),
+      'access arguments' => array('administer modules'),
+      'file' => 'master.admin.inc',
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 10,
+    ),
+    'admin/modules/master/scopes' => array(
+      'title' => 'Scopes',
+      'description' => 'Overview of the defined scopes.',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -8,
+    ),
+    'admin/modules/master/settings' => array(
+      'title' => 'Settings',
+      'description' => 'View the current general settings of the master module.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('master_admin_settings'),
+      'access arguments' => array('administer modules'),
+      'file' => 'master.admin.inc',
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 0,
+    ),
+    'admin/modules/master/scopes/%master_scope' => array(
+      'title' => 'Master scope',
+      'title callback' => 'master_scope_page_title',
+      'title arguments' => array(4),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('master_admin_scope_form', 4),
+      'access arguments' => array('administer modules'),
+      'file' => 'master.admin.inc',
+    ),
+    'admin/modules/master/removables' => array(
+      'title' => 'Removables',
+      'description' => 'Shows module folders that could be removed from the installation.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('master_admin_removables', 4),
+      'access arguments' => array('administer modules'),
+      'file' => 'master.admin.inc',
+      'type' => MENU_LOCAL_TASK,
+      'weight' => -4,
+    ),
+  );
+}
+
+/**
+ * Wrapper function to retrieve master configuration.
+ *
+ * @param string $key
+ *   The variable to get from the configuration:
+ *   Valid keys currently are:
+ *   - modules
+ *   - uninstall_blacklist
+ *   - allow_base_scope
+ *   - removable_blacklist
+ *   - scope
+ *
+ * @param string $scope
+ *   Optional subkey for getting scope only settings.
+ *
+ * @return mixed
+ *   Variable spe
+ */
+function master_get_config($key, $scope = NULL) {
+
+  $version = variable_get('master_version', 0);
+
+  // Master modules.
+  switch ($key) {
+
+    case 'modules':
+      // Fall through to avoid duplicate code.
+    case 'uninstall_blacklist':
+
+      if ($version >= 2) {
+        $modules = variable_get('master_' . $key, array());
+      }
+      else {
+        $modules = _master_get_config_v0($key);
+      }
+
+      // In the case of a given scope, we only return the scope specific
+      // setting.
+      if (isset($scope)) {
+        return isset($modules[$scope]) ? $modules[$scope] : array();
+      }
+      return $modules;
+
+    case 'allow_base_scope':
+
+      if ($version >= 2) {
+        $return = variable_get('master_allow_base_scope', FALSE);
+      }
+      else {
+        $return = _master_get_config_v0($key);
+      }
+      return $return;
+
+    case 'removable_blacklist':
+      return variable_get('master_removable_blacklist', array('modules/*'));
+
+    case 'current_scope':
+      return variable_get('master_current_scope');
+      break;
+
+  }
+
+}
+
+/**
+ * Helper to get config converted from version 0 to the newest version.
+ *
+ * @param string $variable_key
+ *   Key of the variable to get.
+ *
+ * @return array
+ *   Array of list arrays, keyed by 'base' and the different scopes.
+ */
+function _master_get_config_v0($config_key) {
+
+  // Base scope was called empty scope in the first version.
+  if ($config_key == 'allow_base_scope') {
+    return variable_get('mater_allow_empty_scope', FALSE);
+  }
+
+  // Old version of scope specific module list.
+  if ($config_key == 'modules' || $config_key == 'uninstall_blacklist') {
+    $variable_key = 'master_' . $config_key;
+    // Fetch the
+    $list = variable_get($variable_key, array());
+
+    // If no base key is defined, we will deal with the old configuration layout.
+    if (!isset($list[MASTER_BASE])) {
+      // In that case we have to build our list array ourself by iterating through
+      // the whole variable set and looking for our former scopes.
+      $list = array(MASTER_BASE => $list);
+
+      GLOBAL $conf;
+      $len = drupal_strlen("$variable_key:");
+      foreach ($conf as $key => $specs) {
+        if (strpos($key, "$variable_key:") === 0) {
+          $scope = drupal_substr($key, $len);
+          $list[$scope] = $specs;
+        }
+      }
+    }
+
+    return $list;
+  }
+}
+
+
+/**
+ * Checks if there is any master module set.
+ *
+ * @param string $scope
+ *   Identifier for a specific set, e.g. for differentiating different stages.
+ *
+ * @return bool
+ */
+function master_is_set($scope) {
+  $modules = master_get_master_modules($scope);
+
+  // As master is always added, we need a count greater than 1.
+  return count($modules) > 1;
+}
+
+/**
+ * Page argument load for master scope.
+ *
+ * @param string $scope
+ *
+ * @return string | FALSE
+ */
+function master_scope_load($scope) {
+  if (master_validate_scope($scope)) {
+    return $scope;
+  }
+  return FALSE;
+}
+
+/**
+ * Check if the given scope is defined.
+ *
+ * @param string $scope
+ *   Name of the scope, may be 'base' for the master base scope.
+ *
+ * @return bool
+ *   Returns TRUE if there is a scope definition in the master_modules config
+ *   array. In case of the base scope, this will validate true, if the base
+ *   scope is allowed by 'master_allow_base_scope'.
+ */
+function master_validate_scope($scope) {
+  return in_array($scope, master_get_scopes());
+}
+
+/**
+ * Wrapper function to retrieve the master modules.
+ *
+ * @param string $scope
+ *   Identifier for a specific set, e.g. for differentiating different stages.
+ *
+ * @return array
+ *   Machine names of modules that are defined as master modules.
+ */
+function master_get_master_modules($scope) {
+  // Get the masters from $conf.
+  $master_modules = master_get_config('modules', MASTER_BASE);
+
+  // Add additional module set.
+  if ($scope != MASTER_BASE) {
+    $add_modules = master_get_config('modules', $scope);
+    $master_modules = array_merge($master_modules, $add_modules);
+  }
+
+  // Master is always a master.
+  $master_modules[] = 'master';
+
+  return array_values($master_modules);
+}
+
+/**
+ * Retrieve list of all master modules that are set in any scope.
+ *
+ * @return array
+ *   Array of master module machine names.
+ */
+function master_get_all_master_modules() {
+  $scopes = master_get_scopes();
+
+  $return = array();
+
+  foreach ($scopes as $scope) {
+    $return = array_merge($return, master_get_master_modules($scope));
+  }
+  return array_values(array_unique($return));
+}
+
+/**
+ * Get information for modules that shall not be uninstalled from settings.php.
+ *
+ * @param string $scope
+ *   identifier for a specific set., e.g. for differentiating different stages
+ *
+ * @return array
+ *   Machine names of modules that shall not be uninstalled by master.
+ */
+function master_get_uninstall_blacklist($scope) {
+  $modules = master_get_config('uninstall_blacklist', MASTER_BASE);
+
+  // Add additional module set.
+  if ($scope != MASTER_BASE) {
+    $add_modules = master_get_config('uninstall_blacklist', $scope);
+    $modules = array_merge($modules, $add_modules);
+  }
+
+  return $modules;
+}
+
+/**
+ * Provides enriched module data with master_status information.
+ *
+ * @param string $scope
+ *   Name of the scope to provide master status information for.
+ * @param bool $reset
+ *   Indicator to reset the static cache of the module data.
+ *
+ * @return array
+ *   Array of module data objects, containing information from
+ *   master_get_module_data() and an additional property 'master_status' as
+ *   array of key/values:
+ *   - (string) key: the name of a master status
+ *   - (bool) value: TRUE if the module has the given status
+ *
+ * @see master_get_module_data()
+ */
+function master_get_module_data_for_scope($scope = '', $reset = FALSE) {
+  static $static_data = array();
+
+  if (!$reset && !empty($static_data[$scope])) {
+    return $static_data[$scope];
+  }
+
+  $module_data = master_get_module_data($reset);
+  $masters = master_get_master_modules($scope);
+  $required = master_get_required_modules($masters);
+  $change = master_get_change_status_information($masters);
+
+  foreach ($module_data as $module => &$data) {
+    // Enrich the module data with master status information.
+    $data->master_status = array();
+    $data->master_status[MASTER_STATUS_MASTER] = in_array($module, $masters);
+    $data->master_status[MASTER_STATUS_REQUIRED] = in_array($module, $required);
+    $data->master_status[MASTER_STATUS_MISSING] = in_array($module, $change[MASTER_STATUS_MISSING]);
+    $data->master_status[MASTER_STATUS_REDUNDANT] = in_array($module, $change[MASTER_STATUS_REDUNDANT]);
+    $data->master_status[MASTER_STATUS_UNINSTALL] = in_array($module, $change[MASTER_STATUS_UNINSTALL]);
+  }
+  // Static cache that information.
+  $static_data[$scope] = $module_data;
+  return $static_data[$scope];
+}
+
+/**
+ * Wrapper to get a static cached version of the module data.
+ *
+ * @param bool $reset
+ *   Set to TRUE if you want to rebuild the data.
+ *
+ * @return array
+ *   Array of module data as returned from system_rebuild_module_data().
+ *
+ * @see system_rebuild_module_data()
+ */
+function master_get_module_data($reset = FALSE) {
+  static $module_data;
+
+  if (empty($module_data) || $reset) {
+    $module_data = system_rebuild_module_data();
+
+    // Installation profiles are no hard dependencies, so we remove it from the
+    // module data.
+    $profile = drupal_get_profile();
+    unset($module_data[$profile]);
+
+    // We remove module data dependencies from modules that have circular
+    // dependencies.
+    foreach ($module_data as $module => $data) {
+      // We got a circular dependency if a module is dependent on itself.
+      if (isset($data->requires[$module]) || isset($data->required_by[$module])) {
+
+        // We remove the self-requirement.
+        unset($module_data[$module]->requires[$module]);
+        unset($module_data[$module]->required_by[$module]);
+
+        // In that case we remove all requires and required_by of the modules
+        // that are part in both arrays.
+        $intersect = array_intersect_key($data->requires, $data->required_by);
+        foreach ($intersect as $m => $spec) {
+          unset($module_data[$module]->requires[$m]);
+          unset($module_data[$module]->required_by[$m]);
+        }
+      }
+    }
+
+    // Mark modules that are required by core.
+    // We cannot use $info['required'] here, as modules can alter that
+    // information, like field_system_info_alter() does, to avoid modules beeing
+    // disabled, due to existing fields.
+    $core_required = drupal_required_modules();
+    foreach ($core_required as $core_required_module) {
+      if ($core_required_module != $profile) {
+        $module_data[$core_required_module]->core_required = TRUE;
+      }
+    }
+  }
+
+  return $module_data;
+}
+
+/**
+ * Retrieve the list of required modules for the given module set.
+ *
+ * @param array $master_modules
+ *   Array of module machine names of the master modules.
+ *
+ * @return array
+ *   Array of module names required by the master modules or defined as required
+ *   in the module info (as for core modules like field or user). The list does
+ *   not contain the master modules themselves.
+ */
+function master_get_required_modules($master_modules) {
+
+  $module_data = master_get_module_data();
+
+  // For comparing, we need the master_modules as keys.
+  $master_keys = array_flip($master_modules);
+
+  $required_modules = array();
+  // As module_data already contains all dependencies in requires, we simply
+  // iterate over the whole module list.
+  foreach ($module_data as $module => $data) {
+    // If this is a master module, we skip it.
+    if (in_array($module, $master_modules)) {
+      // Do nothing.
+    }
+    // If the module is required via the module info, we do not ignore that and
+    // add it to the list.
+    elseif (!empty($data->info['required'])) {
+      $required_modules[] = $module;
+    }
+    // If one or more master modules require this module, we add it to the list.
+    elseif (!empty($data->required_by)) {
+      $intersect = array_intersect_key($data->required_by, $master_keys);
+      if (count($intersect) > 0) {
+        $required_modules[] = $module;
+      }
+    }
+  }
+
+  return $required_modules;
+}
+
+/**
+ * Retrieves modules that should be enabled or disabled to fit master specs.
+ *
+ * @param array $master_modules
+ *   List of master module machine names to build the list of all required
+ *   modules.
+ *
+ * @param array $no_uninstall
+ *   List of modules that shall not be uninstalled.
+ *
+ * @return array
+ *   Array consists of three arrays:
+ *   - missing: array of modules that have to be enabled to fulfill the
+ *     dependencies of the master modules.
+ *   - redundant: array of modules that are not required by any master module but
+ *     are enabled
+ *   - uninstall: array of modules that have already been enabled but not
+ *     uninstalled yet
+ */
+function master_get_change_status_information($master_modules) {
+
+  $module_data = master_get_module_data();
+
+  $required = master_get_required_modules($master_modules);
+  $enable = array();
+  $disable = array();
+  $uninstall = array();
+
+  foreach ($module_data as $module => $data) {
+    // If module is not a master module or a required module.
+    if (!in_array($module, $master_modules) && !in_array($module, $required)) {
+      if (!empty($data->status)) {
+        $disable[] = $module;
+      }
+      elseif ($data->schema_version != -1) {
+        $uninstall[] = $module;
+      }
+    }
+    // Modules that are required get proof too.
+    else {
+      // Those that are not enabled, get to the enable list.
+      if (empty($data->status)) {
+        $enable[] = $module;
+      }
+    }
+  }
+
+  // We order the modules in the way they can be enabled, disabled, uninstalled
+  // without getting dependencies in the way.
+  $enable = master_sort_modules_by_requirements($enable);
+  $disable = array_reverse(master_sort_modules_by_requirements($disable));
+  $uninstall = array_reverse(master_sort_modules_by_requirements($uninstall));
+
+  return array(
+    MASTER_STATUS_MISSING => $enable,
+    MASTER_STATUS_REDUNDANT => $disable,
+    MASTER_STATUS_UNINSTALL => $uninstall,
+  );
+}
+
+/**
+ * Sort modules in order of dependency, undependent modules first.
+ *
+ * @param array $modules
+ *
+ * @return array
+ */
+function master_sort_modules_by_requirements($modules) {
+
+  $module_data = master_get_module_data();
+  $left_modules = drupal_map_assoc($modules);
+  $return = array();
+
+  // We loop until we got no module anymore.
+  while (count($left_modules)) {
+
+    $found_independent_module = FALSE;
+    foreach ($left_modules as $module) {
+
+      // Get required modules from module data.
+      $required = !empty($module_data[$module]->requires) ? array_keys($module_data[$module]->requires) : array();
+      // Check if any of the current module set is part of the requirements.
+      $intersect = array_intersect($required, $left_modules);
+
+      // If there are no requirements with the currently leaved module set we
+      // can add it to the return array.
+      if (!count($intersect)) {
+        $return[] = $module;
+        // We remove the module from the temp array, so we can check
+        // dependencies in the next round without that module.
+        unset($left_modules[$module]);
+        $found_independent_module = TRUE;
+      }
+    }
+
+    // If we did not find a module to add to the return list, we end the loop so
+    // we do not end up in an infinite loop.
+    if (!$found_independent_module) {
+      watchdog('master', 'Some dependencies could not be resolved: @modules', array('@modules', implode(', ', $left_modules), WATCHDOG_CRITICAL));
+      break;
+    }
+
+    // Reset module list for the next run.
+    reset($left_modules);
+  }
+
+  return $return;
+}
+
+/**
+ * Helps to extract a list of possible master modules for the current state.
+ *
+ * @param bool $check_profile
+ *   If set to TRUE, we also take the profile in mind for the master module
+ *   recommendation.
+ *
+ * @return array
+ *   List of module machine names, that will fit a matching master module list
+ *   for the current set of enabled modules.
+ */
+function master_get_master_modules_recommendation($check_profile = FALSE) {
+  $module_data = master_get_module_data();
+
+  // For the current configuration, we simply look for modules, that are enabled
+  // and not required by any other enabled module.
+  $return = array();
+  foreach ($module_data as $module => $data) {
+    // First we check on some special modules.
+    // ... like master, we do not need it in the master config.
+    if ($module == 'master') {
+      continue;
+    }
+    // We do not add the module, if it is required by drupal core.
+    elseif (!empty($data->core_required)) {
+      continue;
+    }
+    // We only check on enabled modules.
+    elseif (!empty($data->status)) {
+
+      // When enabled, we check, if any enabled module is required by the
+      // current one. Otherwise it would by a possible master.
+      $required_by = FALSE;
+      if (!empty($data->required_by)) {
+        foreach ($data->required_by as $required_by_module => $required_by_data) {
+          // When the module is active, the module cannot be a desired master.
+          if (!empty($module_data[$required_by_module]->status)) {
+            $required_by = TRUE;
+            break;
+          }
+        }
+      }
+      // We add it to the list, if it is not required by another module.
+      if (!$required_by) {
+        $return[] = $module;
+      }
+    }
+  }
+
+  // If we shall not check the profile, we can quit here.
+  if (!$check_profile) {
+    return $return;
+  }
+
+  // We check for the current profile, if it holds all dependencies.
+  $profile = drupal_get_profile();
+  // If all modules of the current profile definition are active, the profile
+  // holds a part of the current master config.
+  $profile_data = master_get_profile_data($profile);
+  if (!empty($profile_data->requires)) {
+    // Check each "requires" module.
+    $requires = array_keys($profile_data->requires);
+    $all_active = FALSE;
+    foreach ($requires as $module) {
+      if (!empty($module_data[$module]->status)) {
+        $all_active = TRUE;
+      }
+      // If we find any module, that is not active, the profile can't be master.
+      else {
+        $all_active = FALSE;
+        break;
+      }
+    }
+
+    // If the profile can be a master, we replace its requirements, by the
+    // profile.
+    if ($all_active) {
+      // We remove the dependent modules and add the profile.
+      $return = array_diff($return, $requires);
+      array_unshift($return, $profile);
+    }
+  }
+
+  return array_values($return);
+}
+
+/**
+ * Helper to get information about the given profile.
+ *
+ * @param string $profile
+ *   Machine name of a profile.
+ *
+ * @return object
+ *   Profile data if the profile exists.
+ */
+function master_get_profile_data($profile) {
+  $module_data = system_rebuild_module_data();
+
+  if (!empty($module_data[$profile])) {
+    return $module_data[$profile];
+  }
+}
+
+/**
+ * Retrieves the current set of modules, that are not uninstalled yet.
+ *
+ * @return array
+ *   Array of machine names of not-uninstalled modules.
+ */
+function master_get_uninstall_blacklist_recommendation() {
+  $module_data = master_get_module_data();
+  $return = array();
+  foreach ($module_data as $module => $data) {
+    if (empty($data->status) && $data->schema_version >= 0) {
+      $return[] = $module;
+    }
+  }
+  return $return;
+}
+
+/**
+ * Provides a PHP output for a recommended master configuration.
+ *
+ * @param array $scopes
+ *   Array of scope names.
+ * @param bool $no_profile
+ *   If set to TRUE, the profile will not be taken into account for being set as
+ *   master module.
+ * @param bool $no_uninstall
+ * @param bool $sort
+ *
+ * @return string
+ */
+function master_get_config_recommendation($scopes = array(), $no_profile  = FALSE, $no_uninstall = FALSE, $sort = FALSE) {
+  $export = '';
+  $recommended_masters = master_get_master_modules_recommendation(!$no_profile);
+
+  if (!empty($sort)) {
+    sort($recommended_masters);
+  }
+
+  // If profile is part of the config, we add a line to make sure the profile
+  // config is provided in the settings.
+  if (empty($no_profile)) {
+    $profile = drupal_get_profile();
+    if (in_array($profile, $recommended_masters)) {
+      $export .= format_string('$conf[\'install_profile\'] = \'@profile\';', array('@profile' => $profile));
+      $export .= "\n";
+    }
+  }
+
+  // Export the master version in any case.
+  $export .= format_string('$conf[\'master_version\'] = !var;', array('!var' => master_var_export(MASTER_VERSION)));
+  $export .= "\n";
+
+  // Build master module config array.
+  $master_modules = array(MASTER_BASE => $recommended_masters);
+  // Add empty arrays for each scope.
+  if (!empty($scopes)) {
+    foreach ($scopes as $scope) {
+      if ($scope == MASTER_BASE || $scope === '') {
+        // Base scope is already set by the base config, and empty scopes are
+        // not valid.
+        continue;
+      }
+      $master_modules[$scope] = array();
+    }
+  }
+  $export .= format_string('$conf[\'master_modules\'] = !var;', array('!var' => master_var_export($master_modules)));
+
+
+  // Add uninstall blacklist to php output.
+  if (empty($no_uninstall)) {
+    $uninstall_blacklist = master_get_uninstall_blacklist_recommendation();
+
+    if (!empty($sort)) {
+      sort($uninstall_blacklist);
+    }
+
+    $uninstall = array(MASTER_BASE => $uninstall_blacklist);
+
+    if (!empty($scopes)) {
+      foreach ($scopes as $scope) {
+        if ($scope == MASTER_BASE || $scope === '') {
+          // Base scope is already set by the base config, and empty scopes are
+          // not valid.
+          continue;
+        }
+        $uninstall[$scope] = array();
+      }
+    }
+    $export .= "\n";
+    $export .= format_string('$conf[\'master_uninstall_blacklist\'] = !var;', array('!var' => master_var_export($uninstall)));
+  }
+
+  // Removable folder blacklist.
+  $export .= "\n";
+  $export .= format_string('$conf[\'master_removable_blacklist\'] = !var;', array('!var' => master_var_export(master_get_removable_blacklist())));
+
+  return $export;
+}
+
+/**
+ * Helper to provide human readable names for the status.
+ *
+ * @return array
+ *   Labels for every master status, keyed by status machine name.
+ */
+function master_get_status_infos() {
+  return array(
+    MASTER_STATUS_MASTER => array(
+      'label' => t('Master modules'),
+      'description' => t('The modules defined as master. These modules are the base for all module requirements.'),
+    ),
+    MASTER_STATUS_REQUIRED => array(
+      'label' => t('Required modules'),
+      'description' => t('Modules that are required by the defined master modules.'),
+    ),
+    MASTER_STATUS_MISSING => array(
+      'label' => t('Missing modules'),
+      'description' => t('Modules that are master or required, but currently disabled.'),
+    ),
+    MASTER_STATUS_REDUNDANT => array(
+      'label' => t('Redundant modules'),
+      'description' => t('Modules that are not required, but are currently enabled.'),
+    ),
+    MASTER_STATUS_UNINSTALL => array(
+      'label' => t('Uninstall modules'),
+      'description' => t('Disabled modules that shall be uninstalled.'),
+    ),
+  );
+}
+
+/**
+ * Provides identifier of the current scope.
+ *
+ * @return string
+ *   Returns the identifier of the current scope, when it is defined as a valid
+ *   scope.
+ */
+function master_get_current_scope() {
+  $current_scope = master_get_config('current_scope');
+  if (isset($current_scope) && master_validate_scope($current_scope)) {
+    return $current_scope;
+  }
+}
+
+/**
+ * Wrapper to get the available scopes for the current master settings.
+ *
+ * @return array
+ *   Array of scope machine names.
+ */
+function master_get_scopes() {
+  $master_modules = master_get_config('modules');
+  $scopes = drupal_map_assoc(array_keys($master_modules));
+
+  // Check if base scope is allowed, otherwise remove it from scopes.
+  if (!master_get_config('allow_base_scope')) {
+    unset($scopes[MASTER_BASE]);
+  }
+  return $scopes;
+}
+
+function _master_get_scopes_v1() {
+
+  $len = drupal_strlen('master_modules:');
+  foreach ($conf as $key => $specs) {
+    if (strpos($key, 'master_modules:') === 0) {
+      $scope = drupal_substr($key, $len);
+      $scopes[$scope] = $scope;
+    }
+  }
+  return $scopes;
+}
+
+/**
+ * Helper to provide list of project folders with their associated modules.
+ *
+ * @return array
+ *   List of module arrays, keyed by the project directory.
+ */
+function master_get_project_folders() {
+  static $directories;
+
+  // Static cache for the directory folder.
+  if (isset($directories)) {
+    return $directories;
+  }
+
+  $directories = array();
+
+  // Downloaded Drupal project folders contain a LICENSE.txt, this way we can
+  // find our Drupal project folders, even if the main folder does not contain
+  // a *.module file.
+  $projects = drupal_system_listing('/^LICENSE\.txt$/', 'modules', 'uri', 0);
+  foreach ($projects as $uri => $data) {
+    $directories[dirname($uri)] = array();
+  }
+
+  $modules = master_get_module_data();
+
+  // Group all modules by the directory they are contained.
+  foreach ($modules as $module => $data) {
+    $dir = dirname($data->filename);
+    // Provide a directory for that dir.
+    if (!isset($directories[$dir])) {
+      $directories[$dir] = array();
+    }
+    $directories[$dir][$module] = $module;
+  }
+
+  // In the second loop, we look if our directory is a subdirectory of another
+  // module's directory.
+  foreach ($directories as $dir => $modules) {
+
+    $super_parent = $next_dir = $dir;
+    while (dirname($next_dir) != '.') {
+      $next_dir = dirname($next_dir);
+      // If a module is located in that parent dir, we may have a project dir.
+      // In the next loop we will look if that one's parent is a module dir too.
+      if (isset($directories[$next_dir])) {
+        $super_parent = $next_dir;
+      }
+    }
+
+    // If the current module's directory is not the project directory, we move
+    // the module information to the project directory and remove the module
+    // directory from our directory list.
+    if ($super_parent != $dir) {
+      $directories[$super_parent] += $directories[$dir];
+      unset($directories[$dir]);
+    }
+  }
+
+  // Sort by folder name.
+  ksort($directories);
+
+  return $directories;
+}
+
+/**
+ * Retrieves project folders that may be removed from the installation.
+ *
+ * @param array $folders
+ *   List of folder-module associations as returned by
+ *   master_get_project_folders().
+ * @param array $blacklist
+ *   List of drupal_match_path() compliant folder patterns as returned by
+ *   master_get_removable_blacklist().
+ *
+ * @return array
+ *   Array of modules, keyed by folder name.
+ */
+function master_filter_removable_folders($folders, $blacklist = array()) {
+
+  $module_data = master_get_module_data();
+
+  // Get list of modules, that are required in the project in any scope.
+  $master_modules = master_get_all_master_modules();
+  $required = master_get_required_modules($master_modules);
+
+  $return = array();
+
+  // We check for each folder, if that folder may be needed in the project, by
+  // containing a module that is
+  // - a master module in any scope
+  // - a required module in any scope
+  // - a currently enabled module
+  // - a currently disabled but not uninstalled module
+  // or the folder is in the blacklist.
+  foreach ($folders as $folder => $modules) {
+
+    foreach ($modules as $module) {
+      if (in_array($module, $master_modules)) {
+        continue 2;
+      }
+      elseif (in_array($module, $required)) {
+        continue 2;
+      }
+      elseif (!empty($module_data[$module]->status)) {
+        continue 2;
+      }
+      elseif ($module_data[$module]->schema_version != -1) {
+        continue 2;
+      }
+    }
+
+    // If the folder is in a blacklist, we skip it too.
+    foreach ($blacklist as $pattern) {
+      if (drupal_match_path($folder, $pattern)) {
+        continue 2;
+      }
+    }
+
+    // If the loop did not kick us out, we have no module that fits the criteria
+    // of making the module relevant, so we can remove the project folder.
+    $return[$folder] = $modules;
+  }
+
+  return $return;
+}
+
+/**
+ * Retrieves a list of folder expressions, that may not be removed.
+ *
+ * @return array
+ *   Array of drupal_match_path() expressions.
+ *
+ * @see drupal_match_path()
+ */
+function master_get_removable_blacklist() {
+  return master_get_config('removable_blacklist');
+}
+
+
+/**
+ * Retrieve a list of missing modules.
+ *
+ * Missing modules are modules, that are not in the fileysystem anymore, but
+ * - a defined master module
+ * - a requirement of a master module
+ * - a module stated enabled in the system table
+ * - a module stated not uninstalled in the system table.
+ *
+ * @return array
+ *   Array of module machine names.
+ */
+function master_get_absent_modules() {
+
+  $return = array();
+
+  $module_data = master_get_module_data();
+
+  $found_modules = array_keys($module_data);
+  $found_modules[] = drupal_get_profile();
+
+  // We check all master modules, about their presence and the presence of their
+  // requirements.
+  foreach (master_get_all_master_modules() as $master) {
+    // The master module is missing.
+    if (!isset($module_data[$master])) {
+      $return[$master] = $master;
+    }
+    // Check if any requirements of master module are missing.
+    elseif (!empty($module_data[$master]->requires)) {
+      foreach ($module_data[$master]->requires as $required_module => $data) {
+        if (!isset($module_data[$required_module])) {
+          $return[$required_module] = $required_module;
+        }
+      }
+    }
+  }
+
+  // Query for modules that should be enabled or are not uninstalled yet, but
+  // were removed from the file system.
+  $or = db_or()->condition('status', 1)->condition('schema_version', -1, '<>');
+  $query = db_select('system', 's')
+    ->fields('s')
+    ->condition('type', 'module')
+    ->condition('name', $found_modules, 'NOT IN')
+    ->condition($or);
+  $res = $query->execute();
+
+  while ($obj = $res->fetchObject()) {
+    $return[$obj->name] = $obj->name;
+  }
+
+  return $return;
+}
+
+/**
+ * Wrapper for var_export to provide nice output when ctools is enabled.
+ *
+ * @param mixed $var
+ *   The variable to output.
+ *
+ * @return string
+ *   PHP string representation of the variable.
+ */
+function master_var_export($var) {
+  if (module_exists('ctools')) {
+    ctools_include('export');
+    return ctools_var_export($var);
+  }
+  else {
+    return var_export($var, TRUE);
+  }
+}

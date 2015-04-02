@@ -1,0 +1,17 @@
+Listen 8080
+
+<VirtualHost *:8080>
+  LoadModule php5_module /home/ubuntu/.phpenv/versions/5.5.11/libexec/libphp5.so
+  DocumentRoot /home/ubuntu/southbankcentre.org-CMS/drupal
+  ServerName api.sc.circle
+  <FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+  </FilesMatch>
+
+  <Directory "/home/ubuntu/southbankcentre.org-CMS/drupal">
+      AllowOverride All
+      Options -Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+  </Directory>
+</VirtualHost>

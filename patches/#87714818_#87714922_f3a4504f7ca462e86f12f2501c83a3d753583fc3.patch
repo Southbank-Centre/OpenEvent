@@ -1,0 +1,36 @@
+From f3a4504f7ca462e86f12f2501c83a3d753583fc3 Mon Sep 17 00:00:00 2001
+From: Jeroen Bobbeldijk
+Date: Tue, 02 Dec 2014 20:20:17 +0000
+Subject: Issue #2383293: Notices for deleted paragraphs
+
+---
+diff --git a/paragraphs.field_widget.inc b/paragraphs.field_widget.inc
+index 06133be..cb713f5 100644
+--- a/paragraphs.field_widget.inc
++++ b/paragraphs.field_widget.inc
+@@ -152,7 +152,9 @@ function paragraphs_field_multiple_value_form($field, $instance, $langcode, $ite
+           // If an item has been explicitly selected, raise our flag.
+           $explicitly_enabled = TRUE;
+         }
+-        $select_bundles_weighted[$available_bundles[$allowed_bundle_key]->bundle] = $available_bundles[$allowed_bundle_key]->name;
++        elseif (isset($available_bundles[$allowed_bundle_key]->bundle)) {
++          $select_bundles_weighted[$available_bundles[$allowed_bundle_key]->bundle] = $available_bundles[$allowed_bundle_key]->name;
++        }
+       }
+ 
+       // If no bundle has been explicitly selected, give access to all of them.
+diff --git a/paragraphs.module b/paragraphs.module
+index 9e72dec..9055437 100644
+--- a/paragraphs.module
++++ b/paragraphs.module
+@@ -331,7 +331,7 @@ function paragraphs_bundle_settings_form_submit($form, &$form_state) {
+     $bundle_settings_table = $form_state['values']['instance']['settings']['allowed_bundles_table'];
+     uasort($bundle_settings_table, 'drupal_sort_weight');
+     foreach ($bundle_settings_table as $machine_name => $value) {
+-      $bundle_settings[$machine_name] = (($value['enabled'] === 1) ? $machine_name : 0);
++      $bundle_settings[$machine_name] = (($value['enabled'] === 1) ? $machine_name : -1);
+     }
+   }
+   $form_state['values']['instance']['settings']['allowed_bundles'] = $bundle_settings;
+--
+cgit v0.9.2

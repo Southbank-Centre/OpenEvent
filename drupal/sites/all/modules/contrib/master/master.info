@@ -1,0 +1,14 @@
+name = "Master"
+package = "Features"
+description = "Master control to provide (drush) utilities for setting dependent and disabling unecessary modules and reverting features for a site configuration."
+configure = admin/modules/master
+core = "7.x"
+
+files[] = master.test
+
+; Information added by Drupal.org packaging script on 2014-01-17
+version = "7.x-2.0-beta3"
+core = "7.x"
+project = "master"
+datestamp = "1389947305"
+
