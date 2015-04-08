@@ -1,14 +1,15 @@
-# Ignore configuration files that may contain sensitive information.
-#sites/*/settings*.php
-
 # Ignore everything
 *
 
 # Exclude the following
 !.gitignore
 !profiles/openevent
-!sites/default/master.conf.php
+!sites/default/*.conf.php
+!sites/default/settings*.php
 !*.make
+
+# Ignore configuration files that may contain sensitive information.
+#sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
 #sites/*/files
