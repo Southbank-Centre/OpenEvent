@@ -1,7 +1,7 @@
 name = Open Event
-description = Install with commonly used features pre-configured for an Open Event distribution (Southbank Centre).
-version = 0.1
+description = Open Event distibution provided by Southbank Centre.
 core = 7.x
+version = "7.x-0.1"
 
 ; Core
 dependencies[] = contextual
@@ -41,8 +41,6 @@ dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = filefield_sources
 dependencies[] = link
-;dependencies[] = migrate
-;dependencies[] = migrate_ui
 dependencies[] = auto_entitylabel
 dependencies[] = better_formats
 dependencies[] = diff
@@ -60,6 +58,8 @@ dependencies[] = taxonomy_access_fix
 dependencies[] = views
 dependencies[] = views_data_export
 dependencies[] = views_ui
+;dependencies[] = migrate
+;dependencies[] = migrate_ui
 
 ; Files
 files[] = openevent.profile

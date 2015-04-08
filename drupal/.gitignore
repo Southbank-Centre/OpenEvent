@@ -1,21 +1,15 @@
 # Ignore configuration files that may contain sensitive information.
-sites/*/*.settings.php
-sites/*/settings*.php
+#sites/*/settings*.php
+
+# Ignore everything
+*
+
+# Exclude the following
+!.gitignore
+!profiles/openevent
+!sites/default/master.conf.php
+!*.make
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
-
-# Ignore MacOSX temporary files
-.DS_Store
-
-# Ignore Linux temporary files
-*~
-
-# Ignore Drupal local modules for development
-sites/*/modules/local
-
-# Ignore IDE specific files
-.idea/
-.project/
-.settings/
+#sites/*/files
+#sites/*/private
