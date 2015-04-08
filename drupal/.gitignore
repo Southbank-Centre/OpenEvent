@@ -1,12 +1,15 @@
 # Ignore everything
 *
 
+# Not in subdirectories
+!*/
+
 # Exclude the following
 !.gitignore
 !profiles/openevent
-!sites/default/*.conf.php
-!sites/default/settings*.php
 !*.make
+!sites/default/*conf.php
+!sites/default/*settings.php
 
 # Ignore configuration files that may contain sensitive information.
 #sites/*/settings*.php
