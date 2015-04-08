@@ -1,7 +1,7 @@
 name = OE Shared Field Bases
 description = Provides field bases and text formats that are used by multiple other features.
 core = 7.x
-package = Features
+package = Open Events
 version = 7.x-1.0
 project = oe_shared_field_bases
 dependencies[] = features
