@@ -1,0 +1,5 @@
+; This file can be used for more control on building core.
+core = 7.x
+api = 2
+projects[drupal][type] = core
+projects[drupal][version] = "7.35"
