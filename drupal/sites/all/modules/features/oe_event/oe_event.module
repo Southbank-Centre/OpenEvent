@@ -1,0 +1,15 @@
+<?php
+/**
+ * @file
+ * Code for the OE Event feature.
+ */
+
+include_once 'oe_event.features.inc';
+
+function oe_event_form_alter(&$form, &$form_state) {
+
+  if (arg(0) == 'node' && (arg(1) == 'add' || arg(2) == 'edit')) {
+    $form['field_event_children']['#access'] = 0;
+  }
+
+}
