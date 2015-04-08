@@ -1,0 +1,16 @@
+diff --git a/shs.module b/shs.module
+index de30c9d..ba41de5 100644
+--- a/shs.module
++++ b/shs.module
+@@ -686,9 +686,11 @@ function shs_taxonomy_term_insert($term) {
+  */
+ function shs_taxonomy_term_update($term) {
+   // Update vocabulary cache for the terms parents.
++  if(isset($term->parent)){
+   foreach ($term->parent as $parent) {
+     shs_term_get_children($term->vid, $parent, array('node_count' => TRUE), TRUE);
+   }
++  }
+ }
+ 
+ /**
