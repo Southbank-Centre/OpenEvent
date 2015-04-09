@@ -1,0 +1,5 @@
+name = OE Test module
+description = Provides a test bed to test functionality.
+core = 7.x
+package = OpenEvent
+version = 7.x-1.0

@@ -8,6 +8,7 @@
 !.gitignore
 !*.make
 !profiles/openevent
+!profiles/openevent/*/*
 !sites/default/*conf.php
 !sites/default/settings*.php*
 
@@ -17,4 +18,4 @@ sites/*/private
 
 #
 sites/all/*
-sites/default/*.php
+sites/default/*.settings.php
