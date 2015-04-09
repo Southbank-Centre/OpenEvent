@@ -9,7 +9,7 @@
 !*.make
 !profiles/openevent
 !sites/default/*conf.php
-!sites/default/*settings.php
+!sites/default/settings*.php*
 
 # Ignore paths that contain user-generated content.
 sites/*/files
@@ -17,4 +17,4 @@ sites/*/private
 
 #
 sites/all/*
-sites/default/local.settings.php
+sites/default/*.php
