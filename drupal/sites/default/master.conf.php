@@ -49,6 +49,7 @@ $conf['master_modules'] = array(
     'views',
     'views_data_export',
     'migrate',
+    'oe_test',
 
   ),
   'dev' => array(
