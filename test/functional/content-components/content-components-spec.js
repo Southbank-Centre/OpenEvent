@@ -27,8 +27,8 @@ describe('OE Content Components', function() {
     expect(element(by.xpath("//table/tbody/tr[td='Link (link)']")).isPresent()).toBe(true);
   });
 
-  it('includes a Pull quote component', function(){
-    expect(element(by.xpath("//table/tbody/tr[td='Pull quote (pull_quote)']")).isPresent()).toBe(true);
+  it('includes a Quote component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='Quote (quote)']")).isPresent()).toBe(true);
   });
 
   it('includes a Youtube component', function(){
