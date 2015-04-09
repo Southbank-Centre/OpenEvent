@@ -1,3 +1,4 @@
+; This file is not currently used.
 api = 2
 core = 7.x
 

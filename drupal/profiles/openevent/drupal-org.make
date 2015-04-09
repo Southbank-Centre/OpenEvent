@@ -1,7 +1,6 @@
 ; Define required attributes
 core = 7.x
 api = 2
-projects[drupal][version] = "7.35"
 
 ; Define required modules
 ;
@@ -78,5 +77,5 @@ projects[migrate][version] = 2.7
 projects[migrate][subdir] = contrib
 
 ; Patches
-;projects[shs][patch][] = ./patches/#84775642_checkifparentset-1960182.patch
-;projects[field][patch][] = ./patches/#84843756_string-offset-cast-1824820-2.patch
+;projects[shs][patch][] = "./patches/#84775642_checkifparentset-1960182.patch"
+;projects[field][patch][] = "./patches/#84843756_string-offset-cast-1824820-2.patch"

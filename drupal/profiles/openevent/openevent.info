@@ -3,7 +3,7 @@ description = Open Event distibution provided by Southbank Centre.
 core = 7.x
 version = "7.x-0.1"
 
-; Core
+; Core dependencies.
 dependencies[] = contextual
 dependencies[] = field
 dependencies[] = field_sql_storage
@@ -26,10 +26,10 @@ dependencies[] = text
 dependencies[] = toolbar
 dependencies[] = user
 
-; Contrib
+; Contrib depedencies.
 dependencies[] = ctools
 dependencies[] = date
-dependencies[] =  date_all_day
+dependencies[] = date_all_day
 dependencies[] = date_api
 dependencies[] = date_popup
 dependencies[] = features
@@ -61,5 +61,5 @@ dependencies[] = views_ui
 dependencies[] = migrate
 dependencies[] = migrate_ui
 
-; Files
+; File depedencies.
 files[] = openevent.profile
