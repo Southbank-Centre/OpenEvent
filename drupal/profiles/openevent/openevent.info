@@ -6,8 +6,6 @@ version = "7.x-0.1"
 ; Core dependencies.
 dependencies[] = contextual
 dependencies[] = field
-dependencies[] = field_sql_storage
-dependencies[] = field_ui
 dependencies[] = file
 dependencies[] = filter
 dependencies[] = help

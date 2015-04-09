@@ -1,35 +1,61 @@
 <?php
-
 $conf['master_version'] = 2;
-
 $conf['master_modules'] = array(
   'base' => array(
     // Core modules
-    //'block',
-    //'color',
-    //'comment',
     'contextual',
-    //'dashboard',
-    //'dblog',
     'file',
     'help',
     'image',
     'list',
     'menu',
+    'node',
     'number',
     'options',
-    //'overlay',
     'path',
-    //'rdf',
-    //'search',
     'shortcut',
     'syslog',
+    'system',
+    'taxonomy',
+    'text',
     'toolbar',
-    //'update',
-  ),
+    'user',
 
+    // Contributed modules
+    'ctools',
+    'date',
+    'date_all_day',
+    'date_api',
+    'date_popup',
+    'auto_entitylabel',
+    'better_formats',
+    'color_field',
+    'entity',
+    'entityreference',
+    'features',
+    'field_group',
+    'field_validation',
+    'filefield_sources',
+    'libraries',
+    'link',
+    'pathauto',
+    'restws',
+    'shs',
+    'strongarm',
+    'taxonomy_access_fix',
+    'token',
+    'transliteration',
+    'view_unpublished',
+    'views',
+    'views_data_export',
+    'migrate',
+
+  ),
   'dev' => array(
     'field_ui',
+    'field_validation_ui',
+    'views_ui',
+    'migrate_ui',
     'varnish',
   ),
   'staging' => array(
@@ -39,13 +65,10 @@ $conf['master_modules'] = array(
     'varnish',
   ),
 );
-
 $conf['master_uninstall_blacklist'] = array(
   'base' => array(),
   'dev' => array(),
   'staging' => array(),
   'live' => array(),
 );
-
 $conf['master_allow_base_scope'] = TRUE;
-
