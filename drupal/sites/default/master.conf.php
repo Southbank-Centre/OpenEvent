@@ -44,6 +44,7 @@ $conf['master_modules'] = array(
     'oe_event',
     'oe_shared_field_bases',
     'restws',
+    'strongarm',
     'table_element',
     'views',
     'views_ui', // Dev
