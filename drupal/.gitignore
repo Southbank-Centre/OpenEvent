@@ -2,13 +2,14 @@
 *
 
 # Ignores all files in subdirectories
-*/
+!*/
 
 # Exclude
 !.gitignore
 !*.make
-!profiles/openevent
-!profiles/openevent/**
+!profiles/openevent/*
+!profiles/openevent/patches/*
+!profiles/openevent/modules/**
 !sites/default/*conf.php
 !sites/default/settings*.php*
 
