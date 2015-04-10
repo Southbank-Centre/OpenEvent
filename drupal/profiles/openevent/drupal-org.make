@@ -46,7 +46,7 @@ projects[migrate][version] = 2.7
 projects[master][version] = 2.0-beta4
 projects[varnish][version] = 1.0-beta3
 projects[better_formats][version] = 1.0-beta1
-projects[paragraphs][version] = 1.0-beta5
+projects[paragraphs][version] = 1.0-beta6
 projects[views_data_export][version] = 3.0-beta8
 
 ; Defaults
