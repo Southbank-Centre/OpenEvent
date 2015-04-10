@@ -18,6 +18,11 @@ exports.config = {
   // Tests to run
   specs: ['**/*.js'],
 
+  suites: {
+    base: ['base/*.js'],
+    content_components: ['content-components/*.js']
+  },
+
   // Single Browser
   // capability: [
   //   browserName: 'chrome',
@@ -65,6 +70,11 @@ exports.config = {
         return /user/.test(url);
       });
     });
+
+    // Testing on Angular site or not
+    global.isAngularSite = function(flag){
+      browser.ignoreSynchronization = !flag;
+    };
   },
 
 };

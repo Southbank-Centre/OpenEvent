@@ -6,8 +6,7 @@
 describe('WOW CMS', function() {
 
   beforeEach(function(){
-    // don't wait for (non-existent) Angular to load
-    return browser.ignoreSynchronization = true;
+    isAngularSite(false);
   });
 
   it('has been logged into successfully', function(){
