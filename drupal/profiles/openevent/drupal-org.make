@@ -49,8 +49,8 @@ projects[varnish][version] = 1.0-beta3
 projects[better_formats][version] = 1.0-beta1
 projects[paragraphs][version] = 1.0-beta6
 projects[views_data_export][version] = 3.0-beta8
-projects[cer][version] = 7.x-3.0-alpha7
-projects[table_element][version] = 7.x-1.0-beta1
+projects[cer][version] = 3.0-alpha7
+projects[table_element][version] = 1.0-beta1
 
 ; Defaults
 defaults[projects][subdir] = contrib
