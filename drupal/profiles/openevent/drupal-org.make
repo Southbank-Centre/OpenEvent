@@ -13,7 +13,7 @@ api = 2
 ;   - 1.4 for a module with 1.4 version number
 ;   - 2.0-beta3 for a beta release
 ;   - 1.x-dev for a development version (be carefull as it results in different code each time
-;     it runs.
+;     it runs)
 ;
 ; Add patches with the following:
 ;   projects[ctools][patch][] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
@@ -43,6 +43,7 @@ projects[taxonomy_access_fix][version] = 2.1
 projects[views][version] = 3.10
 projects[migrate][version] = 2.7
 
+; Contrib modules with beta releases
 projects[master][version] = 2.0-beta4
 projects[varnish][version] = 1.0-beta3
 projects[better_formats][version] = 1.0-beta1
@@ -53,5 +54,18 @@ projects[views_data_export][version] = 3.0-beta8
 defaults[projects][subdir] = contrib
 
 ; Patches
-;projects[shs][patch][] = "./patches/#84775642_checkifparentset-1960182.patch"
-;projects[field][patch][] = "./patches/#84843756_string-offset-cast-1824820-2.patch"
+
+; The patch at http://www.drupal.org/files/checkifparentset-1960182.patch for shs module
+; when retrieved (via url) gives the following error:
+;   patch unexpectedly ends in middle of line                                                                                                                                     [notice]
+;   patch: **** Only garbage was found in the patch input.
+;   Unable to patch shs with checkifparentset-1960182.patch.
+;
+; The patch located at the profile directory will be applied.
+; For varnish module the patch is automatically retrieved for drupal.org servers.
+projects[shs][patch][] = "profiles/openevent/patches/#84775642_checkifparentset-1960182.patch"
+projects[varnish][patch][] = http://www.drupal.org/files/issues/varnish-2371907-24.patch
+
+; Patches no more relevant
+;projects[entity][patch][] = http://www.drupal.org/files/2013473_0.patch
+;projects[paragraphs][patch][] = "profiles/openevent/patches/#87714818_#87714922_f3a4504f7ca462e86f12f2501c83a3d753583fc3.patch"
