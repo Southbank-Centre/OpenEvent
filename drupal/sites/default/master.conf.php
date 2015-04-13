@@ -51,10 +51,11 @@ $conf['master_modules'] = array(
     'views_data_export',
     'table_element',
     'migrate',
+    'paragraphs',
 
     // OE related
       'oe_shared_field_bases',
-      'oe_component_list',
+      'oe_content_components',
       'oe_event',
 
   ),
