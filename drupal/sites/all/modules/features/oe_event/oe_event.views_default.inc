@@ -72,7 +72,7 @@ if (isset($args[6])) {
 if (isset($args[6])) {
   return $args[6];
 } else {
-  return true;
+  return false;
 }';
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
