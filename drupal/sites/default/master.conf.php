@@ -26,6 +26,30 @@ $conf['master_modules'] = array(
     'syslog',
     'toolbar',
     //'update',
+
+    // START: Migrate to OE profile
+    'better_formats',
+    'cer',
+    'ctools',
+    'date',
+    'date_all_day',
+    'date_popup',
+    'diff', // Dev
+    'entity',
+    'entityreference',
+    'features',
+    'features_diff', // Dev
+    'field_group',
+    'field_validation',
+    'field_validation_ui', // Dev
+    'oe_event',
+    'oe_shared_field_bases',
+    'restws',
+    'strongarm',
+    'table_element',
+    'views',
+    'views_ui', // Dev
+    // END: Migrate to OE profile
   ),
 
   'dev' => array(

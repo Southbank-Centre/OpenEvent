@@ -57,6 +57,7 @@ exports.config = {
   // function to run before the tests - logs the browser into the CMS
   onPrepare: function() {
     global.dvr = browser.driver;
+    global.frisby = require('frisby'); // include Frisby.js for JSON tests
 
     dvr.get(browser.params.url + '/user/login');
 

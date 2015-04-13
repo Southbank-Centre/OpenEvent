@@ -36,6 +36,9 @@ dependencies:
     - sudo service apache2 restart
     # protractor setup
     - npm install -g protractor@1.8.0
+    # frisby setup
+    - npm install -g frisby@0.8.5
+    - npm link frisby
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz

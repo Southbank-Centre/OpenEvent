@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_field_schema().
+ */
+function field_object_field_schema(array $field) {
+  return array(
+    'columns' => array(
+      'path' => array(
+        'type' => 'text',
+        'size' => 'tiny',
+        'description' => 'The path to the instance, represented as text.',
+      ),
+    ),
+  );
+}
