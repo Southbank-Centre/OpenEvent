@@ -32,6 +32,7 @@ $conf['master_modules'] = array(
     'cer',
     'ctools',
     'date',
+    'date_all_day',
     'date_popup',
     'diff', // Dev
     'entity',

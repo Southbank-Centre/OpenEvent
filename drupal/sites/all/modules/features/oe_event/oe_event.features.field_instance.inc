@@ -15,7 +15,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The full text information about the event.',
+    'description' => 'The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -84,7 +84,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18.',
+    'description' => 'The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -153,7 +153,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -245,7 +245,7 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_door_time'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The date and time that the venue can be accessed before the event starts.',
+    'description' => 'The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -282,6 +282,7 @@ function oe_event_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 0,
         'increment' => 5,
         'input_format' => 'd/m/Y - H:i:s',
         'input_format_custom' => '',
@@ -299,7 +300,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The duration of the event in minutes.',
+    'description' => 'The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -344,7 +345,7 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_end_time'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The end date and time for the event.',
+    'description' => 'The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -381,6 +382,7 @@ function oe_event_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 1,
         'increment' => 5,
         'input_format' => 'd/m/Y - H:i:s',
         'input_format_custom' => '',
@@ -398,7 +400,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Events that this event is a part of.',
+    'description' => 'Events that this event is a part of. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -449,7 +451,7 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_start_time'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The start date and time for the event.',
+    'description' => 'The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -486,6 +488,7 @@ function oe_event_field_default_field_instances() {
       'active' => 1,
       'module' => 'date',
       'settings' => array(
+        'display_all_day' => 1,
         'increment' => 5,
         'input_format' => 'd/m/Y - H:i:s',
         'input_format_custom' => '',
@@ -503,7 +506,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The event\'s types categorise its content.',
+    'description' => 'The event\'s types categorise its content. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -621,18 +624,19 @@ function oe_event_field_default_field_instances() {
   t('Door time');
   t('Duration');
   t('End date/time');
-  t('Events that this event is a part of.');
+  t('Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>');
+  t('Events that this event is a part of. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a>');
   t('Parents');
   t('Start date/time');
   t('Teaser');
-  t('The date and time that the venue can be accessed before the event starts.');
-  t('The duration of the event in minutes.');
-  t('The end date and time for the event.');
+  t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
+  t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
+  t('The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The event\'s class categorises its form.');
-  t('The event\'s types categorise its content.');
-  t('The full text information about the event.');
-  t('The start date and time for the event.');
-  t('The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18.');
+  t('The event\'s types categorise its content. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
+  t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
+  t('The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>');
+  t('The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
 
   return $field_instances;

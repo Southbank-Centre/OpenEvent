@@ -50,7 +50,7 @@ function oe_event_node_info() {
     'event' => array(
       'name' => t('Event'),
       'base' => 'node_content',
-      'description' => t('The Open Event content type.'),
+      'description' => t('The Open Event content type, designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
