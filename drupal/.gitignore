@@ -20,3 +20,4 @@ sites/*/private
 #
 sites/all/*
 sites/default/*.settings.php
+profiles/openevent/.DS_Store
