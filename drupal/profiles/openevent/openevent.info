@@ -1,0 +1,63 @@
+name = Open Event
+description = Open Event distibution provided by Southbank Centre.
+core = 7.x
+version = "7.x-0.1"
+
+; Core dependencies.
+dependencies[] = contextual
+dependencies[] = field
+dependencies[] = file
+dependencies[] = filter
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = node
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = shortcut
+dependencies[] = syslog
+dependencies[] = system
+dependencies[] = taxonomy
+dependencies[] = text
+dependencies[] = toolbar
+dependencies[] = user
+
+; Contrib depedencies.
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = date_all_day
+dependencies[] = date_api
+dependencies[] = date_popup
+dependencies[] = features
+dependencies[] = master
+dependencies[] = color_field
+dependencies[] = entityreference
+dependencies[] = field_group
+dependencies[] = field_validation
+dependencies[] = field_validation_ui
+dependencies[] = filefield_sources
+dependencies[] = link
+dependencies[] = auto_entitylabel
+dependencies[] = better_formats
+dependencies[] = diff
+dependencies[] = entity
+dependencies[] = libraries
+dependencies[] = pathauto
+dependencies[] = restws
+dependencies[] = shs
+dependencies[] = strongarm
+dependencies[] = token
+dependencies[] = transliteration
+dependencies[] = paragraphs
+dependencies[] = view_unpublished
+dependencies[] = taxonomy_access_fix
+dependencies[] = views
+dependencies[] = views_data_export
+dependencies[] = views_ui
+dependencies[] = migrate
+dependencies[] = migrate_ui
+
+; File depedencies.
+files[] = openevent.profile
