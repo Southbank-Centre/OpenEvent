@@ -21,7 +21,7 @@ api = 2
 ; Contrib modules
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
-projects[features][version] = 2.4
+projects[features][version] = 2.5
 projects[color_field][version] = 1.7
 projects[entityreference][version] = 1.1
 projects[field_group][version] = 1.4
