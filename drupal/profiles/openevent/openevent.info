@@ -5,6 +5,7 @@ version = "7.x-0.1"
 
 ; Core dependencies.
 dependencies[] = contextual
+dependencies[] = dblog
 dependencies[] = field
 dependencies[] = file
 dependencies[] = filter
@@ -25,10 +26,8 @@ dependencies[] = toolbar
 dependencies[] = user
 
 ; Contrib depedencies.
-dependencies[] = auto_entitylabel
 dependencies[] = better_formats
 dependencies[] = cer
-dependencies[] = color_field
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_all_day

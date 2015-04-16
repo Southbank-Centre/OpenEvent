@@ -19,8 +19,6 @@ api = 2
 ;   projects[ctools][patch][] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
 
 ; Contrib modules
-projects[auto_entitylabel][version] = 1.3
-projects[color_field][version] = 1.7
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[diff][version] = 3.2
@@ -44,7 +42,7 @@ projects[transliteration][version] = 3.2
 projects[view_unpublished][version] = 1.2
 projects[views][version] = 3.10
 
-; Contrib modules with beta releases
+; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
 projects[cer][version] = 3.0-alpha7
 projects[master][version] = 2.0-beta4
