@@ -56,18 +56,9 @@ projects[table_element][version] = 1.0-beta1
 defaults[projects][subdir] = contrib
 
 ; Patches
-
-; The patch at http://www.drupal.org/files/checkifparentset-1960182.patch for shs module
-; when retrieved (via url) gives the following error:
-;   patch unexpectedly ends in middle of line                                                                                                                                     [notice]
-;   patch: **** Only garbage was found in the patch input.
-;   Unable to patch shs with checkifparentset-1960182.patch.
-;
-; The patch located at the profile directory will be applied.
-; For varnish module the patch is automatically retrieved for drupal.org servers.
-projects[shs][patch][] = "profiles/openevent/patches/#84775642_checkifparentset-1960182.patch"
-projects[varnish][patch][] = http://www.drupal.org/files/issues/varnish-2371907-24.patch
+projects[shs][patch][1960182] = "http://www.drupal.org/files/issues/checkifparentset-1960182-08-D7.patch"
+projects[varnish][patch][2371907] = http://www.drupal.org/files/issues/varnish-2371907-24.patch
 
 ; Patches no more relevant
-;projects[entity][patch][] = http://www.drupal.org/files/2013473_0.patch
+;projects[entity][patch][2013473] = http://www.drupal.org/files/2013473_0.patch
 ;projects[paragraphs][patch][] = "profiles/openevent/patches/#87714818_#87714922_f3a4504f7ca462e86f12f2501c83a3d753583fc3.patch"
