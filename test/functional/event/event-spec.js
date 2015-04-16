@@ -6,7 +6,7 @@
 var url = require('url');
 var path = require('path');
 
-describe('The CMS', function() {
+describe('The Event features of the CMS', function() {
 
   var parentNid;
   var parentPathAlias;
