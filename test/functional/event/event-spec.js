@@ -1,6 +1,6 @@
 'use strict';
 /**
- * WOW Homepage Spec
+ * Event Spec
  */
 
 var url = require('url');
