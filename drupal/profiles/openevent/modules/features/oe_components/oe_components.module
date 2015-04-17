@@ -4,4 +4,4 @@
  * Code for the OE Content Components feature.
  */
 
-include_once 'oe_content_components.features.inc';
+include_once 'oe_components.features.inc';

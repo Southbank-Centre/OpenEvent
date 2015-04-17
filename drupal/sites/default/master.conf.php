@@ -2,7 +2,7 @@
 $conf['master_version'] = 2;
 $conf['master_modules'] = array(
   'base' => array(
-    // Core
+    // Core modules
     'contextual',
     'field',
     'file',
@@ -56,9 +56,8 @@ $conf['master_modules'] = array(
     'views_data_export',
 
     // Open Event
-    'oe_content_components',
+    'oe_components',
     'oe_event',
-    'oe_shared_field_bases',
   ),
   'dev' => array(
     'field_ui',

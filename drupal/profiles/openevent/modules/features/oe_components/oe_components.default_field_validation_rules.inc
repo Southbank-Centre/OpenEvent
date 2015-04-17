@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * oe_content_components.default_field_validation_rules.inc
+ * oe_components.default_field_validation_rules.inc
  */
 
 /**
  * Implements hook_default_field_validation_rule().
  */
-function oe_content_components_default_field_validation_rule() {
+function oe_components_default_field_validation_rule() {
   $export = array();
 
   $rule = new stdClass();

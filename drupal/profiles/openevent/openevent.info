@@ -61,10 +61,9 @@ dependencies[] = views
 dependencies[] = views_data_export
 dependencies[] = views_ui
 
-; Open Event depedencies
-dependencies[] = oe_content_components
+; Open Event dependencies
+dependencies[] = oe_components
 dependencies[] = oe_event
-dependencies[] = oe_shared_field_bases
 
 ; File depedencies.
 files[] = openevent.profile

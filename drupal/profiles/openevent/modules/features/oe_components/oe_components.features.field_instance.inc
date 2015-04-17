@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * oe_content_components.features.field_instance.inc
+ * oe_components.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function oe_content_components_field_default_field_instances() {
+function oe_components_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'paragraphs_item-flickr-field_caption'

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * oe_content_components.features.field_base.inc
+ * oe_components.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function oe_content_components_field_default_field_bases() {
+function oe_components_field_default_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'field_embed_code'
