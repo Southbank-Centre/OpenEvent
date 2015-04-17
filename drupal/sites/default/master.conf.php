@@ -2,9 +2,11 @@
 $conf['master_version'] = 2;
 $conf['master_modules'] = array(
   'base' => array(
-    // Core modules
+    // Core
     'contextual',
+    'field',
     'file',
+    'filter',
     'help',
     'image',
     'list',
@@ -14,23 +16,22 @@ $conf['master_modules'] = array(
     'options',
     'path',
     'shortcut',
-    'syslog',
     'system',
     'taxonomy',
     'text',
     'toolbar',
     'user',
+    'varnish',
 
-    // Contributed modules
-    'ctools',
+    // Contrib
+    'better_formats',
     'cer',
+    'ctools',
     'date',
     'date_all_day',
     'date_api',
     'date_popup',
-    'auto_entitylabel',
-    'better_formats',
-    'color_field',
+    'diff',
     'entity',
     'entityreference',
     'features',
@@ -39,38 +40,38 @@ $conf['master_modules'] = array(
     'filefield_sources',
     'libraries',
     'link',
+    'master',
+    'migrate',
+    'paragraphs',
     'pathauto',
     'restws',
     'shs',
     'strongarm',
+    'table_element',
     'taxonomy_access_fix',
     'token',
     'transliteration',
     'view_unpublished',
     'views',
     'views_data_export',
-    'table_element',
-    'migrate',
-    'paragraphs',
 
-    // OE related
-      'oe_shared_field_bases',
-      'oe_content_components',
-      'oe_event',
-
+    // OE
+    'oe_content_components',
+    'oe_event',
+    'oe_shared_field_bases',
   ),
   'dev' => array(
     'field_ui',
     'field_validation_ui',
     'views_ui',
     'migrate_ui',
-    'varnish',
+    'dblog',
   ),
   'staging' => array(
-    'varnish',
+    'syslog',
   ),
   'live' => array(
-    'varnish',
+    'syslog',
   ),
 );
 $conf['master_uninstall_blacklist'] = array(
