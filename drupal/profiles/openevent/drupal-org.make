@@ -4,7 +4,7 @@ api = 2
 
 ; Define required modules
 ;
-; To define a specific module version (eg ctool 1.4) and place it in a
+; To define a specific module version (eg ctools 1.4) and place it in a
 ; specific directory use the following notation:
 ;   projects[ctools][version] = 1.4
 ;   projects[ctools][subdir] = contrib
@@ -16,7 +16,15 @@ api = 2
 ;     it runs)
 ;
 ; Add patches with the following:
-;   projects[ctools][patch][] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
+;   projects[ctools][patch][1023606] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
+;
+; Patches applied
+; shs (1960182)
+;   SC bug 84775642 - Adds a check when updating parent terms. shs does not give warning anymore when
+;   terms are updated.
+;
+; varnish (2371907)
+;   SC bug 88440006 - The module gave undefined notices after installation in theme_varnish_status().
 
 ; Contrib modules
 projects[ctools][version] = 1.7
