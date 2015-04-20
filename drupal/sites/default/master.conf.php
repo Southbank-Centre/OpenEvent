@@ -55,7 +55,7 @@ $conf['master_modules'] = array(
     'views',
     'views_data_export',
 
-    // OE
+    // Open Event
     'oe_content_components',
     'oe_event',
     'oe_shared_field_bases',
