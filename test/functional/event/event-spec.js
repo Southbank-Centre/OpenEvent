@@ -101,7 +101,7 @@ describe('The CMS', function() {
       // check for the error message explaining that required fields haven't been populated
       expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
       expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following two formats: Either "5-" (no end range) or "11-18" (start and end range)');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
@@ -118,7 +118,6 @@ describe('The CMS', function() {
         dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
         // start date/time
-        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).click();
         dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
         dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
         dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
@@ -256,9 +255,9 @@ describe('The CMS', function() {
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
       // set the item to published
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
@@ -357,14 +356,20 @@ describe('The CMS', function() {
           }
         ],
         "field_event_children": [],
-        "field_event_date_teim"
-        "field_event_start_time": function(val) { 
-          expect(val.length).toEqual(10); 
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
+        "field_event_date_time": {
+          "value": function(val) { 
+            expect(val.length).toEqual(10); 
+            expect(isNaN(parseInt(val, 10))).toBe(false);
+          },
+          "value2": function(val) { 
+            expect(val.length).toEqual(10); 
+            expect(isNaN(parseInt(val, 10))).toBe(false);
+          },
+          "duration": function(val) { expect(typeof val).toEqual("number"); },
         },
         "field_event_door_time": function(val) {
           expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
+          expect(isNaN(parseInt(val, 10))).toBe(false);
         },
         "field_event_duration": "150",
         "cer": {
