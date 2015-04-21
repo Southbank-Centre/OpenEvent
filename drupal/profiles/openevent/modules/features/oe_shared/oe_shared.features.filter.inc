@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * oe_fields.features.filter.inc
+ * oe_shared.features.filter.inc
  */
 
 /**
  * Implements hook_filter_default_formats().
  */
-function oe_fields_filter_default_formats() {
+function oe_shared_filter_default_formats() {
   $formats = array();
 
   // Exported format: Filtered HTML.
@@ -16,7 +16,7 @@ function oe_fields_filter_default_formats() {
     'name' => 'Filtered HTML',
     'cache' => 1,
     'status' => 1,
-    'weight' => 0,
+    'weight' => -10,
     'filters' => array(
       'filter_url' => array(
         'weight' => 0,
@@ -53,7 +53,7 @@ function oe_fields_filter_default_formats() {
     'name' => 'Full HTML',
     'cache' => 1,
     'status' => 1,
-    'weight' => 1,
+    'weight' => -9,
     'filters' => array(
       'filter_url' => array(
         'weight' => 0,
@@ -81,7 +81,7 @@ function oe_fields_filter_default_formats() {
     'name' => 'Iframe HTML',
     'cache' => 1,
     'status' => 1,
-    'weight' => 0,
+    'weight' => -8,
     'filters' => array(
       'filter_html' => array(
         'weight' => -10,
@@ -106,7 +106,7 @@ function oe_fields_filter_default_formats() {
     'name' => 'Plain text',
     'cache' => 1,
     'status' => 1,
-    'weight' => 10,
+    'weight' => -7,
     'filters' => array(
       'filter_html_escape' => array(
         'weight' => 0,
