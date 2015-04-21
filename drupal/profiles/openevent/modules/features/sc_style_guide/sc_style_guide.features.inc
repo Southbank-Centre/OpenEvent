@@ -33,3 +33,17 @@ function sc_style_guide_node_info() {
   drupal_alter('node_info', $items);
   return $items;
 }
+
+/**
+ * Implements hook_paragraphs_info().
+ */
+function sc_style_guide_paragraphs_info() {
+  $items = array(
+    'page_element_spec' => array(
+      'name' => 'Page element spec',
+      'bundle' => 'page_element_spec',
+      'locked' => '1',
+    ),
+  );
+  return $items;
+}

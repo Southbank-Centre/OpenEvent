@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Code for the SC Style guide feature.
+ * Code for the SC Style Guide feature.
  */
 
 include_once 'sc_style_guide.features.inc';

@@ -14,11 +14,11 @@ function sc_style_guide_menu_default_menu_custom() {
   $menus['menu-style-guide'] = array(
     'menu_name' => 'menu-style-guide',
     'title' => 'Style guide',
-    'description' => 'Defines the structure of the Style guide menu. You can add section headings to the menu by setting the link for a menu item to <firstchild>, then adding Style guide pages as children of that item.',
+    'description' => 'A menu for managing the ordering of style guide chapters',
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('Defines the structure of the Style guide menu. You can add section headings to the menu by setting the link for a menu item to <firstchild>, then adding Style guide pages as children of that item.');
+  t('A menu for managing the ordering of style guide chapters');
   t('Style guide');
 
 

@@ -15,8 +15,7 @@ function sc_style_guide_user_default_permissions() {
     'name' => 'access content',
     'roles' => array(
       'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
+      'designer' => 'designer',
     ),
     'module' => 'node',
   );
@@ -46,6 +45,7 @@ function sc_style_guide_user_default_permissions() {
     'name' => 'administer menu',
     'roles' => array(
       'administrator' => 'administrator',
+      'designer' => 'designer',
     ),
     'module' => 'menu',
   );
@@ -68,6 +68,16 @@ function sc_style_guide_user_default_permissions() {
       'designer' => 'designer',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: 'create url aliases'.
+  $permissions['create url aliases'] = array(
+    'name' => 'create url aliases',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'path',
   );
 
   // Exported permission: 'delete any style_guide_page content'.
