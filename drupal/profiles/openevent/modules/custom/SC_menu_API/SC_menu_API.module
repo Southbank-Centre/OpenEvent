@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * Implement hook_menu()
+ */
+function SC_menu_API_menu() {
+  $items['api/menu/%'] = array(
+    'page callback' => '_SC_menu_API_endpoint_callback',
+    'delivery callback' => 'drupal_json_output',
+    'page arguments' => array(2),
+    'access callback' => TRUE,
+    'title' => 'Menu API'
+  );
+  return $items;
+}
+
+function _SC_menu_API_endpoint_callback($menu_machine_name) {
+
+  $menu_links = menu_load_links($menu_machine_name);
+  print json_encode($menu_links);
+
+}
