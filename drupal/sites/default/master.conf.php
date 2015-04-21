@@ -42,6 +42,7 @@ $conf['master_modules'] = array(
     'libraries',
     'link',
     'master',
+    'menu_firstchild',
     'migrate',
     'menu_firstchild',
     'paragraphs',
