@@ -33,6 +33,11 @@ function oe_components_paragraphs_info() {
       'bundle' => 'html',
       'locked' => '1',
     ),
+    'image' => array(
+      'name' => 'Image',
+      'bundle' => 'image',
+      'locked' => '1',
+    ),
     'link' => array(
       'name' => 'Link',
       'bundle' => 'link',
