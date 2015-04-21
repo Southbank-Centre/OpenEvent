@@ -15,7 +15,7 @@ function sc_style_guide_field_default_field_instances() {
     'bundle' => 'style_guide_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The blocks of components that make up the content of this page.',
+    'description' => 'The blocks of components that make up the content of this page. To create an anchor link at the top of a style guide page, create a <strong>Heading</strong> paragraph with a <em>Heading level</em> set to <em>Heading 2</em>.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -300,7 +300,7 @@ function sc_style_guide_field_default_field_instances() {
   t('Description');
   t('HTML');
   t('The HTML that constitutes the page element. The content of this field may also be used to generate a preview of the element on the page.');
-  t('The blocks of components that make up the content of this page.');
+  t('The blocks of components that make up the content of this page. To create an anchor link at the top of a style guide page, create a <strong>Heading</strong> paragraph with a <em>Heading level</em> set to <em>Heading 2</em>.');
 
   return $field_instances;
 }

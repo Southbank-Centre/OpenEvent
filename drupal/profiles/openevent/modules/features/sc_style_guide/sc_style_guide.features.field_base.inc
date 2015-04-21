@@ -10,21 +10,6 @@
 function sc_style_guide_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_components'
-  $field_bases['field_components'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_components',
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'paragraphs',
-    'settings' => array(),
-    'translatable' => 0,
-    'type' => 'paragraphs',
-  );
-
   // Exported field_base: 'field_css_properties'
   $field_bases['field_css_properties'] = array(
     'active' => 1,
