@@ -18,7 +18,7 @@ function oe_components_default_field_validation_rule() {
   $rule->field_name = 'field_embed_code';
   $rule->col = 'value';
   $rule->entity_type = 'paragraphs_item';
-  $rule->bundle = 'flickr';
+  $rule->bundle = 'flickr_embed';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
     'data' => '(^<iframe).*(src=".*www\\.flickr\\.com).*(<\\/iframe>$)',
@@ -41,7 +41,7 @@ function oe_components_default_field_validation_rule() {
   $rule->field_name = 'field_embed_code';
   $rule->col = 'value';
   $rule->entity_type = 'paragraphs_item';
-  $rule->bundle = 'soundcloud';
+  $rule->bundle = 'soundcloud_embed';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
     'data' => '(^<iframe).*(src=".*w\\.soundcloud\\.com).*(<\\/iframe>$)',
@@ -64,7 +64,7 @@ function oe_components_default_field_validation_rule() {
   $rule->field_name = 'field_embed_code';
   $rule->col = 'value';
   $rule->entity_type = 'paragraphs_item';
-  $rule->bundle = 'storify';
+  $rule->bundle = 'storify_embed';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
     'data' => '(^<iframe).*(src=".*storify\\.com).*(<\\/iframe>$)',
@@ -87,7 +87,7 @@ function oe_components_default_field_validation_rule() {
   $rule->field_name = 'field_embed_code';
   $rule->col = 'value';
   $rule->entity_type = 'paragraphs_item';
-  $rule->bundle = 'youtube';
+  $rule->bundle = 'youtube_embed';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
     'data' => '(^<iframe).*(src=".*www\\.youtube\\.com).*(<\\/iframe>$)',

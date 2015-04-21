@@ -10,9 +10,9 @@
 function oe_components_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'paragraphs_item-flickr-field_caption'
-  $field_instances['paragraphs_item-flickr-field_caption'] = array(
-    'bundle' => 'flickr',
+  // Exported field_instance: 'paragraphs_item-flickr_embed-field_caption'
+  $field_instances['paragraphs_item-flickr_embed-field_caption'] = array(
+    'bundle' => 'flickr_embed',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -38,10 +38,9 @@ function oe_components_field_default_field_instances() {
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(
-          'filtered_html' => 0,
+          'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 'limited_html',
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -55,9 +54,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -80,12 +76,12 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-flickr-field_embed_code'
-  $field_instances['paragraphs_item-flickr-field_embed_code'] = array(
-    'bundle' => 'flickr',
+  // Exported field_instance: 'paragraphs_item-flickr_embed-field_embed_code'
+  $field_instances['paragraphs_item-flickr_embed-field_embed_code'] = array(
+    'bundle' => 'flickr_embed',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Add a Flickr embed iframe. More information <a href="https://help.yahoo.com/kb/flickr/share-flickr-photos-websites-sln7319.html" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -111,7 +107,6 @@ function oe_components_field_default_field_instances() {
           'filtered_html' => 0,
           'full_html' => 0,
           'iframe_html' => 'iframe_html',
-          'limited_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -125,9 +120,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -538,7 +530,7 @@ function oe_components_field_default_field_instances() {
     'bundle' => 'link',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter an optional Title and the <strong>full</strong> website URL - eg http://www.southbankcentre.org',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -595,7 +587,7 @@ function oe_components_field_default_field_instances() {
     'bundle' => 'long_text',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Enter paragraphs of text here. Note note that disallowed HTML tags will be stripped out. If pasting text in from another source remove invalid markup first.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -621,7 +613,6 @@ function oe_components_field_default_field_instances() {
           'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -635,9 +626,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -800,9 +788,9 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-soundcloud-field_caption'
-  $field_instances['paragraphs_item-soundcloud-field_caption'] = array(
-    'bundle' => 'soundcloud',
+  // Exported field_instance: 'paragraphs_item-soundcloud_embed-field_caption'
+  $field_instances['paragraphs_item-soundcloud_embed-field_caption'] = array(
+    'bundle' => 'soundcloud_embed',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -828,10 +816,9 @@ function oe_components_field_default_field_instances() {
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(
-          'filtered_html' => 0,
+          'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 'limited_html',
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -845,9 +832,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -870,12 +854,13 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-soundcloud-field_embed_code'
-  $field_instances['paragraphs_item-soundcloud-field_embed_code'] = array(
-    'bundle' => 'soundcloud',
+  // Exported field_instance:
+  // 'paragraphs_item-soundcloud_embed-field_embed_code'
+  $field_instances['paragraphs_item-soundcloud_embed-field_embed_code'] = array(
+    'bundle' => 'soundcloud_embed',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Add a SoundCloud embed iframe. More information <a href="http://help.soundcloud.com/customer/portal/articles/1209780-how-to-add-soundcloud-to-your-website" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -901,7 +886,6 @@ function oe_components_field_default_field_instances() {
           'filtered_html' => 0,
           'full_html' => 0,
           'iframe_html' => 'iframe_html',
-          'limited_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -915,9 +899,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -940,9 +921,9 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-storify-field_caption'
-  $field_instances['paragraphs_item-storify-field_caption'] = array(
-    'bundle' => 'storify',
+  // Exported field_instance: 'paragraphs_item-storify_embed-field_caption'
+  $field_instances['paragraphs_item-storify_embed-field_caption'] = array(
+    'bundle' => 'storify_embed',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -968,10 +949,9 @@ function oe_components_field_default_field_instances() {
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(
-          'filtered_html' => 0,
+          'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 'limited_html',
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -985,9 +965,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -1010,12 +987,12 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-storify-field_embed_code'
-  $field_instances['paragraphs_item-storify-field_embed_code'] = array(
-    'bundle' => 'storify',
+  // Exported field_instance: 'paragraphs_item-storify_embed-field_embed_code'
+  $field_instances['paragraphs_item-storify_embed-field_embed_code'] = array(
+    'bundle' => 'storify_embed',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <div>, <script> and <noscript> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1041,7 +1018,6 @@ function oe_components_field_default_field_instances() {
           'filtered_html' => 0,
           'full_html' => 0,
           'iframe_html' => 'iframe_html',
-          'limited_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -1055,9 +1031,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -1080,9 +1053,9 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-youtube-field_caption'
-  $field_instances['paragraphs_item-youtube-field_caption'] = array(
-    'bundle' => 'youtube',
+  // Exported field_instance: 'paragraphs_item-youtube_embed-field_caption'
+  $field_instances['paragraphs_item-youtube_embed-field_caption'] = array(
+    'bundle' => 'youtube_embed',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -1108,10 +1081,9 @@ function oe_components_field_default_field_instances() {
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(
-          'filtered_html' => 0,
+          'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 'limited_html',
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -1125,9 +1097,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -1150,12 +1119,12 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-youtube-field_embed_code'
-  $field_instances['paragraphs_item-youtube-field_embed_code'] = array(
-    'bundle' => 'youtube',
+  // Exported field_instance: 'paragraphs_item-youtube_embed-field_embed_code'
+  $field_instances['paragraphs_item-youtube_embed-field_embed_code'] = array(
+    'bundle' => 'youtube_embed',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Add a YouTube embed iframe. More information <a href="https://support.google.com/youtube/answer/171780?hl=en-GB" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1181,7 +1150,6 @@ function oe_components_field_default_field_instances() {
           'filtered_html' => 0,
           'full_html' => 0,
           'iframe_html' => 'iframe_html',
-          'limited_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -1195,9 +1163,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -1222,7 +1187,13 @@ function oe_components_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add a Flickr embed iframe. More information <a href="https://help.yahoo.com/kb/flickr/share-flickr-photos-websites-sln7319.html" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
+  t('Add a SoundCloud embed iframe. More information <a href="http://help.soundcloud.com/customer/portal/articles/1209780-how-to-add-soundcloud-to-your-website" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
+  t('Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <div>, <script> and <noscript> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
+  t('Add a YouTube embed iframe. More information <a href="https://support.google.com/youtube/answer/171780?hl=en-GB" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
   t('Caption');
+  t('Enter an optional Title and the <strong>full</strong> website URL - eg http://www.southbankcentre.org');
+  t('Enter paragraphs of text here. Note note that disallowed HTML tags will be stripped out. If pasting text in from another source remove invalid markup first.');
   t('Flickr embed code');
   t('HTML');
   t('Heading');

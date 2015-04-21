@@ -18,9 +18,9 @@ function oe_components_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function oe_components_paragraphs_info() {
   $items = array(
-    'flickr' => array(
-      'name' => 'Flickr',
-      'bundle' => 'flickr',
+    'flickr_embed' => array(
+      'name' => 'Flickr embed',
+      'bundle' => 'flickr_embed',
       'locked' => '1',
     ),
     'heading' => array(
@@ -53,19 +53,19 @@ function oe_components_paragraphs_info() {
       'bundle' => 'quote',
       'locked' => '1',
     ),
-    'soundcloud' => array(
-      'name' => 'SoundCloud',
-      'bundle' => 'soundcloud',
+    'soundcloud_embed' => array(
+      'name' => 'SoundCloud embed',
+      'bundle' => 'soundcloud_embed',
       'locked' => '1',
     ),
-    'storify' => array(
-      'name' => 'Storify',
-      'bundle' => 'storify',
+    'storify_embed' => array(
+      'name' => 'Storify embed',
+      'bundle' => 'storify_embed',
       'locked' => '1',
     ),
-    'youtube' => array(
-      'name' => 'YouTube',
-      'bundle' => 'youtube',
+    'youtube_embed' => array(
+      'name' => 'YouTube embed',
+      'bundle' => 'youtube_embed',
       'locked' => '1',
     ),
   );
