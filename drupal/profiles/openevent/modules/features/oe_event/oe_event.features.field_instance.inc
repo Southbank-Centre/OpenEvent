@@ -84,7 +84,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>',
+    'description' => 'The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -116,6 +116,8 @@ function oe_event_field_default_field_instances() {
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
+          'iframe_html' => 0,
+          'limited_html' => 0,
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -127,6 +129,12 @@ function oe_event_field_default_field_instances() {
             ),
             'full_html' => array(
               'weight' => 1,
+            ),
+            'iframe_html' => array(
+              'weight' => 0,
+            ),
+            'limited_html' => array(
+              'weight' => 0,
             ),
             'plain_text' => array(
               'weight' => 10,
@@ -588,7 +596,7 @@ function oe_event_field_default_field_instances() {
   t('The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
   t('The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
-  t('The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
+  t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
 
   return $field_instances;

@@ -21,16 +21,17 @@ function oe_event_default_field_validation_rule() {
   $rule->bundle = 'event';
   $rule->validator = 'field_validation_regex_validator';
   $rule->settings = array(
-    'data' => '(\\d+)-(\\d+)?',
+    'data' => '(^(\\d+)$)|(^(\\d+)-(\\d+)$)|(^(\\d+\\+)$)',
     'bypass' => 0,
     'roles' => array(
       1 => 0,
       2 => 0,
       3 => 0,
+      4 => 0,
     ),
     'errors' => 0,
   );
-  $rule->error_message = 'An age range should be one of the following two formats: Either "5-" (no end range) or "11-18" (start and end range)';
+  $rule->error_message = 'An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).';
   $export['age_range'] = $rule;
 
   return $export;
