@@ -32,6 +32,7 @@ $conf['master_modules'] = array(
     'date_api',
     'date_popup',
     'diff',
+    'double_field',
     'entity',
     'entityreference',
     'features',
@@ -42,6 +43,7 @@ $conf['master_modules'] = array(
     'link',
     'master',
     'migrate',
+    'menu_firstchild',
     'paragraphs',
     'pathauto',
     'restws',
@@ -58,6 +60,10 @@ $conf['master_modules'] = array(
     // Open Event
     'oe_components',
     'oe_event',
+
+    // Southbank Centre features
+    'sc_style_guide',
+
   ),
   'dev' => array(
     'field_ui',
