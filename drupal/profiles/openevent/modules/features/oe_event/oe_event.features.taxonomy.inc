@@ -12,7 +12,7 @@ function oe_event_taxonomy_default_vocabularies() {
     'event_class' => array(
       'name' => 'Event class',
       'machine_name' => 'event_class',
-      'description' => 'An event class is a term assigned to an event to categorise its form, e.g. Festival, Series, Performance, etc.',
+      'description' => 'Event classes categorise what form events will take, and help data consuming applications determine how to represent events.',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
@@ -20,7 +20,7 @@ function oe_event_taxonomy_default_vocabularies() {
     'event_type' => array(
       'name' => 'Event type',
       'machine_name' => 'event_type',
-      'description' => 'Event types are terms assigned to an event to categorise its content, e.g. Classical, Dance, Comedy, etc.',
+      'description' => 'Event types are terms assigned to events to categorise their content so that users know what to expect if they were to attend.',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,

@@ -202,7 +202,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The event\'s class categorises its form.',
+    'description' => 'The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -400,7 +400,11 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Events that this event is a part of. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a>',
+    'description' => '<p>This field allows you to determine which events this event is grouped within.</p>
+<p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
+<p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
+<p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
+<p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -452,7 +456,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The event\'s types categorise its content. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>',
+    'description' => 'The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -562,6 +566,11 @@ function oe_event_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('<p>This field allows you to determine which events this event is grouped within.</p>
+<p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
+<p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
+<p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
+<p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
   t('A short piece of text designed to give the visitor a feel for the event.');
   t('Age range');
   t('Children');
@@ -571,13 +580,12 @@ function oe_event_field_default_field_instances() {
   t('Door time');
   t('Duration');
   t('Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>');
-  t('Events that this event is a part of. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a>');
   t('Parents');
   t('Teaser');
   t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
-  t('The event\'s class categorises its form.');
-  t('The event\'s types categorise its content. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
+  t('The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.');
+  t('The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
   t('The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The suggested or required age range for an event. Should be specificed as a range, with or without an end range. For example, <i>5-</i> specifies ages 5 and above; <i>11-18</i> specifies ages 11 to 18. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
