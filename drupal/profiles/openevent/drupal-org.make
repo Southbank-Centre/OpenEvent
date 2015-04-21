@@ -12,19 +12,11 @@ api = 2
 ; Versions can be:
 ;   - 1.4 for a module with 1.4 version number
 ;   - 2.0-beta3 for a beta release
-;   - 1.x-dev for a development version (be carefull as it results in different code each time
+;   - 1.x-dev for a development version (be careful as it results in different code each time
 ;     it runs)
 ;
 ; Add patches with the following:
 ;   projects[ctools][patch][1023606] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
-;
-; Patches applied
-; shs (1960182)
-;   SC bug 84775642 - Adds a check when updating parent terms. shs does not give warning anymore when
-;   terms are updated.
-;
-; varnish (2371907)
-;   SC bug 88440006 - The module gave undefined notices after installation in theme_varnish_status().
 
 ; Contrib modules
 projects[ctools][version] = 1.7
@@ -42,6 +34,7 @@ projects[migrate][version] = 2.7
 projects[pathauto][version] = 1.2
 projects[restws][version] = 2.3
 projects[shs][version] = 1.6
+; Adds a check when updating parent terms. shs does not give warning any more when terms are updated.
 projects[shs][patch][1960182] = "http://www.drupal.org/files/issues/checkifparentset-1960182-08-D7.patch"
 projects[strongarm][version] = 2.0
 projects[taxonomy_access_fix][version] = 2.1
@@ -57,7 +50,8 @@ projects[master][version] = 2.0-beta4
 projects[paragraphs][version] = 1.0-beta6
 projects[table_element][version] = 1.0-beta1
 projects[varnish][version] = 1.0-beta3
-projects[varnish][patch][2371907] = http://www.drupal.org/files/issues/varnish-2371907-24.patch
+; The module gave undefined notices after installation in theme_varnish_status().
+projects[varnish][patch][2371907] = "http://www.drupal.org/files/issues/varnish-2371907-24.patch"
 projects[views_data_export][version] = 3.0-beta8
 
 ; Defaults
