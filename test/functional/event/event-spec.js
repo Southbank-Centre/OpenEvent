@@ -87,7 +87,7 @@ describe('The CMS', function() {
 
     // add a bad age range
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('10');
+    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
 
     // add bad duration
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -102,7 +102,7 @@ describe('The CMS', function() {
       expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
       expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following two formats: Either "5-" (no end range) or "11-18" (start and end range)');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
@@ -166,7 +166,7 @@ describe('The CMS', function() {
     dvr.findElement(by.id('edit-title')).sendKeys('Protractor event page');
     dvr.findElement(by.id('edit-field-teaser-und-0-value')).sendKeys('Here is some content in the teaser field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     dvr.findElement(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4-');
+    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
     expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
     dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
     expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
@@ -321,7 +321,7 @@ describe('The CMS', function() {
           "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
         },
-        "field_event_age_range": "4-",
+        "field_event_age_range": "4+",
         "field_event_class": {
           "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
           "id": function(val) {
