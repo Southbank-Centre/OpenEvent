@@ -3,7 +3,13 @@
  * Style guide Spec
  */
 
+var url = require('url');
+var path = require('path');
+
 describe('The Style Guide features of the CMS', function() {
+
+  var nid;
+  var pathAlias;
 
   beforeEach(function(){
     // don't wait for (non-existent) Angular to load
@@ -23,6 +29,26 @@ describe('The Style Guide features of the CMS', function() {
 
     // test successful save
     expect(element(by.id('console')).getText()).toContain('Created a new user account for Elliot Hunter.');
+
+  });
+
+  it('can allow content to be viewed by anyone', function() {
+    browser.get(browser.params.url + '/admin/people/permissions');
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+
+    // Allow published content to be viewed by anyone
+    dvr.findElement(by.id('edit-1-access-content')).click();
+    dvr.findElement(by.id('edit-2-access-content')).click();
+
+    // Allow node API endpoints to be viewed by anyone
+    dvr.findElement(by.id('edit-1-access-resource-node')).click();
+    dvr.findElement(by.id('edit-2-access-resource-node')).click();
+
+    // Allow paragraphs_item API endpoints to be viewed by anyone
+    dvr.findElement(by.id('edit-1-access-resource-paragraphs-item')).click();
+    dvr.findElement(by.id('edit-2-access-resource-paragraphs-item')).click();
+
+    dvr.findElement(by.id('edit-submit')).click();
 
   });
 
@@ -118,10 +144,31 @@ describe('The Style Guide features of the CMS', function() {
       element(by.cssContainingText('ul.vertical-tabs-list > li > a', 'Publishing options')).click();
       dvr.findElement(by.id('edit-status')).click();
 
+      // add to style guide menu
+      element(by.cssContainingText('ul.vertical-tabs-list > li > a', 'Menu settings')).click();
+      element(by.id('edit-menu-enabled')).click();
+
       // save
       element(by.id('edit-submit')).click();
 
-      expect(element(by.id('messages')).getText()).toContain('Style guide page Typography has been created.');
+      expect(element(by.id('console')).getText()).toContain('Style guide page Typography has been created.');
+
+      // go back to edit page
+      element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+      element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+
+        pathAlias = alias;
+
+        // store node ID of event just created
+        dvr.getCurrentUrl().then(function(currentUrl) {
+          var currentUrlObj = url.parse(currentUrl);
+          var currentUrlPath = currentUrlObj.pathname.split(path.sep);
+          nid = currentUrlPath[currentUrlPath.length-2];
+        });
+
+      });
+
     });
 
   });
@@ -137,7 +184,7 @@ describe('The Style Guide features of the CMS', function() {
     // save
     element(by.id('edit-submit')).click();
 
-    expect(element(by.id('messages')).getText()).toContain('Style guide page Editable has been created.');
+    expect(element(by.id('console')).getText()).toContain('Style guide page Editable has been created.');
 
     // edit
     element(by.cssContainingText('.tabs.primary > li > a', 'Edit')).click();
@@ -146,7 +193,7 @@ describe('The Style Guide features of the CMS', function() {
     // save
     element(by.id('edit-submit')).click();
 
-    expect(element(by.id('messages')).getText()).toContain('Style guide page Editable edited has been updated.');
+    expect(element(by.id('console')).getText()).toContain('Style guide page Editable edited has been updated.');
 
   });
 
@@ -159,58 +206,194 @@ describe('The Style Guide features of the CMS', function() {
     element(by.id('edit-delete')).click();
     element(by.id('edit-submit')).click();
 
-    expect(element(by.id('messages')).getText()).toContain('Style guide page Editable edited has been deleted.');
+    expect(element(by.id('console')).getText()).toContain('Style guide page Editable edited has been deleted.');
   });
 
-  it('can create a piece of Style Guide Chapter content as designer', function() {
+  it('outputs Style Guide Page node JSON and Page Element Spec paragraph item JSON in the expected format', function () {
 
-    browser.get(browser.params.url + '/node/add/style-guide-chapter');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Style guide chapter');
-    
-  });
+    frisby.create('Get JSON for Style Guide Page created in previous test')
+      .get(browser.params.url + '/node.json?nid=' + nid)
+      .expectStatus(200)
+      .expectHeaderContains('content-type', 'application/json')
+      .expectJSON('list.0', {
+        "field_components": [
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/paragraphs_item/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "paragraphs_item"
+          },
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/paragraphs_item/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "paragraphs_item"
+          },
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/paragraphs_item/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "paragraphs_item"
+          },
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/paragraphs_item/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "paragraphs_item"
+          }
+        ],
+        "cer": {
+          "lineage": "node:style_guide_page:",
+          "depth": 0,
+          "owner": {
+            "uri": browser.params.url + "/node/" + nid,
+            "id": nid,
+            "resource": "node"
+          },
+          "original": {
+            "uri": browser.params.url + "/node/" + nid,
+            "id": nid,
+            "resource": "node"
+          }
+        },
+        "nid": nid,
+        "vid": nid,
+        "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
+        "type": "style_guide_page",
+        "title": "Typography",
+        "language": "und",
+        "url": browser.params.url + '/' + pathAlias,
+        "edit_url": browser.params.url + "/node/" + nid + "/edit",
+        "status": "1",
+        "promote": "0",
+        "sticky": "0",
+        "created": function(val) {
+          expect(val.length).toEqual(10);
+          expect(isNaN(parseInt(val, 10))).toBe(false); 
+        },
+        "changed": function(val) {
+          expect(val.length).toEqual(10);
+          expect(isNaN(parseInt(val, 10))).toBe(false);
+        },
+        "body": {
+          "value": "",
+          "summary": "",
+          "format": null
+        }
+      }).afterJSON(function(styleGuidePage) {
 
-  it('can edit a piece of Style Guide Chapter content as designer', function() {
-    
-  });
+        // id of Page Element Spec paragraph item
+        var itemId = styleGuidePage.list[0].field_components[3].id;
 
-  it('can delete a piece of Style Guide Chapter content as designer', function() {
-    
-  });
+        // get Page Element Spec paragraph item JSON
+        frisby.create('Get JSON for Page Element Spec created in Style Guide Page previous test')
+          .get(browser.params.url + '/paragraphs_item.json?item_id=' + itemId)
+          .expectStatus(200)
+          .expectHeaderContains('content-type', 'application/json')
+          .expectJSON('list.0', {
+            "field_description": {
+              "value": "<p>There should only ever be one page title.</p>\n",
+              "format": "filtered_html"
+            },
+            "field_html": {
+              "value": "<h1>Page title</h1>\n",
+              "format": "full_html"
+            },
+            "field_css_properties": [
+              {
+                "first": "font-family",
+                "second": "SC Akkurat"
+              },
+              {
+                "first": "font-size",
+                "second": "Mobile: 40px/40px; Desktop: 60px/60px"
+              },
+              {
+                "first": "text-spacing",
+                "second": "- 0.2"
+              }
+            ],
+            "cer": {
+              "lineage": "paragraphs_item:page_element_spec:",
+              "depth": 0,
+              "owner": {
+                "uri": browser.params.url + "/paragraphs_item/" + itemId,
+                "id": itemId,
+                "resource": "paragraphs_item"
+              },
+              "original": {
+                "uri": browser.params.url + "/paragraphs_item/" + itemId,
+                "id": itemId,
+                "resource": "paragraphs_item"
+              }
+            },
+            "item_id": itemId,
+            "revision_id": itemId,
+            "bundle": "page_element_spec",
+            "field_name": "field_components",
+            "archived": "0",
+            "url": browser.params.url + "/"
+          })
+          .after(CleanUp)
+          .toss();
 
-  it('outputs Style Guide Page node JSON in the expected format', function () {
+      })
+      .toss();
 
-  });
+      function CleanUp() {
 
-  it('outputs Style Guide Chapter node JSON in the expected format', function () {
+        describe('Clean up', function() {
 
-  });
+          it('can revert changes made in this spec', function () {
+            // designer logout
+            browser.get(browser.params.url + '/user/logout');
 
-  it('can revert changes made in this spec', function () {
-    // designer logout
-    browser.get(browser.params.url + '/user/logout');
-    dvr.get(browser.params.url + '/user/login');
+            // log in as admin
+            dvr.get(browser.params.url + '/user/login');
+            dvr.findElement(by.id('edit-name')).sendKeys('admin');
+            dvr.findElement(by.id('edit-pass')).sendKeys('admin');
+            dvr.findElement(by.id('edit-submit')).click();
+            dvr.wait(function() {
+              return dvr.getCurrentUrl().then(function(url) {
+                return /user/.test(url);
+              });
+            });
+          
+            // remove designer and their content
+            browser.get(browser.params.url + '/admin/people');
+            element(by.cssContainingText('#user-admin-account > div > table:nth-of-type(2) td > a', 'Elliot Hunter')).click();
+            element(by.cssContainingText('.tabs.primary > li > a', 'Edit')).click();
+            element(by.id('edit-cancel')).click();
+            element(by.css('#edit-user-cancel-method > .form-item-user-cancel-method:nth-of-type(4) > input')).click();
+            element(by.id('edit-submit')).click();
+            browser.wait(function() {
+              return browser.isElementPresent(by.id('console'));
+            }, 5000);
+            expect(element(by.id('console')).getText()).toContain('Elliot Hunter has been deleted.');
 
-    // log in as admin
-    dvr.findElement(by.id('edit-name')).sendKeys('admin');
-    dvr.findElement(by.id('edit-pass')).sendKeys('admin');
-    dvr.findElement(by.id('edit-submit')).click();
-    dvr.wait(function() {
-      return dvr.getCurrentUrl().then(function(url) {
-        return /user/.test(url);
-      });
-    });
-  
-    // remove designer
-    browser.get(browser.params.url + '/admin/people');
-    element(by.cssContainingText('#user-admin-account > div > table:nth-of-type(2) td > a', 'Elliot Hunter')).click();
-    element(by.cssContainingText('.tabs.primary > li > a', 'Edit')).click();
-    element(by.id('edit-cancel')).click();
-    element(by.css('#edit-user-cancel-method > .form-item-user-cancel-method:nth-of-type(4) > input')).click();
-    element(by.id('edit-submit')).click();
-    browser.wait(function() {
-      return browser.isElementPresent(by.id('console'));
-    }, 5000);
-    expect(element(by.id('console')).getText()).toContain('Elliot Hunter has been deleted.');
+            // reset permissions
+            browser.get(browser.params.url + '/admin/people/permissions');
+            dvr.findElement(by.id('edit-1-access-content')).click();
+            dvr.findElement(by.id('edit-2-access-content')).click();
+            dvr.findElement(by.id('edit-1-access-resource-node')).click();
+            dvr.findElement(by.id('edit-2-access-resource-node')).click();
+            dvr.findElement(by.id('edit-1-access-resource-paragraphs-item')).click();
+            dvr.findElement(by.id('edit-2-access-resource-paragraphs-item')).click();
+            dvr.findElement(by.id('edit-submit')).click();
+
+          });
+
+        });
+
+      }
 
   });
 
