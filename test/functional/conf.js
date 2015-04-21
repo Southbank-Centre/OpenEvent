@@ -20,7 +20,8 @@ exports.config = {
 
   suites: {
     base: ['base/*.js'],
-    content_components: ['content-components/*.js']
+    content_components: ['content-components/*.js'],
+    event: ['event/*.js']
   },
 
   // Single Browser

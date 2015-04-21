@@ -116,10 +116,14 @@ describe('The CMS', function() {
       dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
         dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+        // start date/time
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).click();
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+        // duration
         dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
 
         // set the item to published
@@ -186,14 +190,24 @@ describe('The CMS', function() {
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-timeEntry-popup-1')).sendKeys('22:00');
+
+      // start date/time
+      expect(element(by.id('edit-field-event-date-time-und-0-all-day')).isPresent()).toBe(true);
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+      // end date/time
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-show-todate')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).sendKeys('22:00');
+
+      // duration
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).sendKeys('150');
+
+      // door time
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).click();
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).sendKeys('19:00');
@@ -343,12 +357,9 @@ describe('The CMS', function() {
           }
         ],
         "field_event_children": [],
+        "field_event_date_teim"
         "field_event_start_time": function(val) { 
           expect(val.length).toEqual(10); 
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
-        },
-        "field_event_end_time": function(val) { 
-          expect(val.length).toEqual(10);
           expect(isNaN(parseInt(val, 10))).toBe(false); 
         },
         "field_event_door_time": function(val) {
