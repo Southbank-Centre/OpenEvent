@@ -23,7 +23,7 @@ $conf['master_modules'] = array(
     'user',
     'varnish',
 
-    // Contrib
+    // Contributed modules
     'better_formats',
     'cer',
     'ctools',
