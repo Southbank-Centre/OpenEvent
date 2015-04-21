@@ -1,9 +1,9 @@
 'use strict';
 /**
- * OE Content Components Spec
+ * OE Components Spec
  */
 
-describe('OE Content Components', function() {
+describe('OE Components', function() {
 
   beforeEach(function(){
     isAngularSite(false);
