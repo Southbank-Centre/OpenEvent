@@ -17,11 +17,6 @@ describe('Image', function() {
     isAngularSite(false);
   });
 
-  it('is included for Event content type', function(){
-    browser.get(browser.params.url + '/admin/structure/types/manage/event/fields');
-    expect(element(by.xpath("//table/tbody/tr/td[span='Image']")).isPresent()).toBe(true);
-  });
-
   it('can be added to an Event page', function(){
     
     // Add test term (required to save an Event page)
@@ -58,66 +53,67 @@ describe('Image', function() {
     // fill out content on 'Main' tab
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
     dvr.findElement(by.id('edit-title')).sendKeys('Test event page');
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).clear();
-    expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+
+    // upload 'Image'
+    var fileToUpload = 'test-img.jpg';
+    var absolutePath = path.resolve(__dirname, fileToUpload);
+    dvr.findElement(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
+    dvr.findElement(by.id('edit-field-image-und-0-upload-button')).click();
+    //$('#edit-field-image-und-0-upload').sendKeys(absolutePath);
+    //$('#edit-field-image-und-0-upload-button').click();
+
+    // wait until image has uploaded
+    browser.wait(function() {
+     return browser.isElementPresent($('#edit-field-image-und-0-alt'));
+    }, 5000);
+
+    $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
+    $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
+
+    // select event class
     dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('20/04/2015');
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+       // start date/time
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+      // duration
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
 
+      
+      // set the item to published
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+      dvr.findElement(by.id('edit-status')).click();
 
-      // fill out content on 'Image' tab
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      // submit
+      dvr.findElement(by.id('edit-submit')).click();
 
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Image']")).click();
-        var fileToUpload = 'test-img.jpg';
-        var absolutePath = path.resolve(__dirname, fileToUpload);
-        $('#edit-field-image-und-0-upload').sendKeys(absolutePath);
-        $('#edit-field-image-und-0-upload-button').click();
+      // test uploaded image exists
+      expect($('.field-name-field-image img').isPresent()).toBe(true);
+      expect($('.field-name-field-image img').getAttribute('alt')).toEqual('Test image ALT');
+      expect($('.field-name-field-image img').getAttribute('title')).toEqual('Test image TITLE');
 
-        // wait until image has uploaded
-        browser.wait(function() {
-         return browser.isElementPresent($('.image-preview'));
-        }, 5000);
 
-        $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
-        $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
+      // go back to edit page
+      dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
 
-        // $('#edit-submit').click();
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+      dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
-        // set the item to published
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-        dvr.findElement(by.id('edit-status')).click();
+        pathAlias = alias;
 
-        // submit
-        dvr.findElement(by.id('edit-submit')).click();
-
-        // test image on successful save
-        expect($('.field-name-field-image img').isPresent()).toBe(true);
-        expect($('.field-name-field-image img').getAttribute('alt')).toEqual('Test image ALT');
-        expect($('.field-name-field-image img').getAttribute('title')).toEqual('Test image TITLE');
-
-        // go back to edit page
-        dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-        dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
-
-          pathAlias = alias;
-
-          // store node ID of event just created
-          dvr.getCurrentUrl().then(function(currentUrl) {
-            var currentUrlObj = url.parse(currentUrl);
-            var currentUrlPath = currentUrlObj.pathname.split(path.sep);
-            nid = currentUrlPath[currentUrlPath.length-2];
-          });
-
+        // store node ID of event just created
+        dvr.getCurrentUrl().then(function(currentUrl) {
+          var currentUrlObj = url.parse(currentUrl);
+          var currentUrlPath = currentUrlObj.pathname.split(path.sep);
+          nid = currentUrlPath[currentUrlPath.length-2];
         });
 
       });
