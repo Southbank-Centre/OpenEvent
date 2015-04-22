@@ -45,7 +45,9 @@ exports.config = {
   ],
 
   params: {
-    url: ''
+    url: '',
+    user: 'admin',
+    pass: 'admin'
   },
 
   // Options to be passed to jasmine-node.
@@ -63,8 +65,8 @@ exports.config = {
 
     dvr.get(browser.params.url + '/user/login');
 
-    dvr.findElement(by.id('edit-name')).sendKeys('admin');
-    dvr.findElement(by.id('edit-pass')).sendKeys('admin');
+    dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
+    dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
     dvr.findElement(by.id('edit-submit')).click();
 
     // Login takes some time, so wait until it's done.
