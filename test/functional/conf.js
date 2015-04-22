@@ -78,6 +78,6 @@ exports.config = {
     global.isAngularSite = function(flag){
       browser.ignoreSynchronization = !flag;
     };
-  },
+  }
 
 };
