@@ -27,24 +27,28 @@ describe('OE Components', function() {
     expect(element(by.xpath("//table/tbody/tr[td='Link (link)']")).isPresent()).toBe(true);
   });
 
+  it('includes an Image component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='Image (image)']")).isPresent()).toBe(true);
+  });
+
   it('includes a Quote component', function(){
     expect(element(by.xpath("//table/tbody/tr[td='Quote (quote)']")).isPresent()).toBe(true);
   });
 
-  it('includes a Youtube component', function(){
-    expect(element(by.xpath("//table/tbody/tr[td='YouTube (youtube)']")).isPresent()).toBe(true);
+  it('includes a Youtube embed component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='YouTube embed (youtube_embed)']")).isPresent()).toBe(true);
   });
 
-  it('includes a Flickr component', function(){
-    expect(element(by.xpath("//table/tbody/tr[td='Flickr (flickr)']")).isPresent()).toBe(true);
+  it('includes a Flickr embed component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='Flickr embed (flickr_embed)']")).isPresent()).toBe(true);
   });
 
-  it('includes a SoundCloud component', function(){
-    expect(element(by.xpath("//table/tbody/tr[td='SoundCloud (soundcloud)']")).isPresent()).toBe(true);
+  it('includes a SoundCloud embed component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='SoundCloud embed (soundcloud_embed)']")).isPresent()).toBe(true);
   });
 
-  it('includes a Storify component', function(){
-    expect(element(by.xpath("//table/tbody/tr[td='Storify (storify)']")).isPresent()).toBe(true);
+  it('includes a Storify embed component', function(){
+    expect(element(by.xpath("//table/tbody/tr[td='Storify embed (storify_embed)']")).isPresent()).toBe(true);
   });
 
 });
