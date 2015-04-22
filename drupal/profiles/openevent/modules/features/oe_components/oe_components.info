@@ -18,6 +18,7 @@ features[ctools][] = field_validation:default_field_validation_rules:2
 features[features_api][] = api:2
 features[field_base][] = field_caption
 features[field_base][] = field_component
+features[field_base][] = field_teaser
 features[field_base][] = field_description
 features[field_base][] = field_embed_code
 features[field_base][] = field_file_image_alt_text
