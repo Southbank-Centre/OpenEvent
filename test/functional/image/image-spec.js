@@ -19,6 +19,7 @@ describe('Image', function() {
 
   it('can be added to an Event page', function(){
     
+    console.log("Image: staring spec\n");
     // Add test term (required to save an Event page)
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
 

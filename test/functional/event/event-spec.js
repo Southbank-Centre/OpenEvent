@@ -308,183 +308,193 @@ describe('The CMS', function() {
 
   it('outputs Event node JSON in the expected format', function () {
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node.json?nid=' + nid)
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON('list.0', {
-        "field_teaser": {
-          "value": "<p>Here is some content in the teaser field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
-          "format": "filtered_html"
-        },
-        "field_description": {
-          "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
-          "format": "filtered_html"
-        },
-        "field_event_age_range": "4+",
-        "field_event_class": {
-          "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-          "id": function(val) {
-            expect(val).toBeDefined();
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "resource": "taxonomy_term"
-        },
-        "field_event_type": [
-          {
-            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "taxonomy_term"
-          },
-          {
-            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "taxonomy_term"
-          }
-        ],
-        "field_event_parents": [
-          {
-            "uri": browser.params.url + "/node/" + parentNid,
-            "id": parentNid,
-            "resource": "node"
-          }
-        ],
-        "field_event_children": [],
-        "field_event_date_time": {
-          "value": function(val) { 
-            expect(val.length).toEqual(10); 
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "value2": function(val) { 
-            expect(val.length).toEqual(10); 
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "duration": function(val) { expect(typeof val).toEqual("number"); },
-        },
-        "field_event_door_time": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_duration": "150",
-        "cer": {
-          "lineage": "node:event:",
-          "depth": 0,
-          "owner": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          },
-          "original": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          }
-        },
-        "nid": nid,
-        "vid": nid,
-        "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
-        "type": "event",
-        "title": "Protractor event page",
-        "language": "und",
-        "url": browser.params.url + '/' + pathAlias,
-        "edit_url": browser.params.url + "/node/" + nid + "/edit",
-        "status": "1",
-        "promote": "0",
-        "sticky": "0",
-        "created": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
-        },
-        "changed": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "body": {
-          "value": "",
-          "summary": "",
-          "format": null
-        }
-      })
-      .after(function() {
+    console.log("Event: calling API\n");
+
+    browser.wait(function () {
+
+      return new Promise(function(fulfill, reject) {
 
         frisby.create('Get JSON for Event page created in previous test')
-          .get(browser.params.url + '/node.json?nid=' + parentNid)
+          .get(browser.params.url + '/node.json?nid=' + nid)
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('list.0.field_event_children', [
-            {
-              "uri": browser.params.url + "/node/" + nid,
-              "id": nid,
-              "resource": "node"
+          .expectJSON('list.0', {
+            "field_teaser": {
+              "value": "<p>Here is some content in the teaser field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
+              "format": "filtered_html"
+            },
+            "field_description": {
+              "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
+              "format": "filtered_html"
+            },
+            "field_event_age_range": "4+",
+            "field_event_class": {
+              "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+              "id": function(val) {
+                expect(val).toBeDefined();
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "resource": "taxonomy_term"
+            },
+            "field_event_type": [
+              {
+                "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+                "id": function(val) {
+                  expect(val).toBeDefined();
+                  expect(isNaN(parseInt(val, 10))).toBe(false);
+                },
+                "resource": "taxonomy_term"
+              },
+              {
+                "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+                "id": function(val) {
+                  expect(val).toBeDefined();
+                  expect(isNaN(parseInt(val, 10))).toBe(false);
+                },
+                "resource": "taxonomy_term"
+              }
+            ],
+            "field_event_parents": [
+              {
+                "uri": browser.params.url + "/node/" + parentNid,
+                "id": parentNid,
+                "resource": "node"
+              }
+            ],
+            "field_event_children": [],
+            "field_event_date_time": {
+              "value": function(val) { 
+                expect(val.length).toEqual(10); 
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "value2": function(val) { 
+                expect(val.length).toEqual(10); 
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "duration": function(val) { expect(typeof val).toEqual("number"); },
+            },
+            "field_event_door_time": function(val) {
+              expect(val.length).toEqual(10);
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "field_event_duration": "150",
+            "cer": {
+              "lineage": "node:event:",
+              "depth": 0,
+              "owner": {
+                "uri": browser.params.url + "/node/" + nid,
+                "id": nid,
+                "resource": "node"
+              },
+              "original": {
+                "uri": browser.params.url + "/node/" + nid,
+                "id": nid,
+                "resource": "node"
+              }
+            },
+            "nid": nid,
+            "vid": nid,
+            "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
+            "type": "event",
+            "title": "Protractor event page",
+            "language": "und",
+            "url": browser.params.url + '/' + pathAlias,
+            "edit_url": browser.params.url + "/node/" + nid + "/edit",
+            "status": "1",
+            "promote": "0",
+            "sticky": "0",
+            "created": function(val) {
+              expect(val.length).toEqual(10);
+              expect(isNaN(parseInt(val, 10))).toBe(false); 
+            },
+            "changed": function(val) {
+              expect(val.length).toEqual(10);
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "body": {
+              "value": "",
+              "summary": "",
+              "format": null
             }
-          ])
-          .after(CleanUp)
+          })
+          .after(function() {
+
+            frisby.create('Get JSON for Event page created in previous test')
+              .get(browser.params.url + '/node.json?nid=' + parentNid)
+              .expectStatus(200)
+              .expectHeaderContains('content-type', 'application/json')
+              .expectJSON('list.0.field_event_children', [
+                {
+                  "uri": browser.params.url + "/node/" + nid,
+                  "id": nid,
+                  "resource": "node"
+                }
+              ])
+              .after(fulfill)
+              .toss();
+
+          })
           .toss();
 
+      });
+
+    }).then(CleanUp);
+
+    function CleanUp() {
+
+      describe('Clean up', function() {
+
+        it('will take place after all tests have passed', function() {
+
+          // CLEAN UP
+          console.log("Event:Cleaning up\n")
+          // remove event class terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
+          // remove event type terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
+          // remove content
+          browser.get(browser.params.url + '/admin/content');
+          dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+          element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+          element(by.id('edit-submit--2')).click();
+          element(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+          // reset permissions
+          browser.get(browser.params.url + '/admin/people/permissions');
+          dvr.findElement(by.id('edit-1-access-content')).click();
+          dvr.findElement(by.id('edit-2-access-content')).click();
+          dvr.findElement(by.id('edit-1-access-resource-node')).click();
+          dvr.findElement(by.id('edit-2-access-resource-node')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+
+        });
+
       })
-      .toss();
 
-      function CleanUp() {
-
-        describe('Clean up', function() {
-
-          it('will take place after all tests have passed', function() {
-
-            // CLEAN UP
-            
-            // remove event class terms
-            browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
-
-            // remove event type terms
-            browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            dvr.findElement(by.id('edit-delete')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-            expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
-
-            // remove content
-            browser.get(browser.params.url + '/admin/content');
-            dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-            element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-            element(by.id('edit-submit--2')).click();
-            element(by.id('edit-submit')).click();
-            expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-            // reset permissions
-            browser.get(browser.params.url + '/admin/people/permissions');
-            dvr.findElement(by.id('edit-1-access-content')).click();
-            dvr.findElement(by.id('edit-2-access-content')).click();
-            dvr.findElement(by.id('edit-1-access-resource-node')).click();
-            dvr.findElement(by.id('edit-2-access-resource-node')).click();
-            dvr.findElement(by.id('edit-submit')).click();
-
-          });
-
-        })
-
-      }
+    }
 
   });
 
