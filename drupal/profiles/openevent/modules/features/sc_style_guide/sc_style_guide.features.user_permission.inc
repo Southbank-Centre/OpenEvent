@@ -145,8 +145,7 @@ function sc_style_guide_user_default_permissions() {
     'name' => 'use text format filtered_html',
     'roles' => array(
       'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
+      'designer' => 'designer',
     ),
     'module' => 'filter',
   );
