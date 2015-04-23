@@ -22,6 +22,7 @@ api = 2
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[diff][version] = 3.2
+projects[double_field][version] = 2.4
 projects[entity][version] = 1.6
 projects[entityreference][version] = 1.1
 projects[features][version] = 2.5
@@ -32,7 +33,7 @@ projects[libraries][version] = 2.2
 projects[link][version] = 1.3
 projects[migrate][version] = 2.7
 projects[pathauto][version] = 1.2
-projects[restws][version] = 2.3
+projects[restws][version] = 2.4
 projects[shs][version] = 1.6
 ; Adds a check when updating parent terms. shs does not give warning any more when terms are updated.
 projects[shs][patch][1960182] = "http://www.drupal.org/files/issues/checkifparentset-1960182-08-D7.patch"
