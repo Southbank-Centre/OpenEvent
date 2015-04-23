@@ -23,7 +23,7 @@ exports.config = {
     components: ['components/*.js'],
     event: ['event/*.js'],
     image: ['image/*.js'],
-    style_guide: ['style-guide/*.js']
+    style_guide: ['style-guide/*.js'],
     menu_api: ['menu-api/*.js']
   },
 

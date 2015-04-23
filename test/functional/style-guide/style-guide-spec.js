@@ -77,7 +77,7 @@ describe('The Style Guide features of the CMS', function() {
 
     // check paragraph types
     var paragraphTypes = element(by.id('edit-field-components-und-add-more-type')).all(by.tagName('option')).getAttribute('value');
-    expect(paragraphTypes).toEqual(['heading', 'html', 'long_text', 'page_element_spec']);
+    expect(paragraphTypes).toEqual(['heading', 'html', 'image', 'long_text', 'page_element_spec']);
 
     // add heading paragraph
     element(by.cssContainingText('#edit-field-components-und-add-more-type > option', 'Heading')).click();
@@ -104,40 +104,60 @@ describe('The Style Guide features of the CMS', function() {
     // fill in HTML paragraph
     element(by.id('edit-field-components-und-1-field-html-und-0-value')).sendKeys('<div><h1><strong>Various HTML</strong> elements <em>can be added here.</em></h1><script>ButNotJavaScript("sorry!");</script></div>');
 
-    // add Long text paragraph
-    element(by.cssContainingText('#edit-field-components-und-add-more-type--3 > option', 'Long text')).click();
+    // add Image paragraph
+    element(by.cssContainingText('#edit-field-components-und-add-more-type--3 > option', 'Image')).click();
     element(by.id('edit-field-components-und-add-more-add-more--3')).click();
     browser.wait(function() {
-      return browser.isElementPresent(by.id('edit-field-components-und-2-field-text-und-0-value'));
+      return browser.isElementPresent(by.id('edit-field-components-und-2-field-image-und-0-upload'));
+    }, 5000);
+
+    // fill in Image paragraph
+    // upload 'Image'
+    var fileToUpload = 'test-img.jpg';
+    var absolutePath = path.resolve(__dirname, fileToUpload);
+    dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload')).sendKeys(absolutePath);
+    dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload-button')).click();
+    // wait until image has uploaded
+    browser.wait(function() {
+     return browser.isElementPresent($('#edit-field-components-und-2-field-image-und-0-alt'));
+    }, 5000);
+    $('#edit-field-components-und-2-field-image-und-0-alt').sendKeys('Test image ALT');
+    $('#edit-field-components-und-2-field-image-und-0-title').sendKeys('Test image TITLE');
+
+    // add Long text paragraph
+    element(by.cssContainingText('#edit-field-components-und-add-more-type--4 > option', 'Long text')).click();
+    element(by.id('edit-field-components-und-add-more-add-more--4')).click();
+    browser.wait(function() {
+      return browser.isElementPresent(by.id('edit-field-components-und-3-field-text-und-0-value'));
     }, 5000);
 
     // fill in Long text paragraph
-    element(by.id('edit-field-components-und-2-field-text-und-0-value')).sendKeys('Here is some long text <em>where some</em> HTML tags are allowed <div>but others are not</div> <script>EspeciallyNotScriptTags("sorry!");</script>');
+    element(by.id('edit-field-components-und-3-field-text-und-0-value')).sendKeys('Here is some long text <em>where some</em> HTML tags are allowed <div>but others are not</div> <script>EspeciallyNotScriptTags("sorry!");</script>');
 
     // add Page element spec paragraph
-    element(by.cssContainingText('#edit-field-components-und-add-more-type--4 > option', 'Page element spec')).click();
-    element(by.id('edit-field-components-und-add-more-add-more--4')).click();
+    element(by.cssContainingText('#edit-field-components-und-add-more-type--5 > option', 'Page element spec')).click();
+    element(by.id('edit-field-components-und-add-more-add-more--5')).click();
     browser.wait(function() {
-      return browser.isElementPresent(by.id('edit-field-components-und-3-field-description-und-0-value'));
+      return browser.isElementPresent(by.id('edit-field-components-und-4-field-description-und-0-value'));
     }, 5000);
 
     // fill in Page element spec paragraph
-    element(by.id('edit-field-components-und-3-field-description-und-0-value')).sendKeys('There should only ever be one page title.');
-    element(by.id('edit-field-components-und-3-field-html-und-0-value')).sendKeys('<h1>Page title</h1>');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-0-first')).sendKeys('font-family');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-0-second')).sendKeys('SC Akkurat');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-add-more')).click();
+    element(by.id('edit-field-components-und-4-field-description-und-0-value')).sendKeys('There should only ever be one page title.');
+    element(by.id('edit-field-components-und-4-field-html-und-0-value')).sendKeys('<h1>Page title</h1>');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-0-first')).sendKeys('font-family');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-0-second')).sendKeys('SC Akkurat');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-add-more')).click();
     browser.wait(function() {
-      return browser.isElementPresent(by.id('edit-field-components-und-3-field-css-properties-und-1-first'));
+      return browser.isElementPresent(by.id('edit-field-components-und-4-field-css-properties-und-1-first'));
     }, 5000);
-    element(by.id('edit-field-components-und-3-field-css-properties-und-1-first')).sendKeys('font-size');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-1-second')).sendKeys('Mobile: 40px/40px; Desktop: 60px/60px');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-add-more--2')).click();
+    element(by.id('edit-field-components-und-4-field-css-properties-und-1-first')).sendKeys('font-size');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-1-second')).sendKeys('Mobile: 40px/40px; Desktop: 60px/60px');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-add-more--2')).click();
     browser.wait(function() {
-      return browser.isElementPresent(by.id('edit-field-components-und-3-field-css-properties-und-2-first'));
+      return browser.isElementPresent(by.id('edit-field-components-und-4-field-css-properties-und-2-first'));
     }, 5000);
-    element(by.id('edit-field-components-und-3-field-css-properties-und-2-first')).sendKeys('text-spacing');
-    element(by.id('edit-field-components-und-3-field-css-properties-und-2-second')).sendKeys('- 0.2');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-2-first')).sendKeys('text-spacing');
+    element(by.id('edit-field-components-und-4-field-css-properties-und-2-second')).sendKeys('- 0.2');
 
     // publish
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -248,6 +268,14 @@ describe('The Style Guide features of the CMS', function() {
               expect(isNaN(parseInt(val, 10))).toBe(false);
             },
             "resource": "paragraphs_item"
+          },
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/paragraphs_item/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "paragraphs_item"
           }
         ],
         "cer": {
@@ -291,7 +319,7 @@ describe('The Style Guide features of the CMS', function() {
       }).afterJSON(function(styleGuidePage) {
 
         // id of Page Element Spec paragraph item
-        var itemId = styleGuidePage.list[0].field_components[3].id;
+        var itemId = styleGuidePage.list[0].field_components[4].id;
 
         // get Page Element Spec paragraph item JSON
         frisby.create('Get JSON for Page Element Spec created in Style Guide Page previous test')
