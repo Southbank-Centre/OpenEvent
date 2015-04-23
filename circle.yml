@@ -27,7 +27,7 @@ dependencies:
     - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php
     - drush -r $HOME/southbankcentre.org-CMS/drupal en -y master features
     - drush -r $HOME/southbankcentre.org-CMS/drupal master-execute -y --scope=dev
-    - drush -r $HOME/southbankcentre.org/drupal fra -y
+    - drush -r $HOME/southbankcentre.org-CMS/drupal fra -y
     - drush -r $HOME/southbankcentre.org-CMS/drupal cc all
     - sudo chgrp -R www-data $HOME/southbankcentre.org-CMS/drupal/sites/default/files
 
