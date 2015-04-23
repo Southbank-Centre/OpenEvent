@@ -64,6 +64,7 @@ $conf['master_modules'] = array(
 
     // Southbank Centre features
     'sc_style_guide',
+    'sc_menu_api',
 
   ),
   'dev' => array(

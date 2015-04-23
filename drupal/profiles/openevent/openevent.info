@@ -46,6 +46,7 @@ dependencies[] = filefield_sources
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = master
+dependencies[] = menu_firstchild
 dependencies[] = migrate
 dependencies[] = migrate_ui
 dependencies[] = paragraphs
@@ -68,6 +69,7 @@ dependencies[] = oe_event
 
 ; SC dependencies
 dependencies[] = sc_style_guide
+dependencies[] = sc_menu_api
 
 ; File depedencies.
 files[] = openevent.profile

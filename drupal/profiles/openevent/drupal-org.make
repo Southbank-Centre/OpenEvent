@@ -31,6 +31,7 @@ projects[field_validation][version] = 2.4
 projects[filefield_sources][version] = 1.9
 projects[libraries][version] = 2.2
 projects[link][version] = 1.3
+projects[menu_firstchild][version] = 1.1
 projects[migrate][version] = 2.7
 projects[pathauto][version] = 1.2
 projects[restws][version] = 2.4
