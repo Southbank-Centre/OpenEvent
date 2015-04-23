@@ -274,9 +274,7 @@ describe('The CMS', function() {
 
       // type in the title of the event that is a child of this event and wait for the autocomplete list to load
       dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Protractor event page');
-      dvr.wait(function () {
-          return dvr.isElementPresent(by.css('#autocomplete'));
-      }, 5000);
+      dvr.sleep(5000);
 
       // check that there are no items in the autocomplete list
       expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
