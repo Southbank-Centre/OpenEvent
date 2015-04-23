@@ -6,10 +6,12 @@
 var url = require('url');
 var path = require('path');
 
-describe('WOW CMS', function() {
+describe('The CMS', function() {
 
   var parentNid;
+  var parentPathAlias;
   var nid;
+  var pathAlias;
 
   beforeEach(function(){
     // don't wait for (non-existent) Angular to load
@@ -63,13 +65,29 @@ describe('WOW CMS', function() {
 
   });
 
+  it('can allow events to be viewed by anyone', function() {
+    browser.get(browser.params.url + '/admin/people/permissions');
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+
+    // Allow published content to be viewed by anyone
+    dvr.findElement(by.id('edit-1-access-content')).click();
+    dvr.findElement(by.id('edit-2-access-content')).click();
+
+    // Allow node API endpoints to be viewed by anyone
+    dvr.findElement(by.id('edit-1-access-resource-node')).click();
+    dvr.findElement(by.id('edit-2-access-resource-node')).click();
+
+    dvr.findElement(by.id('edit-submit')).click();
+
+  });
+
   it('can create a minimal event page', function(){
     browser.get(browser.params.url + '/node/add/event');
     expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Event');
 
     // add a bad age range
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('10');
+    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
 
     // add bad duration
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -83,8 +101,8 @@ describe('WOW CMS', function() {
       // check for the error message explaining that required fields haven't been populated
       expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following two formats: Either "5-" (no end range) or "11-18" (start and end range)');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
       expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
@@ -98,10 +116,13 @@ describe('WOW CMS', function() {
       dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
         dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-        dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+        // start date/time
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+        // duration
         dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
 
         // set the item to published
@@ -112,13 +133,22 @@ describe('WOW CMS', function() {
         dvr.findElement(by.id('edit-submit')).click();
 
         // test successful save
-        expect(element(by.id('page-title')).getText()).toContain('Parent event page');
+        expect(element(by.id('console')).getText()).toContain('Event Parent event page has been created.');
 
-        // store node ID of event just created
-        dvr.getCurrentUrl().then(function(currentUrl) {
-          var currentUrlObj = url.parse(currentUrl);
-          var currentUrlPath = currentUrlObj.pathname.split(path.sep);
-          parentNid = currentUrlPath[currentUrlPath.length-1];
+        // go back to edit page
+        dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+        dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+
+          parentPathAlias = alias;
+
+          // store node ID of event just created
+          dvr.getCurrentUrl().then(function(currentUrl) {
+            var currentUrlObj = url.parse(currentUrl);
+            var currentUrlPath = currentUrlObj.pathname.split(path.sep);
+            parentNid = currentUrlPath[currentUrlPath.length-2];
+
+          });
 
         });
 
@@ -136,7 +166,7 @@ describe('WOW CMS', function() {
     dvr.findElement(by.id('edit-title')).sendKeys('Protractor event page');
     dvr.findElement(by.id('edit-field-teaser-und-0-value')).sendKeys('Here is some content in the teaser field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     dvr.findElement(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4-');
+    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
     expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
     dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
     expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
@@ -159,14 +189,24 @@ describe('WOW CMS', function() {
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-end-time-und-0-value-timeEntry-popup-1')).sendKeys('22:00');
+
+      // start date/time
+      expect(element(by.id('edit-field-event-date-time-und-0-all-day')).isPresent()).toBe(true);
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+      // end date/time
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-show-todate')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).sendKeys('22:00');
+
+      // duration
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).sendKeys('150');
+
+      // door time
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).click();
       dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).sendKeys('19:00');
@@ -179,13 +219,21 @@ describe('WOW CMS', function() {
       dvr.findElement(by.id('edit-submit')).click();
 
       // test successful save
-      expect(element(by.id('page-title')).getText()).toContain('Protractor event page');
+      expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been created.');
 
-      // store node ID of event just created
-      dvr.getCurrentUrl().then(function(currentUrl) {
-        var currentUrlObj = url.parse(currentUrl);
-        var currentUrlPath = currentUrlObj.pathname.split(path.sep);
-        nid = currentUrlPath[currentUrlPath.length-1];
+      // go back to edit page
+      dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+      dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+
+        pathAlias = alias;
+
+        // store node ID of event just created
+        dvr.getCurrentUrl().then(function(currentUrl) {
+          var currentUrlObj = url.parse(currentUrl);
+          var currentUrlPath = currentUrlObj.pathname.split(path.sep);
+          nid = currentUrlPath[currentUrlPath.length-2];
+        });
 
       });
 
@@ -207,9 +255,9 @@ describe('WOW CMS', function() {
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
 
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-start-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
       // set the item to published
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
@@ -219,7 +267,7 @@ describe('WOW CMS', function() {
       dvr.findElement(by.id('edit-submit')).click();
 
       // test successful save
-      expect(element(by.id('page-title')).getText()).toContain('Can be parent');
+      expect(element(by.id('console')).getText()).toContain('Event Can be parent has been created.');
 
       // edit 'Parent event page' to run test
       browser.get(browser.params.url + '/node/' + parentNid + '/edit');
@@ -273,7 +321,7 @@ describe('WOW CMS', function() {
           "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
         },
-        "field_event_age_range": "4-",
+        "field_event_age_range": "4+",
         "field_event_class": {
           "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
           "id": function(val) {
@@ -308,17 +356,20 @@ describe('WOW CMS', function() {
           }
         ],
         "field_event_children": [],
-        "field_event_start_time": function(val) { 
-          expect(val.length).toEqual(10); 
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
-        },
-        "field_event_end_time": function(val) { 
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
+        "field_event_date_time": {
+          "value": function(val) { 
+            expect(val.length).toEqual(10); 
+            expect(isNaN(parseInt(val, 10))).toBe(false);
+          },
+          "value2": function(val) { 
+            expect(val.length).toEqual(10); 
+            expect(isNaN(parseInt(val, 10))).toBe(false);
+          },
+          "duration": function(val) { expect(typeof val).toEqual("number"); },
         },
         "field_event_door_time": function(val) {
           expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
+          expect(isNaN(parseInt(val, 10))).toBe(false);
         },
         "field_event_duration": "150",
         "cer": {
@@ -341,7 +392,7 @@ describe('WOW CMS', function() {
         "type": "event",
         "title": "Protractor event page",
         "language": "und",
-        "url": browser.params.url + "/node/" + nid,
+        "url": browser.params.url + '/' + pathAlias,
         "edit_url": browser.params.url + "/node/" + nid + "/edit",
         "status": "1",
         "promote": "0",
@@ -354,26 +405,85 @@ describe('WOW CMS', function() {
           expect(val.length).toEqual(10);
           expect(isNaN(parseInt(val, 10))).toBe(false);
         },
-        "body": []
+        "body": {
+          "value": "",
+          "summary": "",
+          "format": null
+        }
+      })
+      .after(function() {
+
+        frisby.create('Get JSON for Event page created in previous test')
+          .get(browser.params.url + '/node.json?nid=' + parentNid)
+          .expectStatus(200)
+          .expectHeaderContains('content-type', 'application/json')
+          .expectJSON('list.0.field_event_children', [
+            {
+              "uri": browser.params.url + "/node/" + nid,
+              "id": nid,
+              "resource": "node"
+            }
+          ])
+          .after(CleanUp)
+          .toss();
+
       })
       .toss();
 
-  });
+    function CleanUp() {
 
-  it('updates an Events children when it has been assigned as a parent', function() {
+      describe('Clean up', function() {
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node.json?nid=' + parentNid)
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON('list.0.field_event_children', [
-        {
-          "uri": browser.params.url + "/node/" + nid,
-          "id": nid,
-          "resource": "node"
-        }
-      ])
-      .toss();
+        it('will take place after all tests have passed', function() {
+
+          // CLEAN UP
+          // remove event class terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
+          // remove event type terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          dvr.findElement(by.id('edit-delete')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
+          // remove content
+          browser.get(browser.params.url + '/admin/content');
+          dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+          element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+          element(by.id('edit-submit--2')).click();
+          element(by.id('edit-submit')).click();
+          expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+          // reset permissions
+          browser.get(browser.params.url + '/admin/people/permissions');
+          dvr.findElement(by.id('edit-1-access-content')).click();
+          dvr.findElement(by.id('edit-2-access-content')).click();
+          dvr.findElement(by.id('edit-1-access-resource-node')).click();
+          dvr.findElement(by.id('edit-2-access-resource-node')).click();
+          dvr.findElement(by.id('edit-submit')).click();
+
+        });
+
+      });
+      
+    }
 
   });
 

@@ -1,75 +1,82 @@
 <?php
-
 $conf['master_version'] = 2;
-
 $conf['master_modules'] = array(
   'base' => array(
     // Core modules
-    //'block',
-    //'color',
-    //'comment',
     'contextual',
-    //'dashboard',
-    //'dblog',
+    'field',
     'file',
+    'filter',
     'help',
     'image',
     'list',
     'menu',
+    'node',
     'number',
     'options',
-    //'overlay',
     'path',
-    //'rdf',
-    //'search',
     'shortcut',
-    'syslog',
+    'system',
+    'taxonomy',
+    'text',
     'toolbar',
-    //'update',
+    'user',
+    'varnish',
 
-    // START: Migrate to OE profile
+    // Contributed modules
     'better_formats',
     'cer',
     'ctools',
     'date',
     'date_all_day',
+    'date_api',
     'date_popup',
-    'diff', // Dev
+    'diff',
     'entity',
     'entityreference',
     'features',
-    'features_diff', // Dev
     'field_group',
     'field_validation',
-    'field_validation_ui', // Dev
-    'oe_event',
-    'oe_shared_field_bases',
+    'filefield_sources',
+    'libraries',
+    'link',
+    'master',
+    'migrate',
+    'paragraphs',
+    'pathauto',
     'restws',
+    'shs',
     'strongarm',
     'table_element',
+    'taxonomy_access_fix',
+    'token',
+    'transliteration',
+    'view_unpublished',
     'views',
-    'views_ui', // Dev
-    // END: Migrate to OE profile
-  ),
+    'views_data_export',
 
+    // Open Event
+    'oe_components',
+    'oe_event',
+  ),
   'dev' => array(
     'field_ui',
-    'varnish',
+    'field_validation_ui',
+    'views_ui',
+    'migrate_ui',
+    'dblog',
   ),
   'staging' => array(
-    'varnish',
+    'syslog',
   ),
   'live' => array(
-    'varnish',
+    'syslog',
   ),
 );
-
 $conf['master_uninstall_blacklist'] = array(
   'base' => array(),
   'dev' => array(),
   'staging' => array(),
   'live' => array(),
 );
-
 $conf['master_allow_base_scope'] = TRUE;
-
