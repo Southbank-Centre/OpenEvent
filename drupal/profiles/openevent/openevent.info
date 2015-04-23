@@ -35,6 +35,7 @@ dependencies[] = date_all_day
 dependencies[] = date_api
 dependencies[] = date_popup
 dependencies[] = diff
+dependencies[] = double_field
 dependencies[] = entity
 dependencies[] = entityreference
 dependencies[] = features
@@ -45,6 +46,7 @@ dependencies[] = filefield_sources
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = master
+dependencies[] = menu_firstchild
 dependencies[] = migrate
 dependencies[] = migrate_ui
 dependencies[] = paragraphs
@@ -64,6 +66,10 @@ dependencies[] = views_ui
 ; Open Event dependencies
 dependencies[] = oe_components
 dependencies[] = oe_event
+
+; SC dependencies
+dependencies[] = sc_style_guide
+dependencies[] = sc_menu_api
 
 ; File depedencies.
 files[] = openevent.profile

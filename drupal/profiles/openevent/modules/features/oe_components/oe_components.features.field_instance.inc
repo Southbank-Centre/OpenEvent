@@ -854,8 +854,7 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance:
-  // 'paragraphs_item-soundcloud_embed-field_embed_code'
+  // Exported field_instance: 'paragraphs_item-soundcloud_embed-field_embed_code'
   $field_instances['paragraphs_item-soundcloud_embed-field_embed_code'] = array(
     'bundle' => 'soundcloud_embed',
     'default_value' => NULL,
