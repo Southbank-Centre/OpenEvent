@@ -22,7 +22,7 @@ dependencies:
         pwd:
           drupal
     - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/southbankcentre.org-CMS/drupal site-install openevent -y --account-mail=alexb@cogapp.com --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
-    - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php.ci
+    - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php
     - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php
     - drush -r $HOME/southbankcentre.org-CMS/drupal en -y master
     - drush -r $HOME/southbankcentre.org-CMS/drupal master-execute -y --scope=dev
