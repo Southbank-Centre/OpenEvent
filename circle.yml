@@ -19,8 +19,6 @@ dependencies:
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
     - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php.ci
-    # This step should install the Open Event profile when it has been created
-    # I.e. ... site-install OpenEvent -y --account-mail= ...
     - drush make local-openevent.make -y:
         pwd:
           drupal
@@ -29,8 +27,7 @@ dependencies:
     - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php
     - drush -r $HOME/southbankcentre.org-CMS/drupal en -y master
     - drush -r $HOME/southbankcentre.org-CMS/drupal master-execute -y --scope=dev
-    # Features module isn't currently installed, but will be when Open Event profile has been created
-    #- drush -r $HOME/southbankcentre.org/drupal fra -y
+    - drush -r $HOME/southbankcentre.org/drupal fra -y
     - drush -r $HOME/southbankcentre.org-CMS/drupal cc all
     - sudo chgrp -R www-data $HOME/southbankcentre.org-CMS/drupal/sites/default/files
 
