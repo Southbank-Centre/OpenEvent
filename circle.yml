@@ -32,6 +32,7 @@ dependencies:
     # Features module isn't currently installed, but will be when Open Event profile has been created
     #- drush -r $HOME/southbankcentre.org/drupal fra -y
     - drush -r $HOME/southbankcentre.org-CMS/drupal cc all
+    - sudo chgrp -R www-data $HOME/southbankcentre.org-CMS/drupal/sites/default/files
 
   post:
     # apache module setup
