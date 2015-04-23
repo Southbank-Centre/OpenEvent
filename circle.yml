@@ -2,6 +2,9 @@ machine:
   php:
     version: 5.5.11
 
+  node:
+    version: 0.12.2
+
   # Override /etc/hosts
   hosts:
     sc.circle: 127.0.0.1
