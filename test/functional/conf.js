@@ -50,6 +50,8 @@ exports.config = {
     pass: 'admin'
   },
 
+  allScriptsTimeout: 60000,
+
   // Options to be passed to jasmine-node.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
