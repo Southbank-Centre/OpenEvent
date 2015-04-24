@@ -38,6 +38,9 @@ dependencies:
     - cp $HOME/southbankcentre.org-CMS/ci/api.vhost /etc/apache2/sites-available/api
     - a2ensite api
     - sudo service apache2 restart
+
+test:
+  pre:
     # protractor setup
     - npm install -g protractor@1.8.0
     # frisby setup
@@ -46,8 +49,6 @@ dependencies:
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz
-
-test:
   override:
     - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready:
         background: true
