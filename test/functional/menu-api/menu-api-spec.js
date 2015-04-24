@@ -96,44 +96,11 @@ describe('The Menu API features of the CMS', function() {
         "hidden": '0',
         "external": '1',
         "has_children": '0',
-        "expanded": '0',
         "weight": '0',
         "depth": '2',
-        "customized": '1',
-        "p1": parentMlid,
-        "p2": childMlid,
-        "p3": '0',
-        "p4": '0',
-        "p5": '0',
-        "p6": '0',
-        "p7": '0',
-        "p8": '0',
-        "p9": '0',
-        "updated": '0',
-        "load_functions": null,
-        "to_arg_functions": null,
-        "access_callback": null,
-        "access_arguments": null,
-        "page_callback": null,
-        "page_arguments": null,
-        "delivery_callback": null,
-        "tab_parent": null,
-        "tab_root": null,
         "title": 'A child menu link',
-        "title_callback": null,
-        "title_arguments": null,
-        "theme_callback": null,
-        "theme_arguments": null,
-        "type": null,
-        "description": null,
-        "in_active_trail": false,
         "access": 1,
-        "href": 'http://www.google.com',
-        "localized_options": {
-          "attributes": {
-            "title": 'Child menu link description'
-          }
-        }
+        "href": 'http://www.google.com'
       },
       "below": []
     };
@@ -150,54 +117,16 @@ describe('The Menu API features of the CMS', function() {
         "options": {
           "attributes": {
             "title": 'Parent menu link description'
-          },
-          "alter": true,
-          "unaltered_hidden": 0
+          }
         },
-        "module": 'menu',
+        "has_children": '1',
         "hidden": '0',
         "external": '0',
-        "has_children": '1',
-        "expanded": '0',
         "weight": '0',
         "depth": '1',
-        "customized": '1',
-        "p1": parentMlid,
-        "p2": '0',
-        "p3": '0',
-        "p4": '0',
-        "p5": '0',
-        "p6": '0',
-        "p7": '0',
-        "p8": '0',
-        "p9": '0',
-        "updated": '0',
-        "load_functions": '',
-        "to_arg_functions": '',
-        "access_callback": '1',
-        "access_arguments": 'a:0:{}',
-        "page_callback": '_menu_firstchild_menu',
-        "page_arguments": 'a:0:{}',
-        "delivery_callback": '',
-        "tab_parent": '',
-        "tab_root": '<firstchild>',
         "title": 'A parent menu link',
-        "title_callback": 't',
-        "title_arguments": '',
-        "theme_callback": '',
-        "theme_arguments": 'a:0:{}',
-        "type": '0',
-        "description": '',
-        "in_active_trail": false,
         "href": 'http://www.google.com',
-        "access": true,
-        "localized_options": {
-          "attributes": {
-            "title": 'Parent menu link description'
-          },
-          "alter": true,
-          "unaltered_hidden": 0
-        }
+        "access": true
       },
       "below": childItemJSON
     };
@@ -207,7 +136,6 @@ describe('The Menu API features of the CMS', function() {
       .get(browser.params.url + '/api/menu/menu-a-test-menu')
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
-      .inspectJSON()
       .expectJSON(parentItemJSON)
       .after(CleanUp)
       .toss();
