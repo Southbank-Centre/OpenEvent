@@ -18,7 +18,7 @@ describe('Image', function() {
   });
 
   it('can be added to an Event page', function(){
-    
+
     console.log("Image: staring spec\n");
     // Add test term (required to save an Event page)
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
@@ -33,7 +33,7 @@ describe('Image', function() {
     browser.get(browser.params.url + '/admin/people/permissions');
     //expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
 
-    
+
     // Allow published content to be viewed by anyone
     dvr.findElement(by.id('edit-1-access-content')).click();
     dvr.findElement(by.id('edit-2-access-content')).click();
@@ -58,6 +58,11 @@ describe('Image', function() {
     // upload 'Image'
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
+
+    if (browser.params.isSauceLabs) {
+      absolutePath = '/home/chef/job_assets/shot_0.png';
+    }
+
     dvr.findElement(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
     dvr.findElement(by.id('edit-field-image-und-0-upload-button')).click();
     //$('#edit-field-image-und-0-upload').sendKeys(absolutePath);
@@ -88,7 +93,7 @@ describe('Image', function() {
       // duration
       dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
 
-      
+
       // set the item to published
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
       dvr.findElement(by.id('edit-status')).click();
@@ -126,6 +131,11 @@ describe('Image', function() {
 
   it('outputs the Image data with the Event node JSON in the expected format', function () {
 
+    var imageName = 'test-img.jpg';
+    if (browser.params.isSauceLabs) {
+      imageName = 'shot_0.png';
+    }
+
     frisby.create('Get JSON for Event page created in previous test')
       .get(browser.params.url + '/node/' + nid + '.json')
       .expectStatus(200)
@@ -145,13 +155,13 @@ describe('Image', function() {
         "field_image": {
           "alt": "Test image ALT",
           "title": "Test image TITLE"
-        }  
+        }
       })
 
       .afterJSON(function(imageJSON) {
 
         // Use data from previous result in next test
-        
+
         frisby.create('Image JSON')
 
           .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
@@ -159,7 +169,7 @@ describe('Image', function() {
           .expectHeaderContains('content-type', 'application/json')
 
           .expectJSON({
-            "name": 'test-img.jpg'  
+            "name": imageName
           })
 
         .toss();
@@ -175,7 +185,7 @@ describe('Image', function() {
           it('will take place after all tests have passed', function() {
 
             // CLEAN UP
-            
+
             // remove event class terms
             browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
             dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
@@ -211,4 +221,3 @@ describe('Image', function() {
 
 
 });
-

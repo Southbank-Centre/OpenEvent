@@ -47,7 +47,8 @@ exports.config = {
   params: {
     url: '',
     user: 'admin',
-    pass: 'admin'
+    pass: 'admin',
+    isSauceLabs: 0,
   },
 
   allScriptsTimeout: 60000,

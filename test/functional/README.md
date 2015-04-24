@@ -13,3 +13,7 @@ If you want to run all tests at once without defining a suite to run, they will 
 Rather than calling `protractor` directly on the command line to run all tests, you should use the `run_tests_synchronously.js` script. This will loop through each of the suites defined in `conf.js` and execute a protractor command against each of them in turn.
 
 See the comments at the top of [`run_tests_synchronously.js`](https://github.com/Southbank-Centre/southbankcentre.org-CMS/blob/master/test/functional/run_suites_synchronously.js) for more information.
+
+## Running in SauceLabs
+
+Some tests require code conditional on whether they are being run through SauceLabs. To specify that this should be used, specify `--params.isSauceLabs 1` in the invocation.
