@@ -115,6 +115,11 @@ describe('The Style Guide features of the CMS', function() {
     // upload 'Image'
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
+    // workaround for current inability to upload images through SauceLabs from Protractor:
+    // provide the path of an image which should always exist on a SauceLabs instance
+    if (browser.params.isSauceLabs) {
+      absolutePath = '/home/chef/job_assets/shot_0.png';
+    }
     dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload')).sendKeys(absolutePath);
     dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload-button')).click();
     // wait until image has uploaded
