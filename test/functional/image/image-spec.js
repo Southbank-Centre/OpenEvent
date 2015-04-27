@@ -142,7 +142,6 @@ describe('Image', function() {
       .get(browser.params.url + '/node/' + nid + '.json')
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
-
       .expectJSONTypes({
         "field_image": {
           "file": {
@@ -152,32 +151,27 @@ describe('Image', function() {
           "title": String
         }
       })
-
       .expectJSON({
         "field_image": {
           "alt": "Test image ALT",
           "title": "Test image TITLE"
         }
       })
-
       .afterJSON(function(imageJSON) {
 
         // Use data from previous result in next test
 
         frisby.create('Image JSON')
-
           .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
-
           .expectJSON({
             "name": imageName
           })
+          .after(CleanUp)
+          .toss();
 
-        .toss();
       })
-
-      .after(CleanUp)
       .toss();
 
       function CleanUp() {

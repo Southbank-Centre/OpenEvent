@@ -50,7 +50,7 @@ exports.config = {
     url: '',
     user: 'admin',
     pass: 'admin',
-    isSauceLabs: 0,
+    isSauceLabs: 0
   },
 
   allScriptsTimeout: 60000,
