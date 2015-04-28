@@ -7,11 +7,24 @@ southbankcentre.org-CMS
 
 To set up a local development site using this code, do the following:
 
-* define a *[your-name].settings.php* file containing database settings, base URL, and (optionally) Master settings overrides (as per the samples below)
-* symlink *local.settings.php* to this file
-* run the Drupal installer
-* enable the Master module
-* run `drush master-execute`
+* define a `[your-name].settings.php` file containing database settings, base URL, and (optionally) Master settings overrides (as per the samples below)
+* copy the file above to `local.settings.php`
+* run the Drupal makefile
+
+		drush make local-openevent.make -y
+
+* install the openevent profile
+
+		drush si openevent --account-name="USER" --account-pass="PASS" -y
+	where USER and PASS are the preferred username/password combination
+
+* enable master module
+
+		drush en master -y
+
+* ensure all required modules are activated
+
+		drush master-execute -y
 
 ### Settings
 
@@ -72,4 +85,4 @@ Settings from *master.conf.php* can also be overridden in individual environment
 
 ## Continuous Integration
 
-See CI.md in the *Southbank-Centre/southbankcentre-front-end* repository for more details.
+See CI.md for more details.

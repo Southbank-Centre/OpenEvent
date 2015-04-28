@@ -18,6 +18,15 @@ exports.config = {
   // Tests to run
   specs: ['**/*.js'],
 
+  suites: {
+    base: ['base/*.js'],
+    components: ['components/*.js'],
+    event: ['event/*.js'],
+    image: ['image/*.js'],
+    style_guide: ['style-guide/*.js'],
+    menu_api: ['menu-api/*.js']
+  },
+
   // Single Browser
   // capability: [
   //   browserName: 'chrome',
@@ -38,25 +47,31 @@ exports.config = {
   ],
 
   params: {
-    url: ''
+    url: '',
+    user: 'admin',
+    pass: 'admin',
+    isSauceLabs: 0
   },
+
+  allScriptsTimeout: 60000,
 
   // Options to be passed to jasmine-node.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
     showColors: true,
     // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 60000
   },
 
   // function to run before the tests - logs the browser into the CMS
   onPrepare: function() {
     global.dvr = browser.driver;
+    global.frisby = require('frisby'); // include Frisby.js for JSON tests
 
     dvr.get(browser.params.url + '/user/login');
 
-    dvr.findElement(by.id('edit-name')).sendKeys('admin');
-    dvr.findElement(by.id('edit-pass')).sendKeys('admin');
+    dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
+    dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
     dvr.findElement(by.id('edit-submit')).click();
 
     // Login takes some time, so wait until it's done.
@@ -65,6 +80,11 @@ exports.config = {
         return /user/.test(url);
       });
     });
-  },
+
+    // Testing on Angular site or not
+    global.isAngularSite = function(flag){
+      browser.ignoreSynchronization = !flag;
+    };
+  }
 
 };
