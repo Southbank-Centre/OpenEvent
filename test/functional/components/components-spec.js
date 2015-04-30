@@ -217,8 +217,7 @@ describe('OE Components', function() {
   });
 
   it('tests HTML component: creates a new node of the content type and add a paragraph to it', function() {
-
-  browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
     expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
 
     // Paragraph elements
@@ -260,7 +259,70 @@ describe('OE Components', function() {
     
   });
 
-  //it('tests Link component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests Link component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    // Paragraph elements
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', 'Link'));
+    var paragraphLinkDiv = element(by.id('edit-field-components-und-0-field-link'));
+    
+    // Node elements
+    var nodeTitle = 'Test Link component';
+    var linkTitleField = element(by.id('edit-field-components-und-0-field-link-und-0-title'));
+    var linkUrlField = element(by.id('edit-field-components-und-0-field-link-und-0-url'));;
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: Link');
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphLinkDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('URL field is required.');
+
+    // Submit with malformed url.
+    var wrongUrl = 'http://somethig.whereo/.it.isngert';
+    titleField.sendKeys(nodeTitle);
+    linkTitleField.sendKeys('Evil Southbank Centre');
+    linkUrlField.sendKeys(wrongUrl);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('The value ' + wrongUrl + ' provided for Link is not a valid URL.');
+
+    // Clean up fields.
+    linkUrlField.clear();
+    linkTitleField.clear();
+
+    // Submit with javascript code instead of a url.
+    var js = '<script>alert("Hello! I am an alert box!!");</script>';
+    linkTitleField.sendKeys('Evil javascript');
+    linkUrlField.sendKeys(js);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('The value ' + js + ' provided for Link is not a valid URL.');
+
+    // Clean up fields.
+    linkUrlField.clear();
+    linkTitleField.clear();
+
+    // Submit a corect url.
+    var url = 'http://www.southbankcentre.co.uk';
+    linkTitleField.sendKeys('southbankcentre');
+    linkUrlField.sendKeys(url);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
+
+  });
 
   //it('tests Long text component: creates a new node of the content type and add a paragraph to it', function() {});
 
