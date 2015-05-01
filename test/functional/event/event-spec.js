@@ -286,20 +286,62 @@ describe('The Event features of the CMS', function() {
           return dvr.isElementPresent(by.css('#autocomplete li:first-of-type .field-content'));
       }, 5000);
 
-      // check that there are no items in the autocomplete list
+      // check that there are items in the autocomplete list and select the first one
       expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(true);
       expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']/a")).isPresent()).toBe(false);
       element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
 
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      // submit
+      dvr.findElement(by.id('edit-submit')).click();
 
-        // set the item to published
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-        // submit
-        dvr.findElement(by.id('edit-submit')).click();
+    });
 
-      });
+  });
 
+  it('can have venues assigned to an Event', function() {
+
+    // create a Place
+    browser.get(browser.params.url + '/node/add/place');
+    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+    dvr.findElement(by.id('edit-title')).sendKeys('Place that has an event');
+    // set the item to published
+    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+    dvr.findElement(by.id('edit-status')).click();
+    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.id('console')).getText()).toContain('Place Place that has an event has been created.');
+
+    // edit node with id stored in 'nid'
+    browser.get(browser.params.url + '/node/' + nid + '/edit');
+
+    // try to select an event - shouldn't be possible
+    // type in the title of the event and wait for the autocomplete list to load
+    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
+    dvr.sleep(5000);
+    // check that there are no items in the autocomplete list
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
+
+    // select place made earlier in test
+    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).clear();
+    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Place that has an event');
+    dvr.wait(function () {
+        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
+    }, 5000);
+
+    // check that there are items in the autocomplete list and select the first one
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']")).isPresent()).toBe(true);
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']/a")).isPresent()).toBe(false);
+    element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']")).click();
+
+    // see that you can add more venues
+    expect(element(by.id('edit-field-event-places-und-add-more')).isPresent()).toBe(true);
+
+    // save
+    dvr.findElement(by.id('edit-submit')).click().then(function() {
+      dvr.wait(function () {
+        return dvr.isElementPresent(by.id('console'));
+      }, 5000);
+      // verify save
+      expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
     });
 
   });
@@ -307,10 +349,10 @@ describe('The Event features of the CMS', function() {
   it('outputs Event node JSON in the expected format', function () {
 
     frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node.json?nid=' + nid)
+      .get(browser.params.url + '/node/' + nid + '.json')
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
-      .expectJSON('list.0', {
+      .expectJSON({
         "field_teaser": {
           "value": "<p>Here is some content in the teaser field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
@@ -346,6 +388,7 @@ describe('The Event features of the CMS', function() {
             "resource": "taxonomy_term"
           }
         ],
+        "field_image": [],
         "field_event_parents": [
           {
             "uri": browser.params.url + "/node/" + parentNid,
@@ -370,20 +413,17 @@ describe('The Event features of the CMS', function() {
           expect(isNaN(parseInt(val, 10))).toBe(false);
         },
         "field_event_duration": "150",
-        "cer": {
-          "lineage": "node:event:",
-          "depth": 0,
-          "owner": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          },
-          "original": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
+        "field_event_places": [
+          {
+            "uri": function(val) {
+              expect(val).toContain(browser.params.url + "/node/");
+            },
+            "id": function(val) {
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
             "resource": "node"
           }
-        },
+        ],
         "nid": nid,
         "vid": nid,
         "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
@@ -412,10 +452,10 @@ describe('The Event features of the CMS', function() {
       .after(function() {
 
         frisby.create('Get JSON for Event page created in previous test')
-          .get(browser.params.url + '/node.json?nid=' + parentNid)
+          .get(browser.params.url + '/node/' + parentNid + '.json')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('list.0.field_event_children', [
+          .expectJSON('field_event_children', [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,

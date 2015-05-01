@@ -24,7 +24,8 @@ exports.config = {
     event: ['event/*.js'],
     image: ['image/*.js'],
     style_guide: ['style-guide/*.js'],
-    menu_api: ['menu-api/*.js']
+    menu_api: ['menu-api/*.js'],
+    place: ['place/*.js']
   },
 
   // Single Browser

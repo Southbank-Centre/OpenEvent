@@ -19,7 +19,6 @@ describe('Image', function() {
 
   it('can be added to an Event page', function(){
 
-    console.log("Image: staring spec\n");
     // Add test term (required to save an Event page)
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
 
@@ -62,13 +61,12 @@ describe('Image', function() {
     // workaround for current inability to upload images through SauceLabs from Protractor:
     // provide the path of an image which should always exist on a SauceLabs instance
     if (browser.params.isSauceLabs) {
+      fileToUpload = 'shot_o.png';
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
 
     dvr.findElement(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
     dvr.findElement(by.id('edit-field-image-und-0-upload-button')).click();
-    //$('#edit-field-image-und-0-upload').sendKeys(absolutePath);
-    //$('#edit-field-image-und-0-upload-button').click();
 
     // wait until image has uploaded
     browser.wait(function() {
@@ -78,9 +76,11 @@ describe('Image', function() {
     $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
+    // test that a second image could be added
+    expect(element(by.id('edit-field-image-und-1-upload')).isPresent()).toBe(true);
+
     // select event class
     dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -142,27 +142,30 @@ describe('Image', function() {
       .get(browser.params.url + '/node/' + nid + '.json')
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
-      .expectJSONTypes({
-        "field_image": {
-          "file": {
-            "id": String
-          },
-          "alt": String,
-          "title": String
-        }
-      })
       .expectJSON({
-        "field_image": {
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        }
+        "field_image": [
+          {
+            "file": {
+              "uri": function(val) {
+                expect(val).toContain(browser.params.url + "/file/");
+              },
+              "id": function(val) {
+                expect(val).toBeDefined();
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "resource": "file"
+            },
+            "alt": "Test image ALT",
+            "title": "Test image TITLE"
+          }
+        ]
       })
       .afterJSON(function(imageJSON) {
 
         // Use data from previous result in next test
 
         frisby.create('Image JSON')
-          .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
+          .get(browser.params.url + '/file/' + imageJSON.field_image[0].file.id + '.json')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
           .expectJSON({
