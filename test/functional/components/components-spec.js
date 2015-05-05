@@ -20,7 +20,7 @@ describe('OE Components', function() {
 
   // Standard paragraph elements.
   var paragraphAddButton = element(by.id('edit-field-components-und-add-more-add-more')); // add paragraph type button
-  var paragraphTypeDiv = element(by.id('field-components-values')); // paragraph type container
+  var paragraphTypeDiv = element(by.id('field-components-values')); // components container (table)
   var paragraphTitleDiv = element(by.id('edit-field-components-und-0-paragraph-bundle-title')); // paragraph type title container
 
 
@@ -376,7 +376,51 @@ describe('OE Components', function() {
     expect(el_cite.isPresent()).toBe(true);
   });
 
-  //it('tests Quote component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests Quote component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    var component = 'Quote';
+
+    // Paragraph elementsvar 
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+    var paragraphQuoteTextDiv = element(by.id('edit-field-components-und-0-field-quote'));
+    var paragraphQuoteAttrDiv = element(by.id('edit-field-components-und-0-field-quote-attribution'));
+    
+    // Node elements
+    var nodeTitle = 'Test ' + component + ' component';
+    var quoteTextField = element(by.id('edit-field-components-und-0-field-quote-und-0-value'));
+    var quoteAttrField = element(by.id('edit-field-components-und-0-field-quote-attribution-und-0-value'));
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphQuoteTextDiv) && browser.isElementPresent(paragraphQuoteAttrDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('Quote field is required.');
+
+    // Submit with values
+    var quote = 'A string of text for <cite>quote</cite>';
+    var attribution = 'A string of text for quote attribution';
+    titleField.sendKeys(nodeTitle);
+    quoteTextField.sendKeys(quote);
+    quoteAttrField.sendKeys(attribution);
+    nodeSubmit.click()
+    expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
+  });
 
   //it('tests SoundCloud embed component: creates a new node of the content type and add a paragraph to it', function() {});
 
