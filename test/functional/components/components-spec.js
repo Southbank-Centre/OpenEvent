@@ -477,7 +477,60 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
-  //it('tests Storify embed component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests Storify embed component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    var component = 'Storify embed';
+
+    // Paragraph elementsvar 
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+    var paragraphStorifyEmbedDiv = element(by.id('edit-field-components-und-0-field-embed-code'));
+    var paragraphStorifyCaptionDiv = element(by.id('edit-field-components-und-0-field-caption'));
+    
+    // Node elements
+    var nodeTitle = 'Test ' + component + ' component';
+    var storifyEmbedField = element(by.id('edit-field-components-und-0-field-embed-code-und-0-value'));
+    var storifyCaptionField = element(by.id('edit-field-components-und-0-field-caption-und-0-value'));
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphStorifyEmbedDiv) && browser.isElementPresent(paragraphStorifyCaptionDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('Storify embed code field is required.');
+
+    // Submit with incorect values.
+    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.'
+    var caption = 'This is my caption';
+    titleField.sendKeys(nodeTitle);
+    storifyEmbedField.sendKeys(embed);
+    storifyCaptionField.sendKeys(caption);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('The code pasted is not a valid Storify embed fragment.');
+
+    // Cleanup
+    storifyEmbedField.clear();
+
+    // Submit with correct sound cloud embed fragment.
+    var embed = '<iframe src="//storify.com/AnimalsAsia/bearsearescue/embed?border=false" width="100%" height="750" frameborder="no" allowtransparency="true"></iframe>';
+    storifyEmbedField.sendKeys(embed);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
+  });
 
   //it('tests YouTube embed component: creates a new node of the content type and add a paragraph to it', function() {});
 
