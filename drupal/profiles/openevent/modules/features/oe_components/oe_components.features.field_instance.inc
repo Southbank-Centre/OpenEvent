@@ -988,7 +988,7 @@ function oe_components_field_default_field_instances() {
     'bundle' => 'storify_embed',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <div>, <script> and <noscript> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
+    'description' => 'Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <em>div</em>, <em>script</em> and <em>noscript</em> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1185,7 +1185,7 @@ function oe_components_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Add a Flickr embed iframe. More information <a href="https://help.yahoo.com/kb/flickr/share-flickr-photos-websites-sln7319.html" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
   t('Add a SoundCloud embed iframe. More information <a href="http://help.soundcloud.com/customer/portal/articles/1209780-how-to-add-soundcloud-to-your-website" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
-  t('Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <div>, <script> and <noscript> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
+  t('Add a Storify embed iframe. More information <a href="https://storify.com/tour" target="_blank">here</a>. Remove any additional <em>div</em>, <em>script</em> and <em>noscript</em> tags that the Storify embed code provides - these are not required and not allowed here. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
   t('Add a YouTube embed iframe. More information <a href="https://support.google.com/youtube/answer/171780?hl=en-GB" target="_blank">here</a>. The iframe\'s width and height may be ignored depending upon the front end website\'s implementation.');
   t('Caption');
   t('Enter an optional Title and the <strong>full</strong> website URL - eg http://www.southbankcentre.org');
