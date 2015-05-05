@@ -532,7 +532,60 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
-  //it('tests YouTube embed component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests YouTube embed component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    var component = 'YouTube embed';
+
+    // Paragraph elementsvar 
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+    var paragraphYoutubeEmbedDiv = element(by.id('edit-field-components-und-0-field-embed-code'));
+    var paragraphYoutubeCaptionDiv = element(by.id('edit-field-components-und-0-field-caption'));
+    
+    // Node elements
+    var nodeTitle = 'Test ' + component + ' component';
+    var youtubeEmbedField = element(by.id('edit-field-components-und-0-field-embed-code-und-0-value'));
+    var youtubeCaptionField = element(by.id('edit-field-components-und-0-field-caption-und-0-value'));
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphYoutubeEmbedDiv) && browser.isElementPresent(paragraphYoutubeCaptionDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('YouTube embed code field is required.');
+
+    // Submit with incorect values.
+    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.'
+    var caption = 'This is my caption';
+    titleField.sendKeys(nodeTitle);
+    youtubeEmbedField.sendKeys(embed);
+    youtubeCaptionField.sendKeys(caption);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('The code pasted is not a valid Youtube embed fragment.');
+
+    // Cleanup
+    youtubeEmbedField.clear();
+
+    // Submit with correct sound cloud embed fragment.
+    var embed = '<iframe width="420" height="315" src="https://www.youtube.com/embed/4-94JhLEiN0" frameborder="0" allowfullscreen></iframe>';
+    youtubeEmbedField.sendKeys(embed);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
+  });
 
   //it('tests Image component: creates a new node of the content type and add a paragraph to it', function() {});
 
