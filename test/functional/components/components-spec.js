@@ -324,7 +324,57 @@ describe('OE Components', function() {
 
   });
 
-  //it('tests Long text component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests Long text component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    var component = 'Long text';
+
+    // Paragraph elements
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+    var paragraphLongTextDiv = element(by.id('edit-field-components-und-0-field-text'));
+    
+    // Node elements
+    var nodeTitle = 'Test ' + component + ' component';
+    var longTextField = element(by.id('edit-field-components-und-0-field-text-und-0-value'));
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphLongTextDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('Text field is required.');
+
+    // Check strips not allowed tags.
+    // Add <b> which should be stripped and <cite> which should be left as is.
+    var text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam commodo in tellus id sagittis. Sed feugiat ornare pulvinar. Pellentesque efficitur accumsan nibh, non venenatis est pellentesque nec. Quisque magna risus, cursus sed tellus id, <cite>lacinia vulputate</cite> nunc. Ut sed vehicula justo, nec posuere urna. In hac habitasse platea dictumst. Duis id rutrum neque. Proin molestie hendrerit consectetur. <b>Suspendisse orci</b> tortor, dictum ac urna vel, lacinia blandit lectus. Praesent bibendum finibus scelerisque.';
+    titleField.sendKeys(nodeTitle);
+    longTextField.sendKeys(text);
+    nodeSubmit.click();
+    // Go to content page and see if the not allowed tag made it.
+    var newUrl = nodeTitle.replace(/ /g, "-");
+    browser.get(browser.params.url + '/content/' + newUrl);
+    // Create <b> and <cite> element objects using xpath
+    var el_b = element(by.xpath("//div[contains(concat(' ', @class, ' '), ' field-type-text-long ')]/div/div/p/b"));
+    var el_cite = element(by.xpath("//div[contains(concat(' ', @class, ' '), ' field-type-text-long ')]/div/div/p/cite"));
+    // Expect <b> not to be there
+    expect(el_b.isPresent()).toBe(false);
+    // Expect <cite> to be there
+    expect(el_cite.isPresent()).toBe(true);
+  });
 
   //it('tests Quote component: creates a new node of the content type and add a paragraph to it', function() {});
 
