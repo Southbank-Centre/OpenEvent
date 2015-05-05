@@ -676,10 +676,9 @@ function oe_components_field_default_field_instances() {
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(
-          'filtered_html' => 0,
+          'filtered_html' => 'filtered_html',
           'full_html' => 0,
           'iframe_html' => 0,
-          'limited_html' => 'limited_html',
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -693,9 +692,6 @@ function oe_components_field_default_field_instances() {
               'weight' => 1,
             ),
             'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
               'weight' => 0,
             ),
             'plain_text' => array(
@@ -854,7 +850,8 @@ function oe_components_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'paragraphs_item-soundcloud_embed-field_embed_code'
+  // Exported field_instance:
+  // 'paragraphs_item-soundcloud_embed-field_embed_code'
   $field_instances['paragraphs_item-soundcloud_embed-field_embed_code'] = array(
     'bundle' => 'soundcloud_embed',
     'default_value' => NULL,
