@@ -422,7 +422,60 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
-  //it('tests SoundCloud embed component: creates a new node of the content type and add a paragraph to it', function() {});
+  it('tests SoundCloud embed component: creates a new node of the content type and add a paragraph to it', function() {
+    browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+    var component = 'SoundCloud embed';
+
+    // Paragraph elementsvar 
+    var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+    var paragraphSoundCloudEmbedDiv = element(by.id('edit-field-components-und-0-field-embed-code'));
+    var paragraphSoundCloudCaptionDiv = element(by.id('edit-field-components-und-0-field-caption'));
+    
+    // Node elements
+    var nodeTitle = 'Test ' + component + ' component';
+    var soundCloudEmbedField = element(by.id('edit-field-components-und-0-field-embed-code-und-0-value'));
+    var soundCloudCaptionField = element(by.id('edit-field-components-und-0-field-caption-und-0-value'));
+
+    // Add a html paragraph type
+    paragraphTypeLink.click();
+    paragraphAddButton.click();
+    browser.wait(function() {
+      return browser.isElementPresent(paragraphTypeDiv);
+    }, 5000);
+
+    // Check paragraph type title and fields
+    expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+    browser.wait(function(){
+      // Check all paragraph fields are present.
+      return browser.isElementPresent(paragraphSoundCloudEmbedDiv) && browser.isElementPresent(paragraphSoundCloudCaptionDiv);
+    }, 5000);
+
+    // Submit without required fields.
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('Title field is required.');
+    expect(messages.getText()).toContain('SoundCloud embed code field is required.');
+
+    // Submit with incorect sound cloud embed fragment.
+    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.'
+    var caption = 'This is my caption';
+    titleField.sendKeys(nodeTitle);
+    soundCloudEmbedField.sendKeys(embed);
+    soundCloudCaptionField.sendKeys(caption);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain('The code pasted is not a valid Soundcloud embed fragment.');
+
+    // Cleanup
+    soundCloudEmbedField.clear();
+
+    // Submit with correct sound cloud embed fragment.
+    var embed = '<iframe allowtransparency="true" scrolling="no" frameborder="no" src="https://w.soundcloud.com/icon/?url=http%3A%2F%2Fsoundcloud.com%2Fundefined&color=orange_white&size=32" style="width: 32px; height: 32px;"></iframe>';    
+    soundCloudEmbedField.sendKeys(embed);
+    nodeSubmit.click();
+    expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
+  });
 
   //it('tests Storify embed component: creates a new node of the content type and add a paragraph to it', function() {});
 
