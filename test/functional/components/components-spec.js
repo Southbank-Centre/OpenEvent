@@ -587,9 +587,43 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
-  //it('tests Image component: creates a new node of the content type and add a paragraph to it', function() {});
+  // it('tests Image component: creates a new node of the content type and add a paragraph to it', function() {});
 
-  //it('deletes content created for the test', function() {});
+  it('deletes content created for the test', function() {
+    browser.get(browser.params.url + '/admin/content');
+
+    // Page elements.
+    var checkbox = element(by.xpath("//table[2]/thead//th[@class='select-all']/input"));
+    var deleteOption = element(by.cssContainingText('#edit-operation > option', 'Delete selected content'));;
+    var submit = element(by.id('edit-submit--2'));
+    var deleteAll = element(by.id('edit-submit'));
+    var row = element(by.xpath("//table/thead//th[@class='select-all']/input"));
+
+    deleteOption.click();
+    checkbox.click();
+    submit.click();
+    deleteAll.click();
+
+    browser.sleep(1000);
+
+    browser.get(browser.params.url + '/admin/content');
+    expect(row.isPresent()).toBe(false);
+
+  });
+
+  // it('deletes the content type created', function() {
+  //   // Delete the content type
+  //   browser.get(browser.params.url + '/admin/structure/types/manage/' + contentTypePathName + '/delete');
+  //   browser.sleep(10000);
+  //   element(by.id('edit-submit')).click();
+
+  //   browser.sleep(1000);
+
+  //   // Go to the content type list and check if it is there
+  //   var el = element(by.cssContainingText('//table[2]/tbody/tr/td[contains(text(), "' + contentTypeName + '")]'));
+  //   browser.get(browser.params.url + '/admin/structure/types');
+  //   expect(el.isPresent()).toBe(false);
+  // });
 
   //it('deletes the content type created for the test', function() {
   // // Clean up actions (part of another test):
