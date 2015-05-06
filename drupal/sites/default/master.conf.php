@@ -42,6 +42,7 @@ $conf['master_modules'] = array(
     'filefield_sources',
     'geolocation',
     'geolocation_googlemaps',
+    'htmltidy',
     'libraries',
     'link',
     'master',
