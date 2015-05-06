@@ -152,7 +152,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -201,7 +201,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -245,7 +245,7 @@ function oe_event_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -455,7 +455,50 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 8,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_places'
+  $field_instances['node-event-field_event_places'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_places',
+    'label' => 'Venues',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 5,
     ),
   );
 
@@ -499,7 +542,7 @@ function oe_event_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -507,7 +550,7 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -651,6 +694,7 @@ function oe_event_field_default_field_instances() {
 <p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
   t('A short piece of text designed to give the visitor a feel for the event.');
   t('Age range');
+  t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
   t('Children');
   t('Class');
   t('Date/time');
@@ -669,6 +713,7 @@ function oe_event_field_default_field_instances() {
   t('The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
+  t('Venues');
 
   return $field_instances;
 }

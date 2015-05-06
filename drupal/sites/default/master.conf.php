@@ -24,6 +24,7 @@ $conf['master_modules'] = array(
     'varnish',
 
     // Contributed modules
+    'addressfield',
     'better_formats',
     'cer',
     'ctools',
@@ -39,12 +40,15 @@ $conf['master_modules'] = array(
     'field_group',
     'field_validation',
     'filefield_sources',
+    'geolocation',
+    'geolocation_googlemaps',
     'libraries',
     'link',
     'master',
     'menu_firstchild',
     'migrate',
     'menu_firstchild',
+    'office_hours',
     'paragraphs',
     'pathauto',
     'restws',

@@ -19,6 +19,7 @@ api = 2
 ;   projects[ctools][patch][1023606] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
 
 ; Contrib modules
+projects[addressfield][version] = 1.1
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[diff][version] = 3.2
@@ -29,10 +30,12 @@ projects[features][version] = 2.5
 projects[field_group][version] = 1.4
 projects[field_validation][version] = 2.4
 projects[filefield_sources][version] = 1.9
+projects[geolocation][version] = 1.6
 projects[libraries][version] = 2.2
 projects[link][version] = 1.3
 projects[menu_firstchild][version] = 1.1
 projects[migrate][version] = 2.7
+projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
 projects[restws][version] = 2.4
 projects[shs][version] = 1.6

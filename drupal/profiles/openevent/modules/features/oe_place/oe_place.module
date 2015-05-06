@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OE Place feature.
+ */
+
+include_once 'oe_place.features.inc';
