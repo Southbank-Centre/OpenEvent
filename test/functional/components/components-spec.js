@@ -587,7 +587,156 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
-  // it('tests Image component: creates a new node of the content type and add a paragraph to it', function() {});
+  // Run the following test only locally.
+  if (!browser.params.isSauceLabs) {
+    it('tests Image component: creates a new node of the content type and add a paragraph to it', function() {
+      browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+      expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create ' + contentTypeName);
+
+      var component = 'Image';
+
+      // Paragraph elements
+      var paragraphTypeLink = element(by.cssContainingText('#edit-field-components-und-add-more-type > option', component));
+      var paragraphImageDiv = element(by.id('edit-field-components-und-0-field-image'));
+      var paragraphImageCaptionDiv = element(by.id('edit-field-components-und-0-field-caption'));
+      
+      // Node elements
+      var nodeTitle = 'Test ' + component + ' component';
+      var imageUploadLink = element(by.id('edit-field-components-und-0-field-image-und-0-upload-upload-source'));
+      var imageUploadField = element(by.id('edit-field-components-und-0-field-image-und-0-upload'));
+      var imageUploadSubmit = element(by.id('edit-field-components-und-0-field-image-und-0-upload-button'));
+      var youtubeCaptionField = element(by.id('edit-field-components-und-0-field-caption-und-0-value'));
+
+      // Add paragraph type
+      paragraphTypeLink.click();
+      paragraphAddButton.click();
+      browser.wait(function() {
+        return browser.isElementPresent(paragraphTypeDiv);
+      }, 5000);
+
+      // Check paragraph type title and fields
+      expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+      browser.wait(function(){
+        // Check all paragraph fields are present.
+        return browser.isElementPresent(paragraphImageDiv) && browser.isElementPresent(paragraphImageCaptionDiv);
+      }, 5000);
+
+      // Submit without required fields.
+      nodeSubmit.click();
+      expect(messages.getText()).toContain('Title field is required.');
+      expect(messages.getText()).toContain('Image field is required.');
+
+      // Check filesize restrictions
+      var fileToUpload = 'image-filesize-large.jpg';
+      var absolutePath = path.resolve(__dirname, fileToUpload);
+      imageUploadField.sendKeys(absolutePath);
+      imageUploadSubmit.click();
+      // Wait for the messages to be written.
+      browser.wait(function() {
+        return browser.isElementPresent(element(by.css('#edit-field-components-und-0-field-image .messages')));
+      }, 5000);
+      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The file ' + fileToUpload + ' could not be saved, because it exceeds 2 MB, the maximum allowed size for uploads.');
+      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The file in the Image field was unable to be uploaded.');
+
+      // Check dimension small
+      browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+
+      // Add paragraph type
+      paragraphTypeLink.click();
+      paragraphAddButton.click();
+      browser.wait(function() {
+        return browser.isElementPresent(paragraphTypeDiv);
+      }, 5000);
+
+      // Check paragraph type title and fields
+      expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+      browser.wait(function(){
+        // Check all paragraph fields are present.
+        return browser.isElementPresent(paragraphImageDiv) && browser.isElementPresent(paragraphImageCaptionDiv);
+      }, 5000);
+
+      // Submit without required fields.
+      nodeSubmit.click();
+      expect(messages.getText()).toContain('Title field is required.');
+      expect(messages.getText()).toContain('Image field is required.');
+
+      // Check filesize restrictions
+      var fileToUpload = 'image-dim-small.gif';
+      var absolutePath = path.resolve(__dirname, fileToUpload);
+      imageUploadField.sendKeys(absolutePath);
+      imageUploadSubmit.click();
+      // Wait for the messages to be written.
+      browser.wait(function() {
+        return browser.isElementPresent(element(by.css('#edit-field-components-und-0-field-image .messages')));
+      }, 5000);
+      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The specified file '+ fileToUpload + ' could not be uploaded. The image is too small; the minimum dimensions are 320x180 pixels.');
+
+      // Check dimension large
+      browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+      // Add paragraph type
+      paragraphTypeLink.click();
+      paragraphAddButton.click();
+      browser.wait(function() {
+        return browser.isElementPresent(paragraphTypeDiv);
+      }, 5000);
+
+      // Check paragraph type title and fields
+      expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+      browser.wait(function(){
+        // Check all paragraph fields are present.
+        return browser.isElementPresent(paragraphImageDiv) && browser.isElementPresent(paragraphImageCaptionDiv);
+      }, 5000);
+
+      // Check filesize restrictions
+      var fileToUpload = 'image-dim-large.gif';
+      var absolutePath = path.resolve(__dirname, fileToUpload);
+      imageUploadField.sendKeys(absolutePath);
+      imageUploadSubmit.click();
+      // Wait for the messages to be written.
+      browser.wait(function() {
+        return browser.isElementPresent(element(by.css('#edit-field-components-und-0-field-image .messages')));
+      }, 5000);
+      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The image was resized to fit within the maximum allowed dimensions of 1280x720 pixels.');
+
+      /**
+       * This is commented out due to a bug that exists with
+       * paragraphs and filefield source modules. It is captured in pivotal
+       * with story #93987938.
+       */
+      // // Check filetype
+      // browser.get(browser.params.url + '/node/add/' + contentTypePathName);
+      // // Add paragraph type
+      // paragraphTypeLink.click();
+      // paragraphAddButton.click();
+      // browser.wait(function() {
+      //   return browser.isElementPresent(paragraphTypeDiv);
+      // }, 5000);
+
+      // // Check paragraph type title and fields
+      // expect(paragraphTitleDiv.getText()).toContain('Paragraph type: ' + component);
+
+      // browser.wait(function(){
+      //   // Check all paragraph fields are present.
+      //   return browser.isElementPresent(paragraphImageDiv) && browser.isElementPresent(paragraphImageCaptionDiv);
+      // }, 5000);
+
+      // // Check filetype restrictions
+      // var fileToUpload = 'image-filetype.md';
+      // var absolutePath = path.resolve(__dirname, fileToUpload);
+      // console.log(absolutePath);
+      // imageUploadField.sendKeys(absolutePath);
+      // browser.sleep(10000);
+      // imageUploadSubmit.click();
+      // // Wait for the messages to be written.
+      // browser.wait(function() {
+      //   return browser.isElementPresent(element(by.css('#edit-field-components-und-0-field-image .messages')));
+      // }, 5000);
+      // expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The specified file ' + fileToUpload + ' could not be uploaded. Only files with the following extensions are allowed: png gif jpg jpeg.');
+    });
+  }
 
   it('deletes content created for the test', function() {
     browser.get(browser.params.url + '/admin/content');
@@ -604,44 +753,32 @@ describe('OE Components', function() {
     submit.click();
     deleteAll.click();
 
-    browser.sleep(1000);
-
     browser.get(browser.params.url + '/admin/content');
     expect(row.isPresent()).toBe(false);
 
   });
 
-  // it('deletes the content type created', function() {
-  //   // Delete the content type
-  //   browser.get(browser.params.url + '/admin/structure/types/manage/' + contentTypePathName + '/delete');
-  //   browser.sleep(10000);
-  //   element(by.id('edit-submit')).click();
+  it('deletes the content type created', function() {
+    // Delete the content type
+    browser.get(browser.params.url + '/admin/structure/types/manage/' + contentTypePathName + '/delete');
+    element(by.id('edit-submit')).click();
+    browser.get(browser.params.url + '/admin/structure/types');
 
-  //   browser.sleep(1000);
+    // Go to the content type list and check if it is there
+    var el = element(by.xpath('//table[2]/tbody/tr/td[contains(text(), "' + contentTypeName + '")]'));
+    expect(el.isPresent()).toBe(false);
+  });
 
-  //   // Go to the content type list and check if it is there
-  //   var el = element(by.cssContainingText('//table[2]/tbody/tr/td[contains(text(), "' + contentTypeName + '")]'));
-  //   browser.get(browser.params.url + '/admin/structure/types');
-  //   expect(el.isPresent()).toBe(false);
-  // });
-
-  //it('deletes the content type created for the test', function() {
-  // // Clean up actions (part of another test):
-  // - Disable Field UI module (use fieldUiStatus)
-  // - Delete content
-  // - Delete content type
-
-  //function CleanUp() {
-  //  describe('Clean up', function () {
-  //    it('can revert changes made in this spec', function () {
-  //      // Delete content (fields deleted automatically)
-  //      // <tbd>
-  //      // Delete content type
-  //      browser.get(browser.params.url + '/admin/structure/types/manage/contentTypePathName/delete');
-  //      element(by.id('edit-submit')).click();
-  //    });
-  //  });
-  //}
-  // });
+  it('disables the field_ui module', function() {
+    // Enable Field UI module
+    browser.get(browser.params.url + '/admin/modules');
+    global.fieldUiStatus = element(by.id('edit-modules-core-field-ui-enable')).isSelected();
+    element(by.id('edit-modules-core-field-ui-enable')).isSelected().then(function(selected) {
+      if (selected) {
+        element(by.id('edit-modules-core-field-ui-enable')).click();
+      }
+    });
+    element(by.id('edit-submit')).click();
+  });
 
 });
