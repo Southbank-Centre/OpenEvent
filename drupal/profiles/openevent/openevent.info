@@ -43,6 +43,7 @@ dependencies[] = field_group
 dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = filefield_sources
+dependencies[] = htmltidy
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = master

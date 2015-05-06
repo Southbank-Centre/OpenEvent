@@ -39,6 +39,7 @@ $conf['master_modules'] = array(
     'field_group',
     'field_validation',
     'filefield_sources',
+    'htmltidy',
     'libraries',
     'link',
     'master',
