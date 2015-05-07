@@ -102,9 +102,6 @@ describe('The Place features of the CMS', function() {
     $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
-    // test that a second image could be added
-    expect(element(by.id('edit-field-image-und-1-upload')).isPresent()).toBe(true);
-
     // type in the title of the page created in the above test and wait for the autocomplete list to load
     dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
     dvr.wait(function () {
@@ -133,7 +130,7 @@ describe('The Place features of the CMS', function() {
 
       // add geolocation
       element(by.id('edit-field-place-geolocation-und-0-address-field')).sendKeys('Southbank Centre London');
-      element(by.id('geolocation-address-geocode-49-0')).click();
+      element(by.css('.geolocation-address-geocode')).click();
 
       // wait for Google Maps
       browser.sleep(5000);
@@ -250,7 +247,7 @@ describe('The Place features of the CMS', function() {
     element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
 
     // re-focus
-    element(by.css('body')).click();
+    element(by.css('h1')).click();
     // save
     element(by.id('edit-submit')).click();
     dvr.wait(function() {
@@ -271,22 +268,20 @@ describe('The Place features of the CMS', function() {
           "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
         },
-        "field_image": [
-          {
-            "file": {
-              "uri": function(val) {
-                expect(val).toContain(browser.params.url + "/file/");
-              },
-              "id": function(val) {
-                expect(val).toBeDefined();
-                expect(isNaN(parseInt(val, 10))).toBe(false);
-              },
-              "resource": "file"
+        "field_image": {
+          "file": {
+            "uri": function(val) {
+              expect(val).toContain(browser.params.url + "/file/");
             },
-            "alt": "Test image ALT",
-            "title": "Test image TITLE"
-          }
-        ],
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "file"
+          },
+          "alt": "Test image ALT",
+          "title": "Test image TITLE"
+        },
         "field_place_parents": [
           {
             "uri": browser.params.url + "/node/" + parentNid,

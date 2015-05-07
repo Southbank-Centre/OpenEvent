@@ -76,9 +76,6 @@ describe('Image', function() {
     $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
-    // test that a second image could be added
-    expect(element(by.id('edit-field-image-und-1-upload')).isPresent()).toBe(true);
-
     // select event class
     dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
 
@@ -143,29 +140,27 @@ describe('Image', function() {
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
       .expectJSON({
-        "field_image": [
-          {
-            "file": {
-              "uri": function(val) {
-                expect(val).toContain(browser.params.url + "/file/");
-              },
-              "id": function(val) {
-                expect(val).toBeDefined();
-                expect(isNaN(parseInt(val, 10))).toBe(false);
-              },
-              "resource": "file"
+        "field_image": {
+          "file": {
+            "uri": function(val) {
+              expect(val).toContain(browser.params.url + "/file/");
             },
-            "alt": "Test image ALT",
-            "title": "Test image TITLE"
-          }
-        ]
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "file"
+          },
+          "alt": "Test image ALT",
+          "title": "Test image TITLE"
+        }
       })
       .afterJSON(function(imageJSON) {
 
         // Use data from previous result in next test
 
         frisby.create('Image JSON')
-          .get(browser.params.url + '/file/' + imageJSON.field_image[0].file.id + '.json')
+          .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
           .expectJSON({
