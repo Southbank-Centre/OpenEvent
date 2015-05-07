@@ -159,7 +159,7 @@ describe('OE Components', function() {
     // Submit the node and check for successful creation message
     element(by.id('edit-submit')).click();
     expect(element(by.css('.messages')).getText()).toContain(contentTypeName + ' Test content has been created.');
-  })
+  });
 
   it('tests Flickr embed component: creates a new node of the content type and add a paragraph to it', function() {
     browser.get(browser.params.url + '/node/add/' + contentTypePathName);
@@ -228,7 +228,7 @@ describe('OE Components', function() {
     // Node elements
     var nodeTitle = 'Test HTML component';
     var htmlHeadingField = element(by.id('edit-field-components-und-0-field-heading-und-0-value'));
-    var htmlContentField = element(by.id('edit-field-components-und-0-field-html-und-0-value'));;
+    var htmlContentField = element(by.id('edit-field-components-und-0-field-html-und-0-value'));
 
     // Add a html paragraph type
     paragraphTypeHTML.click();
@@ -270,7 +270,7 @@ describe('OE Components', function() {
     // Node elements
     var nodeTitle = 'Test Link component';
     var linkTitleField = element(by.id('edit-field-components-und-0-field-link-und-0-title'));
-    var linkUrlField = element(by.id('edit-field-components-und-0-field-link-und-0-url'));;
+    var linkUrlField = element(by.id('edit-field-components-und-0-field-link-und-0-url'));
 
     // Add a html paragraph type
     paragraphTypeLink.click();
@@ -418,7 +418,7 @@ describe('OE Components', function() {
     titleField.sendKeys(nodeTitle);
     quoteTextField.sendKeys(quote);
     quoteAttrField.sendKeys(attribution);
-    nodeSubmit.click()
+    nodeSubmit.click();
     expect(messages.getText()).toContain(contentTypeName + ' ' + nodeTitle + ' has been created');
   });
 
@@ -459,7 +459,7 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain('SoundCloud embed code field is required.');
 
     // Submit with incorect sound cloud embed fragment.
-    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.'
+    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.';
     var caption = 'This is my caption';
     titleField.sendKeys(nodeTitle);
     soundCloudEmbedField.sendKeys(embed);
@@ -569,7 +569,7 @@ describe('OE Components', function() {
     expect(messages.getText()).toContain('YouTube embed code field is required.');
 
     // Submit with incorect values.
-    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.'
+    var embed = 'Not an embed <a href="http://southbankcentre.co.uk>code</a>.';
     var caption = 'This is my caption';
     titleField.sendKeys(nodeTitle);
     youtubeEmbedField.sendKeys(embed);
@@ -743,7 +743,7 @@ describe('OE Components', function() {
 
     // Page elements.
     var checkbox = element(by.xpath("//table[2]/thead//th[@class='select-all']/input"));
-    var deleteOption = element(by.cssContainingText('#edit-operation > option', 'Delete selected content'));;
+    var deleteOption = element(by.cssContainingText('#edit-operation > option', 'Delete selected content'));
     var submit = element(by.id('edit-submit--2'));
     var deleteAll = element(by.id('edit-submit'));
     var row = element(by.xpath("//table/thead//th[@class='select-all']/input"));
