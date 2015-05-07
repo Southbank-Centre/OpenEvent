@@ -58,3 +58,8 @@ projects[views_data_export][version] = 3.0-beta8
 
 ; Defaults
 defaults[projects][subdir] = contrib
+
+; Open bugs
+;
+; 2484657 - Breaking behaviour when a filefield source field is used within a paragraph bundle.
+;
