@@ -70,6 +70,7 @@ dependencies[] = views_ui
 ; Open Event dependencies
 dependencies[] = oe_components
 dependencies[] = oe_event
+dependencies[] = oe_place
 
 ; SC dependencies
 dependencies[] = sc_style_guide
