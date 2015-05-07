@@ -459,7 +459,7 @@ function oe_components_field_default_field_instances() {
   $field_instances['paragraphs_item-image-field_image'] = array(
     'bundle' => 'image',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Please note that files with disallowed filetypes will be <strong>disregarded</strong> without notice.<br>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -1198,6 +1198,7 @@ function oe_components_field_default_field_instances() {
   t('Image');
   t('Link');
   t('Paste in HTML markup here. Disallowed tags and invalid markup will be stripped out.');
+  t('Please note that files with disallowed filetypes will be <strong>disregarded</strong> without notice.<br>');
   t('Quote');
   t('Quote attribution');
   t('SoundCloud embed code');
