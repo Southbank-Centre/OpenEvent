@@ -43,7 +43,7 @@ projects[taxonomy_access_fix][version] = 2.1
 projects[token][version] = 1.6
 projects[transliteration][version] = 3.2
 projects[view_unpublished][version] = 1.2
-projects[views][version] = 3.10
+projects[views][version] = 3.11
 
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
