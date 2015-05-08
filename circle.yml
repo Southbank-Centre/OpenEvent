@@ -66,4 +66,3 @@ general:
       - develop
       - master
       - /release-.*/
-      - 94189736_CHORE_saucelabs_tunnel
