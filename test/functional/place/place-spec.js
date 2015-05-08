@@ -16,7 +16,6 @@ describe('The Place features of the CMS', function() {
   beforeEach(function(){
     // don't wait for (non-existent) Angular to load
     isAngularSite(false);
-    browser.manage().timeouts().implicitlyWait(5000);
   });
 
   it('can allow places to be viewed by anyone', function() {
