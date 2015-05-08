@@ -140,6 +140,16 @@ function sc_style_guide_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'show format tips'.
+  $permissions['show format tips'] = array(
+    'name' => 'show format tips',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'better_formats',
+  );
+
   // Exported permission: 'use text format filtered_html'.
   $permissions['use text format filtered_html'] = array(
     'name' => 'use text format filtered_html',
@@ -153,6 +163,16 @@ function sc_style_guide_user_default_permissions() {
   // Exported permission: 'use text format full_html'.
   $permissions['use text format full_html'] = array(
     'name' => 'use text format full_html',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'filter',
+  );
+
+  // Exported permission: 'use text format style_guide_html'.
+  $permissions['use text format style_guide_html'] = array(
+    'name' => 'use text format style_guide_html',
     'roles' => array(
       'administrator' => 'administrator',
       'designer' => 'designer',
