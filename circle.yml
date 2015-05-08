@@ -67,3 +67,4 @@ general:
       - master
       - /release-.*/
       - 91510332_cms_architecture
+      - 93322128_release_style_guide
