@@ -12,8 +12,27 @@ describe('The Style Guide features of the CMS', function() {
   var pathAlias;
 
   beforeEach(function(){
-    // don't wait for (non-existent) Angular to load
-    return browser.ignoreSynchronization = true;
+    isAngularSite(false);
+  });
+
+  it('has a correctly configured text format for the HTML field', function() {
+    browser.get(browser.params.url + '/admin/config/content/formats');
+    element(by.id('edit-formats-style-guide-html-configure')).click();
+    expect(element(by.id('edit-roles-3')).isSelected()).toBe(true);
+    expect(element(by.id('edit-roles-3')).isSelected()).toBe(true);
+    expect(element(by.id('edit-filters-htmltidy-status')).isSelected()).toBe(true);
+    expect(element(by.id('edit-filters-filter-autop-status')).isSelected()).toBe(false);
+    expect(element(by.id('edit-filters-filter-url-status')).isSelected()).toBe(false);
+    expect(element(by.id('edit-filters-filter-htmlcorrector-status')).isSelected()).toBe(false);
+
+    // HTML tidy settings
+    expect(element(by.id('edit-filters-htmltidy-settings-htmltidy-filter-style-guide-html-paths-config')).getAttribute('value')).toContain('profiles/openevent/modules/features/sc_style_guide/htmltidy.conf');
+    expect(element(by.id('edit-filters-htmltidy-settings-htmltidy-filter-style-guide-html-format-process-input')).isSelected()).toBe(true);
+  });
+
+  it('allows the designer role to see text format tips', function() {
+    browser.get(browser.params.url + '/admin/people/permissions');
+    expect(element(by.id('edit-3-show-format-tips')).isSelected()).toBe(true);
   });
 
   it('can set up a user with the "designer" role', function() {
@@ -71,6 +90,10 @@ describe('The Style Guide features of the CMS', function() {
 
     browser.get(browser.params.url + '/node/add/style-guide-page');
     expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Style guide page');
+
+    // Submit without required fields
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('.messages')).getText()).toContain('Title field is required.');
 
     // add title
     element(by.id('edit-title')).sendKeys('Typography');
@@ -149,6 +172,10 @@ describe('The Style Guide features of the CMS', function() {
     // fill in Page element spec paragraph
     element(by.id('edit-field-components-und-4-field-description-und-0-value')).sendKeys('There should only ever be one page title.');
     element(by.id('edit-field-components-und-4-field-html-und-0-value')).sendKeys('<h1>Page title</h1>');
+
+    // check that the correct Style guide HTML text format is set for the HTML field
+    expect(element(by.css('.filter-guidelines-style_guide_html')).isPresent()).toBe(true);
+
     element(by.id('edit-field-components-und-4-field-css-properties-und-0-first')).sendKeys('font-family');
     element(by.id('edit-field-components-und-4-field-css-properties-und-0-second')).sendKeys('SC Akkurat');
     element(by.id('edit-field-components-und-4-field-css-properties-und-add-more')).click();
@@ -338,7 +365,7 @@ describe('The Style Guide features of the CMS', function() {
             },
             "field_html": {
               "value": "<h1>Page title</h1>\n",
-              "format": "full_html"
+              "format": "style_guide_html"
             },
             "field_css_properties": [
               {
