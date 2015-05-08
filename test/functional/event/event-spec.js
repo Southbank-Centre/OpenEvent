@@ -12,6 +12,8 @@ describe('The Event features of the CMS', function() {
   var parentPathAlias;
   var nid;
   var pathAlias;
+  var placeNid;
+  var placePathAlias;
 
   beforeEach(function(){
     // don't wait for (non-existent) Angular to load
@@ -76,6 +78,8 @@ describe('The Event features of the CMS', function() {
     // Allow node API endpoints to be viewed by anyone
     dvr.findElement(by.id('edit-1-access-resource-node')).click();
     dvr.findElement(by.id('edit-2-access-resource-node')).click();
+    dvr.findElement(by.id('edit-1-access-resource-relation')).click();
+    dvr.findElement(by.id('edit-2-access-resource-relation')).click();
 
     dvr.findElement(by.id('edit-submit')).click();
 
@@ -310,38 +314,62 @@ describe('The Event features of the CMS', function() {
     dvr.findElement(by.id('edit-submit')).click();
     expect(element(by.id('console')).getText()).toContain('Place Place that has an event has been created.');
 
-    // edit node with id stored in 'nid'
-    browser.get(browser.params.url + '/node/' + nid + '/edit');
+    // go back to edit page
+    dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+    dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
-    // try to select an event - shouldn't be possible
-    // type in the title of the event and wait for the autocomplete list to load
-    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
-    dvr.sleep(5000);
-    // check that there are no items in the autocomplete list
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
+      placePathAlias = alias;
 
-    // select place made earlier in test
-    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).clear();
-    dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Place that has an event');
-    dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
-    }, 5000);
+      // store node ID of event just created
+      dvr.getCurrentUrl().then(function(currentUrl) {
+        var currentUrlObj = url.parse(currentUrl);
+        var currentUrlPath = currentUrlObj.pathname.split(path.sep);
+        placeNid = currentUrlPath[currentUrlPath.length-2];
 
-    // check that there are items in the autocomplete list and select the first one
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']")).isPresent()).toBe(true);
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']/a")).isPresent()).toBe(false);
-    element(by.xpath("//div[@id='autocomplete']//li[1]//div[@class='reference-autocomplete']")).click();
+      });
 
-    // see that you can add more venues
-    expect(element(by.id('edit-field-event-places-und-add-more')).isPresent()).toBe(true);
+      // edit node with id stored in 'nid'
+      browser.get(browser.params.url + '/node/' + nid + '/edit');
 
-    // save
-    dvr.findElement(by.id('edit-submit')).click().then(function() {
+      // try to select an event - shouldn't be possible
+      // type in the title of the event and wait for the autocomplete list to load
+      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
+      dvr.sleep(5000);
+      // check that there are no items in the autocomplete list
+      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
+
+      // select place made earlier in test
+      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).clear();
+      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Place that has an event');
       dvr.wait(function () {
-        return dvr.isElementPresent(by.id('console'));
+          return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
       }, 5000);
-      // verify save
-      expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
+
+      // check that there are items in the autocomplete list and select the first one
+      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div")).isPresent()).toBe(true);
+      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div/a")).isPresent()).toBe(false);
+      element(by.xpath("//div[@id='autocomplete']//li[1]//div")).click();
+
+      // see that you can add more venues
+      expect(element(by.id('edit-field-event-places-und-add-more')).isPresent()).toBe(true);
+
+      // re-focus
+      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+        
+        element(by.css('h1')).click();
+        // save
+        dvr.findElement(by.id('edit-submit')).click().then(function() {
+          dvr.wait(function () {
+            return dvr.isElementPresent(by.id('console'));
+          }, 5000);
+          // verify save
+          expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
+
+        });
+
+      });
+
     });
 
   });
@@ -413,17 +441,6 @@ describe('The Event features of the CMS', function() {
           expect(isNaN(parseInt(val, 10))).toBe(false);
         },
         "field_event_duration": "150",
-        "field_event_places": [
-          {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/node/");
-            },
-            "id": function(val) {
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "node"
-          }
-        ],
         "nid": nid,
         "vid": nid,
         "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
@@ -462,7 +479,32 @@ describe('The Event features of the CMS', function() {
               "resource": "node"
             }
           ])
-          .after(CleanUp)
+          .after(function() {
+
+            // Get the list of all relations of this type, because we don't yet have
+            // a way to filter by an item in the endpoints array
+            frisby.create('Get JSON for "event is located in place" relation')
+              .get(browser.params.url + '/relation.json?relation_type=event_is_located_in_place')
+              .expectStatus(200)
+              .expectHeaderContains('content-type', 'application/json')
+              .expectJSON('list.0', {
+                "endpoints": [
+                  {
+                    "uri": browser.params.url + "/node/" + nid,
+                    "id": nid,
+                    "resource": "node"
+                  },
+                  {
+                    "uri": browser.params.url + "/node/" + placeNid,
+                    "id": placeNid,
+                    "resource": "node"
+                  }
+                ]
+              })
+              .after(CleanUp)
+              .toss();
+
+          })
           .toss();
 
       })
@@ -515,6 +557,8 @@ describe('The Event features of the CMS', function() {
           dvr.findElement(by.id('edit-2-access-content')).click();
           dvr.findElement(by.id('edit-1-access-resource-node')).click();
           dvr.findElement(by.id('edit-2-access-resource-node')).click();
+          dvr.findElement(by.id('edit-1-access-resource-relation')).click();
+          dvr.findElement(by.id('edit-2-access-resource-relation')).click();
           dvr.findElement(by.id('edit-submit')).click();
 
         });

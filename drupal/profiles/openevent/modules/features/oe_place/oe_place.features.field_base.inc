@@ -17,32 +17,12 @@ function oe_place_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_event_places',
-    'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'entityreference',
-    'settings' => array(
-      'handler' => 'base',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'sort' => array(
-          'type' => 'none',
-        ),
-        'target_bundles' => array(
-          'place' => 'place',
-        ),
-      ),
-      'target_type' => 'node',
-    ),
+    'module' => 'relation_add',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'entityreference',
+    'type' => 'relation_add',
   );
 
   // Exported field_base: 'field_opening_hours'
@@ -111,31 +91,12 @@ function oe_place_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_place_parents',
-    'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'entityreference',
-    'settings' => array(
-      'handler' => 'views',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => 'entityreference_1',
-          'view_name' => 'place_parent',
-        ),
-      ),
-      'target_type' => 'node',
-    ),
+    'module' => 'relation_add',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'entityreference',
+    'type' => 'relation_add',
   );
 
   return $field_bases;

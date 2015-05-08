@@ -302,9 +302,8 @@ function oe_place_field_default_field_instances() {
   // Exported field_instance: 'node-place-field_place_parents'
   $field_instances['node-place-field_place_parents'] = array(
     'bundle' => 'place',
-    'default_value' => NULL,
     'deleted' => 0,
-    'description' => '<p>This field allows you to determine which places this place is grouped within.</p>
+    'description' => '<p>This field allows you to determine which places this place is located within.</p>
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
@@ -312,12 +311,10 @@ function oe_place_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 2,
+        'module' => 'relation_add',
+        'settings' => array(),
+        'type' => 'relation_add_endpoints_and_fields',
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -331,17 +328,26 @@ function oe_place_field_default_field_instances() {
     'label' => 'Parents',
     'required' => 0,
     'settings' => array(
+      'relation_target_bundles' => array(
+        'node:place' => 'node:place',
+      ),
+      'relation_type' => array(
+        'place_is_contained_in_place' => 'place_is_contained_in_place',
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'entityreference',
+      'module' => 'relation_add',
       'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
+        'relation_endpoint_bundle_display' => 0,
+        'relation_endpoint_custom_label' => '',
+        'relation_endpoint_iso_language_codes' => 0,
+        'relation_endpoint_label' => 'endpoint',
+        'relation_endpoint_label_delta' => 0,
+        'relation_endpoint_search_by_id' => 0,
       ),
-      'type' => 'entityreference_autocomplete',
+      'type' => 'relation_add',
       'weight' => 4,
     ),
   );
@@ -351,7 +357,7 @@ function oe_place_field_default_field_instances() {
   t('<p>The location of the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.geo</code></a></p>
 
 <p>If this field is populated, the <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.hasMap</code></a> property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>');
-  t('<p>This field allows you to determine which places this place is grouped within.</p>
+  t('<p>This field allows you to determine which places this place is located within.</p>
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>

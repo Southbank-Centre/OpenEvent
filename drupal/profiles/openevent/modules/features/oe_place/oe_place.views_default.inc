@@ -62,7 +62,7 @@ if (isset($args[6])) {
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['nid']['break_phrase'] = TRUE;
   $handler->display->display_options['arguments']['nid']['not'] = TRUE;
-  /* Contextual filter: Content: Parents (field_place_parents) */
+  /* Contextual filter: Broken/missing handler */
   $handler->display->display_options['arguments']['field_place_parents_target_id']['id'] = 'field_place_parents_target_id';
   $handler->display->display_options['arguments']['field_place_parents_target_id']['table'] = 'field_data_field_place_parents';
   $handler->display->display_options['arguments']['field_place_parents_target_id']['field'] = 'field_place_parents_target_id';
@@ -77,8 +77,6 @@ if (isset($args[6])) {
   $handler->display->display_options['arguments']['field_place_parents_target_id']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['field_place_parents_target_id']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['field_place_parents_target_id']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_place_parents_target_id']['break_phrase'] = TRUE;
-  $handler->display->display_options['arguments']['field_place_parents_target_id']['not'] = TRUE;
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';

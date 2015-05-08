@@ -30,6 +30,8 @@ describe('The Place features of the CMS', function() {
     // Allow node API endpoints to be viewed by anyone
     dvr.findElement(by.id('edit-1-access-resource-node')).click();
     dvr.findElement(by.id('edit-2-access-resource-node')).click();
+    dvr.findElement(by.id('edit-1-access-resource-relation')).click();
+    dvr.findElement(by.id('edit-2-access-resource-relation')).click();
 
     dvr.findElement(by.id('edit-submit')).click();
 
@@ -105,13 +107,16 @@ describe('The Place features of the CMS', function() {
     // type in the title of the page created in the above test and wait for the autocomplete list to load
     dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
     dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type .field-content'));
+        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
     }, 5000);
 
     // check that there's at least one item in the list, and that it doesn't contain a link
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(true);
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']/a")).isPresent()).toBe(false);
-    element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div")).isPresent()).toBe(true);
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div/a")).isPresent()).toBe(false);
+    element(by.xpath("//div[@id='autocomplete']//li[1]//div")).click();
+
+    // check that more parents can be added
+    expect(element(by.id('edit-field-place-parents-und-add-more')).isPresent()).toBe(true);
 
     // fill out content on 'Location' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -206,57 +211,6 @@ describe('The Place features of the CMS', function() {
 
   });
 
-  it('does not allow a Place to have one of its child Places assigned as a parent', function() {
-
-    // create an Place that should appear be allowed to be selected as a parent
-    browser.get(browser.params.url + '/node/add/place');
-
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Can be parent');
-
-    // set the item to published
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-    dvr.findElement(by.id('edit-status')).click();
-
-    // submit
-    dvr.findElement(by.id('edit-submit')).click();
-
-    // test successful save
-    expect(element(by.id('console')).getText()).toContain('Place Can be parent has been created.');
-
-    // edit 'Parent place' to run test
-    browser.get(browser.params.url + '/node/' + parentNid + '/edit');
-
-    // type in the title of the place that is a child of this place and wait for the autocomplete list to load
-    dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Protractor place');
-    dvr.sleep(5000);
-
-    // check that there are no items in the autocomplete list
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
-
-    // type in the title of the place that was created earlier in this test and wait for the autocomplete list to load
-    dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).clear();
-    dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Can be parent');
-    dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type .field-content'));
-    }, 5000);
-
-    // check that there are items in the autocomplete list and select the first one
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(true);
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']/a")).isPresent()).toBe(false);
-    element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
-
-    // re-focus
-    element(by.css('h1')).click();
-    // save
-    element(by.id('edit-submit')).click();
-    dvr.wait(function() {
-      return element(by.cssContainingText('#console', 'Place Parent place has been updated.'));
-    }, 5000);
-    expect(element(by.id('console')).getText()).toContain('Place Parent place has been updated.');
-
-  });
-
   it('outputs Event node JSON in the expected format', function () {
 
     frisby.create('Get JSON for Event page created in previous test')
@@ -282,13 +236,6 @@ describe('The Place features of the CMS', function() {
           "alt": "Test image ALT",
           "title": "Test image TITLE"
         },
-        "field_place_parents": [
-          {
-            "uri": browser.params.url + "/node/" + parentNid,
-            "id": parentNid,
-            "resource": "node"
-          }
-        ],
         "field_place_address": {
           "country": 'GB',
           "administrative_area": "London (county)",
@@ -357,7 +304,32 @@ describe('The Place features of the CMS', function() {
           "format": null
         }
       })
-      .after(CleanUp)
+      .after(function() {
+
+        // Get the list of all relations of this type, because we don't yet have
+        // a way to filter by an item in the endpoints array
+        frisby.create('Get JSON for "place is contained in place" relation')
+          .get(browser.params.url + '/relation.json?relation_type=place_is_contained_in_place')
+          .expectStatus(200)
+          .expectHeaderContains('content-type', 'application/json')
+          .expectJSON('list.0', {
+            "endpoints": [
+              {
+                "uri": browser.params.url + "/node/" + nid,
+                "id": nid,
+                "resource": "node"
+              },
+              {
+                "uri": browser.params.url + "/node/" + parentNid,
+                "id": parentNid,
+                "resource": "node"
+              }
+            ]
+          })
+          .after(CleanUp)
+          .toss();
+
+      })
       .toss();
 
     function CleanUp() {
@@ -381,6 +353,8 @@ describe('The Place features of the CMS', function() {
           dvr.findElement(by.id('edit-2-access-content')).click();
           dvr.findElement(by.id('edit-1-access-resource-node')).click();
           dvr.findElement(by.id('edit-2-access-resource-node')).click();
+          dvr.findElement(by.id('edit-1-access-resource-relation')).click();
+          dvr.findElement(by.id('edit-2-access-resource-relation')).click();
           dvr.findElement(by.id('edit-submit')).click();
 
         });

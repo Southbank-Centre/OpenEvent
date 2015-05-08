@@ -51,6 +51,9 @@ $conf['master_modules'] = array(
     'office_hours',
     'paragraphs',
     'pathauto',
+    'relation',
+    'relation_add',
+    'relation_endpoint',
     'restws',
     'shs',
     'strongarm',
@@ -77,6 +80,7 @@ $conf['master_modules'] = array(
     'field_validation_ui',
     'views_ui',
     'migrate_ui',
+    'relation_ui',
     'dblog',
   ),
   'staging' => array(

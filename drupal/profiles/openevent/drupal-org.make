@@ -37,6 +37,7 @@ projects[menu_firstchild][version] = 1.1
 projects[migrate][version] = 2.7
 projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
+projects[relation_add][version] = 1.4
 projects[restws][version] = 2.4
 projects[shs][version] = 1.6
 ; Adds a check when updating parent terms. shs does not give warning any more when terms are updated.
@@ -53,6 +54,7 @@ projects[better_formats][version] = 1.0-beta1
 projects[cer][version] = 3.0-alpha7
 projects[master][version] = 2.0-beta4
 projects[paragraphs][version] = 1.0-beta6
+projects[relation][version] = 1.0-rc7
 projects[table_element][version] = 1.0-beta1
 projects[varnish][version] = 1.0-beta3
 ; The module gave undefined notices after installation in theme_varnish_status().
