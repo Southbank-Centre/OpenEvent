@@ -39,6 +39,8 @@ projects[migrate][version] = 2.7
 projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
 projects[relation_add][version] = 1.4
+; When adding a new Relation Add field to a Content Type, after clicking the initial Save Field Settings button, we are taken to the Settings page and there is a warning
+projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
 projects[restws][version] = 2.4
 projects[shs][version] = 1.6
 ; Adds a check when updating parent terms. shs does not give warning any more when terms are updated.
