@@ -48,7 +48,6 @@ $conf['master_modules'] = array(
     'master',
     'menu_firstchild',
     'migrate',
-    'menu_firstchild',
     'office_hours',
     'paragraphs',
     'pathauto',
