@@ -76,12 +76,12 @@ $conf['master_modules'] = array(
 
   ),
   'dev' => array(
+    'dblog',
     'field_ui',
     'field_validation_ui',
-    'views_ui',
     'migrate_ui',
     'relation_ui',
-    'dblog',
+    'views_ui',
   ),
   'staging' => array(
     'syslog',
