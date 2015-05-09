@@ -25,6 +25,7 @@ $conf['master_modules'] = array(
 
     // Contributed modules
     'addressfield',
+    'auto_entitylabel',
     'better_formats',
     'ctools',
     'date',

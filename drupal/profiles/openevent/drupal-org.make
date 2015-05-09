@@ -19,11 +19,8 @@ api = 2
 ;   projects[ctools][patch][1023606] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
 
 ; Contrib modules
-<<<<<<< HEAD
 projects[addressfield][version] = 1.1
-=======
 projects[auto_entitylabel][version] = 1.3
->>>>>>> Added modules relation and relation_add.
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[diff][version] = 3.2
