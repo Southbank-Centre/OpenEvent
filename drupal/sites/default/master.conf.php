@@ -69,6 +69,7 @@ $conf['master_modules'] = array(
     'oe_components',
     'oe_event',
     'oe_place',
+    'oe_person',
 
     // Southbank Centre features
     'sc_style_guide',
