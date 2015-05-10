@@ -152,7 +152,56 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_children'
+  $field_instances['node-event-field_event_children'] = array(
+    'bundle' => 'event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 6,
+      ),
+      'field_readonly' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_children',
+    'label' => 'Children',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 9,
     ),
   );
 
@@ -504,7 +553,8 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>',
+    'description' => 'Images from the event.<br/>
+Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -570,116 +620,6 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_teaser'
-  $field_instances['node-event-field_teaser'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'A short piece of text designed to give the visitor a feel for the event.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_teaser',
-    'label' => 'Teaser',
-    'required' => 0,
-    'settings' => array(
-      'better_formats' => array(
-        'allowed_formats' => array(
-          'filtered_html' => 'filtered_html',
-          'full_html' => 0,
-          'plain_text' => 0,
-        ),
-        'allowed_formats_toggle' => 1,
-        'default_order_toggle' => 0,
-        'default_order_wrapper' => array(
-          'formats' => array(
-            'filtered_html' => array(
-              'weight' => 0,
-            ),
-            'full_html' => array(
-              'weight' => 1,
-            ),
-            'plain_text' => array(
-              'weight' => 10,
-            ),
-          ),
-        ),
-      ),
-      'text_processing' => 1,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'rows' => 5,
-      ),
-      'type' => 'text_textarea',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'relation-event_is_contained_in_event-endpoints'
-  $field_instances['relation-event_is_contained_in_event-endpoints'] = array(
-    'bundle' => 'event_is_contained_in_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'relation_endpoint',
-        'settings' => array(
-          'view_modes' => array(
-            'cer' => 'default',
-            'file' => 'default',
-            'node' => 'default',
-            'paragraphs_item' => 'default',
-            'relation' => 'default',
-            'taxonomy_term' => 'default',
-            'taxonomy_vocabulary' => 'default',
-            'user' => 'default',
-          ),
-        ),
-        'type' => 'relation_endpoint',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'relation',
-    'field_name' => 'endpoints',
-    'label' => 'endpoints',
-    'required' => FALSE,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'module' => 'relation_endpoint',
-      'settings' => array(),
-      'type' => 'relation_endpoint',
-      'weight' => 0,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('<p>This field allows you to determine which events this event is grouped within.</p>
@@ -687,7 +627,6 @@ function oe_event_field_default_field_instances() {
 <p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
 <p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
 <p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
-  t('A short piece of text designed to give the visitor a feel for the event.');
   t('Age range');
   t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
   t('Class');
@@ -696,8 +635,9 @@ function oe_event_field_default_field_instances() {
   t('Door time');
   t('Duration');
   t('Image');
+  t('Images from the event.<br/>
+Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.');
   t('Parents');
-  t('Teaser');
   t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
   t('The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.');
