@@ -341,9 +341,9 @@ function oe_place_field_default_field_instances() {
       'module' => 'relation_add',
       'settings' => array(
         'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => '',
+        'relation_endpoint_custom_label' => 'Parent',
         'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'endpoint',
+        'relation_endpoint_label' => 'custom',
         'relation_endpoint_label_delta' => 0,
         'relation_endpoint_search_by_id' => 0,
       ),
