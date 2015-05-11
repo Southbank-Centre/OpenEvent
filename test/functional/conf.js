@@ -39,7 +39,8 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'chrome',
-      name: 'Testing with chrome'
+      name: 'Testing with chrome',
+      'tunnel-identifier': process.env.SAUCE_TUNNEL_ID
     },
   //  {
   //    browserName: 'firefox',
