@@ -50,7 +50,7 @@ test:
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz
   override:
-    - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready:
+    - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready -i $SAUCE_TUNNEL_ID:
         background: true
         pwd: sc-*-linux
     # Wait for tunnel to be ready
@@ -66,4 +66,4 @@ general:
       - develop
       - master
       - /release-.*/
-      - 91510332_cms_architecture
+      - 94189736_CHORE_saucelabs_tunnel

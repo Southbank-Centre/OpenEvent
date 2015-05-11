@@ -39,7 +39,8 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'chrome',
-      name: 'Testing with chrome'
+      name: 'Testing with chrome',
+      'tunnel-idenitifer': 'circle-ci-tunnel'
     },
   //  {
   //    browserName: 'firefox',
