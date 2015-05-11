@@ -152,7 +152,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -201,7 +201,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -245,7 +245,7 @@ function oe_event_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -455,7 +455,56 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 8,
+      'weight' => 9,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_places'
+  $field_instances['node-event-field_event_places'] = array(
+    'bundle' => 'event',
+    'deleted' => 0,
+    'description' => 'The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'relation_add',
+        'settings' => array(),
+        'type' => 'relation_add_endpoints_and_fields',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_places',
+    'label' => 'Venues',
+    'required' => 0,
+    'settings' => array(
+      'relation_target_bundles' => array(
+        'node:place' => 'node:place',
+      ),
+      'relation_type' => array(
+        'event_is_located_in_place' => 'event_is_located_in_place',
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'relation_add',
+      'settings' => array(
+        'relation_endpoint_bundle_display' => 0,
+        'relation_endpoint_custom_label' => '',
+        'relation_endpoint_iso_language_codes' => 0,
+        'relation_endpoint_label' => 'endpoint',
+        'relation_endpoint_label_delta' => 0,
+        'relation_endpoint_search_by_id' => 0,
+      ),
+      'type' => 'relation_add',
+      'weight' => 5,
     ),
   );
 
@@ -499,7 +548,7 @@ function oe_event_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -507,7 +556,7 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -651,6 +700,7 @@ function oe_event_field_default_field_instances() {
 <p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
   t('A short piece of text designed to give the visitor a feel for the event.');
   t('Age range');
+  t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
   t('Children');
   t('Class');
   t('Date/time');
@@ -666,9 +716,11 @@ function oe_event_field_default_field_instances() {
   t('The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.');
   t('The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
+  t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
   t('The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
+  t('Venues');
 
   return $field_instances;
 }

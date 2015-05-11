@@ -58,9 +58,10 @@ function oe_event_field_group_info() {
       3 => 'field_event_class',
       4 => 'field_event_parents',
       5 => 'field_event_type',
-      6 => 'field_teaser',
-      7 => 'field_image',
-      8 => 'title',
+      6 => 'field_image',
+      7 => 'field_teaser',
+      8 => 'field_event_places',
+      9 => 'title',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
