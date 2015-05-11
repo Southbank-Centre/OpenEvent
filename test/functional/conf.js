@@ -40,7 +40,7 @@ exports.config = {
     {
       browserName: 'chrome',
       name: 'Testing with chrome',
-      'tunnel-idenitifer': 'circle-ci-tunnel'
+      'tunnel-idenitifer': process.env.SAUCE_TUNNEL_ID
     },
   //  {
   //    browserName: 'firefox',
