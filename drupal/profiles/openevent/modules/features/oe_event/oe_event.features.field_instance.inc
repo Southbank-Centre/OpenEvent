@@ -156,55 +156,6 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_children'
-  $field_instances['node-event-field_event_children'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 6,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_children',
-    'label' => 'Children',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'entityreference',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-      ),
-      'type' => 'entityreference_autocomplete',
-      'weight' => 10,
-    ),
-  );
-
   // Exported field_instance: 'node-event-field_event_class'
   $field_instances['node-event-field_event_class'] = array(
     'bundle' => 'event',
@@ -406,7 +357,6 @@ function oe_event_field_default_field_instances() {
   // Exported field_instance: 'node-event-field_event_parents'
   $field_instances['node-event-field_event_parents'] = array(
     'bundle' => 'event',
-    'default_value' => NULL,
     'deleted' => 0,
     'description' => '<p>This field allows you to determine which events this event is grouped within.</p>
 <p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
@@ -416,21 +366,10 @@ function oe_event_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 5,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 5,
+        'module' => 'relation_add',
+        'settings' => array(),
+        'type' => 'relation_add_endpoints_and_fields',
+        'weight' => 15,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -444,17 +383,26 @@ function oe_event_field_default_field_instances() {
     'label' => 'Parents',
     'required' => 0,
     'settings' => array(
+      'relation_target_bundles' => array(
+        'node:event' => 'node:event',
+      ),
+      'relation_type' => array(
+        'event_is_contained_in_event' => 'event_is_contained_in_event',
+      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'entityreference',
+      'module' => 'relation_add',
       'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
+        'relation_endpoint_bundle_display' => 0,
+        'relation_endpoint_custom_label' => 'Parent',
+        'relation_endpoint_iso_language_codes' => 0,
+        'relation_endpoint_label' => 'custom',
+        'relation_endpoint_label_delta' => 0,
+        'relation_endpoint_search_by_id' => 0,
       ),
-      'type' => 'entityreference_autocomplete',
+      'type' => 'relation_add',
       'weight' => 9,
     ),
   );
@@ -691,6 +639,47 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'relation-event_is_contained_in_event-endpoints'
+  $field_instances['relation-event_is_contained_in_event-endpoints'] = array(
+    'bundle' => 'event_is_contained_in_event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'relation_endpoint',
+        'settings' => array(
+          'view_modes' => array(
+            'cer' => 'default',
+            'file' => 'default',
+            'node' => 'default',
+            'paragraphs_item' => 'default',
+            'relation' => 'default',
+            'taxonomy_term' => 'default',
+            'taxonomy_vocabulary' => 'default',
+            'user' => 'default',
+          ),
+        ),
+        'type' => 'relation_endpoint',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'relation',
+    'field_name' => 'endpoints',
+    'label' => 'endpoints',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'relation_endpoint',
+      'settings' => array(),
+      'type' => 'relation_endpoint',
+      'weight' => 0,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('<p>This field allows you to determine which events this event is grouped within.</p>
@@ -701,13 +690,11 @@ function oe_event_field_default_field_instances() {
   t('A short piece of text designed to give the visitor a feel for the event.');
   t('Age range');
   t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
-  t('Children');
   t('Class');
   t('Date/time');
   t('Description');
   t('Door time');
   t('Duration');
-  t('Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>');
   t('Image');
   t('Parents');
   t('Teaser');
@@ -721,6 +708,7 @@ function oe_event_field_default_field_instances() {
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
   t('Venues');
+  t('endpoints');
 
   return $field_instances;
 }
