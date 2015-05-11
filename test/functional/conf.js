@@ -53,14 +53,14 @@ exports.config = {
     isSauceLabs: 0
   },
 
-  allScriptsTimeout: 60000,
+  allScriptsTimeout: 120000,
 
   // Options to be passed to jasmine-node.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
     showColors: true,
     // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 60000
+    defaultTimeoutInterval: 120000
   },
 
   // function to run before the tests - logs the browser into the CMS
