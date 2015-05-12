@@ -17,7 +17,8 @@ describe('The Person features of the CMS', function() {
   // Page elements
   var pageTitle = element(by.css('.page-title'));
   var save = element(by.id('edit-submit'));
-  var messages = element(by.css('.messages'));
+  var del = element(by.id('edit-delete'));
+  var messages = element(by.css('.messages')); // How do we distinguish multiple messages?
 
   // Tab Main
   var tabMain = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']"));
@@ -96,7 +97,7 @@ describe('The Person features of the CMS', function() {
     save.click();
   });
 
-  it('can create a person', function() {
+  it('can create, edit and delete a person', function() {
     browser.get(browser.params.url + '/node/add/person');
     expect(pageTitle.getText()).toContain('Create Person');
 
@@ -111,6 +112,30 @@ describe('The Person features of the CMS', function() {
 
     // Expectations
     expect(messages.getText()).toContain('Person Jon Snow has been created.');
+
+    // Check if it can edit the node.
+    var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+    edit.click();
+
+    // Clear the contents of Alias field.
+    personNameSuffix.clear();
+    save.click();
+
+    // The fields that were deleted.
+    var aliasFieldLabel = element(by.css('.field-name-field-person-name-alias field-label'));
+    var aliasFieldItem = element(by.css('field-name-field-person-name-alias field-items'));
+
+    // Expect deleted fields not to be there.
+    expect(aliasFieldLabel.isPresent()).not.toBe(true);
+    expect(aliasFieldItem.isPresent()).not.toBe(true);
+
+    // Delete the node (edit first, click delete and then confirm deletion)
+    edit.click();
+    del.click();
+    save.click();
+    expect(messages.getText()).toContain('Person Jon Snow has been deleted.');
+
+  });
 
   // What are invalid fields? The fields are limited in length and will not accept longer strings.
   it('can not save person with invalid fields', function() {
@@ -162,7 +187,7 @@ describe('The Person features of the CMS', function() {
 
   });
 
-  it('set relationship to Event', function() {
+  it('sets relationship to Event', function() {
 
     // Person
     var name = 'Daenerys';
@@ -203,6 +228,7 @@ describe('The Person features of the CMS', function() {
   });
 
   // it('set relationship to Event', function() {})
+
 });
 
 function addEvent(eventName) {
