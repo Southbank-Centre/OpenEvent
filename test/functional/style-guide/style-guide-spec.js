@@ -310,20 +310,6 @@ describe('The Style Guide features of the CMS', function() {
             "resource": "paragraphs_item"
           }
         ],
-        "cer": {
-          "lineage": "node:style_guide_page:",
-          "depth": 0,
-          "owner": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          },
-          "original": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          }
-        },
         "nid": nid,
         "vid": nid,
         "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
@@ -381,20 +367,6 @@ describe('The Style Guide features of the CMS', function() {
                 "second": "- 0.2"
               }
             ],
-            "cer": {
-              "lineage": "paragraphs_item:page_element_spec:",
-              "depth": 0,
-              "owner": {
-                "uri": browser.params.url + "/paragraphs_item/" + itemId,
-                "id": itemId,
-                "resource": "paragraphs_item"
-              },
-              "original": {
-                "uri": browser.params.url + "/paragraphs_item/" + itemId,
-                "id": itemId,
-                "resource": "paragraphs_item"
-              }
-            },
             "item_id": itemId,
             "revision_id": itemId,
             "bundle": "page_element_spec",
