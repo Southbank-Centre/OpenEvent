@@ -7,7 +7,6 @@ var url = require('url');
 var path = require('path');
 
 describe('The Person features of the CMS', function() {
-
   // Permissions
   var permViewPublishedContentAnon = element(by.id('edit-1-access-content'));
   var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
@@ -236,8 +235,73 @@ describe('The Person features of the CMS', function() {
 
   });
 
-  // it('set relationship to Event', function() {})
+  // it('get JSON', function() {});
 
+  // Is an it() function the correct place to put the clean up actions?
+  // Don't we have a TearDown or afterAll method or trigger to use?
+  it('cleans up after tests have been done', function() {
+    // There is something I do not like about this: the whole testing is very destructive
+    // and can only be performed in fresh sites [!]
+
+    // Assumes all content created is from this test [!]
+
+    // CleanUp taxonomy vocabularies (it deletes all terms in it)
+    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
+    dvr.findElement(by.id('edit-delete')).click();
+    dvr.findElement(by.id('edit-submit')).click();
+
+    // CleanUp content
+    browser.get(browser.params.url + '/admin/content');
+    dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+    // CleanUp permissions
+    browser.get(browser.params.url + '/admin/people/permissions');
+
+    permViewPublishedContentAnon.isSelected().then(function(selected) {
+      if (selected) {
+        permViewPublishedContentAnon.click();
+      }
+    });
+
+    permViewPublishedContentAuth.isSelected().then(function(selected) {
+      if (selected) {
+        permViewPublishedContentAuth.click();
+      }
+    });
+
+    permAccessResourceNodeAnon.isSelected().then(function(selected) {
+      if (selected) {
+        permAccessResourceNodeAnon.click();
+      }
+    });
+
+    permAccessResourceNodeAuth.isSelected().then(function(selected) {
+      if (selected) {
+        permAccessResourceNodeAuth.click();
+      }
+    });
+
+    permViewRelationsAnon.isSelected().then(function(selected) {
+      if (selected) {
+        permViewRelationsAnon.click();
+      }
+    });
+
+    permViewRelationsAuth.isSelected().then(function(selected) {
+      if (selected) {
+        permViewRelationsAuth.click();
+      }
+    });
+
+    save.click();
+
+    // CleanUp users -> NA
+  });
+  
 });
 
 function addEvent(eventName) {
@@ -281,65 +345,4 @@ function addEvent(eventName) {
 
   // test successful save
   expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
-}
-
-function cleanUp() {
-  // Assumes all content created is from this test [!]
-
-  // CleanUp taxonomy vocabularies (it deletes all terms in it)
-  browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
-  dvr.findElement(by.id('edit-delete')).click();
-  dvr.findElement(by.id('edit-submit')).click();
-
-  // CleanUp content
-  browser.get(browser.params.url + '/admin/content');
-  dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
-  element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-  element(by.id('edit-submit--2')).click();
-  element(by.id('edit-submit')).click();
-  //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-  // CleanUp permissions
-  browser.get(browser.params.url + '/admin/people/permissions');
-
-  permViewPublishedContentAnon.isSelected().then(function(selected) {
-    if (selected) {
-      permViewPublishedContentAnon.click();
-    }
-  });
-
-  permViewPublishedContentAuth.isSelected().then(function(selected) {
-    if (selected) {
-      permViewPublishedContentAuth.click();
-    }
-  });
-
-  permAccessResourceNodeAnon.isSelected().then(function(selected) {
-    if (selected) {
-      permAccessResourceNodeAnon.click();
-    }
-  });
-
-  permAccessResourceNodeAuth.isSelected().then(function(selected) {
-    if (selected) {
-      permAccessResourceNodeAuth.click();
-    }
-  });
-
-  permViewRelationsAnon.isSelected().then(function(selected) {
-    if (selected) {
-      permViewRelationsAnon.click();
-    }
-  });
-
-  permViewRelationsAuth.isSelected().then(function(selected) {
-    if (selected) {
-      permViewRelationsAuth.click();
-    }
-  });
-
-  save.click();
-
-  // CleanUp users -> NA
-
 }
