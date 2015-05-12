@@ -10,12 +10,21 @@
 function oe_person_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'add terms in name_title'.
-  $permissions['add terms in name_title'] = array(
-    'name' => 'add terms in name_title',
+  // Exported permission: 'access relations'.
+  $permissions['access relations'] = array(
+    'name' => 'access relations',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
     ),
+    'module' => 'relation',
+  );
+
+  // Exported permission: 'add terms in person_title'.
+  $permissions['add terms in person_title'] = array(
+    'name' => 'add terms in person_title',
+    'roles' => array(),
     'module' => 'taxonomy_access_fix',
   );
 
@@ -46,12 +55,10 @@ function oe_person_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'delete terms in name_title'.
-  $permissions['delete terms in name_title'] = array(
-    'name' => 'delete terms in name_title',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
+  // Exported permission: 'delete terms in person_title'.
+  $permissions['delete terms in person_title'] = array(
+    'name' => 'delete terms in person_title',
+    'roles' => array(),
     'module' => 'taxonomy',
   );
 
@@ -73,12 +80,10 @@ function oe_person_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'edit terms in name_title'.
-  $permissions['edit terms in name_title'] = array(
-    'name' => 'edit terms in name_title',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
+  // Exported permission: 'edit terms in person_title'.
+  $permissions['edit terms in person_title'] = array(
+    'name' => 'edit terms in person_title',
+    'roles' => array(),
     'module' => 'taxonomy',
   );
 

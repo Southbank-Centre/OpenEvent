@@ -712,7 +712,7 @@ Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person
     ),
     'entity_type' => 'node',
     'field_name' => 'field_person_name_suffix',
-    'label' => 'Sufix',
+    'label' => 'Suffix',
     'required' => 0,
     'settings' => array(
       'better_formats' => array(
@@ -890,7 +890,7 @@ Maps to <a href="http://schema.org/honorificPrefix" target="_blank"><code>Person
 Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:performer</code></a> in Schema.org.');
   t('Person urls');
   t('Prefix');
-  t('Sufix');
+  t('Suffix');
   t('Surname of a person.<br/>
 Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:familyName</code></a> in Schema.org.');
   t('URL of a reference Web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.<br/>
