@@ -246,7 +246,14 @@ describe('The Person features of the CMS', function() {
     // Assumes all content created is from this test [!]
 
     // CleanUp taxonomy vocabularies (it deletes all terms in it)
-    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
+    //browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
+    //dvr.findElement(by.id('edit-delete')).click();
+    //dvr.findElement(by.id('edit-submit')).click();
+
+    // CleanUp taxonomy terms
+    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+    dvr.findElement(by.linkText('Test event class')).click();
+    dvr.findElement(by.linkText('Edit')).click();
     dvr.findElement(by.id('edit-delete')).click();
     dvr.findElement(by.id('edit-submit')).click();
 
