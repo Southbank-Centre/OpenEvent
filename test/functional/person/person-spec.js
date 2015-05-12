@@ -13,6 +13,8 @@ describe('The Person features of the CMS', function() {
   var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
   var permAccessResourceNodeAnon = element(by.id('edit-1-access-resource-node'));
   var permAccessResourceNodeAuth = element(by.id('edit-2-access-resource-node'));
+  var permViewRelationsAnon = element(by.id('edit-1-access-relations'));
+  var permViewRelationsAuth = element(by.id('edit-2-access-relations'));
 
   // Page elements
   var pageTitle = element(by.css('.page-title'));
@@ -90,6 +92,19 @@ describe('The Person features of the CMS', function() {
     permAccessResourceNodeAuth.isSelected().then(function(selected) {
       if (!selected) {
         permAccessResourceNodeAuth.click();
+      }
+    });
+
+    // Allow relations to be viewed by anyone
+    permViewRelationsAnon.isSelected().then(function(selected) {
+      if (!selected) {
+        permViewRelationsAnon.click();
+      }
+    });
+
+    permViewRelationsAuth.isSelected().then(function(selected) {
+      if (!selected) {
+        permViewRelationsAuth.click();
       }
     });
 
@@ -285,7 +300,45 @@ function cleanUp() {
   //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
   // CleanUp permissions
+  browser.get(browser.params.url + '/admin/people/permissions');
 
+  permViewPublishedContentAnon.isSelected().then(function(selected) {
+    if (selected) {
+      permViewPublishedContentAnon.click();
+    }
+  });
+
+  permViewPublishedContentAuth.isSelected().then(function(selected) {
+    if (selected) {
+      permViewPublishedContentAuth.click();
+    }
+  });
+
+  permAccessResourceNodeAnon.isSelected().then(function(selected) {
+    if (selected) {
+      permAccessResourceNodeAnon.click();
+    }
+  });
+
+  permAccessResourceNodeAuth.isSelected().then(function(selected) {
+    if (selected) {
+      permAccessResourceNodeAuth.click();
+    }
+  });
+
+  permViewRelationsAnon.isSelected().then(function(selected) {
+    if (selected) {
+      permViewRelationsAnon.click();
+    }
+  });
+
+  permViewRelationsAuth.isSelected().then(function(selected) {
+    if (selected) {
+      permViewRelationsAuth.click();
+    }
+  });
+
+  save.click();
 
   // CleanUp users -> NA
 
