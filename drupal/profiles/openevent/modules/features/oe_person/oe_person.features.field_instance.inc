@@ -49,9 +49,9 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
       'module' => 'relation_add',
       'settings' => array(
         'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => '',
+        'relation_endpoint_custom_label' => 'Performer',
         'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'none',
+        'relation_endpoint_label' => 'custom',
         'relation_endpoint_label_delta' => 0,
         'relation_endpoint_search_by_id' => 0,
       ),
@@ -304,9 +304,9 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
       'module' => 'relation_add',
       'settings' => array(
         'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => '',
+        'relation_endpoint_custom_label' => 'Event ',
         'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'none',
+        'relation_endpoint_label' => 'custom',
         'relation_endpoint_label_delta' => 0,
         'relation_endpoint_search_by_id' => 0,
       ),

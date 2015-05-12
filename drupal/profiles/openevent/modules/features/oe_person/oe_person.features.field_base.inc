@@ -208,7 +208,7 @@ function oe_person_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         0 => array(
-          'vocabulary' => 'name_title',
+          'vocabulary' => 'person_title',
           'parent' => 0,
         ),
       ),
