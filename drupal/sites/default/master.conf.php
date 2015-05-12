@@ -26,7 +26,6 @@ $conf['master_modules'] = array(
     // Contributed modules
     'addressfield',
     'better_formats',
-    'cer',
     'ctools',
     'date',
     'date_all_day',

@@ -181,13 +181,16 @@ describe('The Event features of the CMS', function() {
     // type in the title of the page created in the above test and wait for the autocomplete list to load
     dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
     dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type .field-content'));
+        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
     }, 5000);
 
     // check that there's at least one item in the list, and that it doesn't contain a link
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(true);
-    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']/a")).isPresent()).toBe(false);
-    element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div")).isPresent()).toBe(true);
+    expect(element(by.xpath("//div[@id='autocomplete']//li[1]//div/a")).isPresent()).toBe(false);
+    element(by.xpath("//div[@id='autocomplete']//li[1]//div")).click();
+
+    // check that more parents can be added
+    expect(element(by.id('edit-field-event-parents-und-add-more')).isPresent()).toBe(true);
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -240,63 +243,6 @@ describe('The Event features of the CMS', function() {
         });
 
       });
-
-    });
-
-  });
-
-  it('does not allow an Event to have one of its child Events assigned as a parent', function() {
-
-    // create an Event that should appear be allowed to be selected as a parent
-    browser.get(browser.params.url + '/node/add/event');
-
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Can be parent');
-    expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-    dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-
-    // fill out content on 'Date and time' tab
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
-
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-
-      // set the item to published
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-      dvr.findElement(by.id('edit-status')).click();
-
-      // submit
-      dvr.findElement(by.id('edit-submit')).click();
-
-      // test successful save
-      expect(element(by.id('console')).getText()).toContain('Event Can be parent has been created.');
-
-      // edit 'Parent event page' to run test
-      browser.get(browser.params.url + '/node/' + parentNid + '/edit');
-
-      // type in the title of the event that is a child of this event and wait for the autocomplete list to load
-      dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Protractor event page');
-      dvr.sleep(5000);
-
-      // check that there are no items in the autocomplete list
-      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
-
-      // type in the title of the event that was created earlier in this test and wait for the autocomplete list to load
-      dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).clear();
-      dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Can be parent');
-      dvr.wait(function () {
-          return dvr.isElementPresent(by.css('#autocomplete li:first-of-type .field-content'));
-      }, 5000);
-
-      // check that there are items in the autocomplete list and select the first one
-      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(true);
-      expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']/a")).isPresent()).toBe(false);
-      element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).click();
-
-      // submit
-      dvr.findElement(by.id('edit-submit')).click();
 
     });
 
@@ -417,14 +363,6 @@ describe('The Event features of the CMS', function() {
           }
         ],
         "field_image": [],
-        "field_event_parents": [
-          {
-            "uri": browser.params.url + "/node/" + parentNid,
-            "id": parentNid,
-            "resource": "node"
-          }
-        ],
-        "field_event_children": [],
         "field_event_date_time": {
           "value": function(val) { 
             expect(val.length).toEqual(10); 
@@ -468,23 +406,32 @@ describe('The Event features of the CMS', function() {
       })
       .after(function() {
 
-        frisby.create('Get JSON for Event page created in previous test')
-          .get(browser.params.url + '/node/' + parentNid + '.json')
+        // Get the list of all relations of this type, because we don't yet have
+        // a way to filter by an item in the endpoints array
+        frisby.create('Get JSON for "event is located in place" relation')
+          .get(browser.params.url + '/relation.json?relation_type=event_is_located_in_place')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('field_event_children', [
-            {
-              "uri": browser.params.url + "/node/" + nid,
-              "id": nid,
-              "resource": "node"
-            }
-          ])
-          .after(function() {
+          .expectJSON('list.0', {
+            "endpoints": [
+              {
+                "uri": browser.params.url + "/node/" + nid,
+                "id": nid,
+                "resource": "node"
+              },
+              {
+                "uri": browser.params.url + "/node/" + placeNid,
+                "id": placeNid,
+                "resource": "node"
+              }
+            ]
+          })
+          .after(function () {
 
             // Get the list of all relations of this type, because we don't yet have
             // a way to filter by an item in the endpoints array
-            frisby.create('Get JSON for "event is located in place" relation')
-              .get(browser.params.url + '/relation.json?relation_type=event_is_located_in_place')
+            frisby.create('Get JSON for "event is contained in event" relation')
+              .get(browser.params.url + '/relation.json?relation_type=event_is_contained_in_event')
               .expectStatus(200)
               .expectHeaderContains('content-type', 'application/json')
               .expectJSON('list.0', {
@@ -495,8 +442,8 @@ describe('The Event features of the CMS', function() {
                     "resource": "node"
                   },
                   {
-                    "uri": browser.params.url + "/node/" + placeNid,
-                    "id": placeNid,
+                    "uri": browser.params.url + "/node/" + parentNid,
+                    "id": parentNid,
                     "resource": "node"
                   }
                 ]

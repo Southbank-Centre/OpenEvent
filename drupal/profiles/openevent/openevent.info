@@ -29,7 +29,6 @@ dependencies[] = user
 ; Contrib depedencies.
 dependencies[] = addressfield
 dependencies[] = better_formats
-dependencies[] = cer
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_all_day
