@@ -51,6 +51,7 @@ projects[views][version] = 3.11
 
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
+projects[htmltidy][version] = 1.0-beta2
 projects[master][version] = 2.0-beta4
 projects[paragraphs][version] = 1.0-beta6
 projects[relation][version] = 1.0-rc7

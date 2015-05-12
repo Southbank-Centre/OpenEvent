@@ -30,6 +30,36 @@ function sc_style_guide_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'access resource file'.
+  $permissions['access resource file'] = array(
+    'name' => 'access resource file',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'restws',
+  );
+
+  // Exported permission: 'access resource node'.
+  $permissions['access resource node'] = array(
+    'name' => 'access resource node',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'restws',
+  );
+
+  // Exported permission: 'access resource paragraphs_item'.
+  $permissions['access resource paragraphs_item'] = array(
+    'name' => 'access resource paragraphs_item',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'restws',
+  );
+
   // Exported permission: 'access toolbar'.
   $permissions['access toolbar'] = array(
     'name' => 'access toolbar',
@@ -140,6 +170,16 @@ function sc_style_guide_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'show format tips'.
+  $permissions['show format tips'] = array(
+    'name' => 'show format tips',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'better_formats',
+  );
+
   // Exported permission: 'use text format filtered_html'.
   $permissions['use text format filtered_html'] = array(
     'name' => 'use text format filtered_html',
@@ -153,6 +193,16 @@ function sc_style_guide_user_default_permissions() {
   // Exported permission: 'use text format full_html'.
   $permissions['use text format full_html'] = array(
     'name' => 'use text format full_html',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'designer' => 'designer',
+    ),
+    'module' => 'filter',
+  );
+
+  // Exported permission: 'use text format style_guide_html'.
+  $permissions['use text format style_guide_html'] = array(
+    'name' => 'use text format style_guide_html',
     'roles' => array(
       'administrator' => 'administrator',
       'designer' => 'designer',
