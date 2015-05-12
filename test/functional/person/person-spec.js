@@ -188,7 +188,6 @@ describe('The Person features of the CMS', function() {
   });
 
   it('sets relationship to Event', function() {
-
     // Person
     var name = 'Daenerys';
     var surname = 'Targaryen';
@@ -198,17 +197,17 @@ describe('The Person features of the CMS', function() {
     addEvent(eventName);
 
     // Add person
-    browser.get(browser.params.url + '/node/add/person');
+    dvr.get(browser.params.url + '/node/add/person');
     expect(pageTitle.getText()).toContain('Create Person');
     personGivenName.sendKeys(name);
     personFamilyName.sendKeys(surname);
 
-    // Add a relation betweeb person and event
+    // Add a relation between person and event
     var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
     tabEvents.click();
     eventRelation.sendKeys(eventName);
-    browser.wait(function() {
-      return browser.isElementPresent(autocomplete);
+    dvr.wait(function() {
+      return dvr.isElementPresent(by.css('#autocomplete li div'));
     }, 5000);
     autocomplete.click();
 
@@ -217,13 +216,8 @@ describe('The Person features of the CMS', function() {
     save.click();
     save.click();
 
-    browser.wait(function() {
-      return browser.isElementPresent(messages);
-    }, 5000);
-
     // Expectations
     expect(messages.getText()).toContain(name + ' ' + surname + ' has been created.');
-
 
   });
 
