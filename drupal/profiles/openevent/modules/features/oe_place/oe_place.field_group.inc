@@ -82,7 +82,7 @@ function oe_place_field_group_info() {
     'label' => 'Opening hours',
     'weight' => '2',
     'children' => array(
-      0 => 'field_opening_hours',
+      0 => 'field_place_opening_hours',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

@@ -25,13 +25,13 @@ function oe_place_field_default_field_bases() {
     'type' => 'relation_add',
   );
 
-  // Exported field_base: 'field_opening_hours'
-  $field_bases['field_opening_hours'] = array(
+  // Exported field_base: 'field_place_opening_hours'
+  $field_bases['field_place_opening_hours'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_opening_hours',
+    'field_name' => 'field_place_opening_hours',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'office_hours',
