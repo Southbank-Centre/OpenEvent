@@ -267,3 +267,26 @@ function addEvent(eventName) {
   // test successful save
   expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
 }
+
+function cleanUp() {
+  // Assumes all content created is from this test [!]
+
+  // CleanUp taxonomy vocabularies (it deletes all terms in it)
+  browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
+  dvr.findElement(by.id('edit-delete')).click();
+  dvr.findElement(by.id('edit-submit')).click();
+
+  // CleanUp content
+  browser.get(browser.params.url + '/admin/content');
+  dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+  element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+  element(by.id('edit-submit--2')).click();
+  element(by.id('edit-submit')).click();
+  //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+  // CleanUp permissions
+
+
+  // CleanUp users -> NA
+
+}
