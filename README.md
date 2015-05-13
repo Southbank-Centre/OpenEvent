@@ -20,9 +20,9 @@ To set up a local development site using this code, do the following:
 
 * set permissions
 
-    chmod u+w sites/default
+		chmod u+w sites/default
 
-    chmod 777 sites/default/files
+		chmod 777 sites/default/files
 
 * enable master module
 
