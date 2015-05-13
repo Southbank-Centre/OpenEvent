@@ -18,6 +18,12 @@ To set up a local development site using this code, do the following:
 		drush si openevent --account-name="USER" --account-pass="PASS" -y
 	where USER and PASS are the preferred username/password combination
 
+* set permissions
+
+    chmod u+w sites/default
+
+    chmod 777 sites/default/files
+
 * enable master module
 
 		drush en master -y
