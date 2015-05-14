@@ -5,8 +5,11 @@
 
 var url = require('url');
 var path = require('path');
+var eid;
+var nid;
 
 describe('The Person features of the CMS', function() {
+
   // Permissions
   var permViewPublishedContentAnon = element(by.id('edit-1-access-content'));
   var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
@@ -206,8 +209,11 @@ describe('The Person features of the CMS', function() {
     var name = 'Daenerys';
     var surname = 'Targaryen';
 
+    // Get timestamp.
+    var time = new Date().getTime();
+
     // Add event
-    var eventName = 'Get to Kings Landing';
+    var eventName = 'Get to Kings Landing' + time;
     addEvent(eventName);
 
     // Add person
@@ -225,93 +231,156 @@ describe('The Person features of the CMS', function() {
     }, 5000);
     autocomplete.click();
 
+    // Publish it
+    tabOptions.click();
+    optionsPublished.isSelected().then(function(selected) {
+      if (!selected) {
+        optionsPublished.click();
+      }
+    });
+
     // Save the node
-    // Needs to be done twice to get focus first and then actually click.
-    save.click();
     save.click();
 
     // Expectations
     expect(messages.getText()).toContain(name + ' ' + surname + ' has been created.');
 
+    // Get the nid for the next test.
+    var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+    edit.click();
+
+    browser.getCurrentUrl().then(function(Url){
+      var parts = Url.split('/');
+      var size = parts.length;
+      nid = parts[size-2];
+    });
+
   });
 
-  // it('get JSON', function() {});
+  it('outputs JSON to the specified format', function() {
+    frisby.create('Get JSON for Event page created in previous test')
+      .get(browser.params.url + '/node/' + nid + '.json')
+        .expectStatus(200)
+        .expectHeaderContains('content-type', 'application/json')
+        .expectJSON({
+          "field_description": [],
+          "field_image": [],
+          "field_person_awards": [],
+          "field_person_job": function(val) { expect(val).toBe(null); },
+          "field_person_name_alias": function(val) { expect(val).toBe(null); },
+          "field_person_name_family": "Targaryen",
+          "field_person_name_given": "Daenerys",
+          "field_person_name_middle": function(val) { expect(val).toBe(null); },
+          "field_person_name_suffix": function(val) { expect(val).toBe(null); },
+          "field_person_urls": [],
+          "nid": nid,
+          "vid": nid,
+          "relation_performs_in_node_reverse": [
+            {
+              "uri": browser.params.url + "/node/" + nid,
+              "id": nid,
+              "resource": "node"
+            },
+            {
+              "uri": browser.params.url + "/node/" + eid,
+              "id": eid,
+              "resource": "node"
+            }
+          ],
+          "relation_performs_in_node": [
+            {
+              "uri": browser.params.url + "/node/" + nid,
+              "id": nid,
+              "resource": "node"
+            },
+            {
+              "uri": browser.params.url + "/node/" + eid,
+              "id": eid,
+              "resource": "node"
+            }
+          ]
+        })
+      .toss();
+  });
 
   // Is an it() function the correct place to put the clean up actions?
   // Don't we have a TearDown or afterAll method or trigger to use?
-  it('cleans up after tests have been done', function() {
-    // There is something I do not like about this: the whole testing is very destructive
-    // and can only be performed in fresh sites [!]
+  // it('cleans up after tests have been done', function() {
+  //   // There is something I do not like about this: the whole testing is very destructive
+  //   // and can only be performed in fresh sites [!]
 
-    // Assumes all content created is from this test [!]
+  //   // Assumes all content created is from this test [!]
 
-    // CleanUp taxonomy vocabularies (it deletes all terms in it)
-    //browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
-    //dvr.findElement(by.id('edit-delete')).click();
-    //dvr.findElement(by.id('edit-submit')).click();
+  //   // CleanUp taxonomy vocabularies (it deletes all terms in it)
+  //   //browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
+  //   //dvr.findElement(by.id('edit-delete')).click();
+  //   //dvr.findElement(by.id('edit-submit')).click();
 
-    // CleanUp taxonomy terms
-    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-    dvr.findElement(by.linkText('Test event class')).click();
-    dvr.findElement(by.linkText('Edit')).click();
-    dvr.findElement(by.id('edit-delete')).click();
-    dvr.findElement(by.id('edit-submit')).click();
+  //   // CleanUp taxonomy terms
+  //   browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+  //   dvr.findElement(by.linkText('Test event class')).click();
+  //   dvr.findElement(by.linkText('Edit')).click();
+  //   dvr.findElement(by.id('edit-delete')).click();
+  //   dvr.findElement(by.id('edit-submit')).click();
 
-    // CleanUp content
-    browser.get(browser.params.url + '/admin/content');
-    dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
-    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-    element(by.id('edit-submit--2')).click();
-    element(by.id('edit-submit')).click();
-    //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+  //   // CleanUp content
+  //   browser.get(browser.params.url + '/admin/content');
+  //   dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+  //   element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+  //   element(by.id('edit-submit--2')).click();
+  //   element(by.id('edit-submit')).click();
+  //   //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
-    // CleanUp permissions
-    browser.get(browser.params.url + '/admin/people/permissions');
+  //   // CleanUp permissions
+  //   browser.get(browser.params.url + '/admin/people/permissions');
 
-    permViewPublishedContentAnon.isSelected().then(function(selected) {
-      if (selected) {
-        permViewPublishedContentAnon.click();
-      }
-    });
+  //   permViewPublishedContentAnon.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permViewPublishedContentAnon.click();
+  //     }
+  //   });
 
-    permViewPublishedContentAuth.isSelected().then(function(selected) {
-      if (selected) {
-        permViewPublishedContentAuth.click();
-      }
-    });
+  //   permViewPublishedContentAuth.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permViewPublishedContentAuth.click();
+  //     }
+  //   });
 
-    permAccessResourceNodeAnon.isSelected().then(function(selected) {
-      if (selected) {
-        permAccessResourceNodeAnon.click();
-      }
-    });
+  //   permAccessResourceNodeAnon.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permAccessResourceNodeAnon.click();
+  //     }
+  //   });
 
-    permAccessResourceNodeAuth.isSelected().then(function(selected) {
-      if (selected) {
-        permAccessResourceNodeAuth.click();
-      }
-    });
+  //   permAccessResourceNodeAuth.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permAccessResourceNodeAuth.click();
+  //     }
+  //   });
 
-    permViewRelationsAnon.isSelected().then(function(selected) {
-      if (selected) {
-        permViewRelationsAnon.click();
-      }
-    });
+  //   permViewRelationsAnon.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permViewRelationsAnon.click();
+  //     }
+  //   });
 
-    permViewRelationsAuth.isSelected().then(function(selected) {
-      if (selected) {
-        permViewRelationsAuth.click();
-      }
-    });
+  //   permViewRelationsAuth.isSelected().then(function(selected) {
+  //     if (selected) {
+  //       permViewRelationsAuth.click();
+  //     }
+  //   });
 
-    save.click();
+  //   save.click();
 
-    // CleanUp users -> NA
-  });
+  //   // CleanUp users -> NA
+
+  // });
+
   
 });
 
 function addEvent(eventName) {
+
   // Create class supporting term
   browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
   expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event class');
@@ -347,9 +416,31 @@ function addEvent(eventName) {
   expect(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).getText()).toContain('Test event class');
   element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).click();
 
+  // Publish it
+  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
+  var optionsPublished = element(by.id('edit-status'));
+  tabOptions.click();
+  optionsPublished.isSelected().then(function(selected) {
+    if (!selected) {
+      optionsPublished.click();
+    }
+  });
+
+
   // save
   dvr.findElement(by.id('edit-submit')).click();
 
   // test successful save
   expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
+
+  // Get the nid for the next test.
+  var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+  edit.click();
+
+  browser.getCurrentUrl().then(function(Url){
+    var parts = Url.split('/');
+    var size = parts.length;
+    eid = parts[size-2];
+  });
+
 }
