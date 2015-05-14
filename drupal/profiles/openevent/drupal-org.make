@@ -52,6 +52,8 @@ projects[views][version] = 3.11
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
 projects[htmltidy][version] = 1.0-beta2
+; Replaces deprecated split() function with preg_split().
+projects[htmltidy][patch][1960182] = "https://www.drupal.org/files/issues/1543906-5-split.patch"
 projects[master][version] = 2.0-beta4
 projects[paragraphs][version] = 1.0-beta6
 projects[relation][version] = 1.0-rc7
