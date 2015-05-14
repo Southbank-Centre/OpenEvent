@@ -38,7 +38,7 @@ function oe_person_install() {
   // Vocabulary creation, if necessary
   if (!taxonomy_vocabulary_machine_name_load($vocab->machine_name)) {
     taxonomy_vocabulary_save($vocab);
-    drupal_set_message(t('New vocabulary %vocab created.', array('%vocab' => $vocab->name)));
+    drupal_set_message(st('New vocabulary %vocab created.', array('%vocab' => $vocab->name)));
   }
 
   // Terms creation or addition
@@ -52,7 +52,7 @@ function oe_person_install() {
       $term->name = $name;
       $term->description = $description;
       taxonomy_term_save($term);
-      drupal_set_message(t('New term %term added to vocabulary %vocab.', array(
+      drupal_set_message(st('New term %term added to vocabulary %vocab.', array(
         '%term' => $name,
         '%vocab'=> $parent_title->name,
       )));
