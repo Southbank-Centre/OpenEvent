@@ -122,7 +122,7 @@ describe('The Person features of the CMS', function() {
     personGivenName.sendKeys('Jon');
     personFamilyName.sendKeys('Snow');
     personNameSuffix.sendKeys('Commander');
-    personAlias.sendKeys('Ned Stark\'s son');
+    personAlias.sendKeys('Lord Commander of the night\'s watch');
 
     // Save the node
     save.click();
