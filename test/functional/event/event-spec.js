@@ -117,7 +117,9 @@ describe('The Event features of the CMS', function() {
       dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).clear();
       expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-      dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+        dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      });
 
       // fill out content on 'Date and time' tab
       dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -188,14 +190,16 @@ describe('The Event features of the CMS', function() {
     expect(element(by.id('edit-field-event-parents-und-add-more')).isPresent()).toBe(true);
 
     // fill out content on 'Details' tab
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
-    expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-    dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-    expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
-    dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
-    expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
-    dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
+    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
+      expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+      dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
+      dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
+      expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
+      dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
+    });
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
