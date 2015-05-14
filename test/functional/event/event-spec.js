@@ -168,7 +168,6 @@ describe('The Event features of the CMS', function() {
     // fill out content on 'Main' tab
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
     dvr.findElement(by.id('edit-title')).sendKeys('Protractor event page');
-    //dvr.findElement(by.id('edit-field-teaser-und-0-value')).sendKeys('Here is some content in the teaser field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     dvr.findElement(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
     expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
