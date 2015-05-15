@@ -257,15 +257,7 @@ describe('The Event features of the CMS', function() {
 
   });
 
-<<<<<<< HEAD
   it('can have venues assigned to an Event', function() {
-=======
-  it('does not allow an Event to have one of its child Events assigned as a parent', function() {
-    var deferment = protractor.promise.defer();
-
-    // create an Event that should appear be allowed to be selected as a parent
-    browser.get(browser.params.url + '/node/add/event');
->>>>>>> Added deferment to promise that was resolving too soon
 
     // create a Place
     browser.get(browser.params.url + '/node/add/place');
@@ -341,7 +333,6 @@ describe('The Event features of the CMS', function() {
 
     });
 
-    expect(deferment).toBe('ok');
   });
 
   it('outputs Event node JSON in the expected format', function () {
