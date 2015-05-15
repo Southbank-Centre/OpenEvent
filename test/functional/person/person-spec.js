@@ -21,6 +21,7 @@ describe('The Person features of the CMS', function() {
   // Page elements
   var pageTitle = element(by.css('.page-title'));
   var save = element(by.id('edit-submit'));
+  var optionsPublished = element(by.id('edit-status'));
   var del = element(by.id('edit-delete'));
   var messages = element(by.css('.messages')); // How do we distinguish multiple messages?
 
@@ -46,6 +47,7 @@ describe('The Person features of the CMS', function() {
 
   // Tab Extra details
   var tabExtra = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Extra details']"));
+  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
 
   // Extra details fields
   var extraJobTitle = element(by.id('edit-field-person-job-und-0-value'));

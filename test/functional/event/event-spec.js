@@ -264,11 +264,6 @@ describe('The Event features of the CMS', function() {
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
     dvr.findElement(by.id('edit-title')).sendKeys('Place that has an event');
 
-    // choose event class
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-    expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-    dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-
     // set the item to published
     dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
     dvr.findElement(by.id('edit-status')).click();
@@ -295,6 +290,7 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
       dvr.sleep(5000);
       // check that there are no items in the autocomplete list

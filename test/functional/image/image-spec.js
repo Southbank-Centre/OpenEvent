@@ -18,6 +18,7 @@ describe('Image', function() {
   });
 
   it('can be added to an Event page', function(){
+    var deferment = protractor.promise.defer();
 
     // Add test term (required to save an Event page)
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
@@ -30,20 +31,22 @@ describe('Image', function() {
 
 
     browser.get(browser.params.url + '/admin/people/permissions');
-    //expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      //expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
 
 
-    // Allow published content to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-content')).click();
-    dvr.findElement(by.id('edit-2-access-content')).click();
+      // Allow published content to be viewed by anyone
+      dvr.findElement(by.id('edit-1-access-content')).click();
+      dvr.findElement(by.id('edit-2-access-content')).click();
 
-    // Allow node API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-node')).click();
-    dvr.findElement(by.id('edit-2-access-resource-node')).click();
-    dvr.findElement(by.id('edit-1-access-resource-file')).click();
-    dvr.findElement(by.id('edit-2-access-resource-file')).click();
+      // Allow node API endpoints to be viewed by anyone
+      dvr.findElement(by.id('edit-1-access-resource-node')).click();
+      dvr.findElement(by.id('edit-2-access-resource-node')).click();
+      dvr.findElement(by.id('edit-1-access-resource-file')).click();
+      dvr.findElement(by.id('edit-2-access-resource-file')).click();
 
-    dvr.findElement(by.id('edit-submit')).click();
+      dvr.findElement(by.id('edit-submit')).click();
+    });
 
 
     // Create minimal Event page
@@ -77,7 +80,10 @@ describe('Image', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // select event class
-    dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+    });
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -119,11 +125,14 @@ describe('Image', function() {
           var currentUrlObj = url.parse(currentUrl);
           var currentUrlPath = currentUrlObj.pathname.split(path.sep);
           nid = currentUrlPath[currentUrlPath.length-2];
+          deferment.fulfill('ok');
         });
 
       });
 
     });
+
+    expect(deferment).toBe('ok');
 
   });
 
