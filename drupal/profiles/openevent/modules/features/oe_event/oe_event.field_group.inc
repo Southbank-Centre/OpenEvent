@@ -52,9 +52,10 @@ function oe_event_field_group_info() {
     'label' => 'Details',
     'weight' => '2',
     'children' => array(
-      0 => 'field_event_age_range',
-      1 => 'field_event_class',
-      2 => 'field_event_type',
+      0 => 'field_event_places',
+      1 => 'field_event_age_range',
+      2 => 'field_event_class',
+      3 => 'field_event_type',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
