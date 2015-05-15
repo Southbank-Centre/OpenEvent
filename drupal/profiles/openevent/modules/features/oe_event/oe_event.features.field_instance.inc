@@ -249,11 +249,11 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_date_time'
-  $field_instances['node-event-field_event_date_time'] = array(
+  // Exported field_instance: 'node-event-field_event_date_end'
+  $field_instances['node-event-field_event_date_end'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>',
+    'description' => 'The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -266,7 +266,7 @@ function oe_event_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 12,
+        'weight' => 17,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -276,12 +276,12 @@ function oe_event_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_event_date_time',
-    'label' => 'Date/time',
+    'field_name' => 'field_event_date_end',
+    'label' => 'End date/time',
     'required' => 1,
     'settings' => array(
       'default_value' => 'blank',
-      'default_value2' => 'blank',
+      'default_value2' => 'same',
       'default_value_code' => '',
       'default_value_code2' => '',
       'user_register_form' => FALSE,
@@ -299,7 +299,61 @@ function oe_event_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 31,
+      'weight' => 33,
+    ),
+  );
+
+  // Exported field_instance: 'node-event-field_event_date_start'
+  $field_instances['node-event-field_event_date_start'] = array(
+    'bundle' => 'event',
+    'deleted' => 0,
+    'description' => 'The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 16,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_date_start',
+    'label' => 'Start date/time',
+    'required' => 1,
+    'settings' => array(
+      'default_value' => 'blank',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'display_all_day' => 1,
+        'increment' => 5,
+        'input_format' => 'd/m/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_popup',
+      'weight' => 32,
     ),
   );
 
@@ -353,7 +407,7 @@ function oe_event_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 33,
+      'weight' => 35,
     ),
   );
 
@@ -399,7 +453,7 @@ function oe_event_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 32,
+      'weight' => 34,
     ),
   );
 
@@ -630,21 +684,24 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
   t('Age range');
   t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
   t('Class');
-  t('Date/time');
   t('Description');
   t('Door time');
   t('Duration');
+  t('End date/time');
   t('Image');
   t('Images from the event.<br/>
 Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.');
   t('Parents');
+  t('Start date/time');
+  t('Teaser');
   t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
+  t('The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.');
   t('The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
   t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
-  t('The start and end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code> and <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
+  t('The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>');
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
   t('Type');
   t('Venues');

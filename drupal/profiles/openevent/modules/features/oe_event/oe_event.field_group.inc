@@ -26,6 +26,8 @@ function oe_event_field_group_info() {
       0 => 'field_event_date_time',
       1 => 'field_event_door_time',
       2 => 'field_event_duration',
+      3 => 'field_event_date_start',
+      4 => 'field_event_date_end',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
