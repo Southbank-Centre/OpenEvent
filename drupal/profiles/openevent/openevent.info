@@ -77,6 +77,7 @@ dependencies[] = oe_place
 dependencies[] = oe_person
 
 ; SC dependencies
+dependencies[] = sc_components
 dependencies[] = sc_style_guide
 dependencies[] = sc_menu_api
 
