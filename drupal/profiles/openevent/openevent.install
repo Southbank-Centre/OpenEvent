@@ -106,7 +106,6 @@ function openevent_install() {
     'access resource taxonomy_term',
     'access resource taxonomy_vocabulary',
     'access relations',
-    'relation add endpoint autocomplete access',
     'view the administration theme',
     'access toolbar',
     'view any unpublished content' 
