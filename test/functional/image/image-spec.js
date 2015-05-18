@@ -13,6 +13,12 @@ describe('Image', function() {
   var nid;
   var pathAlias;
 
+  // Page elements
+  var optionsPublished = element(by.id('edit-status'));
+
+  // Other tabs
+  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
+
   beforeEach(function(){
     isAngularSite(false);
   });
@@ -100,8 +106,12 @@ describe('Image', function() {
 
 
       // set the item to published
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-      dvr.findElement(by.id('edit-status')).click();
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
 
       // submit
       dvr.findElement(by.id('edit-submit')).click();
