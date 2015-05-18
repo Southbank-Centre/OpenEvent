@@ -17,7 +17,6 @@ function sc_components_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
-      'designer' => 'designer',
     ),
     'module' => 'restws',
   );
@@ -26,6 +25,7 @@ function sc_components_user_default_permissions() {
   $permissions['use text format iframe_html'] = array(
     'name' => 'use text format iframe_html',
     'roles' => array(
+      'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'filter',
