@@ -317,11 +317,6 @@ describe('The Person features of the CMS', function() {
       // These tests are destructive and can only be performed on clean/empty sites [!]
       // This cleanup function assumes that all content available is created by this test suite
 
-      // CleanUp taxonomy vocabularies (it deletes all terms in it)
-      //browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/edit');
-      //dvr.findElement(by.id('edit-delete')).click();
-      //dvr.findElement(by.id('edit-submit')).click();
-
       // CleanUp taxonomy terms
       // It assumes there is only ONE term created for the tests
       browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
