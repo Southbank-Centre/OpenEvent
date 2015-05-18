@@ -25,6 +25,7 @@ $conf['master_modules'] = array(
 
     // Contributed modules
     'addressfield',
+    'auto_entitylabel',
     'better_formats',
     'ctools',
     'date',
@@ -47,7 +48,6 @@ $conf['master_modules'] = array(
     'master',
     'menu_firstchild',
     'migrate',
-    'menu_firstchild',
     'office_hours',
     'paragraphs',
     'pathauto',
@@ -69,6 +69,7 @@ $conf['master_modules'] = array(
     'oe_components',
     'oe_event',
     'oe_place',
+    'oe_person',
 
     // Southbank Centre features
     'sc_style_guide',
@@ -76,12 +77,12 @@ $conf['master_modules'] = array(
 
   ),
   'dev' => array(
+    'dblog',
     'field_ui',
     'field_validation_ui',
-    'views_ui',
     'migrate_ui',
     'relation_ui',
-    'dblog',
+    'views_ui',
   ),
   'staging' => array(
     'syslog',
