@@ -636,8 +636,7 @@ describe('OE Components', function() {
       browser.wait(function() {
         return browser.isElementPresent(element(by.css('#edit-field-components-und-0-field-image .messages')));
       }, 5000);
-      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The file ' + fileToUpload + ' could not be saved, because it exceeds 2 MB, the maximum allowed size for uploads.');
-      expect(element(by.css('#edit-field-components-und-0-field-image .messages')).getText()).toContain('The file in the Image field was unable to be uploaded.');
+      expect(element(by.css('#edit-field-components-und-0-field-image .messages.error')).getText()).toContain('The specified file ' + fileToUpload + ' could not be uploaded.');
 
       // Check dimension small
       browser.get(browser.params.url + '/node/add/' + contentTypePathName);
