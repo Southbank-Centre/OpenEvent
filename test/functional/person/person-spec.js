@@ -45,7 +45,7 @@ describe('The Person features of the CMS', function() {
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
-  // Tab Extra details
+  // Other tabs
   var tabExtra = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Extra details']"));
   var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
 
@@ -69,7 +69,7 @@ describe('The Person features of the CMS', function() {
     isAngularSite(false);
   });
 
-  it('allows persons to be views by anyone', function(){
+  it('allows persons to be viewed by anyone', function(){
     browser.get(browser.params.url + '/admin/people/permissions');
     expect(pageTitle.getText()).toContain('People');
 
@@ -203,6 +203,12 @@ describe('The Person features of the CMS', function() {
         optionsPublished.click();
       }
     });
+
+    // Save the node
+    save.click();
+
+    // Expectations
+    expect(messages.getText()).toContain('Person Tyrion Lannister has been created.');
 
   });
 
