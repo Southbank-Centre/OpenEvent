@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the SC Components feature.
+ */
+
+include_once 'sc_components.features.inc';
