@@ -10,16 +10,6 @@
 function sc_style_guide_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'access resource paragraphs_item'.
-  $permissions['access resource paragraphs_item'] = array(
-    'name' => 'access resource paragraphs_item',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'restws',
-  );
-
   // Exported permission: 'administer menu'.
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
