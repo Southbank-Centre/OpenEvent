@@ -84,7 +84,11 @@ function openevent_install() {
   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
     'access content', 
     'access resource node',
-    'access resource file'
+    'access resource relation',
+    'access resource file',
+    'access resource taxonomy_term',
+    'access resource taxonomy_vocabulary',
+    'access relations'
   ));
   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array(
     'show format tips',
