@@ -26,7 +26,8 @@ exports.config = {
     style_guide: ['style-guide/*.js'],
     menu_api: ['menu-api/*.js'],
     place: ['place/*.js'],
-    person: ['person/*.js']
+    person: ['person/*.js'],
+    permissions: ['permissions/*.js']
   },
 
   // Single Browser

@@ -24,22 +24,22 @@ describe('The Event features of the CMS', function() {
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
 
     // Test term 1
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event class');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event class 1');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event class 1 description');
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 1');
+    element(by.id('edit-description-value')).sendKeys('Test event class 1 description');
+    element(by.id('edit-submit')).click();
 
     // Test term 2
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event class');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event class 2');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event class 2 description');
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 2');
+    element(by.id('edit-description-value')).sendKeys('Test event class 2 description');
+    element(by.id('edit-submit')).click();
 
     // Test term 3
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event class');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event class 3');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event class 3 description');
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 3');
+    element(by.id('edit-description-value')).sendKeys('Test event class 3 description');
+    element(by.id('edit-submit')).click();
 
   });
 
@@ -48,111 +48,93 @@ describe('The Event features of the CMS', function() {
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_type/add');
 
     // Test term 1
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event type');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event type 1');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event type 1 description');
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 1');
+    element(by.id('edit-description-value')).sendKeys('Test event type 1 description');
+    element(by.id('edit-submit')).click();
 
     // Test term 2
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event type');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event type 2');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event type 2 description');
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 2');
+    element(by.id('edit-description-value')).sendKeys('Test event type 2 description');
+    element(by.id('edit-submit')).click();
 
     // Test term 3
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event type');
-    dvr.findElement(by.id('edit-name')).sendKeys('Test event type 3');
-    dvr.findElement(by.id('edit-description-value')).sendKeys('Test event type 3 description');
-    dvr.findElement(by.id('edit-submit')).click();
-
-  });
-
-  it('can allow events to be viewed by anyone', function() {
-    browser.get(browser.params.url + '/admin/people/permissions');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
-
-    // Allow published content to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-content')).click();
-    dvr.findElement(by.id('edit-2-access-content')).click();
-
-    // Allow node API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-node')).click();
-    dvr.findElement(by.id('edit-2-access-resource-node')).click();
-    dvr.findElement(by.id('edit-1-access-resource-relation')).click();
-    dvr.findElement(by.id('edit-2-access-resource-relation')).click();
-
-    dvr.findElement(by.id('edit-submit')).click();
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 3');
+    element(by.id('edit-description-value')).sendKeys('Test event type 3 description');
+    element(by.id('edit-submit')).click();
 
   });
 
   it('can create a minimal event page', function(){
     browser.get(browser.params.url + '/node/add/event');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Event');
+    expect(element(by.css('.page-title')).getText()).toContain('Create Event');
 
     // add a bad age range
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-    dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+    element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
 
     // add bad duration
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-      dvr.findElement(by.id('edit-field-event-duration-und-0-value')).sendKeys('1.20');
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+      element(by.id('edit-field-event-duration-und-0-value')).sendKeys('1.20');
 
       // submit the form
-      dvr.findElement(by.id('edit-submit')).click();
+      element(by.id('edit-submit')).click();
 
       // check for the error message explaining that required fields haven't been populated
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
+      expect(element(by.id('console')).getText()).toContain('Title field is required');
+      expect(element(by.id('console')).getText()).toContain('Class field is required');
+      expect(element(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
+      expect(element(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
+      expect(element(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-      dvr.findElement(by.id('edit-title')).sendKeys('Parent event page');
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+      element(by.id('edit-title')).sendKeys('Parent event page');
 
       // fill out content on 'Details' tab
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-      dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).clear();
-      expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
-        dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.id('edit-field-event-age-range-und-0-value')).clear();
+      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+      browser.executeScript('window.scrollTo(0,0);').then(function () {
+        element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
       });
 
       // fill out content on 'Date and time' tab
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+        element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
         // start date/time
-        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-        dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+        element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+        element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
         // duration
-        dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
+        element(by.id('edit-field-event-duration-und-0-value')).clear();
 
         // set the item to published
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-        dvr.findElement(by.id('edit-status')).click();
+        element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+        element(by.id('edit-status')).click();
 
         // submit
-        dvr.findElement(by.id('edit-submit')).click();
+        element(by.id('edit-submit')).click();
 
         // test successful save
         expect(element(by.id('console')).getText()).toContain('Event Parent event page has been created.');
 
         // go back to edit page
-        dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-        dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+        element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+        element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+        element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
           parentPathAlias = alias;
 
           // store node ID of event just created
-          dvr.getCurrentUrl().then(function(currentUrl) {
+          browser.getCurrentUrl().then(function(currentUrl) {
             var currentUrlObj = url.parse(currentUrl);
             var currentUrlPath = currentUrlObj.pathname.split(path.sep);
             parentNid = currentUrlPath[currentUrlPath.length-2];
@@ -171,14 +153,14 @@ describe('The Event features of the CMS', function() {
     browser.get(browser.params.url + '/node/add/event');
 
     // fill out content on 'Main' tab
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Protractor event page');
-    dvr.findElement(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+    element(by.id('edit-title')).sendKeys('Protractor event page');
+    element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
-    dvr.findElement(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
-    dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
+    element(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
+    browser.wait(function () {
+        return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
     }, 5000);
 
     // check that there's at least one item in the list, and that it doesn't contain a link
@@ -190,62 +172,62 @@ describe('The Event features of the CMS', function() {
     expect(element(by.id('edit-field-event-parents-und-add-more')).isPresent()).toBe(true);
 
     // fill out content on 'Details' tab
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-      dvr.findElement(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
-      expect(dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-      dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-      expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
-      dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
-      expect(dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
-      dvr.findElement(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
+      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+      element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
+      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
+      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
+      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
     });
 
     // fill out content on 'Date and time' tab
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
       // start date/time
       expect(element(by.id('edit-field-event-date-time-und-0-all-day')).isPresent()).toBe(true);
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+      element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+      element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
       // end date/time
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-show-todate')).click();
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).sendKeys('22:00');
+      element(by.id('edit-field-event-date-time-und-0-show-todate')).click();
+      element(by.id('edit-field-event-date-time-und-0-value2-datepicker-popup-0')).sendKeys('15/04/2015');
+      element(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).click();
+      element(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).sendKeys('22:00');
 
       // duration
-      dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
-      dvr.findElement(by.id('edit-field-event-duration-und-0-value')).sendKeys('150');
+      element(by.id('edit-field-event-duration-und-0-value')).clear();
+      element(by.id('edit-field-event-duration-und-0-value')).sendKeys('150');
 
       // door time
-      dvr.findElement(by.id('edit-field-event-door-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).click();
-      dvr.findElement(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).sendKeys('19:00');
+      element(by.id('edit-field-event-door-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      element(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).click();
+      element(by.id('edit-field-event-door-time-und-0-value-timeEntry-popup-1')).sendKeys('19:00');
 
       // set the item to published
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-      dvr.findElement(by.id('edit-status')).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+      element(by.id('edit-status')).click();
 
       // submit
-      dvr.findElement(by.id('edit-submit')).click();
+      element(by.id('edit-submit')).click();
 
       // test successful save
       expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been created.');
 
       // go back to edit page
-      dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-      dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+      element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+      element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
         pathAlias = alias;
 
         // store node ID of event just created
-        dvr.getCurrentUrl().then(function(currentUrl) {
+        browser.getCurrentUrl().then(function(currentUrl) {
           var currentUrlObj = url.parse(currentUrl);
           var currentUrlPath = currentUrlObj.pathname.split(path.sep);
           nid = currentUrlPath[currentUrlPath.length-2];
@@ -261,24 +243,24 @@ describe('The Event features of the CMS', function() {
 
     // create a Place
     browser.get(browser.params.url + '/node/add/place');
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Place that has an event');
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+    element(by.id('edit-title')).sendKeys('Place that has an event');
 
     // set the item to published
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-    dvr.findElement(by.id('edit-status')).click();
-    dvr.findElement(by.id('edit-submit')).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+    element(by.id('edit-status')).click();
+    element(by.id('edit-submit')).click();
     expect(element(by.id('console')).getText()).toContain('Place Place that has an event has been created.');
 
     // go back to edit page
-    dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-    dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+    element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+    element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
       placePathAlias = alias;
 
       // store node ID of event just created
-      dvr.getCurrentUrl().then(function(currentUrl) {
+      browser.getCurrentUrl().then(function(currentUrl) {
         var currentUrlObj = url.parse(currentUrl);
         var currentUrlPath = currentUrlObj.pathname.split(path.sep);
         placeNid = currentUrlPath[currentUrlPath.length-2];
@@ -290,17 +272,17 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
-      dvr.sleep(5000);
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
+      browser.sleep(5000);
       // check that there are no items in the autocomplete list
       expect(element(by.xpath("//div[@id='autocomplete']//li[1]//span[@class='field-content']")).isPresent()).toBe(false);
 
       // select place made earlier in test
-      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).clear();
-      dvr.findElement(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Place that has an event');
-      dvr.wait(function () {
-          return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
+      element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).clear();
+      element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Place that has an event');
+      browser.wait(function () {
+          return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
       }, 5000);
 
       // check that there are items in the autocomplete list and select the first one
@@ -312,13 +294,13 @@ describe('The Event features of the CMS', function() {
       expect(element(by.id('edit-field-event-places-und-add-more')).isPresent()).toBe(true);
 
       // re-focus
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      browser.executeScript('window.scrollTo(0,0);').then(function () {
         
         element(by.css('h1')).click();
         // save
-        dvr.findElement(by.id('edit-submit')).click().then(function() {
-          dvr.wait(function () {
-            return dvr.isElementPresent(by.id('console'));
+        element(by.id('edit-submit')).click().then(function() {
+          browser.wait(function () {
+            return browser.isElementPresent(by.id('console'));
           }, 5000);
           // verify save
           expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
@@ -473,47 +455,37 @@ describe('The Event features of the CMS', function() {
           // CLEAN UP
           // remove event class terms
           browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
 
           // remove event type terms
           browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          dvr.findElement(by.id('edit-delete')).click();
-          dvr.findElement(by.id('edit-submit')).click();
-          expect(dvr.findElement(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
 
           // remove content
           browser.get(browser.params.url + '/admin/content');
-          dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+          element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
           element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
           element(by.id('edit-submit--2')).click();
           element(by.id('edit-submit')).click();
-          expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-          // reset permissions
-          browser.get(browser.params.url + '/admin/people/permissions');
-          dvr.findElement(by.id('edit-1-access-content')).click();
-          dvr.findElement(by.id('edit-2-access-content')).click();
-          dvr.findElement(by.id('edit-1-access-resource-node')).click();
-          dvr.findElement(by.id('edit-2-access-resource-node')).click();
-          dvr.findElement(by.id('edit-1-access-resource-relation')).click();
-          dvr.findElement(by.id('edit-2-access-resource-relation')).click();
-          dvr.findElement(by.id('edit-submit')).click();
+          expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
         });
 
