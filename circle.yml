@@ -63,9 +63,6 @@ test:
 
 general:
   branches:
-    only:
-      # only build develop, master and release branches
-      - develop
-      - master
-      - /release-.*/
-      - 91354686_oe_person
+    ignore:
+      # add your branch name here if you don't want it to build in CircleCI
+      - do_not_build_this_branch
