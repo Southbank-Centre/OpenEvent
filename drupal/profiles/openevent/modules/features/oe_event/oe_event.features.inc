@@ -5,22 +5,6 @@
  */
 
 /**
- * Implements hook_default_cer().
- */
-function oe_event_default_cer() {
-  $items = array();
-  $items['node:event:field_event_parents*node:event:field_event_children'] = entity_import('cer', '{
-    "identifier" : "node:event:field_event_parents*node:event:field_event_children",
-    "cer_bidirectional" : { "und" : [ { "value" : "1" } ] },
-    "cer_enabled" : { "und" : [ { "value" : "1" } ] },
-    "cer_weight" : { "und" : [ { "value" : "0" } ] },
-    "cer_left" : { "und" : [ { "path" : "node:event:field_event_parents" } ] },
-    "cer_right" : { "und" : [ { "path" : "node:event:field_event_children" } ] }
-  }');
-  return $items;
-}
-
-/**
  * Implements hook_ctools_plugin_api().
  */
 function oe_event_ctools_plugin_api($module = NULL, $api = NULL) {
@@ -29,6 +13,9 @@ function oe_event_ctools_plugin_api($module = NULL, $api = NULL) {
   }
   if ($module == "field_validation" && $api == "default_field_validation_rules") {
     return array("version" => "2");
+  }
+  if ($module == "relation" && $api == "relation_type_default") {
+    return array("version" => "1");
   }
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
@@ -50,7 +37,8 @@ function oe_event_node_info() {
     'event' => array(
       'name' => t('Event'),
       'base' => 'node_content',
-      'description' => t('The Open Event content type, designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
+      'description' => t('Open Event content type for an event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects.<br/>
+Designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',

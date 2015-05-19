@@ -5,27 +5,60 @@
 
 var url = require('url');
 var path = require('path');
+var pathAlias;
+var nid;
 
 describe('The Style Guide features of the CMS', function() {
 
-  var nid;
-  var pathAlias;
+  // Permissions
+  var permViewPublishedContentAnon = element(by.id('edit-1-access-content'));
+  var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
+  var permAccessResourceNodeAnon = element(by.id('edit-1-access-resource-node'));
+  var permAccessResourceNodeAuth = element(by.id('edit-2-access-resource-node'));
+  var permAccessResourceParaAnon = element(by.id('edit-1-access-resource-paragraphs-item'));
+  var permAccessResourceParaAuth = element(by.id('edit-2-access-resource-paragraphs-item'));
+
+  // Page elements
+  var pageTitle = element(by.css('.page-title'));
+  var save = element(by.id('edit-submit'));
+  var optionsPublished = element(by.id('edit-status'));
+  var del = element(by.id('edit-delete'));
+  var messages = element(by.css('.messages')); // How do we distinguish multiple messages?
 
   beforeEach(function(){
-    // don't wait for (non-existent) Angular to load
-    return browser.ignoreSynchronization = true;
+    isAngularSite(false);
+  });
+
+  it('has a correctly configured text format for the HTML field', function() {
+    browser.get(browser.params.url + '/admin/config/content/formats');
+    element(by.id('edit-formats-style-guide-html-configure')).click();
+    expect(element(by.id('edit-roles-3')).isSelected()).toBe(true);
+    expect(element(by.id('edit-roles-3')).isSelected()).toBe(true);
+    expect(element(by.id('edit-filters-htmltidy-status')).isSelected()).toBe(true);
+    expect(element(by.id('edit-filters-filter-autop-status')).isSelected()).toBe(false);
+    expect(element(by.id('edit-filters-filter-url-status')).isSelected()).toBe(false);
+    expect(element(by.id('edit-filters-filter-htmlcorrector-status')).isSelected()).toBe(false);
+
+    // HTML tidy settings
+    expect(element(by.id('edit-filters-htmltidy-settings-htmltidy-filter-style-guide-html-paths-config')).getAttribute('value')).toContain('profiles/openevent/modules/features/sc_style_guide/htmltidy.conf');
+    expect(element(by.id('edit-filters-htmltidy-settings-htmltidy-filter-style-guide-html-format-process-input')).isSelected()).toBe(true);
+  });
+
+  it('allows the designer role to see text format tips', function() {
+    browser.get(browser.params.url + '/admin/people/permissions');
+    expect(element(by.id('edit-3-show-format-tips')).isSelected()).toBe(true);
   });
 
   it('can set up a user with the "designer" role', function() {
     browser.get(browser.params.url + '/admin/people/create');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+    expect(element(by.css('.page-title')).getText()).toContain('People');
 
     element(by.id('edit-name')).sendKeys('Elliot Hunter');
     element(by.id('edit-mail')).sendKeys('ehunter@example.com');
     element(by.id('edit-pass-pass1')).sendKeys('password');
     element(by.id('edit-pass-pass2')).sendKeys('password');
     element(by.cssContainingText('#edit-roles label', 'designer')).click();
-    element(by.id('edit-submit')).click();
+    save.click();
 
     // test successful save
     expect(element(by.id('console')).getText()).toContain('Created a new user account for Elliot Hunter.');
@@ -34,35 +67,63 @@ describe('The Style Guide features of the CMS', function() {
 
   it('can allow content to be viewed by anyone', function() {
     browser.get(browser.params.url + '/admin/people/permissions');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+    expect(pageTitle.getText()).toContain('People');
 
     // Allow published content to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-content')).click();
-    dvr.findElement(by.id('edit-2-access-content')).click();
+    permViewPublishedContentAnon.isSelected().then(function(selected) {
+      if (!selected) {
+        permViewPublishedContentAnon.click();
+      }
+    });
+
+    permViewPublishedContentAuth.isSelected().then(function(selected) {
+      if (!selected) {
+        permViewPublishedContentAuth.click();
+      }
+    });
 
     // Allow node API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-node')).click();
-    dvr.findElement(by.id('edit-2-access-resource-node')).click();
+    permAccessResourceNodeAnon.isSelected().then(function(selected) {
+      if (!selected) {
+        permAccessResourceNodeAnon.click();
+      }
+    });
+
+    permAccessResourceNodeAuth.isSelected().then(function(selected) {
+      if (!selected) {
+        permAccessResourceNodeAuth.click();
+      }
+    });
 
     // Allow paragraphs_item API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-paragraphs-item')).click();
-    dvr.findElement(by.id('edit-2-access-resource-paragraphs-item')).click();
+    permAccessResourceParaAnon.isSelected().then(function(selected) {
+      if (!selected) {
+        permAccessResourceParaAnon.click();
+      }
+    });
 
-    dvr.findElement(by.id('edit-submit')).click();
+    permAccessResourceParaAuth.isSelected().then(function(selected) {
+      if (!selected) {
+        permAccessResourceParaAuth.click();
+      }
+    });
+
+    // Save permissions
+    save.click();
 
   });
 
   it('can create a piece of Style Guide Page content as designer', function() {
     // admin logout
     browser.get(browser.params.url + '/user/logout');
-    dvr.get(browser.params.url + '/user/login');
+    browser.get(browser.params.url + '/user/login');
 
     // log in as designer
-    dvr.findElement(by.id('edit-name')).sendKeys('Elliot Hunter');
-    dvr.findElement(by.id('edit-pass')).sendKeys('password');
-    dvr.findElement(by.id('edit-submit')).click();
-    dvr.wait(function() {
-      return dvr.getCurrentUrl().then(function(url) {
+    element(by.id('edit-name')).sendKeys('Elliot Hunter');
+    element(by.id('edit-pass')).sendKeys('password');
+    save.click();
+    browser.wait(function() {
+      return browser.getCurrentUrl().then(function(url) {
         return /user/.test(url);
       });
     });
@@ -70,7 +131,11 @@ describe('The Style Guide features of the CMS', function() {
     expect(element(by.id('toolbar')).isPresent()).toBe(true);
 
     browser.get(browser.params.url + '/node/add/style-guide-page');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Style guide page');
+    expect(element(by.css('.page-title')).getText()).toContain('Create Style guide page');
+
+    // Submit without required fields
+    save.click();
+    expect(messages.getText()).toContain('Title field is required.');
 
     // add title
     element(by.id('edit-title')).sendKeys('Typography');
@@ -120,8 +185,8 @@ describe('The Style Guide features of the CMS', function() {
     if (browser.params.isSauceLabs) {
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
-    dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload')).sendKeys(absolutePath);
-    dvr.findElement(by.id('edit-field-components-und-2-field-image-und-0-upload-button')).click();
+    element(by.id('edit-field-components-und-2-field-image-und-0-upload')).sendKeys(absolutePath);
+    element(by.id('edit-field-components-und-2-field-image-und-0-upload-button')).click();
     // wait until image has uploaded
     browser.wait(function() {
      return browser.isElementPresent($('#edit-field-components-und-2-field-image-und-0-alt'));
@@ -149,6 +214,10 @@ describe('The Style Guide features of the CMS', function() {
     // fill in Page element spec paragraph
     element(by.id('edit-field-components-und-4-field-description-und-0-value')).sendKeys('There should only ever be one page title.');
     element(by.id('edit-field-components-und-4-field-html-und-0-value')).sendKeys('<h1>Page title</h1>');
+
+    // check that the correct Style guide HTML text format is set for the HTML field
+    expect(element(by.css('.filter-guidelines-style_guide_html')).isPresent()).toBe(true);
+
     element(by.id('edit-field-components-und-4-field-css-properties-und-0-first')).sendKeys('font-family');
     element(by.id('edit-field-components-und-4-field-css-properties-und-0-second')).sendKeys('SC Akkurat');
     element(by.id('edit-field-components-und-4-field-css-properties-und-add-more')).click();
@@ -165,16 +234,16 @@ describe('The Style Guide features of the CMS', function() {
     element(by.id('edit-field-components-und-4-field-css-properties-und-2-second')).sendKeys('- 0.2');
 
     // publish
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
       element(by.cssContainingText('ul.vertical-tabs-list > li > a', 'Publishing options')).click();
-      dvr.findElement(by.id('edit-status')).click();
+      optionsPublished.click();
 
       // add to style guide menu
       element(by.cssContainingText('ul.vertical-tabs-list > li > a', 'Menu settings')).click();
       element(by.id('edit-menu-enabled')).click();
 
       // save
-      element(by.id('edit-submit')).click();
+      save.click();
 
       expect(element(by.id('console')).getText()).toContain('Style guide page Typography has been created.');
 
@@ -186,7 +255,7 @@ describe('The Style Guide features of the CMS', function() {
         pathAlias = alias;
 
         // store node ID of event just created
-        dvr.getCurrentUrl().then(function(currentUrl) {
+        browser.getCurrentUrl().then(function(currentUrl) {
           var currentUrlObj = url.parse(currentUrl);
           var currentUrlPath = currentUrlObj.pathname.split(path.sep);
           nid = currentUrlPath[currentUrlPath.length-2];
@@ -201,13 +270,13 @@ describe('The Style Guide features of the CMS', function() {
   it('can edit a piece of Style Guide Page content as designer', function() {
 
     browser.get(browser.params.url + '/node/add/style-guide-page');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Style guide page');
+    expect(element(by.css('.page-title')).getText()).toContain('Create Style guide page');
 
     // add title
     element(by.id('edit-title')).sendKeys('Editable');
 
     // save
-    element(by.id('edit-submit')).click();
+    save.click();
 
     expect(element(by.id('console')).getText()).toContain('Style guide page Editable has been created.');
 
@@ -216,7 +285,7 @@ describe('The Style Guide features of the CMS', function() {
     element(by.id('edit-title')).sendKeys(' edited');
 
     // save
-    element(by.id('edit-submit')).click();
+    save.click();
 
     expect(element(by.id('console')).getText()).toContain('Style guide page Editable edited has been updated.');
 
@@ -228,8 +297,8 @@ describe('The Style Guide features of the CMS', function() {
     element(by.cssContainingText('.tabs.primary > li > a', 'Edit')).click();
 
     // delete
-    element(by.id('edit-delete')).click();
-    element(by.id('edit-submit')).click();
+    del.click();
+    save.click();
 
     expect(element(by.id('console')).getText()).toContain('Style guide page Editable edited has been deleted.');
   });
@@ -283,20 +352,6 @@ describe('The Style Guide features of the CMS', function() {
             "resource": "paragraphs_item"
           }
         ],
-        "cer": {
-          "lineage": "node:style_guide_page:",
-          "depth": 0,
-          "owner": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          },
-          "original": {
-            "uri": browser.params.url + "/node/" + nid,
-            "id": nid,
-            "resource": "node"
-          }
-        },
         "nid": nid,
         "vid": nid,
         "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
@@ -338,7 +393,7 @@ describe('The Style Guide features of the CMS', function() {
             },
             "field_html": {
               "value": "<h1>Page title</h1>\n",
-              "format": "full_html"
+              "format": "style_guide_html"
             },
             "field_css_properties": [
               {
@@ -354,20 +409,6 @@ describe('The Style Guide features of the CMS', function() {
                 "second": "- 0.2"
               }
             ],
-            "cer": {
-              "lineage": "paragraphs_item:page_element_spec:",
-              "depth": 0,
-              "owner": {
-                "uri": browser.params.url + "/paragraphs_item/" + itemId,
-                "id": itemId,
-                "resource": "paragraphs_item"
-              },
-              "original": {
-                "uri": browser.params.url + "/paragraphs_item/" + itemId,
-                "id": itemId,
-                "resource": "paragraphs_item"
-              }
-            },
             "item_id": itemId,
             "revision_id": itemId,
             "bundle": "page_element_spec",
@@ -390,12 +431,12 @@ describe('The Style Guide features of the CMS', function() {
             browser.get(browser.params.url + '/user/logout');
 
             // log in as admin
-            dvr.get(browser.params.url + '/user/login');
-            dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
-            dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
-            dvr.findElement(by.id('edit-submit')).click();
-            dvr.wait(function() {
-              return dvr.getCurrentUrl().then(function(url) {
+            browser.get(browser.params.url + '/user/login');
+            element(by.id('edit-name')).sendKeys(browser.params.user);
+            element(by.id('edit-pass')).sendKeys(browser.params.pass);
+            save.click();
+            browser.wait(function() {
+              return browser.getCurrentUrl().then(function(url) {
                 return /user/.test(url);
               });
             });
@@ -406,21 +447,52 @@ describe('The Style Guide features of the CMS', function() {
             element(by.cssContainingText('.tabs.primary > li > a', 'Edit')).click();
             element(by.id('edit-cancel')).click();
             element(by.css('#edit-user-cancel-method > .form-item-user-cancel-method:nth-of-type(4) > input')).click();
-            element(by.id('edit-submit')).click();
+            save.click();
             browser.wait(function() {
               return browser.isElementPresent(by.id('console'));
             }, 5000);
             expect(element(by.id('console')).getText()).toContain('Elliot Hunter has been deleted.');
 
-            // reset permissions
+            // CleanUp permissions
             browser.get(browser.params.url + '/admin/people/permissions');
-            dvr.findElement(by.id('edit-1-access-content')).click();
-            dvr.findElement(by.id('edit-2-access-content')).click();
-            dvr.findElement(by.id('edit-1-access-resource-node')).click();
-            dvr.findElement(by.id('edit-2-access-resource-node')).click();
-            dvr.findElement(by.id('edit-1-access-resource-paragraphs-item')).click();
-            dvr.findElement(by.id('edit-2-access-resource-paragraphs-item')).click();
-            dvr.findElement(by.id('edit-submit')).click();
+
+            permViewPublishedContentAnon.isSelected().then(function(selected) {
+              if (selected) {
+                permViewPublishedContentAnon.click();
+              }
+            });
+
+            permViewPublishedContentAuth.isSelected().then(function(selected) {
+              if (selected) {
+                permViewPublishedContentAuth.click();
+              }
+            });
+
+            permAccessResourceNodeAnon.isSelected().then(function(selected) {
+              if (selected) {
+                permAccessResourceNodeAnon.click();
+              }
+            });
+
+            permAccessResourceNodeAuth.isSelected().then(function(selected) {
+              if (selected) {
+                permAccessResourceNodeAuth.click();
+              }
+            });
+
+            permAccessResourceParaAnon.isSelected().then(function(selected) {
+              if (selected) {
+                permAccessResourceParaAnon.click();
+              }
+            });
+
+            permAccessResourceParaAuth.isSelected().then(function(selected) {
+              if (selected) {
+                permAccessResourceParaAuth.click();
+              }
+            });
+
+            save.click();
 
           });
 

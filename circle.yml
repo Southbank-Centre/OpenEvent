@@ -15,6 +15,8 @@ dependencies:
 
     # Install Drush.
     - composer global require --prefer-source --no-interaction drush/drush:6.2.0
+    # Install tidy
+    - sudo apt-get update; sudo apt-get install tidy
 
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
@@ -50,7 +52,7 @@ test:
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz
   override:
-    - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready:
+    - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready -i $SAUCE_TUNNEL_ID:
         background: true
         pwd: sc-*-linux
     # Wait for tunnel to be ready
@@ -66,4 +68,4 @@ general:
       - develop
       - master
       - /release-.*/
-      - 91510332_cms_architecture
+      - 91354686_oe_person

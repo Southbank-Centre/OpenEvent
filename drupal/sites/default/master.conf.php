@@ -24,8 +24,9 @@ $conf['master_modules'] = array(
     'varnish',
 
     // Contributed modules
+    'addressfield',
+    'auto_entitylabel',
     'better_formats',
-    'cer',
     'ctools',
     'date',
     'date_all_day',
@@ -39,14 +40,20 @@ $conf['master_modules'] = array(
     'field_group',
     'field_validation',
     'filefield_sources',
+    'geolocation',
+    'geolocation_googlemaps',
+    'htmltidy',
     'libraries',
     'link',
     'master',
     'menu_firstchild',
     'migrate',
-    'menu_firstchild',
+    'office_hours',
     'paragraphs',
     'pathauto',
+    'relation',
+    'relation_add',
+    'relation_endpoint',
     'restws',
     'shs',
     'strongarm',
@@ -61,6 +68,8 @@ $conf['master_modules'] = array(
     // Open Event
     'oe_components',
     'oe_event',
+    'oe_place',
+    'oe_person',
 
     // Southbank Centre features
     'sc_style_guide',
@@ -68,11 +77,12 @@ $conf['master_modules'] = array(
 
   ),
   'dev' => array(
+    'dblog',
     'field_ui',
     'field_validation_ui',
-    'views_ui',
     'migrate_ui',
-    'dblog',
+    'relation_ui',
+    'views_ui',
   ),
   'staging' => array(
     'syslog',

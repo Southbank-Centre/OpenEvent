@@ -24,7 +24,9 @@ exports.config = {
     event: ['event/*.js'],
     image: ['image/*.js'],
     style_guide: ['style-guide/*.js'],
-    menu_api: ['menu-api/*.js']
+    menu_api: ['menu-api/*.js'],
+    place: ['place/*.js'],
+    person: ['person/*.js']
   },
 
   // Single Browser
@@ -38,7 +40,8 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'chrome',
-      name: 'Testing with chrome'
+      name: 'Testing with chrome',
+      'tunnel-identifier': process.env.SAUCE_TUNNEL_ID
     },
   //  {
   //    browserName: 'firefox',
@@ -53,14 +56,14 @@ exports.config = {
     isSauceLabs: 0
   },
 
-  allScriptsTimeout: 60000,
+  allScriptsTimeout: 120000,
 
   // Options to be passed to jasmine-node.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
     showColors: true,
     // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 60000
+    defaultTimeoutInterval: 120000
   },
 
   // function to run before the tests - logs the browser into the CMS

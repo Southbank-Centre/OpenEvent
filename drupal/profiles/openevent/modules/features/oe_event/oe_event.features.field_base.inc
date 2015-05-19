@@ -10,6 +10,31 @@
 function oe_event_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'endpoints'
+  $field_bases['endpoints'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'endpoints',
+    'indexes' => array(
+      'entity_id' => array(
+        0 => 'entity_id',
+      ),
+      'entity_type' => array(
+        0 => 'entity_type',
+      ),
+      'r_index' => array(
+        0 => 'r_index',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'relation_endpoint',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'relation_endpoint',
+  );
+
   // Exported field_base: 'field_event_age_range'
   $field_bases['field_event_age_range'] = array(
     'active' => 1,
@@ -29,44 +54,6 @@ function oe_event_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
-  );
-
-  // Exported field_base: 'field_event_children'
-  $field_bases['field_event_children'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_event_children',
-    'field_permissions' => array(
-      'type' => 2,
-    ),
-    'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'entityreference',
-    'settings' => array(
-      'handler' => 'base',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'sort' => array(
-          'type' => 'none',
-        ),
-        'target_bundles' => array(
-          'event' => 'event',
-        ),
-      ),
-      'target_type' => 'node',
-    ),
-    'translatable' => 0,
-    'type' => 'entityreference',
   );
 
   // Exported field_base: 'field_event_class'
@@ -175,31 +162,12 @@ function oe_event_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_event_parents',
-    'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
-      ),
-    ),
+    'indexes' => array(),
     'locked' => 0,
-    'module' => 'entityreference',
-    'settings' => array(
-      'handler' => 'views',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => 'entityreference_1',
-          'view_name' => 'event_parent',
-        ),
-      ),
-      'target_type' => 'node',
-    ),
+    'module' => 'relation_add',
+    'settings' => array(),
     'translatable' => 0,
-    'type' => 'entityreference',
+    'type' => 'relation_add',
   );
 
   // Exported field_base: 'field_event_type'

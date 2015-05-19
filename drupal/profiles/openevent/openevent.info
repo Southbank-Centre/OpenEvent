@@ -27,8 +27,8 @@ dependencies[] = toolbar
 dependencies[] = user
 
 ; Contrib depedencies.
+dependencies[] = addressfield
 dependencies[] = better_formats
-dependencies[] = cer
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = date_all_day
@@ -43,14 +43,21 @@ dependencies[] = field_group
 dependencies[] = field_validation
 dependencies[] = field_validation_ui
 dependencies[] = filefield_sources
+dependencies[] = geolocation
+dependencies[] = geolocation_googlemaps
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = master
 dependencies[] = menu_firstchild
 dependencies[] = migrate
 dependencies[] = migrate_ui
+dependencies[] = office_hours
 dependencies[] = paragraphs
 dependencies[] = pathauto
+dependencies[] = relation
+dependencies[] = relation_add
+dependencies[] = relation_endpoint
+dependencies[] = relation_ui
 dependencies[] = restws
 dependencies[] = shs
 dependencies[] = strongarm
@@ -66,6 +73,8 @@ dependencies[] = views_ui
 ; Open Event dependencies
 dependencies[] = oe_components
 dependencies[] = oe_event
+dependencies[] = oe_place
+dependencies[] = oe_person
 
 ; SC dependencies
 dependencies[] = sc_style_guide

@@ -13,13 +13,19 @@ describe('Image', function() {
   var nid;
   var pathAlias;
 
+  // Page elements
+  var optionsPublished = element(by.id('edit-status'));
+
+  // Other tabs
+  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
+
   beforeEach(function(){
     isAngularSite(false);
   });
 
   it('can be added to an Event page', function(){
+    var deferment = protractor.promise.defer();
 
-    console.log("Image: staring spec\n");
     // Add test term (required to save an Event page)
     browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
 
@@ -31,20 +37,22 @@ describe('Image', function() {
 
 
     browser.get(browser.params.url + '/admin/people/permissions');
-    //expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
+    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      //expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
 
 
-    // Allow published content to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-content')).click();
-    dvr.findElement(by.id('edit-2-access-content')).click();
+      // Allow published content to be viewed by anyone
+      dvr.findElement(by.id('edit-1-access-content')).click();
+      dvr.findElement(by.id('edit-2-access-content')).click();
 
-    // Allow node API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-node')).click();
-    dvr.findElement(by.id('edit-2-access-resource-node')).click();
-    dvr.findElement(by.id('edit-1-access-resource-file')).click();
-    dvr.findElement(by.id('edit-2-access-resource-file')).click();
+      // Allow node API endpoints to be viewed by anyone
+      dvr.findElement(by.id('edit-1-access-resource-node')).click();
+      dvr.findElement(by.id('edit-2-access-resource-node')).click();
+      dvr.findElement(by.id('edit-1-access-resource-file')).click();
+      dvr.findElement(by.id('edit-2-access-resource-file')).click();
 
-    dvr.findElement(by.id('edit-submit')).click();
+      dvr.findElement(by.id('edit-submit')).click();
+    });
 
 
     // Create minimal Event page
@@ -62,13 +70,12 @@ describe('Image', function() {
     // workaround for current inability to upload images through SauceLabs from Protractor:
     // provide the path of an image which should always exist on a SauceLabs instance
     if (browser.params.isSauceLabs) {
+      fileToUpload = 'shot_o.png';
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
 
     dvr.findElement(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
     dvr.findElement(by.id('edit-field-image-und-0-upload-button')).click();
-    //$('#edit-field-image-und-0-upload').sendKeys(absolutePath);
-    //$('#edit-field-image-und-0-upload-button').click();
 
     // wait until image has uploaded
     browser.wait(function() {
@@ -79,8 +86,10 @@ describe('Image', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // select event class
-    dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-
+    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      dvr.findElement(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+    });
 
     // fill out content on 'Date and time' tab
     dvr.executeScript('window.scrollTo(0,0);').then(function () {
@@ -97,8 +106,12 @@ describe('Image', function() {
 
 
       // set the item to published
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-      dvr.findElement(by.id('edit-status')).click();
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
 
       // submit
       dvr.findElement(by.id('edit-submit')).click();
@@ -122,11 +135,14 @@ describe('Image', function() {
           var currentUrlObj = url.parse(currentUrl);
           var currentUrlPath = currentUrlObj.pathname.split(path.sep);
           nid = currentUrlPath[currentUrlPath.length-2];
+          deferment.fulfill('ok');
         });
 
       });
 
     });
+
+    expect(deferment).toBe('ok');
 
   });
 
@@ -142,17 +158,18 @@ describe('Image', function() {
       .get(browser.params.url + '/node/' + nid + '.json')
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
-      .expectJSONTypes({
-        "field_image": {
-          "file": {
-            "id": String
-          },
-          "alt": String,
-          "title": String
-        }
-      })
       .expectJSON({
         "field_image": {
+          "file": {
+            "uri": function(val) {
+              expect(val).toContain(browser.params.url + "/file/");
+            },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "file"
+          },
           "alt": "Test image ALT",
           "title": "Test image TITLE"
         }
