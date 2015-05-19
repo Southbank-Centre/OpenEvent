@@ -15,6 +15,7 @@ function oe_person_user_default_permissions() {
     'name' => 'create person content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -24,6 +25,7 @@ function oe_person_user_default_permissions() {
     'name' => 'delete any person content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -33,6 +35,7 @@ function oe_person_user_default_permissions() {
     'name' => 'delete own person content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -42,6 +45,7 @@ function oe_person_user_default_permissions() {
     'name' => 'edit any person content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -51,6 +55,7 @@ function oe_person_user_default_permissions() {
     'name' => 'edit own person content',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'node',
   );
