@@ -10,6 +10,9 @@ machine:
     sc.circle: 127.0.0.1
     api.sc.circle: 127.0.0.1
 
+  environment:
+    SAUCE_TUNNEL_ID: circle-$CIRCLE_BUILD_NUM
+
 dependencies:
   pre:
 
