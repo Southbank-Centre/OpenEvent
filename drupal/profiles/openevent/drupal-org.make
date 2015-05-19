@@ -20,6 +20,7 @@ api = 2
 
 ; Contrib modules
 projects[addressfield][version] = 1.1
+projects[auto_entitylabel][version] = 1.3
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[diff][version] = 3.2
@@ -38,6 +39,8 @@ projects[migrate][version] = 2.7
 projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
 projects[relation_add][version] = 1.4
+; When adding a new Relation Add field to a Content Type, after clicking the initial Save Field Settings button, we are taken to the Settings page and there is a warning
+projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
 projects[restws][version] = 2.4
 projects[shs][version] = 1.6
 ; Adds a check when updating parent terms. shs does not give warning any more when terms are updated.
@@ -52,6 +55,8 @@ projects[views][version] = 3.11
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
 projects[htmltidy][version] = 1.0-beta2
+; Replaces deprecated split() function with preg_split().
+projects[htmltidy][patch][1960182] = "https://www.drupal.org/files/issues/1543906-5-split.patch"
 projects[master][version] = 2.0-beta4
 projects[paragraphs][version] = 1.0-beta6
 projects[relation][version] = 1.0-rc7

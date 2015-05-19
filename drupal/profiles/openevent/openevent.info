@@ -74,6 +74,7 @@ dependencies[] = views_ui
 dependencies[] = oe_components
 dependencies[] = oe_event
 dependencies[] = oe_place
+dependencies[] = oe_person
 
 ; SC dependencies
 dependencies[] = sc_style_guide

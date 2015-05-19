@@ -25,7 +25,8 @@ exports.config = {
     image: ['image/*.js'],
     style_guide: ['style-guide/*.js'],
     menu_api: ['menu-api/*.js'],
-    place: ['place/*.js']
+    place: ['place/*.js'],
+    person: ['person/*.js']
   },
 
   // Single Browser

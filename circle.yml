@@ -68,3 +68,4 @@ general:
       - develop
       - master
       - /release-.*/
+      - 91354686_oe_person
