@@ -66,6 +66,9 @@ projects[varnish][version] = 1.0-beta3
 projects[varnish][patch][2371907] = "http://www.drupal.org/files/issues/varnish-2371907-24.patch"
 projects[views_data_export][version] = 3.0-beta8
 
+; Defaults
+defaults[projects][subdir] = ../../site/all/modules/contrib
+
 ; Open bugs
 ;
 ; 2484657 - Breaking behaviour when a filefield source field is used within a paragraph bundle.
