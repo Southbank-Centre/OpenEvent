@@ -16,7 +16,7 @@ function sc_style_guide_filter_default_formats() {
     'name' => 'Style guide HTML',
     'cache' => 1,
     'status' => 1,
-    'weight' => 0,
+    'weight' => -6,
     'filters' => array(
       'htmltidy' => array(
         'weight' => -10,

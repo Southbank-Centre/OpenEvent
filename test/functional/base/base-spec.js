@@ -1,9 +1,9 @@
 'use strict';
 /**
- * WOW Homepage Spec
+ * OE Base Spec
  */
 
-describe('WOW CMS', function() {
+describe('OE CMS', function() {
 
   beforeEach(function(){
     isAngularSite(false);
@@ -13,7 +13,7 @@ describe('WOW CMS', function() {
     browser.get(browser.params.url + '/');
 
     // check for the user toolbar
-    expect($('#toolbar-user').isPresent()).toBe(true);
+    expect(element(by.id('toolbar-user')).isPresent()).toBe(true);
   });
 
 });

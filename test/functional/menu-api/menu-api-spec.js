@@ -12,14 +12,13 @@ describe('The Menu API features of the CMS', function() {
   var childMlid;
 
   beforeEach(function(){
-    // don't wait for (non-existent) Angular to load
-    return browser.ignoreSynchronization = true;
+    isAngularSite(false);
   });
 
   it('should allow a menu to be created with a "firstchild" item', function() {
 
     browser.get(browser.params.url + '/admin/structure/menu/add');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Menus');
+    expect(element(by.css('.page-title')).getText()).toContain('Menus');
 
     // fill in new menu fields
     element(by.id('edit-title')).sendKeys('A Test Menu');
@@ -44,7 +43,7 @@ describe('The Menu API features of the CMS', function() {
     element(by.cssContainingText("#menu-overview > tbody > tr:first-of-type > .menu-operations > a", "edit")).click();
 
     // store mlid of event just created
-    dvr.getCurrentUrl().then(function(currentUrl) {
+    browser.getCurrentUrl().then(function(currentUrl) {
       var currentUrlObj = url.parse(currentUrl);
       var currentUrlPath = currentUrlObj.pathname.split(path.sep);
       parentMlid = currentUrlPath[currentUrlPath.length-2];
@@ -64,7 +63,7 @@ describe('The Menu API features of the CMS', function() {
       element(by.cssContainingText("#menu-overview > tbody > tr:nth-of-type(2) > .menu-operations > a", "edit")).click();
 
       // store mlid of event just created
-      dvr.getCurrentUrl().then(function(currentUrl) {
+      browser.getCurrentUrl().then(function(currentUrl) {
         var currentUrlObj = url.parse(currentUrl);
         var currentUrlPath = currentUrlObj.pathname.split(path.sep);
         childMlid = currentUrlPath[currentUrlPath.length-2];

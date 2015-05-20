@@ -156,55 +156,6 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_children'
-  $field_instances['node-event-field_event_children'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Events that are part of this event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.subEvent</code></a>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 6,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 6,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_children',
-    'label' => 'Children',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'entityreference',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => 60,
-      ),
-      'type' => 'entityreference_autocomplete',
-      'weight' => 9,
-    ),
-  );
-
   // Exported field_instance: 'node-event-field_event_class'
   $field_instances['node-event-field_event_class'] = array(
     'bundle' => 'event',
@@ -620,6 +571,46 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
     ),
   );
 
+  // Exported field_instance: 'relation-event_is_contained_in_event-endpoints'
+  $field_instances['relation-event_is_contained_in_event-endpoints'] = array(
+    'bundle' => 'event_is_contained_in_event',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'relation_endpoint',
+        'settings' => array(
+          'view_modes' => array(
+            'file' => 'default',
+            'node' => 'default',
+            'paragraphs_item' => 'default',
+            'relation' => 'default',
+            'taxonomy_term' => 'default',
+            'taxonomy_vocabulary' => 'default',
+            'user' => 'default',
+          ),
+        ),
+        'type' => 'relation_endpoint',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'relation',
+    'field_name' => 'endpoints',
+    'label' => 'endpoints',
+    'required' => FALSE,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'module' => 'relation_endpoint',
+      'settings' => array(),
+      'type' => 'relation_endpoint',
+      'weight' => 0,
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('<p>This field allows you to determine which events this event is grouped within.</p>
@@ -628,7 +619,6 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 <p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
 <p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
   t('Age range');
-  t('An image that represents the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.image</code></a>');
   t('Class');
   t('Date/time');
   t('Description');

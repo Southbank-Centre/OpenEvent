@@ -10,14 +10,6 @@ var nid;
 
 describe('The Person features of the CMS', function() {
 
-  // Permissions
-  var permViewPublishedContentAnon = element(by.id('edit-1-access-content'));
-  var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
-  var permAccessResourceNodeAnon = element(by.id('edit-1-access-resource-node'));
-  var permAccessResourceNodeAuth = element(by.id('edit-2-access-resource-node'));
-  var permViewRelationsAnon = element(by.id('edit-1-access-relations'));
-  var permViewRelationsAuth = element(by.id('edit-2-access-relations'));
-
   // Page elements
   var pageTitle = element(by.css('.page-title'));
   var save = element(by.id('edit-submit'));
@@ -63,58 +55,11 @@ describe('The Person features of the CMS', function() {
   // Event fields
   var eventRelation = element(by.id('edit-field-person-events-und-0-relation-options-targets-target-2'));
   var eventRelationAdd = element(by.id('edit-field-person-events-und-add-more'));
-
   
 	beforeEach(function(){
     isAngularSite(false);
   });
 
-  it('allows persons to be viewed by anyone', function(){
-    browser.get(browser.params.url + '/admin/people/permissions');
-    expect(pageTitle.getText()).toContain('People');
-
-    // Allow published content to be viewed by anyone
-    permViewPublishedContentAnon.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewPublishedContentAnon.click();
-      }
-    });
-
-    permViewPublishedContentAuth.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewPublishedContentAuth.click();
-      }
-    });
-
-    // Allow node API endpoints to be viewed by anyone
-    permAccessResourceNodeAnon.isSelected().then(function(selected) {
-      if (!selected) {
-        permAccessResourceNodeAnon.click();
-      }
-    });
-
-    permAccessResourceNodeAuth.isSelected().then(function(selected) {
-      if (!selected) {
-        permAccessResourceNodeAuth.click();
-      }
-    });
-
-    // Allow relations to be viewed by anyone
-    permViewRelationsAnon.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewRelationsAnon.click();
-      }
-    });
-
-    permViewRelationsAuth.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewRelationsAuth.click();
-      }
-    });
-
-    // Save permissions
-    save.click();
-  });
 
   it('can create, edit and delete a person', function() {
     browser.get(browser.params.url + '/node/add/person');
@@ -225,7 +170,7 @@ describe('The Person features of the CMS', function() {
     addEvent(eventName);
 
     // Add person
-    dvr.get(browser.params.url + '/node/add/person');
+    browser.get(browser.params.url + '/node/add/person');
     expect(pageTitle.getText()).toContain('Create Person');
     personGivenName.sendKeys(name);
     personFamilyName.sendKeys(surname);
@@ -234,8 +179,8 @@ describe('The Person features of the CMS', function() {
     var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
     tabEvents.click();
     eventRelation.sendKeys(eventName);
-    dvr.wait(function() {
-      return dvr.isElementPresent(by.css('#autocomplete li div'));
+    browser.wait(function() {
+      return browser.isElementPresent(by.css('#autocomplete li div'));
     }, 5000);
     autocomplete.click();
 
@@ -320,61 +265,21 @@ describe('The Person features of the CMS', function() {
       // CleanUp taxonomy terms
       // It assumes there is only ONE term created for the tests
       browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-      dvr.findElement(by.linkText('Test event class')).click();
+      element(by.linkText('Test event class')).click();
       element(by.xpath("//ul[@class='tabs primary']/li[2]")).click(); // Assumes no more tabs are present
-      //dvr.findElement(by.linkText('Edit')).click();
-      dvr.findElement(by.id('edit-delete')).click();
-      dvr.findElement(by.id('edit-submit')).click();
+      //element(by.linkText('Edit')).click();
+      element(by.id('edit-delete')).click();
+      element(by.id('edit-submit')).click();
 
       // CleanUp content
       // It deletes ALL content in the site
       browser.get(browser.params.url + '/admin/content');
-      dvr.findElement(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+      element(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
       element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
       element(by.id('edit-submit--2')).click();
       element(by.id('edit-submit')).click();
-      //expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+      //expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
-      // CleanUp permissions
-      browser.get(browser.params.url + '/admin/people/permissions');
-
-      permViewPublishedContentAnon.isSelected().then(function(selected) {
-        if (selected) {
-          permViewPublishedContentAnon.click();
-        }
-      });
-
-      permViewPublishedContentAuth.isSelected().then(function(selected) {
-        if (selected) {
-          permViewPublishedContentAuth.click();
-        }
-      });
-
-      permAccessResourceNodeAnon.isSelected().then(function(selected) {
-        if (selected) {
-          permAccessResourceNodeAnon.click();
-        }
-      });
-
-      permAccessResourceNodeAuth.isSelected().then(function(selected) {
-        if (selected) {
-          permAccessResourceNodeAuth.click();
-        }
-      });
-
-      permViewRelationsAnon.isSelected().then(function(selected) {
-        if (selected) {
-          permViewRelationsAnon.click();
-        }
-      });
-
-      permViewRelationsAuth.isSelected().then(function(selected) {
-        if (selected) {
-          permViewRelationsAuth.click();
-        }
-      });
-
-      save.click();
     }
   });
   
@@ -384,28 +289,28 @@ function addEvent(eventName) {
 
   // Create class supporting term
   browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
-  expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Event class');
-  dvr.findElement(by.id('edit-name')).sendKeys('Test event class');
-  dvr.findElement(by.id('edit-description-value')).sendKeys('Test event class description');
-  dvr.findElement(by.id('edit-submit')).click();
+  expect(element(by.css('.page-title')).getText()).toContain('Event class');
+  element(by.id('edit-name')).sendKeys('Test event class');
+  element(by.id('edit-description-value')).sendKeys('Test event class description');
+  element(by.id('edit-submit')).click();
 
   // Create a supporting event
   browser.get(browser.params.url + '/node/add/event');
-  expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Event');
+  expect(element(by.css('.page-title')).getText()).toContain('Create Event');
 
-  dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-  dvr.findElement(by.id('edit-title')).sendKeys(eventName);
+  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+  element(by.id('edit-title')).sendKeys(eventName);
 
   // Date and time
-  dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
   // start date/time
-  dvr.findElement(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-  dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-  dvr.findElement(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+  element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+  element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
+  element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
   // duration
-  dvr.findElement(by.id('edit-field-event-duration-und-0-value')).clear();
+  element(by.id('edit-field-event-duration-und-0-value')).clear();
 
   // Change to 
   element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click()
@@ -428,7 +333,7 @@ function addEvent(eventName) {
   });
 
   // save
-  dvr.findElement(by.id('edit-submit')).click();
+  element(by.id('edit-submit')).click();
 
   // test successful save
   expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');

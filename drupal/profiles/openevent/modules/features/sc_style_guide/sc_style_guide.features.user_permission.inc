@@ -10,66 +10,6 @@
 function sc_style_guide_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'access content'.
-  $permissions['access content'] = array(
-    'name' => 'access content',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'access content overview'.
-  $permissions['access content overview'] = array(
-    'name' => 'access content overview',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'access resource file'.
-  $permissions['access resource file'] = array(
-    'name' => 'access resource file',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'restws',
-  );
-
-  // Exported permission: 'access resource node'.
-  $permissions['access resource node'] = array(
-    'name' => 'access resource node',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'restws',
-  );
-
-  // Exported permission: 'access resource paragraphs_item'.
-  $permissions['access resource paragraphs_item'] = array(
-    'name' => 'access resource paragraphs_item',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'restws',
-  );
-
-  // Exported permission: 'access toolbar'.
-  $permissions['access toolbar'] = array(
-    'name' => 'access toolbar',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'toolbar',
-  );
-
   // Exported permission: 'administer menu'.
   $permissions['administer menu'] = array(
     'name' => 'administer menu',
@@ -130,16 +70,6 @@ function sc_style_guide_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'delete revisions'.
-  $permissions['delete revisions'] = array(
-    'name' => 'delete revisions',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: 'edit any style_guide_page content'.
   $permissions['edit any style_guide_page content'] = array(
     'name' => 'edit any style_guide_page content',
@@ -160,46 +90,6 @@ function sc_style_guide_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: 'revert revisions'.
-  $permissions['revert revisions'] = array(
-    'name' => 'revert revisions',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'show format tips'.
-  $permissions['show format tips'] = array(
-    'name' => 'show format tips',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'better_formats',
-  );
-
-  // Exported permission: 'use text format filtered_html'.
-  $permissions['use text format filtered_html'] = array(
-    'name' => 'use text format filtered_html',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'filter',
-  );
-
-  // Exported permission: 'use text format full_html'.
-  $permissions['use text format full_html'] = array(
-    'name' => 'use text format full_html',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'filter',
-  );
-
   // Exported permission: 'use text format style_guide_html'.
   $permissions['use text format style_guide_html'] = array(
     'name' => 'use text format style_guide_html',
@@ -208,36 +98,6 @@ function sc_style_guide_user_default_permissions() {
       'designer' => 'designer',
     ),
     'module' => 'filter',
-  );
-
-  // Exported permission: 'view own unpublished content'.
-  $permissions['view own unpublished content'] = array(
-    'name' => 'view own unpublished content',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'view revisions'.
-  $permissions['view revisions'] = array(
-    'name' => 'view revisions',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: 'view the administration theme'.
-  $permissions['view the administration theme'] = array(
-    'name' => 'view the administration theme',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'designer' => 'designer',
-    ),
-    'module' => 'system',
   );
 
   return $permissions;

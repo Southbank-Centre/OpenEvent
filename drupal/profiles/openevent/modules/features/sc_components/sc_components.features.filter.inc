@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * oe_components.features.filter.inc
+ * sc_components.features.filter.inc
  */
 
 /**
  * Implements hook_filter_default_formats().
  */
-function oe_components_filter_default_formats() {
+function sc_components_filter_default_formats() {
   $formats = array();
 
   // Exported format: Iframe HTML.

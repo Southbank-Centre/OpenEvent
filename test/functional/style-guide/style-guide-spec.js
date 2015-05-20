@@ -11,10 +11,6 @@ var nid;
 describe('The Style Guide features of the CMS', function() {
 
   // Permissions
-  var permViewPublishedContentAnon = element(by.id('edit-1-access-content'));
-  var permViewPublishedContentAuth = element(by.id('edit-2-access-content'));
-  var permAccessResourceNodeAnon = element(by.id('edit-1-access-resource-node'));
-  var permAccessResourceNodeAuth = element(by.id('edit-2-access-resource-node'));
   var permAccessResourceParaAnon = element(by.id('edit-1-access-resource-paragraphs-item'));
   var permAccessResourceParaAuth = element(by.id('edit-2-access-resource-paragraphs-item'));
 
@@ -28,6 +24,7 @@ describe('The Style Guide features of the CMS', function() {
   beforeEach(function(){
     isAngularSite(false);
   });
+  
 
   it('has a correctly configured text format for the HTML field', function() {
     browser.get(browser.params.url + '/admin/config/content/formats');
@@ -46,7 +43,8 @@ describe('The Style Guide features of the CMS', function() {
 
   it('allows the designer role to see text format tips', function() {
     browser.get(browser.params.url + '/admin/people/permissions');
-    expect(element(by.id('edit-3-show-format-tips')).isSelected()).toBe(true);
+    // Normal checkbox is hidden as permission is inherited from authenticated user. Target dummy checkbox instead.
+    expect($('.form-item-3-show-format-tips .dummy-checkbox').getAttribute('title')).toContain('This permission is inherited from the authenticated user role.');
   });
 
   it('can set up a user with the "designer" role', function() {
@@ -65,35 +63,9 @@ describe('The Style Guide features of the CMS', function() {
 
   });
 
-  it('can allow content to be viewed by anyone', function() {
+  it('can allow paragraph item content to be viewed by anyone', function() {
     browser.get(browser.params.url + '/admin/people/permissions');
     expect(pageTitle.getText()).toContain('People');
-
-    // Allow published content to be viewed by anyone
-    permViewPublishedContentAnon.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewPublishedContentAnon.click();
-      }
-    });
-
-    permViewPublishedContentAuth.isSelected().then(function(selected) {
-      if (!selected) {
-        permViewPublishedContentAuth.click();
-      }
-    });
-
-    // Allow node API endpoints to be viewed by anyone
-    permAccessResourceNodeAnon.isSelected().then(function(selected) {
-      if (!selected) {
-        permAccessResourceNodeAnon.click();
-      }
-    });
-
-    permAccessResourceNodeAuth.isSelected().then(function(selected) {
-      if (!selected) {
-        permAccessResourceNodeAuth.click();
-      }
-    });
 
     // Allow paragraphs_item API endpoints to be viewed by anyone
     permAccessResourceParaAnon.isSelected().then(function(selected) {
@@ -455,30 +427,6 @@ describe('The Style Guide features of the CMS', function() {
 
             // CleanUp permissions
             browser.get(browser.params.url + '/admin/people/permissions');
-
-            permViewPublishedContentAnon.isSelected().then(function(selected) {
-              if (selected) {
-                permViewPublishedContentAnon.click();
-              }
-            });
-
-            permViewPublishedContentAuth.isSelected().then(function(selected) {
-              if (selected) {
-                permViewPublishedContentAuth.click();
-              }
-            });
-
-            permAccessResourceNodeAnon.isSelected().then(function(selected) {
-              if (selected) {
-                permAccessResourceNodeAnon.click();
-              }
-            });
-
-            permAccessResourceNodeAuth.isSelected().then(function(selected) {
-              if (selected) {
-                permAccessResourceNodeAuth.click();
-              }
-            });
 
             permAccessResourceParaAnon.isSelected().then(function(selected) {
               if (selected) {
