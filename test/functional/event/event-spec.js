@@ -85,11 +85,12 @@ describe('The Event features of the CMS', function() {
       element(by.id('edit-submit')).click();
 
       // check for the error message explaining that required fields haven't been populated
-      expect(element(by.id('console')).getText()).toContain('Title field is required');
-      expect(element(by.id('console')).getText()).toContain('Class field is required');
-      expect(element(by.id('console')).getText()).toContain('A valid date is required for Date/time Start date');
-      expect(element(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
-      expect(element(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for End date/time.');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
@@ -109,9 +110,14 @@ describe('The Event features of the CMS', function() {
         element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
         // start date/time
-        element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-        element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-        element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+        element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
+        element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+        // end date/time
+        element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
+        element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
+        element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
 
         // duration
         element(by.id('edit-field-event-duration-und-0-value')).clear();
@@ -189,16 +195,16 @@ describe('The Event features of the CMS', function() {
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
       // start date/time
-      expect(element(by.id('edit-field-event-date-time-und-0-all-day')).isPresent()).toBe(true);
-      element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-      element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-      element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+      expect(element(by.id('edit-field-event-date-start-und-0-all-day')).isPresent()).toBe(true);
+      element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+      element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
+      element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
       // end date/time
-      element(by.id('edit-field-event-date-time-und-0-show-todate')).click();
-      element(by.id('edit-field-event-date-time-und-0-value2-datepicker-popup-0')).sendKeys('15/04/2015');
-      element(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).click();
-      element(by.id('edit-field-event-date-time-und-0-value2-timeEntry-popup-1')).sendKeys('22:00');
+      expect(element(by.id('edit-field-event-date-end-und-0-all-day')).isPresent()).toBe(true);
+      element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
+      element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
+      element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
 
       // duration
       element(by.id('edit-field-event-duration-und-0-value')).clear();
@@ -295,7 +301,6 @@ describe('The Event features of the CMS', function() {
 
       // re-focus
       browser.executeScript('window.scrollTo(0,0);').then(function () {
-        
         element(by.css('h1')).click();
         // save
         element(by.id('edit-submit')).click().then(function() {
@@ -352,16 +357,13 @@ describe('The Event features of the CMS', function() {
           }
         ],
         "field_image": [],
-        "field_event_date_time": {
-          "value": function(val) {
-            expect(val.length).toEqual(10);
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "value2": function(val) {
-            expect(val.length).toEqual(10);
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "duration": function(val) { expect(typeof val).toEqual("number"); },
+        "field_event_date_start": function(val) {
+          expect(val.length).toEqual(10);
+          expect(isNaN(parseInt(val, 10))).toBe(false);
+        },
+        "field_event_date_end": function(val) {
+          expect(val.length).toEqual(10);
+          expect(isNaN(parseInt(val, 10))).toBe(false);
         },
         "field_event_door_time": function(val) {
           expect(val.length).toEqual(10);

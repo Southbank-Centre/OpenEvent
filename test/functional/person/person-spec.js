@@ -22,7 +22,7 @@ describe('The Person features of the CMS', function() {
 
   // Main fields
   // @TODO add a rand to get one of these
-  var personNamePrefix = element(by.id('edit-field-person-name-prefix-und')); 
+  var personNamePrefix = element(by.id('edit-field-person-name-prefix-und'));
   var personGivenName = element(by.id('edit-field-person-name-given-und-0-value'));
   var personMiddleName = element(by.id('edit-field-person-name-middle-und-0-value'));
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
@@ -55,7 +55,7 @@ describe('The Person features of the CMS', function() {
   // Event fields
   var eventRelation = element(by.id('edit-field-person-events-und-0-relation-options-targets-target-2'));
   var eventRelationAdd = element(by.id('edit-field-person-events-und-add-more'));
-  
+
 	beforeEach(function(){
     isAngularSite(false);
   });
@@ -282,7 +282,7 @@ describe('The Person features of the CMS', function() {
 
     }
   });
-  
+
 });
 
 function addEvent(eventName) {
@@ -305,14 +305,19 @@ function addEvent(eventName) {
   element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
   // start date/time
-  element(by.id('edit-field-event-date-time-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-  element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).click();
-  element(by.id('edit-field-event-date-time-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+  element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
+  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+  // end date/time
+  element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
+  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
+  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
 
   // duration
   element(by.id('edit-field-event-duration-und-0-value')).clear();
 
-  // Change to 
+  // Change to
   element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click()
 
   browser.wait(function() {
