@@ -67,7 +67,7 @@ projects[varnish][patch][2371907] = "http://www.drupal.org/files/issues/varnish-
 projects[views_data_export][version] = 3.0-beta8
 
 ; Defaults
-defaults[projects][subdir] = ../../site/all/modules/contrib
+defaults[projects][subdir] = contrib
 
 ; Open bugs
 ;
