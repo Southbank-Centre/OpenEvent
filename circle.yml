@@ -14,15 +14,13 @@ machine:
 
 checkout:
   override:
-    - git clone drupal/profile/openevent
+    - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_NAME drupal/profile/openevent
 
 dependencies:
   pre:
 
     # Install Drush.
     - composer global require --prefer-source --no-interaction drush/drush:6.2.0
-    # Install tidy
-    - sudo apt-get update; sudo apt-get install tidy
 
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
@@ -30,13 +28,13 @@ dependencies:
         pwd:
           drupal
     - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/drupal site-install openevent -y --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
-    - sudo chgrp -R www-data $HOME/southbankcentre.org-CMS/drupal/sites/default/files
+    - sudo chgrp -R www-data $HOME/drupal/sites/default/files
 
   post:
     # apache module setup
     - a2enmod rewrite
     # apache vhost setup
-    - cp $HOME/drupal/profile/openevent/api.vhost /etc/apache2/sites-available/openevent
+    - cp $HOME/drupal/profile/openevent/openevent.vhost /etc/apache2/sites-available/openevent
     - a2ensite openevent
     - sudo service apache2 restart
 
