@@ -34,7 +34,7 @@ dependencies:
     # apache module setup
     - a2enmod rewrite
     # apache vhost setup
-    - cp $HOME/drupal/profiles/openevent/openevent.vhost /etc/apache2/sites-available/openevent
+    - cp $HOME/drupal/profiles/openevent/ci/openevent.vhost /etc/apache2/sites-available/openevent
     - a2ensite openevent
     - sudo service apache2 restart
 
