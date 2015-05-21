@@ -32,6 +32,7 @@ dependencies[] = auto_entitylabel
 dependencies[] = better_formats
 dependencies[] = ctools
 dependencies[] = date
+dependencies[] = entity
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = field_group
