@@ -26,7 +26,7 @@ dependencies:
   override:
     - cp $HOME/drupal/profiles/openevent/local-openevent.make $HOME/drupal/
     - drush make local-openevent.make -y:
-        pwd: $HOME/drupal
+        pwd: ~/drupal
     - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/drupal site-install openevent -y --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
     - sudo chgrp -R www-data $HOME/drupal/sites/default/files
 
@@ -55,7 +55,7 @@ test:
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
     - node run_suites_synchronously --params.url 'http://api.sc.circle:8080' --params.isSauceLabs 1:
-        pwd: $HOME/drupal/test/functional
+        pwd: ../drupal/test/functional
 
 general:
   branches:
