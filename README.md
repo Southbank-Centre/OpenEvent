@@ -27,7 +27,7 @@ Equally this distribution is intended to evolve and this can be greatly helped b
 ## Requirements
 Open Event requires Drupal 7 and version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements) 
 	
-*Please note if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RESTWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
+*Please note if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
 
 ### Modules
 The following modules are required. They are packaged and automatically enabled with this  distribution:
@@ -108,9 +108,20 @@ Open Event is pre-configured with the following:
 
 ### Content types
 
-* **Event** @TODO description 
-* **Person** @TODO description
-* **Place** @TODO description
+* **Event** An event happening at a certain time and location, such as a concert, lecture, or festival. Events can be linked to other events in a hierarchical structure, and also have Persons and Places associated to them (see Relation types below). The following Event types are defined as individual content types and enabled by default:
+    * ChildrensEvent
+    * ComedyEvent
+    * DanceEvent
+    * EducationEvent
+    * Event (default value)
+    * Festival
+    * FoodEvent
+    * LiteraryEvent
+    * MusicEvent
+    * TheaterEvent
+    * VisualArtsEvent
+* **Person** A person (alive, dead, undead, or fictional). Persons can be associated to Events.
+* **Place** A place has a fixed, physical extension. Places can be linked with other places in a hierarchical structure.
 
 ### Taxonomies:
 
@@ -124,10 +135,40 @@ Open Event is pre-configured with the following:
 * **Event is located in Place**
 * **Place is contained in Place**
 
+### Permissions
+
+The following permissions are pre-set to provide **anonymous users** access to view published content and JSON resources:
+
+* Node - View published content
+* RestWS - Access the resource node
+* RestWS - Access the resource relation
+* RestWS - Access the resource file
+* RestWS - Access the resource taxonomy_term
+* RestWS - Access the resource taxonomy_vocabulary
+* Relation - View Relations
+
+The following permissions are pre-set to provide **authenticated users** access to view published content and JSON resources:
+
+* Better formats - Show format tips
+* Contextual links - Use contextual links
+* Filter - Use the Filtered HTML text format
+* Filter - Use the Full HTML text format
+* Node - Access the content overview page
+* Node - View own unpublished content
+* Node - View/Revert/Delete content revisions
+* Node - Event: Create/Edit/Delete any content
+* Node - Person: Create/Edit/Delete any content
+* Node - Place: Create/Edit/Delete any content
+* System - View the administration theme
+* Toolbar - Use the administration toolbar
+* View Unpublished - View any unpublished content
+
+*Please note currently authenticated users do not have access to create or edit taxonomies, due to the fact that the EventType taxonomy is required to map to Schema.org entities. However this may change if the EventType taxonomy is removed and replace by individual content types*
+
 
 
 ## Open Event API
-Open Event by default exposes all it's content data as JSON via an API. This is based upon the RESTWS module but has been extended to map to Schema.org entities to provide a Create Once Publish Everywhere experience out of the box. <del>The benefits of using JSON data are so that you can be more flexible with how you use the data - front-end apps can be built independently of Drupal and you don't have to use the (soon to be end of life) Drupal 7 theme layer.</del> This approach allows you to use an independent web application as a front-end for the site, use available Drupal themes or consume the data from a mobile app.
+Open Event by default exposes all it's content data as JSON via an API. This is based upon the RestWS module but has been extended to map to Schema.org entities to provide a Create Once Publish Everywhere experience out of the box. <del>The benefits of using JSON data are so that you can be more flexible with how you use the data - front-end apps can be built independently of Drupal and you don't have to use the (soon to be end of life) Drupal 7 theme layer.</del> This approach allows you to use an independent web application as a front-end for the site, use available Drupal themes or consume the data from a mobile app.
 Below is a list of available endpoints:
 
 * List of events: **<root>/api<del>v1/</del>events.json**
@@ -150,7 +191,7 @@ There are a full set of tests included with this distribution. Please refer to *
 
 
 ## Troubleshooting 
-Drupal 404 Page not found response for API resources: this happens due to a fix with Drupal core that broke the capacity of RestWS to deliver API resources  [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829).
+* **Drupal 404 Page not found response for API resources**: This happens due to a fix with Drupal core that broke the capacity of RestWS to deliver API resources  [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829).
 
 
 ## FAQ
