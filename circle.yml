@@ -14,7 +14,7 @@ machine:
 
 checkout:
   override:
-    - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_NAME drupal/profile/openevent
+    - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME drupal/profile/openevent
 
 dependencies:
   pre:
