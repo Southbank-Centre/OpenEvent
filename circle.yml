@@ -25,9 +25,9 @@ dependencies:
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
     - cp $HOME/drupal/profiles/openevent/local-openevent.make $HOME/drupal/
-    - drush make local-openevent.make -y:
+    - drush -r make local-openevent.make -y:
         pwd:
-          $HOME/drupal
+          /$HOME/drupal
     - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/drupal site-install openevent -y --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
     - sudo chgrp -R www-data $HOME/drupal/sites/default/files
 
@@ -57,7 +57,7 @@ test:
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
     - node run_suites_synchronously --params.url 'http://api.sc.circle:8080' --params.isSauceLabs 1:
         pwd:
-          drupal/test/functional
+          /$HOME/drupal/test/functional
 
 general:
   branches:
