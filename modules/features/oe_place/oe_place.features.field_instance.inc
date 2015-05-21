@@ -146,8 +146,8 @@ function oe_place_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-place-field_opening_hours'
-  $field_instances['node-place-field_opening_hours'] = array(
+  // Exported field_instance: 'node-place-field_place_opening_hours'
+  $field_instances['node-place-field_place_opening_hours'] = array(
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
@@ -187,7 +187,7 @@ function oe_place_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_opening_hours',
+    'field_name' => 'field_place_opening_hours',
     'label' => 'Opening hours',
     'required' => 0,
     'settings' => array(
