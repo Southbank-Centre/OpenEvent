@@ -24,7 +24,7 @@ dependencies:
 
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
-    - cp $HOME/drupal/profiles/openenevent/local-openevent.make $HOME/drupal/
+    - cp $HOME/drupal/profiles/openevent/local-openevent.make $HOME/drupal/
     - drush make local-openevent.make -y:
         pwd:
           drupal
