@@ -38,7 +38,7 @@ The following modules are required. They are packaged and automatically enabled 
 * Ctools [https://www.drupal.org/project/ctools](https://www.drupal.org/project/ctools)
 * Date [https://www.drupal.org/project/date](https://www.drupal.org/project/date)
 * Entity [https://www.drupal.org/project/entity](https://www.drupal.org/project/entity)
-* Entity Reference [https://www.drupal.org/project/entityreference](https://www.drupal.org/project/entityreference)
+* <del>Entity Reference [https://www.drupal.org/project/entityreference](https://www.drupal.org/project/entityreference)<del>**NOT REQUIRED FOR OE??**
 * Features [https://www.drupal.org/project/features](https://www.drupal.org/project/features)
 * Field Group [https://www.drupal.org/project/field_group](https://www.drupal.org/project/field_group)
 * Field Validation [https://www.drupal.org/project/field_validation](https://www.drupal.org/project/field_validation)
@@ -98,7 +98,7 @@ B. Assuming you have Git and Drush installed run the following commands from a c
 
 6. Change the permissions of the files directory
 		
-		chmod 777 sites/default/files
+		chmod 775 sites/default/files
 		
 
 
@@ -114,28 +114,29 @@ Open Event is pre-configured with the following:
 
 ### Taxonomies:
 
-* **EventType** The following event types are pre-defined: @TODO to be confirmed next sprint!!  
-* **Person title** Popular titles are predefined.
+* <del>**EventType** The following event types are pre-defined: @TODO to be confirmed next sprint!!</del>  
+* **Person title** Popular name titles are predefined.
 
 ### Relation types
 
 * **Event is contained in Event**
-* **Performs in**
+* **Person Performs in Event**
 * **Event is located in Place**
 * **Place is contained in Place**
 
 
 
 ## Open Event API
-Open Event by default exposes all it's content data as JSON via an API. This is based upon the RESTWS module but has been extended to map to Schema.org entities. The benefits of using JSON data are so that you can be more flexible with how you use the data - front-end apps can be built independently of Drupal and you don't have to use the (soon to be end of life) Drupal 7 theme layer. Below is a list of available endpoints:
+Open Event by default exposes all it's content data as JSON via an API. This is based upon the RESTWS module but has been extended to map to Schema.org entities to provide a Create Once Publish Everywhere experience out of the box. <del>The benefits of using JSON data are so that you can be more flexible with how you use the data - front-end apps can be built independently of Drupal and you don't have to use the (soon to be end of life) Drupal 7 theme layer.</del> This approach allows you to use an independent web application as a front-end for the site, use available Drupal themes or consume the data from a mobile app.
+Below is a list of available endpoints:
 
-* List of events: **<root>/api/v1/events.json**
-* Single event: **<root>/api/v1/events/12.json**
-* Persons in an event: **<root>/api/v1/events/12/persons.json**
-* Filtering: **<root>/api/v1/events.json?status=ready&place=london**
-* Sorting: **<root>/api/v1/events.json?sort=startDate** 
-* Searching **<root>/api/v1/events.json?q=wonderbra&offset=10&limit=20**
-* Optional fields **<root>/api/v1/events.json?fields=title,performers,startDate**
+* List of events: **<root>/api<del>v1/</del>events.json**
+* Single event: **<root>/api<del>v1/</del>events/12.json**
+* Persons in an event: **<root>/api<del>v1/</del>events/12/persons.json**
+* Filtering: **<root>/api/<del>v1/</del>events.json?status=ready&place=london** @TODO: we must use valid URL: parameters
+* Sorting: **<root>/api/<del>v1/</del>events.json?sort=startDate** 
+* Searching **<root>/api/<del>v1/</del>events.json?q=shakespeare<del>wonderbra</del>&offset=10&limit=20**
+* <del>Optional fields **<root>/api/<del>v1/</del>events.json?fields=title,performers,startDate**</del> @TODO: this may not be possible with RestWS
 
 More detailed documentation can be found on the API here: **<link to API docs>**
 
@@ -149,8 +150,7 @@ There are a full set of tests included with this distribution. Please refer to *
 
 
 ## Troubleshooting 
-Optional section - should we include??
-
+Drupal 404 Page not found response for API resources: this happens due to a fix with Drupal core that broke the capacity of RestWS to deliver API resources  [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829).
 
 
 ## FAQ
