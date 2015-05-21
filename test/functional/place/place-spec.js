@@ -130,30 +130,30 @@ describe('The Place features of the CMS', function() {
 
         // fill out Opening Hours field
         // Monday
-        element(by.cssContainingText('#edit-field-opening-hours-und-2-starthours-hours > option', '07')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-2-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-2-endhours-hours > option', '15')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-2-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-hours > option', '07')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-hours > option', '15')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-minutes > option', '00')).click();
         // Tuesday
-        element(by.cssContainingText('#edit-field-opening-hours-und-4-starthours-hours > option', '08')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-4-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-4-endhours-hours > option', '16')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-4-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-hours > option', '08')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-hours > option', '16')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-minutes > option', '00')).click();
         // Wednesday
-        element(by.cssContainingText('#edit-field-opening-hours-und-6-starthours-hours > option', '09')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-6-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-6-endhours-hours > option', '17')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-6-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-hours > option', '09')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-hours > option', '17')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-minutes > option', '00')).click();
         // Thursday
-        element(by.cssContainingText('#edit-field-opening-hours-und-8-starthours-hours > option', '10')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-8-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-8-endhours-hours > option', '18')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-8-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-hours > option', '10')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-hours > option', '18')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-minutes > option', '00')).click();
         // Friday (overnight)
-        element(by.cssContainingText('#edit-field-opening-hours-und-10-starthours-hours > option', '11')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-10-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-10-endhours-hours > option', '02')).click();
-        element(by.cssContainingText('#edit-field-opening-hours-und-10-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-hours > option', '11')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-hours > option', '02')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-minutes > option', '00')).click();
 
         // fill out content on 'Publishing options' tab
         browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -225,7 +225,7 @@ describe('The Place features of the CMS', function() {
           "thoroughfare": "Southbank Centre",
           "premise": "Belvedere Road",
         },
-        "field_opening_hours": [
+        "field_place_opening_hours": [
           {
             "day": "1",
             "starthours": "700",
