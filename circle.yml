@@ -26,7 +26,7 @@ dependencies:
   override:
     - cp $HOME/drupal/profiles/openevent/local-openevent.make $HOME/drupal/
     - drush make local-openevent.make -y:
-        pwd: ~/drupal
+        pwd: ../drupal
     - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/drupal site-install openevent -y --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
     - sudo chgrp -R www-data $HOME/drupal/sites/default/files
 
