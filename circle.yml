@@ -44,7 +44,6 @@ test:
     - npm install -g protractor@1.8.0
     # frisby setup
     - npm install -g frisby@0.8.5
-    - npm link frisby
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz
@@ -54,6 +53,8 @@ test:
         pwd: sc-*-linux
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
+    - npm link frisby:
+        pwd: ../drupal/profiles/openevent/test/functional
     - node run_suites_synchronously --params.url 'http://openevent.sc.circle:8080' --params.isSauceLabs 1:
         pwd: ../drupal/profiles/openevent/test/functional
 
