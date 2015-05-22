@@ -16,7 +16,7 @@ This is specified under the ***machine*** heading in *circle.yml*. Particular ve
 
 ### 2. Check out code
 
-CircleCI will automatically check out the code from the GitHub repository that its project is connected to - in this case, *Southbank-Centre/southbankcentre.org-CMS*.
+CircleCI will automatically check out the code from the GitHub repository that its project is connected to - in this case, *Southbank-Centre/OpenEvent.git*.
 
 By default, CircleCI will watch for commits to any branch. However, it's possible to limit it to only watch for commits to branches with particular names (or matching particular patterns). To see which - if any - branches are being watched, look for the heading ***general***, subheading ***branches*** in *circle.yml*.
 

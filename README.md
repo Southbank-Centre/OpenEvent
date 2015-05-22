@@ -68,7 +68,7 @@ B. Assuming you have Git and Drush installed run the following commands from a c
 
 1. Clone the Open Event distribution branch from GitHub: 
  
-		git clone -b 92518920_OE_split git@github.com:Southbank-Centre/southbankcentre.org-CMS.git DRUPAL-DIRECTORY/profiles/openevent
+		git clone -b develop git@github.com:Southbank-Centre/OpenEvent.git DRUPAL-DIRECTORY/profiles/openevent
 	
 	Where DRUPAL DIRECTORY is the directory name of your site root.
  	
