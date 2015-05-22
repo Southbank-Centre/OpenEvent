@@ -16,9 +16,6 @@ checkout:
   override:
     - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME $HOME/drupal/profiles/openevent
 
-  environment:
-    SAUCE_TUNNEL_ID: circle-$CIRCLE_BUILD_NUM
-
 dependencies:
   pre:
 
