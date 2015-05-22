@@ -107,13 +107,13 @@ Open Event is pre-configured with the following:
 
 ### Content types
 
-* **Event** An event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects. Events can be linked to other events in a hierarchical structure, and also have Persons and Places associated to them (see Relation types below). Designed in accordance with the [schema.org Event type](https://schema.org/Event). 
-* **Person** A person (alive, dead, undead, or fictional). Persons can be associated to Events. Designed in accordance with the [schema.org Person type](http://schema.org/Person). 
-* **Place** A place has a fixed, physical extension. Places can be linked with other places in a hierarchical structure. Designed in accordance with the [schema.org Place type](https://schema.org/Place).
+* **Event** - An event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects. Events can be linked to other events in a hierarchical structure, and also have Persons and Places associated to them (see Relation types below). Designed in accordance with the [schema.org Event type](https://schema.org/Event). 
+* **Person** - A person (alive, dead, undead, or fictional). Persons can be associated to Events. Designed in accordance with the [schema.org Person type](http://schema.org/Person). 
+* **Place** - A place has a fixed, physical extension. Places can be linked with other places in a hierarchical structure. Designed in accordance with the [schema.org Place type](https://schema.org/Place).
 
 ### Taxonomies:
 
-* **Person title** Popular name titles are predefined.
+* **Person title** - Popular name titles are predefined.
 
 ### Relation types
 
@@ -122,9 +122,16 @@ Open Event is pre-configured with the following:
 * **Event is located in Place**
 * **Place is contained in Place**
 
+### Roles
+Open Event includes the same roles as a standard Drupal installation, and they provide the following access (more details in Permissions below):
+
+* **Administrator** - full access to all permissions (as provided by the standard install profile) 
+* **Authenticated User** - access to edit all content types
+* **Anonymous User** - access to view published content and JSON resources 
+
 ### Permissions
 
-The following permissions are pre-set to provide **anonymous users** access to view published content and JSON resources:
+#### Anonymous users
 
 * Node - View published content
 * RestWS - Access the resource node
@@ -134,7 +141,7 @@ The following permissions are pre-set to provide **anonymous users** access to v
 * RestWS - Access the resource taxonomy_vocabulary
 * Relation - View Relations
 
-The following permissions are pre-set to provide **authenticated users** access to view published content and JSON resources:
+#### Authenticated users
 
 * Better formats - Show format tips
 * Contextual links - Use contextual links
