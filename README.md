@@ -54,10 +54,7 @@ The following modules are required. They are packaged and automatically enabled 
 * Table Element [https://www.drupal.org/project/table_element](https://www.drupal.org/project/table_element)
 * Taxonomy Access Fix [https://www.drupal.org/project/taxonomy_access_fix](https://www.drupal.org/project/taxonomy_access_fix)
 * Token [https://www.drupal.org/project/token](https://www.drupal.org/project/token)
-* <del>Varnish [https://www.drupal.org/project/varnish](https://www.drupal.org/project/varnish)</del> **NOT REQUIRED FOR OE??**
-* <del>View Unpublished [https://www.drupal.org/project/view_unpublished](https://www.drupal.org/project/view_unpublished)</del> **NOT REQUIRED FOR OE??**
 * <del>Views [https://www.drupal.org/project/views](https://www.drupal.org/project/views)</del> **NOT REQUIRED FOR OE??**
-* <del>Views Data Export [https://www.drupal.org/project/views_data_export](https://www.drupal.org/project/views_data_export)</del> **NOT REQUIRED FOR OE??**
 
 
 
@@ -162,18 +159,18 @@ Open Event includes the same roles as a standard Drupal installation, and they p
 
 
 ## Open Event API
-Open Event by default exposes all it's content data as JSON via an API. This is based upon the RestWS module but has been extended to map to Schema.org entities to provide a Create Once Publish Everywhere experience out of the box. <del>The benefits of using JSON data are so that you can be more flexible with how you use the data - front-end apps can be built independently of Drupal and you don't have to use the (soon to be end of life) Drupal 7 theme layer.</del> This approach allows you to use an independent web application as a front-end for the site, use available Drupal themes or consume the data from a mobile app.
+Open Event by default exposes all it's content data as JSON via an API. This is based upon the RestWS module but has been extended to map to Schema.org entities to provide a Create Once Publish Everywhere experience out of the box. This approach allows you to use an independent web application as a front-end for the site, use available Drupal themes, or consume data from a mobile app.
 Below is a list of available endpoints:
 
-* List of events: **<root>/api<del>v1/</del>events.json**
-* Single event: **<root>/api<del>v1/</del>events/12.json**
-* Persons in an event: **<root>/api<del>v1/</del>events/12/persons.json**
-* Filtering: **<root>/api/<del>v1/</del>events.json?status=ready&place=london** @TODO: we must use valid URL: parameters
-* Sorting: **<root>/api/<del>v1/</del>events.json?sort=startDate** 
-* Searching **<root>/api/<del>v1/</del>events.json?q=shakespeare<del>wonderbra</del>&offset=10&limit=20**
-* <del>Optional fields **<root>/api/<del>v1/</del>events.json?fields=title,performers,startDate**</del> @TODO: this may not be possible with RestWS
+* List of events: **<root>/api/events.json**
+* Single event: **<root>/api/events/12.json**
+* Persons in an event: **<root>/api/events/12/persons.json**
+* Filtering: **<root>/api/events.json?status=ready&place=london** @TODO: we must use valid URL: parameters
+* Sorting: **<root>/api/events.json?sort=startDate** 
+* Searching **<root>/api/events.json?q=shakespeare&offset=10&limit=20**
+* <del>Optional fields **<root>/api/events.json?fields=title,performers,startDate**</del> @TODO: this may not be possible with RestWS
 
-More detailed documentation can be found on the API here: **<link to API docs>**
+More detailed documentation can be found on the API here: **Link to API docs**
 
 
  
@@ -186,6 +183,7 @@ There are a full set of tests included with this distribution. Please refer to *
 
 ## Troubleshooting 
 * **Drupal 404 Page not found response for API resources**: This happens due to a fix with Drupal core that broke the capacity of RestWS to deliver API resources  [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829).
+
 
 
 ## FAQ
