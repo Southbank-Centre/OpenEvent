@@ -27,7 +27,7 @@ Equally this distribution is intended to evolve and this can be greatly helped b
 ## Requirements
 Open Event requires Drupal 7 and version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements) 
 	
-*Please note if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
+*Please note: if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
 
 ### Modules
 The following modules are required. They are packaged and automatically enabled with this  distribution:
@@ -46,7 +46,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Geolocation Field [https://www.drupal.org/project/geolocation](https://www.drupal.org/project/geolocation)
 * Link [https://www.drupal.org/project/link](https://www.drupal.org/project/link)
 * Office Hours [https://www.drupal.org/project/office_hours](https://www.drupal.org/project/office_hours)
-* <del>Paragraphs [https://www.drupal.org/project/paragraphs](https://www.drupal.org/project/paragraphs)</del> **NOT REQUIRED FOR OE??**
 * Pathauto [https://www.drupal.org/project/pathauto](https://www.drupal.org/project/pathauto)
 * Relation [https://www.drupal.org/project/relation](https://www.drupal.org/project/relation)
 * Relation Add [https://www.drupal.org/project/relation_add](https://www.drupal.org/project/relation_add)
@@ -108,24 +107,12 @@ Open Event is pre-configured with the following:
 
 ### Content types
 
-* **Event** An event happening at a certain time and location, such as a concert, lecture, or festival. Events can be linked to other events in a hierarchical structure, and also have Persons and Places associated to them (see Relation types below). The following Event types are defined as individual content types and enabled by default:
-    * ChildrensEvent
-    * ComedyEvent
-    * DanceEvent
-    * EducationEvent
-    * Event (default value)
-    * Festival
-    * FoodEvent
-    * LiteraryEvent
-    * MusicEvent
-    * TheaterEvent
-    * VisualArtsEvent
-* **Person** A person (alive, dead, undead, or fictional). Persons can be associated to Events.
-* **Place** A place has a fixed, physical extension. Places can be linked with other places in a hierarchical structure.
+* **Event** An event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects. Events can be linked to other events in a hierarchical structure, and also have Persons and Places associated to them (see Relation types below). Designed in accordance with the [schema.org Event type](https://schema.org/Event). 
+* **Person** A person (alive, dead, undead, or fictional). Persons can be associated to Events. Designed in accordance with the [schema.org Person type](http://schema.org/Person). 
+* **Place** A place has a fixed, physical extension. Places can be linked with other places in a hierarchical structure. Designed in accordance with the [schema.org Place type](https://schema.org/Place).
 
 ### Taxonomies:
 
-* <del>**EventType** The following event types are pre-defined: @TODO to be confirmed next sprint!!</del>  
 * **Person title** Popular name titles are predefined.
 
 ### Relation types
@@ -163,7 +150,7 @@ The following permissions are pre-set to provide **authenticated users** access 
 * Toolbar - Use the administration toolbar
 * View Unpublished - View any unpublished content
 
-*Please note currently authenticated users do not have access to create or edit taxonomies, due to the fact that the EventType taxonomy is required to map to Schema.org entities. However this may change if the EventType taxonomy is removed and replace by individual content types*
+*Please note: currently only the administrator role has access to create or edit taxonomies*
 
 
 
