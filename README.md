@@ -38,7 +38,7 @@ The following modules are required. They are packaged and automatically enabled 
 * Ctools [https://www.drupal.org/project/ctools](https://www.drupal.org/project/ctools)
 * Date [https://www.drupal.org/project/date](https://www.drupal.org/project/date)
 * Entity [https://www.drupal.org/project/entity](https://www.drupal.org/project/entity)
-* <del>Entity Reference [https://www.drupal.org/project/entityreference](https://www.drupal.org/project/entityreference)<del>**NOT REQUIRED FOR OE??**
+* <del>Entity Reference [https://www.drupal.org/project/entityreference](https://www.drupal.org/project/entityreference)</del>**NOT REQUIRED FOR OE??**
 * Features [https://www.drupal.org/project/features](https://www.drupal.org/project/features)
 * Field Group [https://www.drupal.org/project/field_group](https://www.drupal.org/project/field_group)
 * Field Validation [https://www.drupal.org/project/field_validation](https://www.drupal.org/project/field_validation)
@@ -76,15 +76,17 @@ B. Assuming you have Git and Drush installed run the following commands from a c
 		
 		cd DRUPAL-DIRECTORY
 		
-3. Download Drupal core and Open Event modules and dependencies: 
-
-		drush make local-openevent.make -y
-    
 4. Copy the Open Event Make file to the Drupal folder (where it needs to be run from):
 
 		cp profiles/openevent/local-openevent.make .
+		
+4. Download Drupal core and Open Event modules and dependencies: 
 
-5. Install Drupal to a MySQL database: 
+		drush make local-openevent.make -y
+
+5. Create the database: https://www.drupal.org/documentation/install/create-database
+
+6. Install Drupal to a MySQL database: 
 
 		drush si openevent --account-name="USER" --account-pass="PASS" --db-url="mysql://DB-USER:DB-PASS@DB-HOST/DB-NAME"
 
@@ -92,10 +94,10 @@ B. Assuming you have Git and Drush installed run the following commands from a c
 	DB-USER, DB-PASS, DB-HOST and DB-NAME should be changed to match your database settings. If the database specified doesn't exist it will be created. The ``--db-url`` parameter will add your database settings automatically to your sites/default/settings.php file. If you would prefer to define separate setting files for different environments (e.g. local.settings.php) then please omit the ``--db-url`` parameter from the command above and define your database settings manually.
 	*Please note if an existing database exists it will be overwritten.*
 
-6. Change the permissions of the files directory
+7. Change the permissions of the files directory and the settings file
 		
 		chmod 775 sites/default/files
-		
+		chmod 444 sites/default/settings.php
 
 
 ## Configuration
