@@ -1,4 +1,0 @@
-name = Southbank Centre Menu API
-description = "Adds an endpoint for accessing JSON representations of menus"
-package = Southbank Centre
-core = 7.x
