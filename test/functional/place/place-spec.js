@@ -14,61 +14,43 @@ describe('The Place features of the CMS', function() {
   var pathAlias;
 
   beforeEach(function(){
-    // don't wait for (non-existent) Angular to load
     isAngularSite(false);
   });
 
-  it('can allow places to be viewed by anyone', function() {
-    browser.get(browser.params.url + '/admin/people/permissions');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('People');
-
-    // Allow published content to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-content')).click();
-    dvr.findElement(by.id('edit-2-access-content')).click();
-
-    // Allow node API endpoints to be viewed by anyone
-    dvr.findElement(by.id('edit-1-access-resource-node')).click();
-    dvr.findElement(by.id('edit-2-access-resource-node')).click();
-    dvr.findElement(by.id('edit-1-access-resource-relation')).click();
-    dvr.findElement(by.id('edit-2-access-resource-relation')).click();
-
-    dvr.findElement(by.id('edit-submit')).click();
-
-  });
 
   it('can create a minimal place page', function(){
     browser.get(browser.params.url + '/node/add/place');
-    expect(dvr.findElement(by.css('.page-title')).getText()).toContain('Create Place');
+    expect(element(by.css('.page-title')).getText()).toContain('Create Place');
 
     // submit the form
-    dvr.findElement(by.id('edit-submit')).click();
+    element(by.id('edit-submit')).click();
 
     // check for the error message explaining that required fields haven't been populated
-    expect(dvr.findElement(by.id('console')).getText()).toContain('Name field is required');
+    expect(element(by.id('console')).getText()).toContain('Name field is required');
 
     // fill out content on 'Main' tab
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Parent place');
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+    element(by.id('edit-title')).sendKeys('Parent place');
 
     // set the item to published
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-    dvr.findElement(by.id('edit-status')).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+    element(by.id('edit-status')).click();
 
     // submit
-    dvr.findElement(by.id('edit-submit')).click();
+    element(by.id('edit-submit')).click();
 
     // test successful save
     expect(element(by.id('console')).getText()).toContain('Place Parent place has been created.');
 
     // go back to edit page
-    dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-    dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+    element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+    element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
       parentPathAlias = alias;
 
       // store node ID of place just created
-      dvr.getCurrentUrl().then(function(currentUrl) {
+      browser.getCurrentUrl().then(function(currentUrl) {
         var currentUrlObj = url.parse(currentUrl);
         var currentUrlPath = currentUrlObj.pathname.split(path.sep);
         parentNid = currentUrlPath[currentUrlPath.length-2];
@@ -83,9 +65,9 @@ describe('The Place features of the CMS', function() {
     browser.get(browser.params.url + '/node/add/place');
 
     // fill out content on 'Main' tab
-    dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    dvr.findElement(by.id('edit-title')).sendKeys('Protractor place');
-    dvr.findElement(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+    element(by.id('edit-title')).sendKeys('Protractor place');
+    element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
@@ -94,8 +76,8 @@ describe('The Place features of the CMS', function() {
     if (browser.params.isSauceLabs) {
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
-    dvr.findElement(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
-    dvr.findElement(by.id('edit-field-image-und-0-upload-button')).click();
+    element(by.id('edit-field-image-und-0-upload')).sendKeys(absolutePath);
+    element(by.id('edit-field-image-und-0-upload-button')).click();
     // wait until image has uploaded
     browser.wait(function() {
      return browser.isElementPresent($('#edit-field-image-und-0-alt'));
@@ -104,9 +86,9 @@ describe('The Place features of the CMS', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
-    dvr.findElement(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
-    dvr.wait(function () {
-        return dvr.isElementPresent(by.css('#autocomplete li:first-of-type div'));
+    element(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
+    browser.wait(function () {
+        return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
     }, 5000);
 
     // check that there's at least one item in the list, and that it doesn't contain a link
@@ -118,9 +100,9 @@ describe('The Place features of the CMS', function() {
     expect(element(by.id('edit-field-place-parents-und-add-more')).isPresent()).toBe(true);
 
     // fill out content on 'Location' tab
-    dvr.executeScript('window.scrollTo(0,0);').then(function () {
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-      dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
 
       // select country
       element(by.cssContainingText('#edit-field-place-address-und-0-country > option', 'United Kingdom')).click();
@@ -142,9 +124,9 @@ describe('The Place features of the CMS', function() {
       expect(element(by.css('#edit-field-place-geolocation-und-0-lngitem .geolocation-lat-item-value')).getText()).not.toEqual('');
 
       // fill out content on 'Opening hours' tab
-      dvr.executeScript('window.scrollTo(0,0);').then(function () {
+      browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-        dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Opening hours']")).click();
+        element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Opening hours']")).click();
 
         // fill out Opening Hours field
         // Monday
@@ -174,27 +156,27 @@ describe('The Place features of the CMS', function() {
         element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-minutes > option', '00')).click();
 
         // fill out content on 'Publishing options' tab
-        dvr.executeScript('window.scrollTo(0,0);').then(function () {
+        browser.executeScript('window.scrollTo(0,0);').then(function () {
 
           // set the item to published
-          dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
-          dvr.findElement(by.id('edit-status')).click();
+          element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']")).click();
+          element(by.id('edit-status')).click();
 
           // submit
-          dvr.findElement(by.id('edit-submit')).click();
+          element(by.id('edit-submit')).click();
 
           // test successful save
           expect(element(by.id('console')).getText()).toContain('Place Protractor place has been created.');
 
           // go back to edit page
-          dvr.findElement(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
-          dvr.findElement(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
-          dvr.findElement(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
+          element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+          element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
+          element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
             pathAlias = alias;
 
             // store node ID of event just created
-            dvr.getCurrentUrl().then(function(currentUrl) {
+            browser.getCurrentUrl().then(function(currentUrl) {
               var currentUrlObj = url.parse(currentUrl);
               var currentUrlPath = currentUrlObj.pathname.split(path.sep);
               nid = currentUrlPath[currentUrlPath.length-2];
@@ -340,21 +322,11 @@ describe('The Place features of the CMS', function() {
           // CLEAN UP
           // remove content
           browser.get(browser.params.url + '/admin/content');
-          dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+          element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
           element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
           element(by.id('edit-submit--2')).click();
           element(by.id('edit-submit')).click();
-          expect(dvr.findElement(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-          // reset permissions
-          browser.get(browser.params.url + '/admin/people/permissions');
-          dvr.findElement(by.id('edit-1-access-content')).click();
-          dvr.findElement(by.id('edit-2-access-content')).click();
-          dvr.findElement(by.id('edit-1-access-resource-node')).click();
-          dvr.findElement(by.id('edit-2-access-resource-node')).click();
-          dvr.findElement(by.id('edit-1-access-resource-relation')).click();
-          dvr.findElement(by.id('edit-2-access-resource-relation')).click();
-          dvr.findElement(by.id('edit-submit')).click();
+          expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
         });
 

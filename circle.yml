@@ -7,38 +7,35 @@ machine:
 
   # Override /etc/hosts
   hosts:
-    sc.circle: 127.0.0.1
-    api.sc.circle: 127.0.0.1
+    openevent.sc.circle: 127.0.0.1
+
+  environment:
+    SAUCE_TUNNEL_ID: circle-$CIRCLE_BUILD_NUM
+
+checkout:
+  override:
+    - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME $HOME/drupal/profiles/openevent
 
 dependencies:
   pre:
 
     # Install Drush.
     - composer global require --prefer-source --no-interaction drush/drush:6.2.0
-    # Install tidy
-    - sudo apt-get update; sudo apt-get install tidy
 
   # Install additional test dependencies here (like Casper, Behat, etc).
   override:
-    - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php.ci
+    - cp $HOME/drupal/profiles/openevent/local-openevent.make $HOME/drupal/
     - drush make local-openevent.make -y:
-        pwd:
-          drupal
-    - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/southbankcentre.org-CMS/drupal site-install openevent -y --account-mail=alexb@cogapp.com --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
-    - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/settings.php
-    - sudo cp $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php.ci $HOME/southbankcentre.org-CMS/drupal/sites/default/local.settings.php
-    - drush -r $HOME/southbankcentre.org-CMS/drupal en -y master features
-    - drush -r $HOME/southbankcentre.org-CMS/drupal master-execute -y --scope=dev
-    - drush -r $HOME/southbankcentre.org-CMS/drupal fra -y
-    - drush -r $HOME/southbankcentre.org-CMS/drupal cc all
-    - sudo chgrp -R www-data $HOME/southbankcentre.org-CMS/drupal/sites/default/files
+        pwd: ../drupal
+    - PHP_OPTIONS="-d sendmail_path=/bin/true" drush -r $HOME/drupal site-install openevent -y --account-name=admin --account-pass=admin --db-url=mysql://ubuntu@127.0.0.1/circle_test
+    - sudo chgrp -R www-data $HOME/drupal/sites/default/files
 
   post:
     # apache module setup
     - a2enmod rewrite
     # apache vhost setup
-    - cp $HOME/southbankcentre.org-CMS/ci/api.vhost /etc/apache2/sites-available/api
-    - a2ensite api
+    - cp $HOME/drupal/profiles/openevent/ci/openevent.vhost /etc/apache2/sites-available/openevent
+    - a2ensite openevent
     - sudo service apache2 restart
 
 test:
@@ -47,7 +44,6 @@ test:
     - npm install -g protractor@1.8.0
     # frisby setup
     - npm install -g frisby@0.8.5
-    - npm link frisby
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
     - tar -xzf sc-latest-linux.tar.gz
@@ -57,15 +53,13 @@ test:
         pwd: sc-*-linux
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
-    - node run_suites_synchronously --params.url 'http://api.sc.circle:8080' --params.isSauceLabs 1:
-        pwd:
-          test/functional
+    - npm link frisby:
+        pwd: ../drupal/profiles/openevent/test/functional
+    - node run_suites_synchronously --params.url 'http://openevent.sc.circle:8080' --params.isSauceLabs 1:
+        pwd: ../drupal/profiles/openevent/test/functional
 
 general:
   branches:
-    only:
-      # only build develop, master and release branches
-      - develop
-      - master
-      - /release-.*/
-      - 91354686_oe_person
+    ignore:
+      # add your branch name here if you don't want it to build in CircleCI
+      - do_not_build_this_branch
