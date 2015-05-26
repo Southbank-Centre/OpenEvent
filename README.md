@@ -164,6 +164,10 @@ Open Event includes the same roles as a standard Drupal installation, and they p
 
 *Please note: currently only the administrator role has access to create or edit taxonomies*
 
+### Administration theme
+
+* **Seven** - this theme is set for both the administration theme and the front end theme layer.
+
 
 
 ## Open Event API
