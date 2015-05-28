@@ -134,4 +134,8 @@ function openevent_install() {
   variable_set('admin_theme', 'seven');
   variable_set('node_admin_theme', '1');
   variable_set('theme_default', 'seven');
+
+  // Disable bartik theme
+  $theme_list = array('bartik');
+  theme_disable($theme_list);
 }
