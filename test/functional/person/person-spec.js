@@ -228,7 +228,7 @@ describe('The Person features of the CMS', function() {
           "field_person_urls": [],
           "nid": nid,
           "vid": nid,
-          "relation_performs_in_node_reverse": [
+          "relation_person_performs_in_event_node_reverse": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,
@@ -240,7 +240,7 @@ describe('The Person features of the CMS', function() {
               "resource": "node"
             }
           ],
-          "relation_performs_in_node": [
+          "relation_person_performs_in_event_node": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,
