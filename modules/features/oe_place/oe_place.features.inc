@@ -34,7 +34,7 @@ function oe_place_node_info() {
     'place' => array(
       'name' => t('Place'),
       'base' => 'node_content',
-      'description' => t('The Open Event \'Place\' content type, designed in accordance with the <a href="https://schema.org/Place" target="_blank">schema.org Place type</a>.'),
+      'description' => t('Open Event content type for a place (entities that have a somewhat fixed, physical extension).<br />Designed in accordance with the <a href="https://schema.org/Place" target="_blank">schema.org Place type</a>.'),
       'has_title' => '1',
       'title_label' => t('Name'),
       'help' => '',
