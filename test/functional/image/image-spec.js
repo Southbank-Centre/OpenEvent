@@ -26,6 +26,16 @@ describe('Image', function() {
   it('can be added to an Event page', function(){
     var deferment = protractor.promise.defer();
 
+    // Add test term (required to save an Event page)
+    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
+
+    // Test term 1
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 1');
+    element(by.id('edit-description-value')).sendKeys('Test event class 1 description');
+    element(by.id('edit-submit')).click();
+
+
     // Create minimal Event page
 
     browser.get(browser.params.url + '/node/add/event');
@@ -55,6 +65,12 @@ describe('Image', function() {
 
     $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
+
+    // select event class
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+    });
 
     // fill out content on 'Date and time' tab
     browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -168,6 +184,14 @@ describe('Image', function() {
           it('will take place after all tests have passed', function() {
 
             // CLEAN UP
+
+            // remove event class terms
+            browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+            element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+            element(by.id('edit-delete')).click();
+            element(by.id('edit-submit')).click();
+            expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
             // remove content
             browser.get(browser.params.url + '/admin/content');
             element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
