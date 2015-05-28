@@ -40,7 +40,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
         'node:person' => 'node:person',
       ),
       'relation_type' => array(
-        'performs_in:reverse' => 'performs_in:reverse',
+        'person_performs_in_event:reverse' => 'person_performs_in_event:reverse',
       ),
       'user_register_form' => FALSE,
     ),
@@ -295,7 +295,7 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
         'node:event' => 'node:event',
       ),
       'relation_type' => array(
-        'performs_in' => 'performs_in',
+        'person_performs_in_event' => 'person_performs_in_event',
       ),
       'user_register_form' => FALSE,
     ),
@@ -813,9 +813,9 @@ Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</
     ),
   );
 
-  // Exported field_instance: 'relation-performs_in-endpoints'
-  $field_instances['relation-performs_in-endpoints'] = array(
-    'bundle' => 'performs_in',
+  // Exported field_instance: 'relation-person_performs_in_event-endpoints'
+  $field_instances['relation-person_performs_in_event-endpoints'] = array(
+    'bundle' => 'person_performs_in_event',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
