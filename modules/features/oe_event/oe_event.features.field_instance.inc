@@ -156,50 +156,6 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_class'
-  $field_instances['node-event-field_event_class'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 3,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 3,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_class',
-    'label' => 'Class',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 7,
-    ),
-  );
-
   // Exported field_instance: 'node-event-field_event_date_end'
   $field_instances['node-event-field_event_date_end'] = array(
     'bundle' => 'event',
@@ -507,50 +463,6 @@ function oe_event_field_default_field_instances() {
       ),
       'type' => 'relation_add',
       'weight' => 5,
-    ),
-  );
-
-  // Exported field_instance: 'node-event-field_event_type'
-  $field_instances['node-event-field_event_type'] = array(
-    'bundle' => 'event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 4,
-      ),
-      'field_readonly' => array(
-        'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_type',
-    'label' => 'Type',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 8,
     ),
   );
 
