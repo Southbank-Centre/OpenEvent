@@ -69,6 +69,9 @@ exports.config = {
     global.dvr = browser.driver;
     global.frisby = require('frisby'); // include Frisby.js for JSON tests
 
+    // set window size (width, height)
+    browser.driver.manage().window().setSize(1024, 768);
+
     dvr.get(browser.params.url + '/user/login');
 
     dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
