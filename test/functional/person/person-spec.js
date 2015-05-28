@@ -318,39 +318,41 @@ function addEvent(eventName) {
   element(by.id('edit-field-event-duration-und-0-value')).clear();
 
   // Change to
-  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click()
+  browser.executeScript('window.scrollTo(0,0);').then(function () {
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
 
-  browser.wait(function() {
-    return browser.isElementPresent(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")));
-  }, 5000);
-  // class
-  expect(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).getText()).toContain('Test event class');
-  element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).click();
+    browser.wait(function() {
+      return browser.isElementPresent(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")));
+    }, 5000);
+    // class
+    expect(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).getText()).toContain('Test event class');
+    element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).click();
 
-  // Publish it
-  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
-  var optionsPublished = element(by.id('edit-status'));
-  tabOptions.click();
-  optionsPublished.isSelected().then(function(selected) {
-    if (!selected) {
-      optionsPublished.click();
-    }
-  });
+    // Publish it
+    var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
+    var optionsPublished = element(by.id('edit-status'));
+    tabOptions.click();
+    optionsPublished.isSelected().then(function(selected) {
+      if (!selected) {
+        optionsPublished.click();
+      }
+    });
 
-  // save
-  element(by.id('edit-submit')).click();
+    // save
+    element(by.id('edit-submit')).click();
 
-  // test successful save
-  expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
+    // test successful save
+    expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
 
-  // Get the nid for the next test.
-  var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
-  edit.click();
+    // Get the nid for the next test.
+    var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+    edit.click();
 
-  browser.getCurrentUrl().then(function(Url){
-    var parts = Url.split('/');
-    var size = parts.length;
-    eid = parts[size-2];
+    browser.getCurrentUrl().then(function(Url){
+      var parts = Url.split('/');
+      var size = parts.length;
+      eid = parts[size-2];
+    });   
   });
 
 }
