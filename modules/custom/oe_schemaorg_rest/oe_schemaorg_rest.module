@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * Return all mappings from Drupal node bundles to Schema.org types
+ */
+function oe_schemaorg_rest_get_resource_mappings() {
+  $mappings = array();
+  $node_types = node_type_get_types();
+  foreach ($node_types as $bundle => $info) {
+    $schema_name = schemaorg_ui_term_load('node', $bundle, 'rdftype');
+    if ($schema_name) {
+      $mappings[$bundle] = $schema_name;
+    }
+  }
+  return $mappings;
+}
+
+
+/**
+ * Return the Drupal node bundle for a given Schema.org name
+ */
+function oe_schemaorg_rest_get_resource_mapping($resource) {
+  $mappings = oe_schemaorg_rest_get_resource_mappings();
+  return array_search($resource, $mappings);
+}
+
+
+/**
+ * Define endpoints for all node bundles with a Schema.org mapping
+ */
+function oe_schemaorg_rest_restws_resource_info() {
+
+  $endpoints = array();
+  $mappings = oe_schemaorg_rest_get_resource_mappings();
+
+  foreach ($mappings as $bundle => $schema_name)
+  {
+    $endpoints[$schema_name] = array(
+      'label' => t($schema_name),
+      'class' => 'OESchemaorgRestController',
+      'menu_path' => 'api/'.$schema_name,
+    );
+  }
+
+  return $endpoints;
+}
+
+/**
+ * Controller for Schema.org-mapped node bundle resources.
+ */
+class OESchemaorgRestController extends RestWSEntityResourceController {
+
+  // properties for tracking the Schema.org type & corresponding node bundle for a transaction
+  protected $entitySchema, $entityBundle;
+
+  /**
+   *  Constructor - override the parent constructor so that the entity type
+   *  is always 'node', and the correct Schema.org type and node bundle are set
+   */
+  public function __construct($schema, $info) {
+    $this->entityType = 'node';
+    $this->entitySchema = $schema;
+    $this->entityBundle = oe_schemaorg_rest_get_resource_mapping($schema);
+    $this->entityInfo = entity_get_info('node');
+  }
+
+  /**
+   * Helper function to respect node permissions while querying.
+   *
+   * @param EntityFieldQuery $query
+   *   The query object.
+   */
+  public function access($op, $id) {
+    return entity_access($op, 'node', isset($id) ? $this->wrapper($id)->value() : NULL);
+  }
+
+  /**
+   * Implements RestWSQueryResourceControllerInterface::query().
+   *
+   * Overrides the parent 'query' function to add the correct bundle as a filter
+   */
+  public function query($filters = array(), $meta_controls = array()) {
+    $filters['type'] = $this->entityBundle;
+    return parent::query($filters, $meta_controls);
+  }
+
+  /**
+   * Implements RestWSQueryResourceControllerInterface::count().
+   *
+   * Overrides the parent 'count' function to add the correct bundle as a filter
+   */
+  public function count($filters = array()) {
+    $filters['type'] = $this->entityBundle;
+    return parent::count($filters);
+  }
+
+  /**
+   * Overrides the parent 'resource' function to use the Schema.org name for
+   * the resource, instead of the entityType
+   */
+  public function resource() {
+    return $this->entitySchema;
+  }
+
+}
