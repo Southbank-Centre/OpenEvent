@@ -46,12 +46,11 @@ test:
     - npm install -g frisby@0.8.5
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
-    - mkdir sc-latest
-    - tar -zxf sc-latest-linux.tar.gz --strip-components=1 -C sc-latest
+    - tar -xzf sc-latest-linux.tar.gz
   override:
     - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready -i $SAUCE_TUNNEL_ID:
         background: true
-        pwd: sc-latest
+        pwd: sc-*-linux
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
     - npm link frisby:

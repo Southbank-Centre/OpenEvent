@@ -5,3 +5,14 @@
  */
 
 include_once 'oe_event.features.inc';
+
+/**
+ * Implements hook_form_alter()
+ */
+function oe_event_form_alter(&$form, &$form_state) {
+
+  if (arg(0) == 'node' && (arg(1) == 'add' || arg(2) == 'edit')) {
+    $form['field_event_children']['#access'] = 0;
+  }
+
+}

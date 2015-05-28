@@ -31,6 +31,32 @@ function oe_event_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_event_class'
+  $field_bases['field_event_class'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_class',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'event_class',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
+  );
+
   // Exported field_base: 'field_event_date_end'
   $field_bases['field_event_date_end'] = array(
     'active' => 1,
@@ -146,6 +172,32 @@ function oe_event_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'relation_add',
+  );
+
+  // Exported field_base: 'field_event_type'
+  $field_bases['field_event_type'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_event_type',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'event_type',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
   );
 
   return $field_bases;

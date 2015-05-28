@@ -20,6 +20,53 @@ describe('The Event features of the CMS', function() {
     return browser.ignoreSynchronization = true;
   });
 
+  it('can create an event class terms', function(){
+    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
+
+    // Test term 1
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 1');
+    element(by.id('edit-description-value')).sendKeys('Test event class 1 description');
+    element(by.id('edit-submit')).click();
+
+    // Test term 2
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 2');
+    element(by.id('edit-description-value')).sendKeys('Test event class 2 description');
+    element(by.id('edit-submit')).click();
+
+    // Test term 3
+    expect(element(by.css('.page-title')).getText()).toContain('Event class');
+    element(by.id('edit-name')).sendKeys('Test event class 3');
+    element(by.id('edit-description-value')).sendKeys('Test event class 3 description');
+    element(by.id('edit-submit')).click();
+
+  });
+
+  it('can create an event type terms', function(){
+
+    browser.get(browser.params.url + '/admin/structure/taxonomy/event_type/add');
+
+    // Test term 1
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 1');
+    element(by.id('edit-description-value')).sendKeys('Test event type 1 description');
+    element(by.id('edit-submit')).click();
+
+    // Test term 2
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 2');
+    element(by.id('edit-description-value')).sendKeys('Test event type 2 description');
+    element(by.id('edit-submit')).click();
+
+    // Test term 3
+    expect(element(by.css('.page-title')).getText()).toContain('Event type');
+    element(by.id('edit-name')).sendKeys('Test event type 3');
+    element(by.id('edit-description-value')).sendKeys('Test event type 3 description');
+    element(by.id('edit-submit')).click();
+
+  });
+
   it('can create a minimal event page', function(){
     browser.get(browser.params.url + '/node/add/event');
     expect(element(by.css('.page-title')).getText()).toContain('Create Event');
@@ -38,6 +85,8 @@ describe('The Event features of the CMS', function() {
       element(by.id('edit-submit')).click();
 
       // check for the error message explaining that required fields haven't been populated
+      expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
+      expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
       expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for End date/time.');
       expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
       expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
@@ -50,6 +99,10 @@ describe('The Event features of the CMS', function() {
       // fill out content on 'Details' tab
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).clear();
+      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+      browser.executeScript('window.scrollTo(0,0);').then(function () {
+        element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      });
 
       // fill out content on 'Date and time' tab
       browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -128,6 +181,12 @@ describe('The Event features of the CMS', function() {
     browser.executeScript('window.scrollTo(0,0);').then(function () {
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
+      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
+      element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
+      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
+      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
+      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
+      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
     });
 
     // fill out content on 'Date and time' tab
@@ -271,6 +330,32 @@ describe('The Event features of the CMS', function() {
           "format": "filtered_html"
         },
         "field_event_age_range": "4+",
+        "field_event_class": {
+          "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+          "id": function(val) {
+            expect(val).toBeDefined();
+            expect(isNaN(parseInt(val, 10))).toBe(false);
+          },
+          "resource": "taxonomy_term"
+        },
+        "field_event_type": [
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "taxonomy_term"
+          },
+          {
+            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "taxonomy_term"
+          }
+        ],
         "field_image": [],
         "field_event_date_start": function(val) {
           expect(val.length).toEqual(10);
@@ -370,6 +455,32 @@ describe('The Event features of the CMS', function() {
         it('will take place after all tests have passed', function() {
 
           // CLEAN UP
+          // remove event class terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
+          // remove event type terms
+          browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
+          element(by.id('edit-delete')).click();
+          element(by.id('edit-submit')).click();
+          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+
           // remove content
           browser.get(browser.params.url + '/admin/content');
           element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();

@@ -262,6 +262,15 @@ describe('The Person features of the CMS', function() {
       // These tests are destructive and can only be performed on clean/empty sites [!]
       // This cleanup function assumes that all content available is created by this test suite
 
+      // CleanUp taxonomy terms
+      // It assumes there is only ONE term created for the tests
+      browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
+      element(by.linkText('Test event class')).click();
+      element(by.xpath("//ul[@class='tabs primary']/li[2]")).click(); // Assumes no more tabs are present
+      //element(by.linkText('Edit')).click();
+      element(by.id('edit-delete')).click();
+      element(by.id('edit-submit')).click();
+
       // CleanUp content
       // It deletes ALL content in the site
       browser.get(browser.params.url + '/admin/content');
@@ -277,6 +286,13 @@ describe('The Person features of the CMS', function() {
 });
 
 function addEvent(eventName) {
+
+  // Create class supporting term
+  browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
+  expect(element(by.css('.page-title')).getText()).toContain('Event class');
+  element(by.id('edit-name')).sendKeys('Test event class');
+  element(by.id('edit-description-value')).sendKeys('Test event class description');
+  element(by.id('edit-submit')).click();
 
   // Create a supporting event
   browser.get(browser.params.url + '/node/add/event');
@@ -300,6 +316,16 @@ function addEvent(eventName) {
 
   // duration
   element(by.id('edit-field-event-duration-und-0-value')).clear();
+
+  // Change to
+  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click()
+
+  browser.wait(function() {
+    return browser.isElementPresent(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")));
+  }, 5000);
+  // class
+  expect(element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).getText()).toContain('Test event class');
+  element(by.xpath("//div[@id='edit-field-event-class-und']/div[1]/label")).click();
 
   // Publish it
   var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
