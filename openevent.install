@@ -107,8 +107,7 @@ function openevent_install() {
     'access resource taxonomy_vocabulary',
     'access relations',
     'view the administration theme',
-    'access toolbar',
-    'view any unpublished content' 
+    'access toolbar' 
   ));
 
   // Create a default role for site administrators, with all available permissions assigned.
@@ -136,6 +135,8 @@ function openevent_install() {
   variable_set('theme_default', 'seven');
 
   // Disable bartik theme
-  $theme_list = array('bartik');
-  theme_disable($theme_list);
+  theme_disable(array('bartik'));
+
+  // Disable unrequired core modules
+  module_disable(array('syslog'),FALSE);
 }
