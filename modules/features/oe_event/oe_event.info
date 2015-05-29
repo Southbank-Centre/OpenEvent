@@ -43,7 +43,6 @@ features[field_instance][] = node-event-field_event_date_start
 features[field_instance][] = node-event-field_event_door_time
 features[field_instance][] = node-event-field_event_duration
 features[field_instance][] = node-event-field_event_parents
-features[field_instance][] = node-event-field_event_places
 features[field_instance][] = node-event-field_image
 features[field_instance][] = relation-event_is_contained_in_event-endpoints
 features[field_validation_rule][] = age_range

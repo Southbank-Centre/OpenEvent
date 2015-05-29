@@ -417,55 +417,6 @@ function oe_event_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-event-field_event_places'
-  $field_instances['node-event-field_event_places'] = array(
-    'bundle' => 'event',
-    'deleted' => 0,
-    'description' => 'The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'relation_add',
-        'settings' => array(),
-        'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 14,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_places',
-    'label' => 'Venues',
-    'required' => 0,
-    'settings' => array(
-      'relation_target_bundles' => array(
-        'node:place' => 'node:place',
-      ),
-      'relation_type' => array(
-        'event_is_located_in_place' => 'event_is_located_in_place',
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'relation_add',
-      'settings' => array(
-        'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => 'Venue',
-        'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'custom',
-        'relation_endpoint_label_delta' => 0,
-        'relation_endpoint_search_by_id' => 0,
-      ),
-      'type' => 'relation_add',
-      'weight' => 5,
-    ),
-  );
-
   // Exported field_instance: 'node-event-field_image'
   $field_instances['node-event-field_image'] = array(
     'bundle' => 'event',
@@ -598,10 +549,8 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
   t('The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
-  t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
   t('The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>');
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
-  t('Venues');
   t('endpoints');
 
   return $field_instances;
