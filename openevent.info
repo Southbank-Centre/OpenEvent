@@ -61,10 +61,13 @@ dependencies[] = views
 dependencies[] = views_ui
 
 ; Open Event dependencies
+; Features
 dependencies[] = oe_components
 dependencies[] = oe_event
 dependencies[] = oe_place
 dependencies[] = oe_person
+; Custom
+dependencies[] = oe_rest_api_doc
 
 ; File depedencies.
 files[] = openevent.profile

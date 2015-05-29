@@ -1,0 +1,7 @@
+name = Open Event Self Documenting REST API
+description = "Customization of the Self Documenting REST API Module"
+package = Open Event
+core = 7.x
+dependencies[] = restws
+dependencies[] = rest_api_doc
+dependencies[] = pathauto

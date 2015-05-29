@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_menu_alter()
+ */
+function oe_rest_api_doc_menu_alter(&$items) {
+  $items['api/doc']['title'] = variable_get('site_name') . ' API Documentation';
+  $items['api/doc']['page callback'] = 'OE_rest_api_doc_page';
+}
+
+/**
+ * API documentation page.
+ */
+function oe_rest_api_doc_page($format = '') {
+  return array('body' => array('#markup' => 'Hello!'));
+}
