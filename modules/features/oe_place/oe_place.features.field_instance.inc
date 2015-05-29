@@ -146,62 +146,6 @@ function oe_place_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-place-field_place_opening_hours'
-  $field_instances['node-place-field_place_opening_hours'] = array(
-    'bundle' => 'place',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'office_hours',
-        'settings' => array(
-          'closedformat' => 'Closed',
-          'compress' => FALSE,
-          'current_status' => array(
-            'closed_text' => 'Currently closed',
-            'open_text' => 'Currently open!',
-            'position' => 'hide',
-          ),
-          'date_first_day' => 0,
-          'daysformat' => 'long',
-          'grouped' => FALSE,
-          'hoursformat' => 0,
-          'separator_day_hours' => ': ',
-          'separator_days' => '<br />',
-          'separator_grouped_days' => ' - ',
-          'separator_hours_hours' => '-',
-          'separator_more_hours' => ', ',
-          'showclosed' => 'all',
-          'timezone_field' => '',
-        ),
-        'type' => 'office_hours',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_place_opening_hours',
-    'label' => 'Opening hours',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'office_hours',
-      'settings' => array(),
-      'type' => 'office_hours',
-      'weight' => 4,
-    ),
-  );
-
   // Exported field_instance: 'node-place-field_place_address'
   $field_instances['node-place-field_place_address'] = array(
     'bundle' => 'place',
@@ -295,6 +239,62 @@ function oe_place_field_default_field_instances() {
         'scrollwheel' => 0,
       ),
       'type' => 'geolocation_googlemap',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-place-field_place_opening_hours'
+  $field_instances['node-place-field_place_opening_hours'] = array(
+    'bundle' => 'place',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'office_hours',
+        'settings' => array(
+          'closedformat' => 'Closed',
+          'compress' => FALSE,
+          'current_status' => array(
+            'closed_text' => 'Currently closed',
+            'open_text' => 'Currently open!',
+            'position' => 'hide',
+          ),
+          'date_first_day' => 0,
+          'daysformat' => 'long',
+          'grouped' => FALSE,
+          'hoursformat' => 0,
+          'separator_day_hours' => ': ',
+          'separator_days' => '<br />',
+          'separator_grouped_days' => ' - ',
+          'separator_hours_hours' => '-',
+          'separator_more_hours' => ', ',
+          'showclosed' => 'all',
+          'timezone_field' => '',
+        ),
+        'type' => 'office_hours',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_place_opening_hours',
+    'label' => 'Opening hours',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'office_hours',
+      'settings' => array(),
+      'type' => 'office_hours',
       'weight' => 4,
     ),
   );
