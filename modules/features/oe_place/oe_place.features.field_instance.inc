@@ -10,6 +10,55 @@
 function oe_place_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-event-field_event_places'
+  $field_instances['node-event-field_event_places'] = array(
+    'bundle' => 'event',
+    'deleted' => 0,
+    'description' => 'The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'relation_add',
+        'settings' => array(),
+        'type' => 'relation_add_endpoints_and_fields',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_places',
+    'label' => 'Venues',
+    'required' => 0,
+    'settings' => array(
+      'relation_target_bundles' => array(
+        'node:place' => 'node:place',
+      ),
+      'relation_type' => array(
+        'event_is_located_in_place' => 'event_is_located_in_place',
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'relation_add',
+      'settings' => array(
+        'relation_endpoint_bundle_display' => 0,
+        'relation_endpoint_custom_label' => 'Venue',
+        'relation_endpoint_iso_language_codes' => 0,
+        'relation_endpoint_label' => 'custom',
+        'relation_endpoint_label_delta' => 0,
+        'relation_endpoint_search_by_id' => 0,
+      ),
+      'type' => 'relation_add',
+      'weight' => 5,
+    ),
+  );
+
   // Exported field_instance: 'node-place-field_description'
   $field_instances['node-place-field_description'] = array(
     'bundle' => 'place',
@@ -371,7 +420,9 @@ function oe_place_field_default_field_instances() {
   t('Parents');
   t('The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>');
   t('The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>');
+  t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
   t('The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>');
+  t('Venues');
 
   return $field_instances;
 }
