@@ -75,6 +75,20 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
   }
 
   /**
+   * Overrides the parent 'wrapper' function to ensure returned items are of the correct
+   * content type for the requested resource
+   */
+  public function wrapper($id) {
+    $wrapper = entity_metadata_wrapper($this->entityType, $id, array('type'=>$this->entityBundle));
+    if ($wrapper->type->value() == $this->entityBundle) {
+      return $wrapper;
+    }
+    else {
+      throw new RestWSException('Not found', 404);
+    }
+  }
+
+  /**
    * Implements RestWSQueryResourceControllerInterface::query().
    *
    * Overrides the parent 'query' function to add the correct bundle as a filter
