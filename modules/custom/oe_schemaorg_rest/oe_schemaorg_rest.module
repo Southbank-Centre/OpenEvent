@@ -46,6 +46,61 @@ function oe_schemaorg_rest_restws_resource_info() {
 }
 
 /**
+ * Alter the outgoing response - implements hook_restws_response_alter
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+  // Capture any responses using our controller and send them for rewriting
+  if (is_a($resourceController, 'OESchemaorgRestController')) {
+    // request for a single resource
+    if ($function == 'viewResource') {
+      $response = oe_schemaorg_rest_map_fields($response);
+    }
+    // query for multiple resources
+    else if ($function == 'queryResource') {
+      foreach ($response['list'] as $index => $item) {
+        $response['list'][$index] = oe_schemaorg_rest_map_fields($item);
+      }
+    }
+  }
+}
+
+/**
+ * Map the fields in a returned item to its Schema.org representation
+ */
+function oe_schemaorg_rest_map_fields($response) {
+  $newResponse = array();
+
+  // get the mappings for the entire content type
+  $mappings = rdf_mapping_load('node', $response['type']);
+
+  foreach($response as $field_name=>$value) {
+    // load the field predicates (where the RDF mapping is stored)
+    $terms = array();
+    if (!empty($mappings[$field_name]['predicates'])) {
+      $terms = $mappings[$field_name]['predicates'];
+    }
+    // if the field has a Schema.org mapping, add it with this to the output
+    foreach ($terms as $term) {
+      if (strpos(trim($term), 'schema:') === 0) {
+        $newResponse[$term] = $value;
+        break;
+      }
+    }
+  }
+
+  return $newResponse;
+}
+
+/**
  * Controller for Schema.org-mapped node bundle resources.
  */
 class OESchemaorgRestController extends RestWSEntityResourceController {
