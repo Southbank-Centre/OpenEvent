@@ -2,7 +2,7 @@ name = OE Place
 description = Provides configuration allowing representation of places.
 core = 7.x
 package = Open Events
-version = 7.x-1.2
+version = 7.x-1.4
 project = oe_place
 dependencies[] = addressfield
 dependencies[] = field_group
@@ -49,3 +49,9 @@ features[variable][] = menu_parent_place
 features[variable][] = node_options_place
 features[variable][] = node_preview_place
 features[variable][] = node_submitted_place
+<<<<<<< HEAD
+=======
+features_exclude[dependencies][ctools] = ctools
+features_exclude[dependencies][features] = features
+features_exclude[dependencies][image] = image
+>>>>>>> Removed place_parent view, views and entity reference dependencies from oe_place.
