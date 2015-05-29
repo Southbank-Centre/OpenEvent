@@ -585,7 +585,6 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 <p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
 <p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
   t('Age range');
-  t('Class');
   t('Description');
   t('Door time');
   t('Duration');
@@ -595,17 +594,13 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.');
   t('Parents');
   t('Start date/time');
-  t('Teaser');
   t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
   t('The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
-  t('The event\'s class categorises its form. The way this event is represented by applications that consume the event data will be determined by which class is selected here.');
-  t('The event\'s types categorise its content. Event types are designed to help give users an understanding of what to expect if they were to attend the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.additionalType</code></a>');
   t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
   t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
   t('The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>');
   t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
-  t('Type');
   t('Venues');
   t('endpoints');
 
