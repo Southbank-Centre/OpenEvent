@@ -26,7 +26,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-submit')).click();
 
     // check for the error message explaining that required fields haven't been populated
-    expect(element(by.id('console')).getText()).toContain('Name field is required');
+    expect(element(by.id('console')).getText()).toContain('Place name field is required');
 
     // fill out content on 'Main' tab
     element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
@@ -69,6 +69,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-title')).sendKeys('Protractor place');
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Image']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     // workaround for current inability to upload images through SauceLabs from Protractor:
@@ -86,6 +87,7 @@ describe('The Place features of the CMS', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Place parents']")).click();
     element(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
     browser.wait(function () {
         return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
@@ -203,20 +205,22 @@ describe('The Place features of the CMS', function() {
           "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
         },
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
+        "field_image": [
+          {
+            "file": {
+              "uri": function(val) {
+                expect(val).toContain(browser.params.url + "/file/");
+              },
+              "id": function(val) {
+                expect(val).toBeDefined();
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "resource": "file"
             },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        },
+            "alt": "Test image ALT",
+            "title": "Test image TITLE"
+          }
+        ],
         "field_place_address": {
           "country": 'GB',
           "administrative_area": "London (county)",

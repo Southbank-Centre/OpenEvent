@@ -25,7 +25,7 @@ describe('The Event features of the CMS', function() {
     expect(element(by.css('.page-title')).getText()).toContain('Create Event');
 
     // add a bad age range
-    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
     element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
 
     // add bad duration
@@ -38,17 +38,13 @@ describe('The Event features of the CMS', function() {
       element(by.id('edit-submit')).click();
 
       // check for the error message explaining that required fields haven't been populated
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for End date/time.');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
+      expect(element(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
+      expect(element(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
+      expect(element(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
       element(by.id('edit-title')).sendKeys('Parent event page');
-
-      // fill out content on 'Details' tab
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).clear();
 
       // fill out content on 'Date and time' tab
@@ -111,6 +107,7 @@ describe('The Event features of the CMS', function() {
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Event parents']")).click();
     element(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
     browser.wait(function () {
         return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
@@ -124,9 +121,9 @@ describe('The Event features of the CMS', function() {
     // check that more parents can be added
     expect(element(by.id('edit-field-event-parents-und-add-more')).isPresent()).toBe(true);
 
-    // fill out content on 'Details' tab
+    // fill out content on 'Main' tab
     browser.executeScript('window.scrollTo(0,0);').then(function () {
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
     });
 
@@ -219,7 +216,7 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
       element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
       browser.sleep(5000);
       // check that there are no items in the autocomplete list
