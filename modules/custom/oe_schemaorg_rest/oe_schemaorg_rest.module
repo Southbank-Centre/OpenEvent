@@ -97,12 +97,12 @@ function oe_schemaorg_rest_map_fields($response) {
           $newResponse[$term] = $tax->name;
         }
         // map date fields to ISO8601 format
-        if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
+        else if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
             || $term == 'schema:doorTime') {
           $newResponse[$term] = format_date($value, 'custom', 'c');
         }
         // map duration field to normalised ISO8601 format
-        if ($term == 'schema:duration') {
+        else if ($term == 'schema:duration' && $value) {
           $date = new DateTime("today");
           $laterDate = (new DateTime("today"))->add(new DateInterval('PT'.$value.'M'));
           $newResponse[$term] = $date->diff($laterDate)->format('P%yY%mM%dDT%hH%iM%sS');
@@ -118,6 +118,8 @@ function oe_schemaorg_rest_map_fields($response) {
 
   return $newResponse;
 }
+
+
 
 /**
  * Controller for Schema.org-mapped node bundle resources.
