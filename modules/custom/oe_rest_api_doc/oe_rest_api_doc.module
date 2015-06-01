@@ -4,7 +4,7 @@
  * Implements hook_menu_alter()
  */
 function oe_rest_api_doc_menu_alter(&$items) {
-  $items['api/doc']['title'] = variable_get('site_name') . ' API Documentation';
+  $items['api/doc']['title'] = 'API Documentation';
   $items['api/doc']['page callback'] = 'OE_rest_api_doc_page';
   $items['api/doc']['access arguments'] = array('access oe_rest_api_doc');
   $items['api/doc']['menu_name'] = 'navigation';
@@ -30,6 +30,10 @@ function oe_rest_api_doc_page($format = '') {
   ksort($resources);
   $formats = restws_get_format_info();
 
+  if (!isset($formats[$format])) {
+    drupal_goto('api/doc/' . key($formats));
+  }
+
   // Display format links if one hasn't been specified in the URL
 
   foreach ($formats as $name => $format_info) {
@@ -40,16 +44,12 @@ function oe_rest_api_doc_page($format = '') {
       $links[] = l($format_info['label'], 'api/doc/' . $name);
     }
   }
-  $page['header']['#markup'] = implode(' | ', $links);
-
-  if (!isset($formats[$format])) {
-    return $page;
-  }
+  $page['header']['#markup'] = '<p>Data types: ' . implode(' | ', $links) . '</p><br/>';
 
 
   // Build documentation markup
   $page['body']['#markup'] =  '';
-  $page['body']['#markup'] .= '<ul id="api-documentation-nav">';
+  $page['body']['#markup'] .= '<nav><h3>Contents</h3><ul>';
   foreach ($resources as $type => $resource) {
     // Only display resource title if user has access
     if (user_access('access resource ' . $type)) {
@@ -59,14 +59,14 @@ function oe_rest_api_doc_page($format = '') {
       $page['body']['#markup'] .= '<li><a href="#' . $resources[$type]['html_id'] . '">' . $resource['label'] . '</a></li>';
     }
   }
-  $page['body']['#markup'] .= '</ul>';
+  $page['body']['#markup'] .= '</ul></nav><br/>';
 
   foreach ($resources as $type => $resource) {
 
     // Only display resource if user has access
     if (user_access('access resource ' . $type)) {
       // Bundle heading
-      $page['body']['#markup'] .= '<h2 id="' . $resource['html_id'] . '">' . $resource['label'] . '</h2>';
+      $page['body']['#markup'] .= '<br/><h2 id="' . $resource['html_id'] . '" class="api-doc-resource">' . $resource['label'] . '</h2>';
 
       $page['body']['#markup'] .= '<dl>';
 
