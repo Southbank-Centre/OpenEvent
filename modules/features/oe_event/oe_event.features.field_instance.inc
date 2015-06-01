@@ -173,7 +173,7 @@ function oe_event_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 17,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -227,7 +227,7 @@ function oe_event_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 16,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -335,7 +335,7 @@ function oe_event_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 11,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -379,7 +379,7 @@ function oe_event_field_default_field_instances() {
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 15,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -432,7 +432,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 13,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
