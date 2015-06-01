@@ -22,7 +22,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 14,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -73,7 +73,7 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -138,7 +138,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 10,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -207,7 +207,7 @@ Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</co
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -273,7 +273,7 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 11,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -324,7 +324,7 @@ Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -391,7 +391,7 @@ Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:a
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -458,7 +458,7 @@ Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:fami
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 10,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -525,7 +525,7 @@ Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:given
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -592,7 +592,7 @@ Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -659,7 +659,7 @@ Maps to <a href="http://schema.org/honorificPrefix" target="_blank"><code>Person
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -697,7 +697,7 @@ Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -764,7 +764,7 @@ Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
