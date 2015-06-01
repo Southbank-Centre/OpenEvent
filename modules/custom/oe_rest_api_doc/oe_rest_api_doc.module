@@ -1,6 +1,34 @@
 <?php
 
 /**
+ * Implements hook_enable()
+ */
+function oe_rest_api_doc_enable() {
+  $item = array(
+    'link_path' => 'api/doc',
+    'link_title' => 'API',
+    'menu_name' => 'management',
+    'weight' => 10,
+    'plid' => 1,
+    'module' => 'menu',
+  );
+  $api_mlid = menu_link_save($item);
+
+  // Save mlid in a variable so the menu item can be deleted when the module is disabled
+  variable_set('OE_rest_api_doc_menu_mlid', $api_mlid);
+}
+
+/**
+ * Implements hook_disable()
+ */
+function oe_rest_api_doc_disable() {
+  // Remove the API link from the admin menu
+  $api_mlid = variable_get('OE_rest_api_doc_menu_mlid');
+  menu_link_delete($api_mlid);
+  variable_del('OE_rest_api_doc_menu_mlid');
+}
+
+/**
  * Implements hook_menu_alter()
  */
 function oe_rest_api_doc_menu_alter(&$items) {
