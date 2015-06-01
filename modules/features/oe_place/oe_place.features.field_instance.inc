@@ -55,7 +55,7 @@ function oe_place_field_default_field_instances() {
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 5,
+      'weight' => 4,
     ),
   );
 
@@ -89,7 +89,6 @@ function oe_place_field_default_field_instances() {
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 0,
-          'iframe_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -101,9 +100,6 @@ function oe_place_field_default_field_instances() {
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -374,7 +370,7 @@ function oe_place_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_place_parents',
-    'label' => 'Parents',
+    'label' => 'Place parents',
     'required' => 0,
     'settings' => array(
       'relation_target_bundles' => array(
@@ -417,7 +413,7 @@ function oe_place_field_default_field_instances() {
   t('Geolocation');
   t('Image');
   t('Opening hours');
-  t('Parents');
+  t('Place parents');
   t('The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>');
   t('The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>');
   t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');

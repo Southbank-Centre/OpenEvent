@@ -35,7 +35,7 @@ function oe_event_strongarm() {
           'weight' => '1',
         ),
         'path' => array(
-          'weight' => '5',
+          'weight' => '6',
         ),
       ),
       'display' => array(),

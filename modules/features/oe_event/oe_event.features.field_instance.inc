@@ -75,7 +75,7 @@ function oe_event_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 2,
     ),
   );
 
@@ -152,7 +152,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 3,
     ),
   );
 
@@ -390,7 +390,7 @@ function oe_event_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_event_parents',
-    'label' => 'Parents',
+    'label' => 'Event parents',
     'required' => 0,
     'settings' => array(
       'relation_target_bundles' => array(
@@ -413,7 +413,7 @@ function oe_event_field_default_field_instances() {
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 9,
+      'weight' => 6,
     ),
   );
 
@@ -540,10 +540,10 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
   t('Door time');
   t('Duration');
   t('End date/time');
+  t('Event parents');
   t('Image');
   t('Images from the event.<br/>
 Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.');
-  t('Parents');
   t('Start date/time');
   t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
   t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');

@@ -56,7 +56,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 34,
+      'weight' => 7,
     ),
   );
 
@@ -65,7 +65,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'A short description of the person.<br/>
+    'description' => 'A short description or biography of the person.<br/>
 Maps to <a href="http://schema.org/description" target="_blank"><code>Person:description</code></a> in Schema.org.',
     'display' => array(
       'default' => array(
@@ -91,7 +91,6 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 0,
-          'iframe_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -103,9 +102,6 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -123,7 +119,7 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 8,
     ),
   );
 
@@ -194,7 +190,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 9,
     ),
   );
 
@@ -311,7 +307,7 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 5,
+      'weight' => 12,
     ),
   );
 
@@ -858,7 +854,7 @@ Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</
   // Included for use with string extractors like potx.
   t('A name between the given name and the family name.<br/>
 Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:additionalName</code></a> in Schema.org.');
-  t('A short description of the person.<br/>
+  t('A short description or biography of the person.<br/>
 Maps to <a href="http://schema.org/description" target="_blank"><code>Person:description</code></a> in Schema.org.');
   t('Alias');
   t('An alias for the person.<br/>

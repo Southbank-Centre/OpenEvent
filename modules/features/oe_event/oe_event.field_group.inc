@@ -23,11 +23,10 @@ function oe_event_field_group_info() {
     'label' => 'Date and time',
     'weight' => '1',
     'children' => array(
-      0 => 'field_event_date_time',
-      1 => 'field_event_door_time',
-      2 => 'field_event_duration',
-      3 => 'field_event_date_start',
-      4 => 'field_event_date_end',
+      0 => 'field_event_date_end',
+      1 => 'field_event_date_start',
+      2 => 'field_event_door_time',
+      3 => 'field_event_duration',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -72,6 +71,33 @@ function oe_event_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_image|node|event|form';
+  $field_group->group_name = 'group_event_image';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Image',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_image',
+    ),
+    'format_type' => 'tab',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-event-image field-group-tab',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_event_image|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_event_main|node|event|form';
   $field_group->group_name = 'group_event_main';
   $field_group->entity_type = 'node';
@@ -83,24 +109,48 @@ function oe_event_field_group_info() {
     'weight' => '0',
     'children' => array(
       0 => 'field_description',
-      1 => 'field_event_children',
-      2 => 'field_event_parents',
-      3 => 'field_image',
-      4 => 'field_teaser',
-      5 => 'title',
+      1 => 'field_event_age_range',
+      2 => 'field_event_places',
+      3 => 'title',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
-      'label' => 'Main',
-      'instance_settings' => array(
-        'required_fields' => 1,
-        'classes' => 'group-event-main field-group-tab',
-        'description' => 'The main pieces of information about an event.',
-      ),
       'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-event-main field-group-tab',
+        'required_fields' => 1,
+      ),
     ),
   );
   $export['group_event_main|node|event|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_event_parents|node|event|form';
+  $field_group->group_name = 'group_event_parents';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'event';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Event parents',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_event_parents',
+    ),
+    'format_type' => 'tab',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => 'group-event-parents field-group-tab',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_event_parents|node|event|form'] = $field_group;
 
   return $export;
 }
