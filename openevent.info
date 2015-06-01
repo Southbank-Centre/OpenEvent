@@ -53,6 +53,7 @@ dependencies[] = relation_add
 dependencies[] = relation_endpoint
 dependencies[] = relation_ui
 dependencies[] = restws
+dependencies[] = schemaorg
 dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
