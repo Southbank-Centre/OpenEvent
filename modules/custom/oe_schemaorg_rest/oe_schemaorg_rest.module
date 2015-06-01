@@ -1,0 +1,193 @@
+<?php
+
+/**
+ * Return all mappings from Drupal node bundles to Schema.org types
+ */
+function oe_schemaorg_rest_get_resource_mappings() {
+  $mappings = array();
+  $node_types = node_type_get_types();
+  foreach ($node_types as $bundle => $info) {
+    $schema_name = schemaorg_ui_term_load('node', $bundle, 'rdftype');
+    if ($schema_name) {
+      $mappings[$bundle] = $schema_name;
+    }
+  }
+  return $mappings;
+}
+
+
+/**
+ * Return the Drupal node bundle for a given Schema.org name
+ */
+function oe_schemaorg_rest_get_resource_mapping($resource) {
+  $mappings = oe_schemaorg_rest_get_resource_mappings();
+  return array_search($resource, $mappings);
+}
+
+
+/**
+ * Define endpoints for all node bundles with a Schema.org mapping
+ */
+function oe_schemaorg_rest_restws_resource_info() {
+
+  $endpoints = array();
+  $mappings = oe_schemaorg_rest_get_resource_mappings();
+
+  foreach ($mappings as $bundle => $schema_name)
+  {
+    $endpoints[$schema_name] = array(
+      'label' => t($schema_name),
+      'class' => 'OESchemaorgRestController',
+      'menu_path' => 'api/'.$schema_name,
+    );
+  }
+
+  return $endpoints;
+}
+
+/**
+ * Alter the outgoing response - implements hook_restws_response_alter
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+  // Capture any responses using our controller and send them for rewriting
+  if (is_a($resourceController, 'OESchemaorgRestController')) {
+    // request for a single resource
+    if ($function == 'viewResource') {
+      $response = oe_schemaorg_rest_map_fields($response);
+    }
+    // query for multiple resources
+    else if ($function == 'queryResource') {
+      foreach ($response['list'] as $index => $item) {
+        $response['list'][$index] = oe_schemaorg_rest_map_fields($item);
+      }
+    }
+  }
+}
+
+/**
+ * Map the fields in a returned item to its Schema.org representation
+ */
+function oe_schemaorg_rest_map_fields($response) {
+  $newResponse = array();
+
+  // get the mappings for the entire content type
+  $mappings = rdf_mapping_load('node', $response['type']);
+
+  foreach($response as $field_name=>$value) {
+    // load the field predicates (where the RDF mapping is stored)
+    $terms = array();
+    if (!empty($mappings[$field_name]['predicates'])) {
+      $terms = $mappings[$field_name]['predicates'];
+    }
+    // if the field has a Schema.org mapping, add it with this to the output
+    foreach ($terms as $term) {
+      if (strpos(trim($term), 'schema:') === 0) {
+        // map taxonomy resource values to their terms
+        if (is_array($value) && isset($value['resource']) && $value['resource'] == 'taxonomy_term') {
+          $tax = taxonomy_term_load($value['id']);
+          $newResponse[$term] = $tax->name;
+        }
+        // map date fields to ISO8601 format
+        if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
+            || $term == 'schema:doorTime') {
+          $newResponse[$term] = format_date($value, 'custom', 'c');
+        }
+        // map duration field to normalised ISO8601 format
+        if ($term == 'schema:duration') {
+          $date = new DateTime("today");
+          $laterDate = (new DateTime("today"))->add(new DateInterval('PT'.$value.'M'));
+          $newResponse[$term] = $date->diff($laterDate)->format('P%yY%mM%dDT%hH%iM%sS');
+        }
+        // output other values straight
+        else {
+          $newResponse[$term] = $value;
+        }
+        break;
+      }
+    }
+  }
+
+  return $newResponse;
+}
+
+/**
+ * Controller for Schema.org-mapped node bundle resources.
+ */
+class OESchemaorgRestController extends RestWSEntityResourceController {
+
+  // properties for tracking the Schema.org type & corresponding node bundle for a transaction
+  protected $entitySchema, $entityBundle;
+
+  /**
+   *  Constructor - override the parent constructor so that the entity type
+   *  is always 'node', and the correct Schema.org type and node bundle are set
+   */
+  public function __construct($schema, $info) {
+    $this->entityType = 'node';
+    $this->entitySchema = $schema;
+    $this->entityBundle = oe_schemaorg_rest_get_resource_mapping($schema);
+    $this->entityInfo = entity_get_info('node');
+  }
+
+  /**
+   * Helper function to respect node permissions while querying.
+   *
+   * @param EntityFieldQuery $query
+   *   The query object.
+   */
+  public function access($op, $id) {
+    return entity_access($op, 'node', isset($id) ? $this->wrapper($id)->value() : NULL);
+  }
+
+  /**
+   * Overrides the parent 'wrapper' function to ensure returned items are of the correct
+   * content type for the requested resource
+   */
+  public function wrapper($id) {
+    $wrapper = entity_metadata_wrapper($this->entityType, $id, array('type'=>$this->entityBundle));
+    if ($wrapper->type->value() == $this->entityBundle) {
+      return $wrapper;
+    }
+    else {
+      throw new RestWSException('Not found', 404);
+    }
+  }
+
+  /**
+   * Implements RestWSQueryResourceControllerInterface::query().
+   *
+   * Overrides the parent 'query' function to add the correct bundle as a filter
+   */
+  public function query($filters = array(), $meta_controls = array()) {
+    $filters['type'] = $this->entityBundle;
+    return parent::query($filters, $meta_controls);
+  }
+
+  /**
+   * Implements RestWSQueryResourceControllerInterface::count().
+   *
+   * Overrides the parent 'count' function to add the correct bundle as a filter
+   */
+  public function count($filters = array()) {
+    $filters['type'] = $this->entityBundle;
+    return parent::count($filters);
+  }
+
+  /**
+   * Overrides the parent 'resource' function to use the Schema.org name for
+   * the resource, instead of the entityType
+   */
+  public function resource() {
+    return $this->entitySchema;
+  }
+
+}

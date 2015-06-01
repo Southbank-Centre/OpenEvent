@@ -47,6 +47,7 @@ projects[views][version] = 3.11
 projects[better_formats][version] = 1.0-beta1
 projects[paragraphs][version] = 1.0-beta6
 projects[relation][version] = 1.0-rc7
+projects[schemaorg][version] = 1.0-rc1
 projects[table_element][version] = 1.0-beta1
 projects[varnish][version] = 1.0-beta3
 ; The module gave undefined notices after installation in theme_varnish_status().
