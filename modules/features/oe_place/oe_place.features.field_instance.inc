@@ -14,7 +14,8 @@ function oe_place_field_default_field_instances() {
   $field_instances['node-event-field_event_places'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>',
+    'description' => '<p>The location or locations of the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/location" target="_blank">location</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -64,7 +65,8 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>',
+    'description' => '<p>The full text information about the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -125,7 +127,8 @@ function oe_place_field_default_field_instances() {
   $field_instances['node-place-field_image'] = array(
     'bundle' => 'place',
     'deleted' => 0,
-    'description' => 'An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>',
+    'description' => '<p>Images that represent the place. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -196,7 +199,8 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>',
+    'description' => '<p>The address of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/address" target="_blank">address</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -251,9 +255,9 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '<p>The location of the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.geo</code></a></p>
-
-<p>If this field is populated, the <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.hasMap</code></a> property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>',
+    'description' => '<p>The location of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/geo" target="_blank">geo</a></code> Schema.org property.</p>
+<p>If this field is populated, the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/hasMap" target="_blank">hasMap</a></code> Schema.org property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -293,7 +297,8 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
+    'description' => '<p>The opening hours of the place. Leave field blank when there are no opening hours for a particular day.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/openingHoursSpecification" target="_blank">openingHoursSpecification</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -352,7 +357,7 @@ function oe_place_field_default_field_instances() {
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.containedIn</code></a></p>',
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/containedIn" target="_blank">containedIn</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -399,25 +404,30 @@ function oe_place_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('<p>The location of the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.geo</code></a></p>
-
-<p>If this field is populated, the <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.hasMap</code></a> property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>');
+  t('<p>Images that represent the place. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
+  t('<p>The address of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/address" target="_blank">address</a></code> Schema.org property.</p>');
+  t('<p>The full text information about the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
+  t('<p>The location of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/geo" target="_blank">geo</a></code> Schema.org property.</p>
+<p>If this field is populated, the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/hasMap" target="_blank">hasMap</a></code> Schema.org property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>');
+  t('<p>The location or locations of the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/location" target="_blank">location</a></code> Schema.org property.</p>');
+  t('<p>The opening hours of the place. Leave field blank when there are no opening hours for a particular day.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/openingHoursSpecification" target="_blank">openingHoursSpecification</a></code> Schema.org property.</p>');
   t('<p>This field allows you to determine which places this place is located within.</p>
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.containedIn</code></a></p>');
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/containedIn" target="_blank">containedIn</a></code> Schema.org property.</p>');
   t('Address');
-  t('An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>');
   t('Description');
   t('Geolocation');
   t('Image');
   t('Opening hours');
   t('Place parents');
-  t('The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>');
-  t('The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>');
-  t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
-  t('The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>');
   t('Venues');
 
   return $field_instances;
