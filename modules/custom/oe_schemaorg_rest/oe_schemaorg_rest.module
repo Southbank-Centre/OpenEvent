@@ -83,36 +83,47 @@ function oe_schemaorg_rest_map_fields($response) {
   $mappings = rdf_mapping_load('node', $response['type']);
 
   foreach($response as $field_name=>$value) {
-    // load the field predicates (where the RDF mapping is stored)
-    $terms = array();
-    if (!empty($mappings[$field_name]['predicates'])) {
-      $terms = $mappings[$field_name]['predicates'];
+    // passthru any fields whose name begins with 'schema:'
+    if (strpos($field_name, 'schema:') === 0) {
+      $newResponse[$field_name] = $value;
     }
-    // if the field has a Schema.org mapping, add it with this to the output
-    foreach ($terms as $term) {
-      if (strpos(trim($term), 'schema:') === 0) {
-        // map taxonomy resource values to their terms
-        if (is_array($value) && isset($value['resource']) && $value['resource'] == 'taxonomy_term') {
-          $tax = taxonomy_term_load($value['id']);
-          $newResponse[$term] = $tax->name;
-        }
-        // map date fields to ISO8601 format
-        else if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
-            || $term == 'schema:doorTime') {
-          $newResponse[$term] = format_date($value, 'custom', 'c');
-        }
-        // map duration field to normalised ISO8601 format
-        else if ($term == 'schema:duration' && $value) {
-          $date = new DateTime("today");
-          $laterDate = (new DateTime("today"))->add(new DateInterval('PT'.$value.'M'));
-          $newResponse[$term] = $date->diff($laterDate)->format('P%yY%mM%dDT%hH%iM%sS');
-        }
-        // output other values straight
-        else {
-          $newResponse[$term] = $value;
-        }
-        break;
+    else {
+      // load the field predicates (where the RDF mapping is stored)
+      $terms = array();
+      if (!empty($mappings[$field_name]['predicates'])) {
+        $terms = $mappings[$field_name]['predicates'];
       }
+      // if the field has a Schema.org mapping, add it with this to the output
+      foreach ($terms as $term) {
+        if (strpos(trim($term), 'schema:') === 0) {
+          // map taxonomy resource values to their terms
+          if (is_array($value) && isset($value['resource']) && $value['resource'] == 'taxonomy_term') {
+            $tax = taxonomy_term_load($value['id']);
+            $newResponse[$term] = $tax->name;
+          }
+          // map date fields to ISO8601 format
+          else if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
+              || $term == 'schema:doorTime') {
+            $newResponse[$term] = format_date($value, 'custom', 'c');
+          }
+          // map duration field to normalised ISO8601 format
+          else if ($term == 'schema:duration' && $value) {
+            $date = new DateTime("today");
+            $laterDate = (new DateTime("today"))->add(new DateInterval('PT'.$value.'M'));
+            $newResponse[$term] = $date->diff($laterDate)->format('P%yY%mM%dDT%hH%iM%sS');
+          }
+          // output other values straight
+          else {
+            $newResponse[$term] = $value;
+          }
+          break;
+        }
+      }
+
+      /*if (!sizeof($terms))
+      {
+        $newResponse['unmapped'][$field_name] = $value;
+      }*/
     }
   }
 
