@@ -21,7 +21,7 @@ function oe_place_field_default_field_instances() {
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 14,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -71,7 +71,7 @@ function oe_place_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -135,7 +135,7 @@ function oe_place_field_default_field_instances() {
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -260,7 +260,7 @@ function oe_place_field_default_field_instances() {
         'module' => 'geolocation',
         'settings' => array(),
         'type' => 'geolocation_text',
-        'weight' => 6,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -319,7 +319,7 @@ function oe_place_field_default_field_instances() {
           'timezone_field' => '',
         ),
         'type' => 'office_hours',
-        'weight' => 5,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -359,7 +359,7 @@ function oe_place_field_default_field_instances() {
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 7,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
