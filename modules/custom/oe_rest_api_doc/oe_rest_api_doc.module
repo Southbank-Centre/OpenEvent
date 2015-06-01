@@ -6,20 +6,38 @@
 function oe_rest_api_doc_menu_alter(&$items) {
   $items['api/doc']['title'] = variable_get('site_name') . ' API Documentation';
   $items['api/doc']['page callback'] = 'OE_rest_api_doc_page';
+  $items['api/doc']['access arguments'] = array('access oe_rest_api_doc');
+}
+
+/**
+ * Implements hook_permission().
+ */
+function oe_rest_api_doc_permission() {
+  return array(
+    'access oe_rest_api_doc' => array(
+      'title' => t('Access Open Event REST API documentation'),
+      'description' => t('Allow to the user to access the REST API documentation.'),
+    ),
+  );
 }
 
 /**
  * API documentation page.
  */
 function oe_rest_api_doc_page($format = '') {
-  $resources = restws_get_resource_info();
+  $resources = oe_schemaorg_rest_restws_resource_info();
   ksort($resources);
   $formats = restws_get_format_info();
 
   // Display format links if one hasn't been specified in the URL
 
   foreach ($formats as $name => $format_info) {
-    $links[] = l($format_info['label'], 'api/doc/' . $name);
+    if ($format === $name) {
+      $links[] = '<strong>' . $format_info['label'] . '</strong>';
+    }
+    else {
+      $links[] = l($format_info['label'], 'api/doc/' . $name);
+    }
   }
   $page['header']['#markup'] = implode(' | ', $links);
 
@@ -32,72 +50,90 @@ function oe_rest_api_doc_page($format = '') {
   $page['body']['#markup'] =  '';
   $page['body']['#markup'] .= '<ul id="api-documentation-nav">';
   foreach ($resources as $type => $resource) {
-    // Add an html ID to each resource
-    $resources[$type]['html_id'] = drupal_html_id($resource['label']);
-
-    // Add resources to the menu
-    $page['body']['#markup'] .= '<li><a href="#' . $resources[$type]['html_id'] . '">' . $resource['label'] . '</a></li>';
+    // Only display resource title if user has access
+    if (user_access('access resource ' . $type)) {
+      // Add an html ID to each resource
+      $resources[$type]['html_id'] = drupal_html_id($resource['label']);
+      // Add resources to the menu
+      $page['body']['#markup'] .= '<li><a href="#' . $resources[$type]['html_id'] . '">' . $resource['label'] . '</a></li>';
+    }
   }
   $page['body']['#markup'] .= '</ul>';
 
   foreach ($resources as $type => $resource) {
-    // Bundle heading
-    $page['body']['#markup'] .= '<h2 id="' . $resource['html_id'] . '">' . $resource['label'] . '</h2>';
 
-    // Single item API call
-    $page['body']['#markup'] .= '<h3><code>/api/' . $type . '/&lt;ID&gt;.' . $format . '</code></h3>';
-    $page['body']['#markup'] .= '<p>Returns a single ' . $type . ' item based on the <ID> passed in.</p>';
-    $page['body']['#markup'] .= '<h4>Example call</h4>';
-    $page['body']['#markup'] .= '<p>This call will return the ' . $type . ' item whose ID is 12.</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '/12.' . $format . '</code></p>';
+    // Only display resource if user has access
+    if (user_access('access resource ' . $type)) {
+      // Bundle heading
+      $page['body']['#markup'] .= '<h2 id="' . $resource['html_id'] . '">' . $resource['label'] . '</h2>';
 
-    // List API call
-    $page['body']['#markup'] .= '<h3><code>/api/' . $type . '.' . $format . '</code></h3>';
-    $page['body']['#markup'] .= '<p>Returns a list of ' . $type . ' items.</p>';
-    $page['body']['#markup'] .= '<h4>Filtering</h4>';
-    $page['body']['#markup'] .= '<p>You can filter on any of properties listed below, in the following way:</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '.' . $format . '?&lt;propertyName&gt;=&lt;propertyValue&gt;</code></p>';
-    $property_rows = array();
-    $controller = restws_resource_controller($type);
-    foreach ($controller->propertyInfo() as $property => $property_info) {
-      if (!empty($property_info['computed']) || empty($property_info['type'])) {
-        continue;
+      $page['body']['#markup'] .= '<dl>';
+
+      // Single item API call
+      $page['body']['#markup'] .= '<dt>';
+      $page['body']['#markup'] .= '<h3><code>/' . $resource['menu_path'] . '/&lt;ID&gt;.' . $format . '</code></h3>';
+      $page['body']['#markup'] .= '</dt>';
+      $page['body']['#markup'] .= '<dd>';
+      $page['body']['#markup'] .= '<p>Returns a single ' . $type . ' item based on the <ID> passed in.</p>';
+      // Example
+      $page['body']['#markup'] .= '<h4>Example call</h4>';
+      $page['body']['#markup'] .= '<p>This call will return the ' . $type . ' item whose ID is 12.</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '/12.' . $format . '</code></p>';
+      $page['body']['#markup'] .= '</dd>';
+
+      // List API call
+      $page['body']['#markup'] .= '<dt>';
+      $page['body']['#markup'] .= '<h3><code>/' . $resource['menu_path'] . '.' . $format . '</code></h3>';
+      $page['body']['#markup'] .= '</dt>';
+      $page['body']['#markup'] .= '<dd>';
+      $page['body']['#markup'] .= '<p>Returns a list of ' . $type . ' items.</p>';
+      // Filtering
+      $page['body']['#markup'] .= '<h4>Filtering</h4>';
+      $page['body']['#markup'] .= '<p>You can filter on any of properties listed below, in the following way:</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?&lt;propertyName&gt;=&lt;propertyValue&gt;</code></p>';
+      $property_rows = array();
+      $controller = restws_resource_controller($type);
+      foreach ($controller->propertyInfo() as $property => $property_info) {
+        $property_rows[] = array(
+          $property,
+          $property_info['description'],
+        );
       }
-      $required = FALSE;
-      $options = NULL;
-      if (is_a($controller, 'RestWSEntityResourceController')) {
-        $entityInfo = entity_get_info($type);
-        $entityPropertyInfo = entity_get_all_property_info($type);
-        if ($entityInfo['entity keys']['bundle'] == $property) {
-          $required = TRUE;
-        }
-        if (!empty($entityPropertyInfo[$property]['required'])) {
-          $required = TRUE;
-        }
+      $properties_table = theme('table', array('rows' => $property_rows, 'header' => array('Property', 'Description')));
+      $page['body']['#markup'] .= $properties_table;
+      // Sorting
+      $page['body']['#markup'] .= '<h4>Sorting</h4>';
+      $page['body']['#markup'] .= '<p>You can sort by passing the <code>sort</code> parameter:</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?sort=&lt;propertyName&gt;</code></p>';
+      $page['body']['#markup'] .= '<p>You can also specify the sort direction (<code>ASC</code> | <code>DES</code>):</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?sort=&lt;propertyName&gt;&direction=DES</code></p>';
+      // Pagination
+      $page['body']['#markup'] .= '<h4>Pagination</h4>';
+      $page['body']['#markup'] .= '<p>You can specify an offset to exclude the first N results:</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?offset=&lt;N&gt;</code></p>';
+      $page['body']['#markup'] .= '<p>You can also specify a limit to the number of results returned by the call:</p>';
+      $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?limit=&lt;N&gt;</code></p>';
+      $page['body']['#markup'] .= '<p>There is a hard limit of ' . variable_get('restws_query_max_limit', 100) . ' items per API call, which cannot be exceeded.</p>';
 
-        if (!empty($entityPropertyInfo[$property]['options list'])) {
-          // KLUDGE: returns errors but works. Why?
-          $options = @call_user_func($entityPropertyInfo[$property]['options list']);
-        }
+      $page['body']['#markup'] .= '</dd>';
+
+      // Permissions
+      $page['body']['#markup'] .= '<dt>';
+      $page['body']['#markup'] .= '<h3>Permissions</h3>';
+      $page['body']['#markup'] .= '</dt>';
+      $page['body']['#markup'] .= '<dd>';
+      $page['body']['#markup'] .= '<p>The following roles have permission to access the ' . $type . ' resource:</p>';
+      $page['body']['#markup'] .= '<ul>';
+      $roles = user_roles(FALSE, 'access resource ' . $type);
+      foreach($roles as $role) {
+        $page['body']['#markup'] .= '<li>' . $role . '</li>';
       }
-      $property_rows[] = array(
-        $property,
-        $property_info['type'] . ($options ? theme('item_list', array('items' => array_keys($options), 'title' => t('Allowed values'))) : ''),
-      );
+      $page['body']['#markup'] .= '</ul>';
+      $page['body']['#markup'] .= '</dd>';
+
+      $page['body']['#markup'] .= '</dl>';
+
     }
-    $properties_table = theme('table', array('rows' => $property_rows, 'header' => array('Property', 'Type')));
-    $page['body']['#markup'] .= $properties_table;
-    $page['body']['#markup'] .= '<h4>Sorting</h4>';
-    $page['body']['#markup'] .= '<p>You can sort by passing the <code>sort</code> parameter:</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '.' . $format . '?sort=&lt;propertyName&gt;</code></p>';
-    $page['body']['#markup'] .= '<p>You can also specify the sort direction (<code>ASC</code> | <code>DES</code>):</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '.' . $format . '?sort=&lt;propertyName&gt;&direction=DES</code></p>';
-    $page['body']['#markup'] .= '<h4>Pagination</h4>';
-    $page['body']['#markup'] .= '<p>You can specify an offset to exclude the first N results:</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '.' . $format . '?offset=&lt;N&gt;</code></p>';
-    $page['body']['#markup'] .= '<p>You can also specify a limit to the number of results returned by the call:</p>';
-    $page['body']['#markup'] .= '<p><code>/api/' . $type . '.' . $format . '?limit=&lt;N&gt;</code></p>';
-    $page['body']['#markup'] .= '<p>There is a hard limit of ' . variable_get('restws_query_max_limit', 100) . ' items per API call, which cannot be exceeded.</p>';
 
   }
 
