@@ -6,3 +6,4 @@ version = 7.x-1.0
 
 dependencies[] = restws
 dependencies[] = schemaorg
+dependencies[] = schemaorg_ui
