@@ -17,7 +17,7 @@ function oe_schemaorg_relation_restws_response_alter(&$response, $function, $for
   if (is_a($resourceController, 'OESchemaorgRestController')) {
     // request for a single resource
     if ($function == 'viewResource') {
-      $response = oe_schemaorg_relation_add_relations($response);
+      $response = oe_schemaorg_relation_add_mapped_relations($response);
     }
     // query for multiple resources
     else if ($function == 'queryResource') {
