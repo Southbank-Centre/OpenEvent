@@ -352,6 +352,23 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
     return $this->entityBundle;
   }
 
+  /**
+   * Overrides the parent 'propertyInfo' function to return the Schema.org names for
+   * the properties of this resource
+   */
+  public function propertyInfo() {
+    $fields = field_info_instances($this->type(), $this->bundle());
+    $field_map = oe_schemaorg_rest_get_field_mappings($this->type(), $this->bundle());
+    $fields_mapped = array();
+    foreach($fields as $i => $field) {
+      $property_name = oe_schemaorg_rest_get_field_name_schemaorg($i, $field_map);
+      if ($property_name) {
+        $fields_mapped[$property_name] = $field;
+      }
+    }
+    return $fields_mapped;
+  }
+
 }
 
 /**
