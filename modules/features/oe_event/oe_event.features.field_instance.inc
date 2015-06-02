@@ -471,7 +471,12 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'deleted' => 0,
     'description' => 'Images from the event.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.',
+Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -592,7 +597,12 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
   t('End date/time');
   t('Image');
   t('Images from the event.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org.');
+Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>');
   t('Parents');
   t('Start date/time');
   t('Teaser');
