@@ -1,0 +1,13 @@
+<?php
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Maps taxonomy resources to their term strings
+   */
+  function oe_schemaorg_rest_taxonomy_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if (is_array($value) && isset($value['resource']) && $value['resource'] == 'taxonomy_term') {
+      $tax = taxonomy_term_load($value['id']);
+      $value = $tax->name;
+    }
+  }

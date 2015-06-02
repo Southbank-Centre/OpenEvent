@@ -67,6 +67,10 @@ dependencies[] = oe_event
 dependencies[] = oe_place
 dependencies[] = oe_person
 dependencies[] = oe_schemaorg_rest
+dependencies[] = oe_schemaorg_rest_date
+dependencies[] = oe_schemaorg_rest_duration
+dependencies[] = oe_schemaorg_rest_office_hours
+dependencies[] = oe_schemaorg_rest_taxonomy
 dependencies[] = oe_schemaorg_relation
 
 ; File depedencies.

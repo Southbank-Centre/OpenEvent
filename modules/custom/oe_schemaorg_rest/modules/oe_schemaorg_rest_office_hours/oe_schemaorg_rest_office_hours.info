@@ -1,0 +1,8 @@
+name = OE Schema.org Office Hours
+description = Provides Schema.org mappings for the Office Hours module.
+core = 7.x
+package = Open Events
+version = 7.x-1.0
+
+dependencies[] = office_hours
+dependencies[] = oe_schemaorg_rest

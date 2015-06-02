@@ -1,0 +1,16 @@
+<?php
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Maps date fields to ISO8601 format
+   */
+  function oe_schemaorg_rest_date_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($value
+        && $field_info['type'] == 'date'
+        && ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
+            || $term == 'schema:doorTime'))
+      {
+        $value = format_date($value, 'custom', 'c');
+      }
+  }
