@@ -184,7 +184,7 @@ function oe_person_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Image',
+    'label' => 'Images',
     'weight' => '1',
     'children' => array(
       0 => 'field_image',
@@ -210,7 +210,7 @@ function oe_person_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'Image',
+    'label' => 'Images',
     'weight' => '2',
     'children' => array(
       0 => 'field_image',
