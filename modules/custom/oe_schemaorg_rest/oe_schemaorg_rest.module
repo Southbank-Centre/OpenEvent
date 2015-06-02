@@ -127,7 +127,9 @@ function oe_schemaorg_rest_map_query_parameters($parameters, $field_map) {
         if ($entity_field_name) {
           $mapped_parameters[$entity_field_name] = $query_value;
         }
-        $mapped_parameters[$query_string] = $query_value;
+        else {
+          $mapped_parameters[$query_string] = $query_value;
+        }
       }
     }
     return $mapped_parameters;
