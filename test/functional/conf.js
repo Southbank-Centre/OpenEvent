@@ -12,8 +12,8 @@
 exports.config = {
 
   // Saucelabs credentials.
-  //sauceUser: process.env.SAUCE_USERNAME,
-  //sauceKey: process.env.SAUCE_ACCESS_KEY,
+  sauceUser: process.env.SAUCE_USERNAME,
+  sauceKey: process.env.SAUCE_ACCESS_KEY,
 
   // Tests to run
   specs: ['**/*.js'],
