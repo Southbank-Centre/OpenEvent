@@ -4,6 +4,6 @@ package = Open Events
 core = 7.x
 dependencies[] = restws
 dependencies[] = rest_api_doc
-dependencies[] = pathauto
+dependencies[] = oe_schemaorg_rest
 
 stylesheets[all][] = oe_rest_api_doc.css
