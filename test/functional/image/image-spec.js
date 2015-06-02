@@ -35,7 +35,7 @@ describe('Image', function() {
     element(by.id('edit-title')).sendKeys('Test event page');
 
     // upload 'Image'
-    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Image']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
 

@@ -69,7 +69,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-title')).sendKeys('Protractor place');
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
-    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Image']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     // workaround for current inability to upload images through SauceLabs from Protractor:

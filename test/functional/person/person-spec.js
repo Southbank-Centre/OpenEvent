@@ -28,12 +28,10 @@ describe('The Person features of the CMS', function() {
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
   var personNameSuffix = element(by.id('edit-field-person-name-suffix-und-0-value'));
   var personAlias = element(by.id('edit-field-person-name-alias-und-0-value'));
-
-  // Tab Biography and images
-  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Biography and images']"));
-
-  // Biography and images fields
   var bioDescription = element(by.id('edit-field-description-und-0-value'));
+
+  // Tab Images
+  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
