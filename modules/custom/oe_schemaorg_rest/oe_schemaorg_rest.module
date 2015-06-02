@@ -260,7 +260,9 @@ function oe_schemaorg_rest_map_fields($response) {
           // map date fields to ISO8601 format
           else if ((stripos($term, 'date') !== false && $term != 'schema:candidate' && $term != 'schema:dateline')
               || $term == 'schema:doorTime') {
-            $newResponse[$term] = format_date($value, 'custom', 'c');
+            if ($value) {
+              $newResponse[$term] = format_date($value, 'custom', 'c');
+            }
           }
           // map duration field to normalised ISO8601 format
           else if ($term == 'schema:duration' && $value) {
