@@ -109,24 +109,31 @@ function oe_schemaorg_rest_get_field_name_schemaorg($entity_field, $field_map) {
  *   Returns query string parameters array with schemaorg field names
  *   mapped to entity field names.
  */
-function oe_schemaorg_rest_map_query_parameters($parameters, $field_map) {
+function oe_schemaorg_rest_map_query_parameters($parameters, $field_map, $taxonomy_terms = NULL) {
 
   $mapped_parameters = array();
 
   if (!is_null($parameters)) {
     foreach ($parameters as $query_string => $query_value) {
       if ($query_string == 'sort') {
-        // A sort query has the name of the field as its value. Get its
-        // corresponding field name.
+        // Map sort value to the correct entity field name
         $mapped_parameters[$query_string] = oe_schemaorg_rest_get_field_name_entity($query_value, $field_map);
       }
       else {
-        // Else if there is a mapping for it return the mapping, otherwise pass it straight
-        // through and rest_ws will deal with it.
+        // Decide if it is a field we care about mapping.
+        // If we do then check to see if we need extra processing (e.g. taxonomy term, relation, etc).
         $entity_field_name = oe_schemaorg_rest_get_field_name_entity($query_string, $field_map);
         if ($entity_field_name) {
-          $mapped_parameters[$entity_field_name] = $query_value;
+          // Check if it is a taxonomy term and grab its term ID.
+          if (in_array($entity_field_name, $taxonomy_terms)) {
+            $mapped_parameters[$entity_field_name] = oe_schemaorg_rest_get_term_tid($query_value);
+          }
+          else {
+            // It is a normal field that we care to map so use the mapped name as key.
+            $mapped_parameters[$entity_field_name] = $query_value;
+          }
         }
+        // If none of the above pass it straight through and rest_ws will deal with it.
         else {
           $mapped_parameters[$query_string] = $query_value;
         }
@@ -134,6 +141,24 @@ function oe_schemaorg_rest_map_query_parameters($parameters, $field_map) {
     }
     return $mapped_parameters;
   }
+}
+
+/**
+ * Returns the term id of a term name
+ *
+ * @param $term_name
+ * @return mixed
+ *   Returns the term id of a term name, false
+ *   otherwise
+ */
+function oe_schemaorg_rest_get_term_tid($term_name) {
+  $terms = taxonomy_get_term_by_name($term_name);
+  if (empty($terms)){
+    return false;
+  }
+  $term = reset($terms);
+  $tid = $term->tid;
+  return $tid;
 }
 
 /**
@@ -352,6 +377,24 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
     return $this->entityBundle;
   }
 
+  /**
+   * Returns an array of term fields.
+   *
+   * @return mixed
+   */
+  public function taxonomy_terms() {
+    $properties = $this->propertyInfo();
+    $taxonomy_terms = array();
+
+    foreach ($properties as $field => $value) {
+      $type = $value['type'];
+      if ($type == 'taxonomy_term') {
+        $taxonomy_terms[] = $field;
+      }
+    }
+    return !empty($taxonomy_terms) ? $taxonomy_terms : false;
+  }
+
 }
 
 /**
@@ -372,26 +415,28 @@ class OESchemaorgRestWSFormatJSON extends RestWSFormatJSON {
     // Get the parameter from the URL.
     $query_parameters = drupal_get_query_parameters();
 
+    $rest_controls = restws_meta_controls();
+    $properties = $resourceController->propertyInfo();
+
     // Override logic when the custom OESchemaorgRestController is set
     if (is_a($resourceController, 'OESchemaorgRestController')) {
 
       // Get controller info on the node we are dealing with.
       $type = $resourceController->type();
       $bundle = $resourceController->bundle();
+      $taxonomy_terms = $resourceController->taxonomy_terms();
 
       // Get field mapping definition for the given type and bundle.
       $field_map = oe_schemaorg_rest_get_field_mappings($type, $bundle);
 
       // Map parameters to entity field names.
-      $parameters = oe_schemaorg_rest_map_query_parameters($query_parameters, $field_map);
+      $parameters = oe_schemaorg_rest_map_query_parameters($query_parameters, $field_map, $taxonomy_terms);
 
     }
     else {
       $parameters = $query_parameters;
     }
 
-    $rest_controls = restws_meta_controls();
-    $properties = $resourceController->propertyInfo();
     $split_parameters = $this->splitParameters($properties, $parameters);
 
     // We pass the original request parameters so we get mapped request URIs.
