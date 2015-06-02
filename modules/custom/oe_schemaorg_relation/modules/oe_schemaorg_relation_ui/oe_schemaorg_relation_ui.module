@@ -1,0 +1,130 @@
+<?php
+
+/**
+ * @file
+ * User interface for setting the schema.org mappings on Relations
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter, with inspiration from the schemaorg_ui module
+ *
+ * Alter the Relation edit form to add Schema.org field mappings for source & target
+ */
+function oe_schemaorg_relation_ui_form_relation_ui_type_form_alter(&$form, $form_state, $form_id) {
+
+  if (isset($form['labels']['relation_type']['#default_value'])) {
+
+    // Fieldset for the Schema.org settings
+    $bundle = $form['labels']['relation_type']['#default_value'];
+    $form['schemaorg_ui'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Schema.org settings'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+      '#group' => 'additional_settings',
+    );
+    // Schema.org field mapping for source property
+    $form['schemaorg_ui']['schemaorg_ui_source_property'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Source property'),
+      '#description' => t('Specify the property you want to associated on the source object.'),
+      '#default_value' => schemaorg_ui_term_load('relation', $bundle, 'source_bundles'),
+      '#attributes' => array('class' => array('schemaorg-ui-autocomplete-properties')),
+    );
+    // Schema.org field mapping for target property
+    $form['schemaorg_ui']['schemaorg_ui_target_property'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Target property'),
+      '#description' => t('Specify the property you want to associated on the target object.'),
+      '#default_value' => schemaorg_ui_term_load('relation', $bundle, 'target_bundles'),
+      '#attributes' => array('class' => array('schemaorg-ui-autocomplete-properties')),
+    );
+    $form['#submit'][] = 'oe_schemaorg_relation_ui_node_type_form_submit';
+    // Use jQuery UI autocomplete to provide a faster autocomplete without
+    // callback to the server.
+    $form['#attached']['library'][] = array('system', 'ui.autocomplete');
+    $form['#attached']['css'][] = drupal_get_path('module', 'schemaorg_ui') . '/css/schemaorg_ui.jquery.ui.theme.css';
+    $form['#attached']['js'][] = drupal_get_path('module', 'schemaorg_ui') . '/js/schemaorg_ui.js';
+    $form['#attached']['js'][] =  array(
+          'data' => array('schemaorguiapiTermsPath' => base_path() . drupal_get_path('module', 'schemaorg_ui') . '/js/schemaorg_ui.terms.json'),
+          'type' => 'setting'
+    );
+  }
+}
+
+
+
+/**
+ * Submit function for node type form
+ */
+function oe_schemaorg_relation_ui_node_type_form_submit($form, &$form_state) {
+  $bundle = $form_state['values']['relation_type'];
+  $fields = array('source_bundles'=>'schemaorg_ui_source_property', 'target_bundles'=>'schemaorg_ui_target_property');
+
+
+  // load the RDF mappings for the relation
+  $mapping = rdf_mapping_load('relation', $bundle);
+
+  foreach($fields as $field_name=>$property) {
+    // This field might not have an RDF mapping yet.
+    if (empty($mapping[$field_name])) {
+      $mapping[$field_name]['predicates'] = array();
+    }
+    $mapping[$field_name]['predicates'] = schemaorg_ui_terms_merge($form_state['values'][$property], $mapping[$field_name]['predicates']);
+  }
+
+  /** Code lifted from schemaorg_ui module **/
+
+  // Performs some maintenance tasks based on whether the mapping contains
+  // schema.org terms or not.
+  // Scans the mapping array to see if some fields are mapped to schema.org.
+  $schemaorg_mappings = FALSE;
+  // Some fields are ignored since they are not input by the user.
+  $ignored_fields = array('title', 'name', 'url');
+  foreach ($mapping as $field => $info) {
+    if (!empty($info['predicates']) && !in_array($field, $ignored_fields)) {
+      if (count($info['predicates']) != count(array_filter($info['predicates'], 'schemaorg_ui_filter_schema_term'))) {
+        $schemaorg_mappings = TRUE;
+        break;
+      }
+    }
+  }
+  if ($schemaorg_mappings) {
+    // Specifies the title/name mapping as expected by schema.org. This mapping
+    // is always set to schema:name and is not exposed in the UI.
+    // The label of an entity is usually either 'title' (e.g. node) or
+    // 'name' (e.g. user).
+    if (!empty($mapping['title'])) {
+      $mapping['title']['predicates'] = array('schema:name');
+    }
+    if (!empty($mapping['name'])) {
+      $mapping['name']['predicates'] = array('schema:name');
+    }
+    // Sets the mapping for the url of the entity. This mapping is always set
+    // to schema:url and is not exposed in the UI.
+    $mapping['url']['predicates'] = array('schema:url');
+    $mapping['url']['type'] = 'rel';
+  }
+  else {
+    // Makes sure no schema.org mapping for title/name remains if no schema.org
+    // terms are used.
+    if (!empty($mapping['title'])) {
+      $mapping['title']['predicates'] = array_filter($mapping['title']['predicates'], 'schemaorg_ui_filter_schema_term');
+    }
+    if (!empty($mapping['name'])) {
+      $mapping['name']['predicates'] = array_filter($mapping['name']['predicates'], 'schemaorg_ui_filter_schema_term');
+    }
+    // Since this pseudo-field mapping is only used for the purpose of
+    // schema.org, it is entirely removed.
+    unset($mapping['url']);
+  }
+
+  rdf_mapping_save(array(
+    'type' => 'relation',
+    'bundle' => $bundle,
+    'mapping' => $mapping,
+    )
+  );
+
+  /** Code lifted from schemaorg_ui module ends **/
+}

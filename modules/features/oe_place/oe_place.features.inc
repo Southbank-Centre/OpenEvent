@@ -145,5 +145,43 @@ function oe_place_rdf_default_mappings() {
     ),
   );
 
+  // Exported RDF mapping: event_is_located_in_place
+  $schemaorg['relation']['event_is_located_in_place'] = array(
+    'source_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:location',
+      ),
+    ),
+    'target_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:event',
+      ),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
+    ),
+  );
+
+  // Exported RDF mapping: place_is_contained_in_place
+  $schemaorg['relation']['place_is_contained_in_place'] = array(
+    'source_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:containedIn',
+      ),
+    ),
+    'target_bundles' => array(
+      'predicates' => array(),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
+    ),
+  );
+
   return $schemaorg;
 }

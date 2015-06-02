@@ -62,6 +62,7 @@ features[field_instance][] = relation-performs_in-endpoints
 features[node][] = person
 features[relation_type][] = performs_in
 features[schemaorg][] = node-person
+features[schemaorg][] = relation-performs_in
 features[taxonomy][] = person_title
 features[user_permission][] = create person content
 features[user_permission][] = delete any person content

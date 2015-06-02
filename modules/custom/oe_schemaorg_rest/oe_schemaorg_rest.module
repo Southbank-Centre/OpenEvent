@@ -24,6 +24,117 @@ function oe_schemaorg_rest_get_resource_mapping($resource) {
   return array_search($resource, $mappings);
 }
 
+/**
+ * Return a Schema.org field map for a given entity type and bundle.
+ *
+ * @param $type
+ *   The entity type (e.g. 'node')
+ * @param $bundle
+ *   The entity type bundle (e.g. 'article')
+ * @return array
+ *   A field map with keys the drupal field name and values the
+ *   Schema.org corresponding field name
+ */
+function oe_schemaorg_rest_get_field_mappings($type, $bundle) {
+  $field_map = array();
+  $def = 'schema:';
+  $mappings = rdf_mapping_load($type, $bundle);
+
+  foreach($mappings as $mapping => $value) {
+
+    // If there is a predicate value (defined by rdf module)
+    if (!empty($value['predicates'])) {
+
+      $predicates = $value['predicates'];
+
+      foreach ($predicates as $predicate) {
+
+        $predicate = trim($predicate);
+
+        // If predicate starts with 'schema:' then add it to the map.
+        if (substr($predicate, 0, strlen($def)) === $def) {
+          $field_map[$mapping] = substr($predicate, strlen($def));
+        }
+      }
+
+    }
+
+  }
+
+  return $field_map;
+}
+
+/**
+ * Returns the Entity field that corresponds to a Schema.org field.
+ *
+ * @param $schema_field
+ *   The schema field name
+ * @param $field_map
+ *   A field map for a given entity type and bundle as returned by
+ *   oe_schemaorg_rest_get_field_mappings() function.
+ * @return mixed
+ *   Returns the entity field name for the given Schema.org name or
+ *   false if it does not exist
+ */
+function oe_schemaorg_rest_get_field_name_entity($schema_field, $field_map) {
+  return array_search($schema_field, $field_map);
+}
+
+/**
+ * Returns the Schema.org field that corresponds to an Entity field
+ *
+ * @param $entity_field
+ *   The entity field name.
+ * @param $field_map
+ *   A field map for a given entity type and bundle as returned by
+ *   oe_schemaorg_rest_get_field_mappings() function.
+ * @return mixed
+ *   Returns the Schema.org field name for a given entity field name or
+ *   false if it does not exist
+ */
+function oe_schemaorg_rest_get_field_name_schemaorg($entity_field, $field_map) {
+  return isset($field_map[$entity_field]) ? $field_map[$entity_field] : false;
+}
+
+/**
+ * Returns query string parameters from schemaorg field names to entity
+ * field names.
+ *
+ * @param $parameters
+ *   Processed URL query parameters as returned from drupal_get_query_parameters().
+ * @param $field_map
+ *   A field map for a given entity type and bundle as returned by
+ *   oe_schemaorg_rest_get_field_mappings() function.
+ * @return array
+ *   Returns query string parameters array with schemaorg field names
+ *   mapped to entity field names.
+ */
+function oe_schemaorg_rest_map_query_parameters($parameters, $field_map) {
+
+  $mapped_parameters = array();
+
+  if (!is_null($parameters)) {
+    foreach ($parameters as $query_string => $query_value) {
+      if ($query_string == 'sort') {
+        // A sort query has the name of the field as its value. Get its
+        // corresponding field name.
+        $mapped_parameters[$query_string] = oe_schemaorg_rest_get_field_name_entity($query_value, $field_map);
+      }
+      else {
+        // Else if there is a mapping for it return the mapping, otherwise pass it straight
+        // through and rest_ws will deal with it.
+        $entity_field_name = oe_schemaorg_rest_get_field_name_entity($query_string, $field_map);
+        if ($entity_field_name) {
+          $mapped_parameters[$entity_field_name] = $query_value;
+        }
+        else {
+          $mapped_parameters[$query_string] = $query_value;
+        }
+      }
+    }
+    return $mapped_parameters;
+  }
+}
 
 /**
  * Define endpoints for all node bundles with a Schema.org mapping
@@ -74,24 +185,48 @@ function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatN
 }
 
 /**
+ * Alter available format information.
+ *
+ * @param array $format_info
+ *   Format information as defined in hook_restws_format_info()
+ */
+function oe_schemaorg_rest_restws_format_info_alter(&$format_info) {
+  $format_info['json']['class'] = 'OESchemaorgRestWSFormatJSON';
+}
+
+/**
+ * Alter the incoming request array.
+ *
+ * @param array $request
+ *
+ */
+function oe_schemaorg_rest_restws_request_alter(array &$request) {
+
+}
+
+/**
  * Map the fields in a returned item to its Schema.org representation
  */
-function oe_schemaorg_rest_map_fields($response, $no_output = FALSE) {
+function oe_schemaorg_rest_map_fields($response) {
   $newResponse = array();
 
   // get the mappings for the entire content type
   $mappings = rdf_mapping_load('node', $response['type']);
 
   foreach($response as $field_name=>$value) {
-    // load the field predicates (where the RDF mapping is stored)
-    $terms = array();
-    if (!empty($mappings[$field_name]['predicates'])) {
-      $terms = $mappings[$field_name]['predicates'];
+    // passthru any fields whose name begins with 'schema:'
+    if (strpos($field_name, 'schema:') === 0) {
+      $newResponse[$field_name] = $value;
     }
-    // if the field has a Schema.org mapping, add it with this to the output
-    foreach ($terms as $term) {
-      if (strpos(trim($term), 'schema:') === 0) {
-        if (!$no_output) {
+    else {
+      // load the field predicates (where the RDF mapping is stored)
+      $terms = array();
+      if (!empty($mappings[$field_name]['predicates'])) {
+        $terms = $mappings[$field_name]['predicates'];
+      }
+      // if the field has a Schema.org mapping, add it with this to the output
+      foreach ($terms as $term) {
+        if (strpos(trim($term), 'schema:') === 0) {
           // map taxonomy resource values to their terms
           if (is_array($value) && isset($value['resource']) && $value['resource'] == 'taxonomy_term') {
             $tax = taxonomy_term_load($value['id']);
@@ -112,11 +247,14 @@ function oe_schemaorg_rest_map_fields($response, $no_output = FALSE) {
           else {
             $newResponse[$term] = $value;
           }
-        } else {
-          $newResponse[$term] = $value;
+          break;
         }
-        break;
       }
+
+      /*if (!sizeof($terms))
+      {
+        $newResponse['unmapped'][$field_name] = $value;
+      }*/
     }
   }
 
@@ -197,12 +335,88 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
   }
 
   /**
-   * Overrides the parent 'propertyInfo' function to return the Schema.org names for properties
+   * Returns the entity type assigned to the controller.
+   *
+   * @return string
    */
-  public function propertyInfo() {
-    $field_info = field_info_instances($this->entityType, $this->entityBundle);
-    $field_info['type'] = $this->entityBundle;
-    return oe_schemaorg_rest_map_fields($field_info, TRUE);
+  public function type() {
+    return $this->entityType;
+  }
+
+  /**
+   * Returns the entity type bundle assigned to the controller.
+   *
+   * @return mixed
+   */
+  public function bundle() {
+    return $this->entityBundle;
+  }
+
+}
+
+/**
+ * A formatter to format json.
+ *
+ * Overrides RestWSFormatJSON.
+ */
+class OESchemaorgRestWSFormatJSON extends RestWSFormatJSON {
+
+  /**
+   * Implements RestWSFormatInterface::queryResource().
+   *
+   * Overrides the parent query resource function to provide field mappings from
+   * Schema.org values back to content type fields.
+   */
+  public function queryResource($resourceController, $payload) {
+
+    // Get the parameter from the URL.
+    $query_parameters = drupal_get_query_parameters();
+
+    // Override logic when the custom OESchemaorgRestController is set
+    if (is_a($resourceController, 'OESchemaorgRestController')) {
+
+      // Get controller info on the node we are dealing with.
+      $type = $resourceController->type();
+      $bundle = $resourceController->bundle();
+
+      // Get field mapping definition for the given type and bundle.
+      $field_map = oe_schemaorg_rest_get_field_mappings($type, $bundle);
+
+      // Map parameters to entity field names.
+      $parameters = oe_schemaorg_rest_map_query_parameters($query_parameters, $field_map);
+
+    }
+    else {
+      $parameters = $query_parameters;
+    }
+
+    $rest_controls = restws_meta_controls();
+    $properties = $resourceController->propertyInfo();
+    $split_parameters = $this->splitParameters($properties, $parameters);
+
+    // We pass the original request parameters so we get mapped request URIs.
+    $values = $this->generateQueryURIs($resourceController, $query_parameters, $split_parameters['filters']);
+
+    $full = (isset($split_parameters['meta_controls'][$rest_controls['full']])) ? $split_parameters['meta_controls'][$rest_controls['full']] : 1;
+
+    $result = $resourceController->query($split_parameters['filters'], $split_parameters['meta_controls']);
+    $values['list'] = array();
+    if ($full === '0') {
+      foreach ($result as $id) {
+        $values['list'][] = $this->getResourceReference($resourceController->resource(), $id);
+      }
+    }
+    else {
+      foreach ($result as $id) {
+        $values['list'][] = $this->getData($resourceController->wrapper($id));
+      }
+    }
+
+    $function = __FUNCTION__;
+    drupal_alter('restws_response', $values, $function, $this->formatName, $resourceController);
+
+    return $this->serialize($values);
+
   }
 
 }
