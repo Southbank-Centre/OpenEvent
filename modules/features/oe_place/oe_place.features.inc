@@ -169,13 +169,11 @@ function oe_place_rdf_default_mappings() {
   $schemaorg['relation']['place_is_contained_in_place'] = array(
     'source_bundles' => array(
       'predicates' => array(
-        0 => 'schema:superEvent',
+        0 => 'schema:containedIn',
       ),
     ),
     'target_bundles' => array(
-      'predicates' => array(
-        0 => 'schema:subEvent',
-      ),
+      'predicates' => array(),
     ),
     'url' => array(
       'predicates' => array(
