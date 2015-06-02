@@ -75,7 +75,7 @@ function oe_rest_api_doc_page($format = '') {
       $page['body']['#markup'] .= '<h3><code>/' . $resource['menu_path'] . '/&lt;ID&gt;.' . $format . '</code></h3>';
       $page['body']['#markup'] .= '</dt>';
       $page['body']['#markup'] .= '<dd>';
-      $page['body']['#markup'] .= '<p>Returns a single ' . $type . ' item based on the <ID> passed in.</p>';
+      $page['body']['#markup'] .= '<p>Returns a single ' . $type . ' item based on the &lt;ID&gt; passed in.</p>';
       // Example
       $page['body']['#markup'] .= '<h4>Example call</h4>';
       $page['body']['#markup'] .= '<p>This call will return the ' . $type . ' item whose ID is 12.</p>';
@@ -95,6 +95,9 @@ function oe_rest_api_doc_page($format = '') {
       $property_rows = array();
       $controller = restws_resource_controller($type);
       foreach ($controller->propertyInfo() as $property => $property_info) {
+        if (substr($property, 0, 7) == 'schema:') {
+          $property = substr($property, 7);
+        }
         $property_rows[] = array(
           $property,
           $property_info['description'],
