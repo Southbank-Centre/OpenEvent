@@ -52,7 +52,6 @@ dependencies[] = relation
 dependencies[] = relation_add
 dependencies[] = relation_endpoint
 dependencies[] = relation_ui
-dependencies[] = rest_api_doc
 dependencies[] = restws
 dependencies[] = schemaorg
 dependencies[] = strongarm
