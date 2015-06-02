@@ -23,13 +23,6 @@ function oe_event_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
- * Implements hook_views_api().
- */
-function oe_event_views_api($module = NULL, $api = NULL) {
-  return array("api" => "3.0");
-}
-
-/**
  * Implements hook_node_info().
  */
 function oe_event_node_info() {
@@ -161,6 +154,26 @@ function oe_event_rdf_default_mappings() {
       'predicates' => array(
         0 => 'schema:typicalAgeRange',
       ),
+    ),
+  );
+
+  // Exported RDF mapping: event_is_contained_in_event
+  $schemaorg['relation']['event_is_contained_in_event'] = array(
+    'source_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:superEvent',
+      ),
+    ),
+    'target_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:subEvent',
+      ),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
     ),
   );
 

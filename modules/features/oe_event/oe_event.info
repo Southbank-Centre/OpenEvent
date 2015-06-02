@@ -54,6 +54,7 @@ features[field_validation_rule][] = age_range
 features[node][] = event
 features[relation_type][] = event_is_contained_in_event
 features[schemaorg][] = node-event
+features[schemaorg][] = relation-event_is_contained_in_event
 features[user_permission][] = create event content
 features[user_permission][] = delete any event content
 features[user_permission][] = delete own event content

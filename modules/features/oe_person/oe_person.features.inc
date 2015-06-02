@@ -170,5 +170,25 @@ function oe_person_rdf_default_mappings() {
     ),
   );
 
+  // Exported RDF mapping: performs_in
+  $schemaorg['relation']['performs_in'] = array(
+    'source_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:performerIn',
+      ),
+    ),
+    'target_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:performers',
+      ),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
+    ),
+  );
+
   return $schemaorg;
 }
