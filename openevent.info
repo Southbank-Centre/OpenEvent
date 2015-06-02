@@ -67,6 +67,7 @@ dependencies[] = oe_event
 dependencies[] = oe_place
 dependencies[] = oe_person
 dependencies[] = oe_schemaorg_rest
+dependencies[] = oe_schemaorg_relation
 
 ; File depedencies.
 files[] = openevent.profile
