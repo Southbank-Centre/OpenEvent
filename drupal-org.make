@@ -30,6 +30,8 @@ projects[field_validation][version] = 2.4
 projects[filefield_sources][version] = 1.9
 projects[geolocation][version] = 1.6
 projects[link][version] = 1.3
+; Fix URL validation
+projects[link][patch][2498983] = "https://www.drupal.org/files/issues/link-urls_not_validate-2498983-1.patch"
 projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
 projects[relation_add][version] = 1.4

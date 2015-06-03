@@ -119,8 +119,7 @@ describe('The Person features of the CMS', function() {
     var wrongUrl = [
       'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
       'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
-      // Check bug #94383178 on Pivotal Tracker
-      // 'http//en.wikipedia.org/wiki/Tyrion_Lannister',
+      'http//en.wikipedia.org/wiki/Tyrion_Lannister',
       'http://en.wikipedia/wiki/Tyrion_Lannister'
     ];
     extraLinkTitle.sendKeys('Wikipedia (wrong)');
