@@ -305,15 +305,15 @@ function oe_place_field_default_field_instances() {
         'module' => 'office_hours',
         'settings' => array(
           'closedformat' => 'Closed',
-          'compress' => FALSE,
+          'compress' => 0,
           'current_status' => array(
             'closed_text' => 'Currently closed',
             'open_text' => 'Currently open!',
             'position' => 'hide',
           ),
-          'date_first_day' => 0,
+          'date_first_day' => 1,
           'daysformat' => 'long',
-          'grouped' => FALSE,
+          'grouped' => 0,
           'hoursformat' => 0,
           'separator_day_hours' => ': ',
           'separator_days' => '<br />',
