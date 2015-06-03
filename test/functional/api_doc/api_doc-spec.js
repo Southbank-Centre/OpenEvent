@@ -8,6 +8,7 @@ describe('OE API documentation', function() {
   var numContentTypes = 0;
   var schemaTypes = [];
   var schemaPropertyMappings = {};
+  var resourcesAnonCanAccess = [];
 
   beforeEach(function() {
     isAngularSite(false);
@@ -141,7 +142,8 @@ describe('OE API documentation', function() {
     viewContentTypeFields();
 
     browser.get(browser.params.url + '/api/doc');
-
+    // test that all the endpoints are displayed
+    expect(element.all(by.css('.api-doc-resource')).count()).toBe(numContentTypes);
     element.all(by.css('.api-doc-resource')).each(function(item, index) {
 
       var resourceName = schemaTypes[index];
@@ -233,6 +235,143 @@ describe('OE API documentation', function() {
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(11) > code')).getText()).toBe('/api/' + resourceName + '.rdf?limit=<N>');
 
     });
+
+  });
+
+  it('allows anonymous users to access to documentation and allows them access to see resources they have access to', function() {
+
+    // logout and visit docs
+    browser.get(browser.params.url + '/user/logout');
+    browser.get(browser.params.url + '/api/doc');
+
+    expect(element(by.css('h1.page-title')).getText()).toBe('API Documentation');
+
+    // log back in
+    dvr.get(browser.params.url + '/user/login');
+    dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
+    dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
+    dvr.findElement(by.id('edit-submit')).click();
+    // Login takes some time, so wait until it's done.
+    dvr.wait(function() {
+      return dvr.getCurrentUrl().then(function(url) {
+        return /user/.test(url);
+      });
+    });
+
+    // if anon user doesn't have access to resources, grant them the permissions
+    // save the default permissions so they can be reset
+    dvr.get(browser.params.url + '/admin/people/permissions');
+    var i = 0;
+    var grantAnonResourcePermissions = function() {
+
+      var resourceName = schemaTypes[i];
+      element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).isSelected().then(function(selected) {
+        if (!selected) {
+          element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
+        } else {
+          resourcesAnonCanAccess.push(resourceName);
+        }
+        i = i + 1;
+        if (i < schemaTypes.length) {
+          grantAnonResourcePermissions();
+        }
+      });
+
+    };
+    grantAnonResourcePermissions();
+
+    // save permissions changes
+    element(by.id('edit-submit')).click();
+
+    // logout and visit docs
+    browser.get(browser.params.url + '/user/logout');
+    browser.get(browser.params.url + '/api/doc');
+
+    // test that all the endpoints are displayed
+    expect(element.all(by.css('.api-doc-resource')).count()).toBe(numContentTypes);
+
+    // log back in
+    dvr.get(browser.params.url + '/user/login');
+    dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
+    dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
+    dvr.findElement(by.id('edit-submit')).click();
+    // Login takes some time, so wait until it's done.
+    dvr.wait(function() {
+      return dvr.getCurrentUrl().then(function(url) {
+        return /user/.test(url);
+      });
+    });
+
+  });
+
+  it('doesn\'t allow anonymous users to access resources they don\'t have access to', function() {
+
+    // if anon user has access to resources, revoke their permissions
+    dvr.get(browser.params.url + '/admin/people/permissions');
+    var j = 0;
+    var revokeAnonResourcePermissions = function() {
+
+      var resourceName = schemaTypes[j];
+      element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).isSelected().then(function(selected) {
+        if (selected) {
+          element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
+        }
+        j = j + 1;
+        if (j < schemaTypes.length) {
+          revokeAnonResourcePermissions();
+        }
+      });
+
+    };
+    revokeAnonResourcePermissions();
+
+    // save permissions changes
+    element(by.id('edit-submit')).click();
+
+    // logout and visit docs
+    browser.get(browser.params.url + '/user/logout');
+    browser.get(browser.params.url + '/api/doc');
+
+    // test that none of the endpoints are displayed
+    expect(element.all(by.css('.api-doc-resource')).count()).toBe(0);
+
+    // log back in
+    dvr.get(browser.params.url + '/user/login');
+    dvr.findElement(by.id('edit-name')).sendKeys(browser.params.user);
+    dvr.findElement(by.id('edit-pass')).sendKeys(browser.params.pass);
+    dvr.findElement(by.id('edit-submit')).click();
+    // Login takes some time, so wait until it's done.
+    dvr.wait(function() {
+      return dvr.getCurrentUrl().then(function(url) {
+        return /user/.test(url);
+      });
+    });
+
+  });
+
+  it('resets anonymous users permissions', function() {
+
+    // reset anon user's resource permissions to how they are by default
+    dvr.get(browser.params.url + '/admin/people/permissions');
+    var k = 0;
+    var resetAnonResourcePermissions = function() {
+
+      var resourceName = schemaTypes[k];
+      // if the resource name is in list of resources that anon user
+      // can access, grant their permission to access that resource
+      if (resourcesAnonCanAccess.indexOf(resourceName) > -1) {
+        element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
+      }
+      k = k + 1;
+      if (k < schemaTypes.length) {
+        resetAnonResourcePermissions();
+      }
+
+    };
+    resetAnonResourcePermissions();
+
+    // save permissions changes
+    element(by.id('edit-submit')).click();
 
   });
 
