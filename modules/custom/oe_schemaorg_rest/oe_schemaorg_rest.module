@@ -310,6 +310,27 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
   }
 
   /**
+   * Overrides parent 'create' method and returns an 'Non implemented' message.
+   */
+  public function create(array $values) {
+    throw new RestWSException('Not implemented', 501);
+  }
+
+  /**
+   * Overrides parent 'update' method and returns an 'Non implemented' message.
+   */
+  public function update($id, array $values) {
+    throw new RestWSException('Not implemented', 501);
+  }
+
+  /**
+   * Overrides parent 'delete' method and returns a 'Non implemented' message.
+   */
+  public function delete($id) {
+    throw new RestWSException('Non implemented', 501);
+  }
+
+  /**
    * Implements RestWSQueryResourceControllerInterface::query().
    *
    * Overrides the parent 'query' function to add the correct bundle as a filter
