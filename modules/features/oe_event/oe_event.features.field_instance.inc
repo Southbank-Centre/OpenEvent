@@ -420,7 +420,7 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'deleted' => 0,
     'description' => '<p>Images that represent the event. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="http://schema.org/image" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>',
+<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -529,7 +529,7 @@ function oe_event_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('<p>Images that represent the event. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="http://schema.org/image" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
+<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
   t('<p>The date and time that the venue can be accessed before the event starts.</p>
 <p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/doorTime" target="_blank">doorTime</a></code> Schema.org property.</p>');
   t('<p>The duration of the event in minutes.</p>
