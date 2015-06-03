@@ -14,15 +14,15 @@ function oe_person_field_default_field_instances() {
   $field_instances['node-event-field_event_performers'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'Performers at the event—for example, a presenter, musician, musical group or actor.<br/>
-Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:performer</code></a> in Schema.org.',
+    'description' => '<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
+<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 14,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -40,7 +40,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
         'node:person' => 'node:person',
       ),
       'relation_type' => array(
-        'performs_in:reverse' => 'performs_in:reverse',
+        'person_performs_in_event:reverse' => 'person_performs_in_event:reverse',
       ),
       'user_register_form' => FALSE,
     ),
@@ -56,7 +56,7 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 34,
+      'weight' => 7,
     ),
   );
 
@@ -65,15 +65,15 @@ Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:perfor
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'A short description of the person.<br/>
-Maps to <a href="http://schema.org/description" target="_blank"><code>Person:description</code></a> in Schema.org.',
+    'description' => '<p>A short description or biography of the person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -91,7 +91,6 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 0,
-          'iframe_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -103,9 +102,6 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -123,7 +119,7 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 8,
     ),
   );
 
@@ -131,8 +127,8 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
   $field_instances['node-person-field_image'] = array(
     'bundle' => 'person',
     'deleted' => 0,
-    'description' => 'Image or photo from the person. Multiple images are allowed.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org.',
+    'description' => '<p>Images that represent the person. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -142,7 +138,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 10,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -194,7 +190,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 9,
     ),
   );
 
@@ -203,15 +199,15 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Awards won by this person or his/her creative work. One award per line.<br/>
-Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</code></a> in Schema.org.',
+    'description' => '<p>Awards won by this person for his/her work. Enter one award per line.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/award" target="_blank">award</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -229,7 +225,6 @@ Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</co
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -241,9 +236,6 @@ Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</co
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -269,15 +261,15 @@ Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</co
   $field_instances['node-person-field_person_events'] = array(
     'bundle' => 'person',
     'deleted' => 0,
-    'description' => 'Events in which this person is a performer.<br/>
-Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:performerIn</code></a> in Schema.org.',
+    'description' => '<p>Events in which this person is a performer.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/performerIn" target="_blank">performerIn</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 11,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -295,7 +287,7 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
         'node:event' => 'node:event',
       ),
       'relation_type' => array(
-        'performs_in' => 'performs_in',
+        'person_performs_in_event' => 'person_performs_in_event',
       ),
       'user_register_form' => FALSE,
     ),
@@ -311,7 +303,7 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 5,
+      'weight' => 12,
     ),
   );
 
@@ -320,15 +312,15 @@ Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:per
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Job titles of the person.<br/>
-Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle" target="_blank"><code>Person:jobTitle</code></a> in Schema.org.',
+    'description' => '<p>Job titles of the person. Multiple values can be entered, and should be separated by commas.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/jobTitle" target="_blank">jobTitle</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 8,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -346,7 +338,6 @@ Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -358,9 +349,6 @@ Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -387,15 +375,15 @@ Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'An alias for the person.<br/>
-Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:alternateName</code></a> in Schema.org.',
+    'description' => '<p>An alias for the person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/alternateName" target="_blank">alternateName</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -413,7 +401,6 @@ Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:a
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -425,9 +412,6 @@ Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:a
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -454,15 +438,15 @@ Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:a
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Surname of a person.<br/>
-Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:familyName</code></a> in Schema.org.',
+    'description' => '<p>Surname of a person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/familyName" target="_blank">familyName</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 10,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -480,7 +464,6 @@ Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:fami
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -492,9 +475,6 @@ Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:fami
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -521,15 +501,15 @@ Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:fami
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'First name of a person.<br/>
-Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:givenName</code></a> in Schema.org.',
+    'description' => '<p>First name of a person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/givenName" target="_blank">givenName</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -547,7 +527,6 @@ Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:given
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -559,9 +538,6 @@ Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:given
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -588,15 +564,15 @@ Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:given
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'A name between the given name and the family name.<br/>
-Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:additionalName</code></a> in Schema.org.',
+    'description' => '<p>A name between the given name and the family name.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/additionalName" target="_blank">additionalName</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -614,7 +590,6 @@ Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -626,9 +601,6 @@ Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -655,15 +627,15 @@ Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Name title preceding the name.<br/>
-Maps to <a href="http://schema.org/honorificPrefix" target="_blank"><code>Person:honorificPrefix</code></a> in Schema.org.',
+    'description' => '<p>Name title preceding the name.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificPrefix" target="_blank">honorificPrefix</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 6,
+        'type' => 'taxonomy_term_reference_plain',
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -693,15 +665,15 @@ Maps to <a href="http://schema.org/honorificPrefix" target="_blank"><code>Person
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'An honorific suffix for a Person\'s name such as M.D./PhD/MSCSW. It follows a person\'s full name and provides additional information about the person. Post-nominal letters indicate that the individual holds a position, educational degree, accreditation, office, or honour.<br/>
-Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person:honorificSuffix</code></a> in Schema.org.',
+    'description' => '<p>An honorific suffix for a Person\'s name such as M.D./PhD/MSCSW. It follows a person\'s full name and provides additional information about the person. Post-nominal letters indicate that the individual holds a position, educational degree, accreditation, office, or honour.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificSuffix" target="_blank">honorificSuffix</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -719,7 +691,6 @@ Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 'iframe_html',
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -731,9 +702,6 @@ Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -760,15 +728,15 @@ Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'URL of a reference Web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.<br/>
-Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</code></a> in Schema.org.',
+    'description' => '<p>URL of a reference web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -813,9 +781,9 @@ Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</
     ),
   );
 
-  // Exported field_instance: 'relation-performs_in-endpoints'
-  $field_instances['relation-performs_in-endpoints'] = array(
-    'bundle' => 'performs_in',
+  // Exported field_instance: 'relation-person_performs_in_event-endpoints'
+  $field_instances['relation-person_performs_in_event-endpoints'] = array(
+    'bundle' => 'person_performs_in_event',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -856,45 +824,45 @@ Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('A name between the given name and the family name.<br/>
-Maps to <a href="http://schema.org/additionalName" target="_blank"><code>Person:additionalName</code></a> in Schema.org.');
-  t('A short description of the person.<br/>
-Maps to <a href="http://schema.org/description" target="_blank"><code>Person:description</code></a> in Schema.org.');
+  t('<p>A name between the given name and the family name.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/additionalName" target="_blank">additionalName</a></code> Schema.org property.</p>');
+  t('<p>A short description or biography of the person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
+  t('<p>An alias for the person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/alternateName" target="_blank">alternateName</a></code> Schema.org property.</p>');
+  t('<p>An honorific suffix for a Person\'s name such as M.D./PhD/MSCSW. It follows a person\'s full name and provides additional information about the person. Post-nominal letters indicate that the individual holds a position, educational degree, accreditation, office, or honour.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificSuffix" target="_blank">honorificSuffix</a></code> Schema.org property.</p>');
+  t('<p>Awards won by this person for his/her work. Enter one award per line.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/award" target="_blank">award</a></code> Schema.org property.</p>');
+  t('<p>Events in which this person is a performer.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/performerIn" target="_blank">performerIn</a></code> Schema.org property.</p>');
+  t('<p>First name of a person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/givenName" target="_blank">givenName</a></code> Schema.org property.</p>');
+  t('<p>Images that represent the person. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.');
+  t('<p>Job titles of the person. Multiple values can be entered, and should be separated by commas.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/jobTitle" target="_blank">jobTitle</a></code> Schema.org property.</p>');
+  t('<p>Name title preceding the name.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificPrefix" target="_blank">honorificPrefix</a></code> Schema.org property.</p>');
+  t('<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
+<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>');
+  t('<p>Surname of a person.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/familyName" target="_blank">familyName</a></code> Schema.org property.</p>');
+  t('<p>URL of a reference web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.</p>
+<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>');
   t('Alias');
-  t('An alias for the person.<br/>
-Maps to <a href="http://schema.org/alternateName" target="_blank"><code>Person:alternateName</code></a> in Schema.org.');
-  t('An honorific suffix for a Person\'s name such as M.D./PhD/MSCSW. It follows a person\'s full name and provides additional information about the person. Post-nominal letters indicate that the individual holds a position, educational degree, accreditation, office, or honour.<br/>
-Maps to <a href="http://schema.org/honorificSuffix" target="_blank"><code>Person:honorificSuffix</code></a> in Schema.org.');
   t('Awards');
-  t('Awards won by this person or his/her creative work. One award per line.<br/>
-Maps to <a href="http://schema.org/award" target="_blank"><code>Person:award</code></a> in Schema.org.');
   t('Description');
   t('Events');
-  t('Events in which this person is a performer.<br/>
-Maps to <a href="http://schema.org/performerIn" target="_blank"><code>Person:performerIn</code></a> in Schema.org.');
   t('Family name');
-  t('First name of a person.<br/>
-Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:givenName</code></a> in Schema.org.');
   t('Given name');
   t('Image');
-  t('Image or photo from the person. Multiple images are allowed.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org.');
   t('Job title');
-  t('Job titles of the person.<br/>
-Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle" target="_blank"><code>Person:jobTitle</code></a> in Schema.org.');
   t('Middle name');
-  t('Name title preceding the name.<br/>
-Maps to <a href="http://schema.org/honorificPrefix" target="_blank"><code>Person:honorificPrefix</code></a> in Schema.org.');
   t('Performers');
-  t('Performers at the event—for example, a presenter, musician, musical group or actor.<br/>
-Maps to <a href="http://schema.org/performer" target="_blank"><code>Event:performer</code></a> in Schema.org.');
   t('Person urls');
   t('Prefix');
   t('Suffix');
-  t('Surname of a person.<br/>
-Maps to <a href="http://schema.org/familyName" target="_blank"><code>Person:familyName</code></a> in Schema.org.');
-  t('URL of a reference Web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.<br/>
-Maps to <a href="http://schema.org/sameAs" target="_blank"><code>Person:sameAs</code></a> in Schema.org.');
   t('endpoints');
 
   return $field_instances;

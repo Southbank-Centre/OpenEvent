@@ -26,7 +26,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-submit')).click();
 
     // check for the error message explaining that required fields haven't been populated
-    expect(element(by.id('console')).getText()).toContain('Name field is required');
+    expect(element(by.id('console')).getText()).toContain('Place name field is required');
 
     // fill out content on 'Main' tab
     element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
@@ -69,6 +69,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-title')).sendKeys('Protractor place');
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     // workaround for current inability to upload images through SauceLabs from Protractor:
@@ -86,6 +87,7 @@ describe('The Place features of the CMS', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Place parents']")).click();
     element(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
     browser.wait(function () {
         return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
@@ -130,30 +132,30 @@ describe('The Place features of the CMS', function() {
 
         // fill out Opening Hours field
         // Monday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-hours > option', '07')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-hours > option', '15')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-starthours-hours > option', '07')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-endhours-hours > option', '15')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-endhours-minutes > option', '00')).click();
         // Tuesday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-hours > option', '08')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-hours > option', '16')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-hours > option', '08')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-hours > option', '16')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-minutes > option', '00')).click();
         // Wednesday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-hours > option', '09')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-hours > option', '17')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-hours > option', '09')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-hours > option', '17')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-minutes > option', '00')).click();
         // Thursday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-hours > option', '10')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-hours > option', '18')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-hours > option', '10')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-hours > option', '18')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-minutes > option', '00')).click();
         // Friday (overnight)
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-hours > option', '11')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-hours > option', '02')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-hours > option', '11')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-hours > option', '02')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-minutes > option', '00')).click();
 
         // fill out content on 'Publishing options' tab
         browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -203,20 +205,22 @@ describe('The Place features of the CMS', function() {
           "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
           "format": "filtered_html"
         },
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
+        "field_image": [
+          {
+            "file": {
+              "uri": function(val) {
+                expect(val).toContain(browser.params.url + "/file/");
+              },
+              "id": function(val) {
+                expect(val).toBeDefined();
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "resource": "file"
             },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        },
+            "alt": "Test image ALT",
+            "title": "Test image TITLE"
+          }
+        ],
         "field_place_address": {
           "country": 'GB',
           "administrative_area": "London (county)",

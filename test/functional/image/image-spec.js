@@ -35,6 +35,7 @@ describe('Image', function() {
     element(by.id('edit-title')).sendKeys('Test event page');
 
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
 
@@ -129,27 +130,29 @@ describe('Image', function() {
       .expectStatus(200)
       .expectHeaderContains('content-type', 'application/json')
       .expectJSON({
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
+        "field_image": [
+          {
+            "file": {
+              "uri": function(val) {
+                expect(val).toContain(browser.params.url + "/file/");
+              },
+              "id": function(val) {
+                expect(val).toBeDefined();
+                expect(isNaN(parseInt(val, 10))).toBe(false);
+              },
+              "resource": "file"
             },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        }
+            "alt": "Test image ALT",
+            "title": "Test image TITLE"
+          }
+        ]
       })
       .afterJSON(function(imageJSON) {
 
         // Use data from previous result in next test
 
         frisby.create('Image JSON')
-          .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
+          .get(browser.params.url + '/file/' + imageJSON.field_image[0].file.id + '.json')
           .expectStatus(200)
           .expectHeaderContains('content-type', 'application/json')
           .expectJSON({

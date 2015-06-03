@@ -197,6 +197,6 @@ Optional section - should we include??
 Current maintainers:
 
 * Jorge Lopez-Lago - [https://www.drupal.org/u/kurkuma](https://www.drupal.org/u/kurkuma)
-* please add...
-
- 
+* Alex Bridge - [https://www.drupal.org/u/alxbridge](https://www.drupal.org/u/alxbridge)
+* Tassos Koutlas - [https://www.drupal.org/u/tassos](https://www.drupal.org/u/tassos)
+* please add more ...

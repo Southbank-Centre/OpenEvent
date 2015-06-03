@@ -107,8 +107,7 @@ function openevent_install() {
     'access resource taxonomy_vocabulary',
     'access relations',
     'view the administration theme',
-    'access toolbar',
-    'view any unpublished content' 
+    'access toolbar' 
   ));
 
   // Create a default role for site administrators, with all available permissions assigned.
@@ -134,4 +133,12 @@ function openevent_install() {
   variable_set('admin_theme', 'seven');
   variable_set('node_admin_theme', '1');
   variable_set('theme_default', 'seven');
+
+  // Disable bartik theme
+  theme_disable(array('bartik'));
+
+  // Date settings
+  variable_set('date_first_day', '1');
+  variable_set('date_api_use_iso8601', 1);
+
 }

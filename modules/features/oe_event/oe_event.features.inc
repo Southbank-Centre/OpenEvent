@@ -23,13 +23,6 @@ function oe_event_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
- * Implements hook_views_api().
- */
-function oe_event_views_api($module = NULL, $api = NULL) {
-  return array("api" => "3.0");
-}
-
-/**
  * Implements hook_node_info().
  */
 function oe_event_node_info() {
@@ -38,9 +31,9 @@ function oe_event_node_info() {
       'name' => t('Event'),
       'base' => 'node_content',
       'description' => t('Open Event content type for an event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects.<br/>
-Designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
+Designed in accordance with the <a href="https://schema.org/Event" target="_blank">Schema.org Event type</a>.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Event title'),
       'help' => '',
     ),
   );

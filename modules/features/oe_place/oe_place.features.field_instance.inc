@@ -10,19 +10,70 @@
 function oe_place_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'node-event-field_event_places'
+  $field_instances['node-event-field_event_places'] = array(
+    'bundle' => 'event',
+    'deleted' => 0,
+    'description' => '<p>The location or locations of the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/location" target="_blank">location</a></code> Schema.org property.</p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'relation_add',
+        'settings' => array(),
+        'type' => 'relation_add_endpoints_and_fields',
+        'weight' => 3,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_event_places',
+    'label' => 'Venues',
+    'required' => 0,
+    'settings' => array(
+      'relation_target_bundles' => array(
+        'node:place' => 'node:place',
+      ),
+      'relation_type' => array(
+        'event_is_located_in_place' => 'event_is_located_in_place',
+      ),
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'relation_add',
+      'settings' => array(
+        'relation_endpoint_bundle_display' => 0,
+        'relation_endpoint_custom_label' => 'Venue',
+        'relation_endpoint_iso_language_codes' => 0,
+        'relation_endpoint_label' => 'custom',
+        'relation_endpoint_label_delta' => 0,
+        'relation_endpoint_search_by_id' => 0,
+      ),
+      'type' => 'relation_add',
+      'weight' => 4,
+    ),
+  );
+
   // Exported field_instance: 'node-place-field_description'
   $field_instances['node-place-field_description'] = array(
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>',
+    'description' => '<p>The full text information about the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -40,7 +91,6 @@ function oe_place_field_default_field_instances() {
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 0,
-          'iframe_html' => 0,
           'plain_text' => 0,
         ),
         'allowed_formats_toggle' => 1,
@@ -52,9 +102,6 @@ function oe_place_field_default_field_instances() {
             ),
             'full_html' => array(
               'weight' => -9,
-            ),
-            'iframe_html' => array(
-              'weight' => -8,
             ),
             'plain_text' => array(
               'weight' => -7,
@@ -80,7 +127,8 @@ function oe_place_field_default_field_instances() {
   $field_instances['node-place-field_image'] = array(
     'bundle' => 'place',
     'deleted' => 0,
-    'description' => 'An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>',
+    'description' => '<p>Images that represent the place. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -90,7 +138,7 @@ function oe_place_field_default_field_instances() {
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -146,68 +194,13 @@ function oe_place_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-place-field_place_opening_hours'
-  $field_instances['node-place-field_place_opening_hours'] = array(
-    'bundle' => 'place',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'office_hours',
-        'settings' => array(
-          'closedformat' => 'Closed',
-          'compress' => FALSE,
-          'current_status' => array(
-            'closed_text' => 'Currently closed',
-            'open_text' => 'Currently open!',
-            'position' => 'hide',
-          ),
-          'date_first_day' => 0,
-          'daysformat' => 'long',
-          'grouped' => FALSE,
-          'hoursformat' => 0,
-          'separator_day_hours' => ': ',
-          'separator_days' => '<br />',
-          'separator_grouped_days' => ' - ',
-          'separator_hours_hours' => '-',
-          'separator_more_hours' => ', ',
-          'showclosed' => 'all',
-          'timezone_field' => '',
-        ),
-        'type' => 'office_hours',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_place_opening_hours',
-    'label' => 'Opening hours',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'office_hours',
-      'settings' => array(),
-      'type' => 'office_hours',
-      'weight' => 4,
-    ),
-  );
-
   // Exported field_instance: 'node-place-field_place_address'
   $field_instances['node-place-field_place_address'] = array(
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>',
+    'description' => '<p>The address of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/address" target="_blank">address</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -262,16 +255,16 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '<p>The location of the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.geo</code></a></p>
-
-<p>If this field is populated, the <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.hasMap</code></a> property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>',
+    'description' => '<p>The location of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/geo" target="_blank">geo</a></code> Schema.org property.</p>
+<p>If this field is populated, the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/hasMap" target="_blank">hasMap</a></code> Schema.org property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'geolocation',
         'settings' => array(),
         'type' => 'geolocation_text',
-        'weight' => 6,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -299,6 +292,63 @@ function oe_place_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-place-field_place_opening_hours'
+  $field_instances['node-place-field_place_opening_hours'] = array(
+    'bundle' => 'place',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>The opening hours of the place. Leave field blank when there are no opening hours for a particular day.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/openingHoursSpecification" target="_blank">openingHoursSpecification</a></code> Schema.org property.</p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'office_hours',
+        'settings' => array(
+          'closedformat' => 'Closed',
+          'compress' => 0,
+          'current_status' => array(
+            'closed_text' => 'Currently closed',
+            'open_text' => 'Currently open!',
+            'position' => 'hide',
+          ),
+          'date_first_day' => 1,
+          'daysformat' => 'long',
+          'grouped' => 0,
+          'hoursformat' => 0,
+          'separator_day_hours' => ': ',
+          'separator_days' => '<br />',
+          'separator_grouped_days' => ' - ',
+          'separator_hours_hours' => '-',
+          'separator_more_hours' => ', ',
+          'showclosed' => 'all',
+          'timezone_field' => '',
+        ),
+        'type' => 'office_hours',
+        'weight' => 4,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_place_opening_hours',
+    'label' => 'Opening hours',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'office_hours',
+      'settings' => array(),
+      'type' => 'office_hours',
+      'weight' => 4,
+    ),
+  );
+
   // Exported field_instance: 'node-place-field_place_parents'
   $field_instances['node-place-field_place_parents'] = array(
     'bundle' => 'place',
@@ -307,14 +357,14 @@ function oe_place_field_default_field_instances() {
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.containedIn</code></a></p>',
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/containedIn" target="_blank">containedIn</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 7,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -325,7 +375,7 @@ function oe_place_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_place_parents',
-    'label' => 'Parents',
+    'label' => 'Place parents',
     'required' => 0,
     'settings' => array(
       'relation_target_bundles' => array(
@@ -354,24 +404,31 @@ function oe_place_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('<p>The location of the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.geo</code></a></p>
-
-<p>If this field is populated, the <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.hasMap</code></a> property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>');
+  t('<p>Images that represent the place. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
+  t('<p>The address of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/address" target="_blank">address</a></code> Schema.org property.</p>');
+  t('<p>The full text information about the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
+  t('<p>The location of the place.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/geo" target="_blank">geo</a></code> Schema.org property.</p>
+<p>If this field is populated, the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/hasMap" target="_blank">hasMap</a></code> Schema.org property is populated with an <a href="http://http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> link to a map centered at the given coordinates.</p>');
+  t('<p>The location or locations of the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/location" target="_blank">location</a></code> Schema.org property.</p>');
+  t('<p>The opening hours of the place. Leave field blank when there are no opening hours for a particular day.</p>
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/openingHoursSpecification" target="_blank">openingHoursSpecification</a></code> Schema.org property.</p>');
   t('<p>This field allows you to determine which places this place is located within.</p>
 <p>Places can be structured hierarchically, with places being \'parents\' of others places that may in turn be \'parents\' of other places, and so on.</p>
 <p>For example, a rooms are situated within a building. Once an Place has been created to represent the building, it is then possible to group the rooms it contains by specifying the building Places in their \'Parents\' field.</p>
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.containedIn</code></a></p>');
+<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/containedIn" target="_blank">containedIn</a></code> Schema.org property.</p>');
   t('Address');
-  t('An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>');
   t('Description');
   t('Geolocation');
   t('Image');
   t('Opening hours');
-  t('Parents');
-  t('The address of the place. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.address</code></a></p>');
-  t('The full text information about the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.description</code></a>');
-  t('The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>');
+  t('Place parents');
+  t('Venues');
 
   return $field_instances;
 }

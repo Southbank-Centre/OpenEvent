@@ -28,12 +28,10 @@ describe('The Person features of the CMS', function() {
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
   var personNameSuffix = element(by.id('edit-field-person-name-suffix-und-0-value'));
   var personAlias = element(by.id('edit-field-person-name-alias-und-0-value'));
-
-  // Tab Biography and images
-  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Biography and images']"));
-
-  // Biography and images fields
   var bioDescription = element(by.id('edit-field-description-und-0-value'));
+
+  // Tab Images
+  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
@@ -121,8 +119,7 @@ describe('The Person features of the CMS', function() {
     var wrongUrl = [
       'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
       'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
-      // Check bug #94383178 on Pivotal Tracker
-      // 'http//en.wikipedia.org/wiki/Tyrion_Lannister',
+      'http//en.wikipedia.org/wiki/Tyrion_Lannister',
       'http://en.wikipedia/wiki/Tyrion_Lannister'
     ];
     extraLinkTitle.sendKeys('Wikipedia (wrong)');
@@ -228,7 +225,7 @@ describe('The Person features of the CMS', function() {
           "field_person_urls": [],
           "nid": nid,
           "vid": nid,
-          "relation_performs_in_node_reverse": [
+          "relation_person_performs_in_event_node_reverse": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,
@@ -240,7 +237,7 @@ describe('The Person features of the CMS', function() {
               "resource": "node"
             }
           ],
-          "relation_performs_in_node": [
+          "relation_person_performs_in_event_node": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,
