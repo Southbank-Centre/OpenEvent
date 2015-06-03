@@ -7,7 +7,7 @@ function oe_schemaorg_rest_get_resource_mappings() {
   $mappings = array();
   $node_types = node_type_get_types();
   foreach ($node_types as $bundle => $info) {
-    $schema_name = schemaorg_ui_term_load('node', $bundle, 'rdftype');
+    $schema_name = oe_schemaorg_rest_get_bundle_mapping($bundle);
     if ($schema_name) {
       $mappings[$bundle] = $schema_name;
     }
@@ -15,6 +15,13 @@ function oe_schemaorg_rest_get_resource_mappings() {
   return $mappings;
 }
 
+/**
+ * Return the Schema.org type for a given node bundle
+ */
+function oe_schemaorg_rest_get_bundle_mapping($bundle) {
+  $schema_name = schemaorg_ui_term_load('node', $bundle, 'rdftype');
+  return $schema_name;
+}
 
 /**
  * Return the Drupal node bundle for a given Schema.org name
@@ -188,7 +195,7 @@ function oe_schemaorg_rest_restws_resource_info() {
  *   The response data being returned by the REST service (not yet serialized).
  * @param string $function
  *   The function being called on the REST service.
- * @param string $format
+ * @param string $formatName
  *   The name of the format serializing the response.
  * @param RestWSResourceControllerInterface $resourceController
  *   The resource controller.
@@ -239,6 +246,7 @@ function oe_schemaorg_rest_map_fields($response) {
   $newResponse = array();
 
   // get the mappings for the entire content type
+  $schema_name = oe_schemaorg_rest_get_bundle_mapping($response['type']);
   $mappings = rdf_mapping_load('node', $response['type']);
 
   foreach($response as $field_name=>$value) {
@@ -256,6 +264,11 @@ function oe_schemaorg_rest_map_fields($response) {
       // if the field has a Schema.org mapping, add it with this to the output
       foreach ($terms as $term) {
         if (strpos(trim($term), 'schema:') === 0) {
+          // alter the URL of the item to use the REST address
+          if ($term == 'schema:url') {
+            $value = restws_resource_uri($schema_name, $response['nid']);
+          }
+
           // call hook to allow other modules to modify the field contents
           drupal_alter('schemaorg_rest_field', $value, $term, $field_info);
 
@@ -272,6 +285,19 @@ function oe_schemaorg_rest_map_fields($response) {
   return $newResponse;
 }
 
+
+
+/**
+ * Implements hook_schemaorg_rest_field_alter
+ *
+ * Map default Drupal fields to Schema.org properties
+ */
+function oe_schemaorg_rest_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+  if ($term == 'schema:description' && $field_info['type'] == 'text_long') {
+    // map Drupal's description representation to Schema.org
+    $value = $value['value'];
+  }
+}
 
 
 /**
