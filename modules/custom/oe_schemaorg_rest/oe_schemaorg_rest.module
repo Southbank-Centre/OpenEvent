@@ -174,7 +174,7 @@ function oe_schemaorg_rest_restws_resource_info() {
     $endpoints[$schema_name] = array(
       'label' => t($schema_name),
       'class' => 'OESchemaorgRestController',
-      'menu_path' => 'api/'.$schema_name,
+      'menu_path' => 'api/'.strtolower($schema_name),
     );
   }
 
@@ -241,7 +241,7 @@ function oe_schemaorg_rest_map_fields($response) {
   foreach($response as $field_name=>$value) {
     // passthru any fields whose name begins with 'schema:'
     if (strpos($field_name, 'schema:') === 0) {
-      $newResponse[$field_name] = $value;
+      $newResponse[mb_substr($field_name,7)] = $value;
     }
     else {
       $field_info = field_info_field($field_name);
@@ -254,7 +254,7 @@ function oe_schemaorg_rest_map_fields($response) {
       foreach ($terms as $term) {
         if (strpos(trim($term), 'schema:') === 0) {
           drupal_alter('schemaorg_rest_field', $value, $term, $field_info);
-          $newResponse[$term] = $value;
+          $newResponse[mb_substr($term,7)] = $value;
           break;
         }
       }
