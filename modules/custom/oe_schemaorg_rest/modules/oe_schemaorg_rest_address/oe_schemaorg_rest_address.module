@@ -3,7 +3,7 @@
   /**
    * Implements hook_schemaorg_rest_field_alter
    *
-   * Map image fields to Schema.org ImageObject
+   * Map address fields to Schema.org PostalAddress
    */
   function oe_schemaorg_rest_address_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
     if ($term == 'schema:address' && $field_info['type'] == 'addressfield') {
