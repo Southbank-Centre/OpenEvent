@@ -216,7 +216,10 @@ function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatN
  *   Format information as defined in hook_restws_format_info()
  */
 function oe_schemaorg_rest_restws_format_info_alter(&$format_info) {
+  unset($format_info['xml']);
+  unset($format_info['rdf']);
   $format_info['json']['class'] = 'OESchemaorgRestWSFormatJSON';
+
 }
 
 /**
