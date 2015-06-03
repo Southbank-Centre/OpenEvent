@@ -137,6 +137,4 @@ function openevent_install() {
   // Disable bartik theme
   theme_disable(array('bartik'));
 
-  // Disable unrequired core modules
-  module_disable(array('syslog'),FALSE);
 }
