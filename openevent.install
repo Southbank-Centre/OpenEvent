@@ -137,4 +137,8 @@ function openevent_install() {
   // Disable bartik theme
   theme_disable(array('bartik'));
 
+  // Date settings
+  variable_set('date_first_day', '1');
+  variable_set('date_api_use_iso8601', 1);
+
 }
