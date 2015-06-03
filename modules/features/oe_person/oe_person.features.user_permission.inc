@@ -10,6 +10,16 @@
 function oe_person_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access resource Person'.
+  $permissions['access resource Person'] = array(
+    'name' => 'access resource Person',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+    ),
+    'module' => 'restws',
+  );
+
   // Exported permission: 'create person content'.
   $permissions['create person content'] = array(
     'name' => 'create person content',
