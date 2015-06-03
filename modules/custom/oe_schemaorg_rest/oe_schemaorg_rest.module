@@ -253,13 +253,18 @@ function oe_schemaorg_rest_map_fields($response) {
       // if the field has a Schema.org mapping, add it with this to the output
       foreach ($terms as $term) {
         if (strpos(trim($term), 'schema:') === 0) {
+          // call hook to allow other modules to modify the field contents
           drupal_alter('schemaorg_rest_field', $value, $term, $field_info);
+
           $newResponse[mb_substr($term,7)] = $value;
           break;
         }
       }
     }
   }
+
+  // call hook to allow other modules to modify the response
+  drupal_alter('schemaorg_rest_response', $newResponse, $response['type']);
 
   return $newResponse;
 }
