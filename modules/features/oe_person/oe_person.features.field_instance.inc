@@ -132,7 +132,12 @@ Maps to <a href="http://schema.org/description" target="_blank"><code>Person:des
     'bundle' => 'person',
     'deleted' => 0,
     'description' => 'Image or photo from the person. Multiple images are allowed.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org.',
+Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -878,7 +883,12 @@ Maps to <a href="http://schema.org/givenName" target="_blank"><code>Person:given
   t('Given name');
   t('Image');
   t('Image or photo from the person. Multiple images are allowed.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org.');
+Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>');
   t('Job title');
   t('Job titles of the person.<br/>
 Multiple values separated by commas. Maps to <a href="http://schema.org/jobTitle" target="_blank"><code>Person:jobTitle</code></a> in Schema.org.');

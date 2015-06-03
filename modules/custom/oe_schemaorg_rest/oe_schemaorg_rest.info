@@ -1,5 +1,5 @@
-name = OpenEvent Schema.org REST
-description = Provides Schema.org mappings to Restful Web Services APIS.
+name = OE Schema.org REST
+description = Provides Schema.org mappings to Restful Web Services APIs.
 core = 7.x
 package = Open Events
 version = 7.x-1.0

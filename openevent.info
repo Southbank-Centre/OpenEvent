@@ -70,6 +70,14 @@ dependencies[] = oe_person
 ; Custom
 dependencies[] = oe_rest_api_doc
 dependencies[] = oe_schemaorg_rest
+dependencies[] = oe_schemaorg_rest_address
+dependencies[] = oe_schemaorg_rest_date
+dependencies[] = oe_schemaorg_rest_duration
+dependencies[] = oe_schemaorg_rest_geo
+dependencies[] = oe_schemaorg_rest_image
+dependencies[] = oe_schemaorg_rest_link
+dependencies[] = oe_schemaorg_rest_office_hours
+dependencies[] = oe_schemaorg_rest_taxonomy
 dependencies[] = oe_schemaorg_relation
 
 ; File depedencies.

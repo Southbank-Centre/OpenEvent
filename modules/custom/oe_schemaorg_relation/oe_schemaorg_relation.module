@@ -56,7 +56,7 @@ function oe_schemaorg_relation_add_mapped_relations($resource) {
         foreach($results as $result) {
           $uri = oe_schemaorg_relation_get_resource_uri($result->rid, !$reference_index);
           if ($uri) {
-            $mapped_results[] = array('uri'=>$uri);
+            $mapped_results[] = $uri;
           }
         }
         $resource[$mapping] = $mapped_results;

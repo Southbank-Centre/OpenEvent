@@ -1,0 +1,14 @@
+<?php
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map numeric duration fields to ISO8601 duration format
+   */
+  function oe_schemaorg_rest_duration_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($term == 'schema:duration' && is_numeric($value)) {
+      $date = new DateTime("today");
+      $laterDate = (new DateTime("today"))->add(new DateInterval('PT'.$value.'M'));
+      $value = $date->diff($laterDate)->format('P%yY%mM%dDT%hH%iM%sS');
+    }
+  }

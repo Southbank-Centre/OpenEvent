@@ -80,7 +80,12 @@ function oe_place_field_default_field_instances() {
   $field_instances['node-place-field_image'] = array(
     'bundle' => 'place',
     'deleted' => 0,
-    'description' => 'An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>',
+    'description' => 'An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a> as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -143,62 +148,6 @@ function oe_place_field_default_field_instances() {
       ),
       'type' => 'image_image',
       'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-place-field_place_opening_hours'
-  $field_instances['node-place-field_place_opening_hours'] = array(
-    'bundle' => 'place',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'office_hours',
-        'settings' => array(
-          'closedformat' => 'Closed',
-          'compress' => FALSE,
-          'current_status' => array(
-            'closed_text' => 'Currently closed',
-            'open_text' => 'Currently open!',
-            'position' => 'hide',
-          ),
-          'date_first_day' => 0,
-          'daysformat' => 'long',
-          'grouped' => FALSE,
-          'hoursformat' => 0,
-          'separator_day_hours' => ': ',
-          'separator_days' => '<br />',
-          'separator_grouped_days' => ' - ',
-          'separator_hours_hours' => '-',
-          'separator_more_hours' => ', ',
-          'showclosed' => 'all',
-          'timezone_field' => '',
-        ),
-        'type' => 'office_hours',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_place_opening_hours',
-    'label' => 'Opening hours',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'office_hours',
-      'settings' => array(),
-      'type' => 'office_hours',
-      'weight' => 4,
     ),
   );
 
@@ -299,6 +248,62 @@ function oe_place_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-place-field_place_opening_hours'
+  $field_instances['node-place-field_place_opening_hours'] = array(
+    'bundle' => 'place',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'office_hours',
+        'settings' => array(
+          'closedformat' => 'Closed',
+          'compress' => FALSE,
+          'current_status' => array(
+            'closed_text' => 'Currently closed',
+            'open_text' => 'Currently open!',
+            'position' => 'hide',
+          ),
+          'date_first_day' => 0,
+          'daysformat' => 'long',
+          'grouped' => FALSE,
+          'hoursformat' => 0,
+          'separator_day_hours' => ': ',
+          'separator_days' => '<br />',
+          'separator_grouped_days' => ' - ',
+          'separator_hours_hours' => '-',
+          'separator_more_hours' => ', ',
+          'showclosed' => 'all',
+          'timezone_field' => '',
+        ),
+        'type' => 'office_hours',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_place_opening_hours',
+    'label' => 'Opening hours',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'office_hours',
+      'settings' => array(),
+      'type' => 'office_hours',
+      'weight' => 4,
+    ),
+  );
+
   // Exported field_instance: 'node-place-field_place_parents'
   $field_instances['node-place-field_place_parents'] = array(
     'bundle' => 'place',
@@ -363,7 +368,12 @@ function oe_place_field_default_field_instances() {
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
 <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.containedIn</code></a></p>');
   t('Address');
-  t('An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a>');
+  t('An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a> as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>');
   t('Description');
   t('Geolocation');
   t('Image');

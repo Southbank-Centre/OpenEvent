@@ -1,0 +1,30 @@
+<?php
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map image fields to Schema.org ImageObject
+   */
+  function oe_schemaorg_rest_image_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($term == 'schema:image' && $field_info['type'] == 'image') {
+      // mappings from Drupal's image representation to Schema.org representation
+      $imageMappings = array('alt'=>'alternateName', 'title'=>'caption', 'file'=>'contentUrl');
+
+      $newImage = array();
+      foreach ($value as $key => $fieldValue) {
+        // get the URL to the file from its ID
+        if ($key == 'file') {
+          $file = file_load($fieldValue['id']);
+          $uri = $file->uri;
+          $url = file_create_url($uri);
+          $newImage[$imageMappings[$key]] = $url;
+        }
+        // other (text) fields can be mapped as-is
+        else {
+          $newImage[$imageMappings[$key]] = $fieldValue;
+        }
+      }
+
+      $value = $newImage;
+    }
+  }
