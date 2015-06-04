@@ -192,147 +192,79 @@ describe('The Place features of the CMS', function() {
 
   });
 
-  it('outputs Event node JSON in the expected format', function () {
-
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON({
-        "field_description": {
-          "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
-          "format": "filtered_html"
-        },
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
-            },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        },
-        "field_place_address": {
-          "country": 'GB',
-          "administrative_area": "London (county)",
-          "locality": "London",
-          "postal_code": "SE1 8XX",
-          "thoroughfare": "Southbank Centre",
-          "premise": "Belvedere Road",
-        },
-        "field_place_opening_hours": [
-          {
-            "day": "1",
-            "starthours": "700",
-            "endhours": "1500"
-          },
-          {
-            "day": "2",
-            "starthours": "800",
-            "endhours": "1600"
-          },
-          {
-            "day": "3",
-            "starthours": "900",
-            "endhours": "1700"
-          },
-          {
-            "day": "4",
-            "starthours": "1000",
-            "endhours": "1800"
-          },
-          {
-            "day": "5",
-            "starthours": "1100",
-            "endhours": "200"
-          },
-        ],
-        "field_place_geolocation": {
-          "lat": function(val) {
-            expect(isNaN(parseFloat(val))).toBe(false); 
-          },
-          "lng": function(val) {
-            expect(isNaN(parseFloat(val))).toBe(false); 
-          }
-        },
-        "nid": nid,
-        "vid": nid,
-        "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
-        "type": "place",
-        "title": "Protractor place",
-        "language": "und",
-        "url": browser.params.url + '/' + pathAlias,
-        "edit_url": browser.params.url + "/node/" + nid + "/edit",
-        "status": "1",
-        "promote": "0",
-        "sticky": "0",
-        "created": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false); 
-        },
-        "changed": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "body": {
-          "value": "",
-          "summary": "",
-          "format": null
-        }
-      })
-      .after(function() {
-
-        // Get the list of all relations of this type, because we don't yet have
-        // a way to filter by an item in the endpoints array
-        frisby.create('Get JSON for "place is contained in place" relation')
-          .get(browser.params.url + '/relation.json?relation_type=place_is_contained_in_place')
-          .expectStatus(200)
-          .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('list.0', {
-            "endpoints": [
-              {
-                "uri": browser.params.url + "/node/" + nid,
-                "id": nid,
-                "resource": "node"
-              },
-              {
-                "uri": browser.params.url + "/node/" + parentNid,
-                "id": parentNid,
-                "resource": "node"
-              }
-            ]
-          })
-          .after(CleanUp)
-          .toss();
-
-      })
-      .toss();
-
-    function CleanUp() {
-
-      describe('Clean up', function() {
-
-        it('will take place after all tests have passed', function() {
-
-          // CLEAN UP
-          // remove content
-          browser.get(browser.params.url + '/admin/content');
-          element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-          element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-          element(by.id('edit-submit--2')).click();
-          element(by.id('edit-submit')).click();
-          expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-        });
-
-      });
-      
+  it('outputs Place node JSON in Schema.org format', function () {
+    // set correct filename for checking image upload
+    var imageName = 'test-img.jpg';
+    if (browser.params.isSauceLabs) {
+      imageName = 'shot_0.png';
     }
+
+    // get Place JSON from API and parse it
+    browser.get(browser.params.url + '/api/place/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+
+      // string fields as input
+      expect(json.name).toBe("Protractor place");
+      expect(json.description).toBe("<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n");
+
+      // image uploaded & fields filled out as expected
+      expect(json.image.contentUrl).toContain(browser.params.url);
+      expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
+      expect(json.image.alternateName).toBe("Test image ALT");
+      expect(json.image.caption).toBe("Test image TITLE");
+
+      // address fields as input
+      expect(json.address.addressCountry).toBe("GB");
+      expect(json.address.addressRegion).toBe("London (county)");
+      expect(json.address.addressLocality).toBe("London");
+      expect(json.address.postalCode).toBe("SE1 8XX");
+      expect(json.address.streetAddress).toBe("Southbank Centre, Belvedere Road");
+
+      // geolocation & map link as expected for the address input
+      expect(json.geo.latitude).toBe("51.5066566");
+      expect(json.geo.longitude).toBe("-0.11511270000005425");
+      expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.5066566&mlon=-0.11511270000005425#map=15/51.5066566/-0.11511270000005425");
+
+      // opening hours as input
+      expect(json.openingHoursSpecification[0].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Monday");
+      expect(json.openingHoursSpecification[0].opens).toBe("07:00:00");
+      expect(json.openingHoursSpecification[0].closes).toBe("15:00:00");
+      expect(json.openingHoursSpecification[1].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Tuesday");
+      expect(json.openingHoursSpecification[1].opens).toBe("08:00:00");
+      expect(json.openingHoursSpecification[1].closes).toBe("16:00:00");
+      expect(json.openingHoursSpecification[2].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Wednesday");
+      expect(json.openingHoursSpecification[2].opens).toBe("09:00:00");
+      expect(json.openingHoursSpecification[2].closes).toBe("17:00:00");
+      expect(json.openingHoursSpecification[3].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Thursday");
+      expect(json.openingHoursSpecification[3].opens).toBe("10:00:00");
+      expect(json.openingHoursSpecification[3].closes).toBe("18:00:00");
+      expect(json.openingHoursSpecification[4].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Friday");
+      expect(json.openingHoursSpecification[4].opens).toBe("11:00:00");
+      expect(json.openingHoursSpecification[4].closes).toBe("02:00:00");
+
+      // URL of this item should be predictable based on NID
+      expect(json.url).toBe(browser.params.url + '/api/place/' + nid);
+
+      // Relation to parent place item set up correctly
+      expect(json.containedIn.length).toEqual(1);
+      expect(json.containedIn[0]).toEqual(browser.params.url + "/api/place/" + parentNid);
+
+      // No related event specified
+      expect(json.event.length).toEqual(0);
+    });
+  });
+
+  it('will take place after all tests have passed', function() {
+
+    // CLEAN UP
+    // remove content
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
   });
 
