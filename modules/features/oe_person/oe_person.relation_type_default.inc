@@ -22,8 +22,8 @@ function oe_person_relation_default_relation_types() {
   $relation_type->min_arity = 2;
   $relation_type->max_arity = 2;
   $relation_type->source_bundles = array(
-    0 => 'node:person',
-    1 => 'node:organization',
+    0 => 'node:organization',
+    1 => 'node:person',
   );
   $relation_type->target_bundles = array(
     0 => 'node:event',

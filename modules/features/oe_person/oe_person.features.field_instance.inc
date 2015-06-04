@@ -38,6 +38,7 @@ function oe_person_field_default_field_instances() {
     'settings' => array(
       'relation_target_bundles' => array(
         'node:person' => 'node:person',
+        'node:organization' => 'node:organization',
       ),
       'relation_type' => array(
         'performer_performs_in_event:reverse' => 'performer_performs_in_event:reverse',
