@@ -1,5 +1,5 @@
 name = OE Person
-description = Provides configuration allowing representation of the persons.
+description = Provides configuration allowing representation of persons.
 core = 7.x
 package = Open Events
 version = 7.x-1.7
