@@ -57,8 +57,11 @@ dependencies[] = token
 ; Open Event dependencies
 dependencies[] = oe_components
 dependencies[] = oe_event
+dependencies[] = oe_organization
 dependencies[] = oe_place
 dependencies[] = oe_person
+dependencies[] = oe_relationship_location
+dependencies[] = oe_relationship_performer
 
 ; File depedencies.
 files[] = openevent.profile

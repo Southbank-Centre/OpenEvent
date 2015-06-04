@@ -1,0 +1,7 @@
+name = OE Relationship: Performer
+description = Provides configuration allowing types to be related to Events as performers.
+core = 7.x
+package = Open Event: Relationships
+version = 7.x-1.0
+project = oe_relationship_performer
+features[features_api][] = api:2

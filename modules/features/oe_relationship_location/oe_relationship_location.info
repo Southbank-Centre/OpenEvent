@@ -1,0 +1,7 @@
+name = OE Relationship: Location
+description = Provides configuration allowing Places to be defined as locations for other types.
+core = 7.x
+package = Open Event Relationships
+version = 7.x-1.0
+project = oe_relationship_location
+features[features_api][] = api:2
