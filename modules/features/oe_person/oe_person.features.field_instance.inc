@@ -14,7 +14,7 @@ function oe_person_field_default_field_instances() {
   $field_instances['node-event-field_event_performers'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => '<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
+    'description' => '<p>Performers at the event—for example, a presenter, musician, musical group, actor or organization.</p>
 <p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
@@ -40,7 +40,7 @@ function oe_person_field_default_field_instances() {
         'node:person' => 'node:person',
       ),
       'relation_type' => array(
-        'person_performs_in_event:reverse' => 'person_performs_in_event:reverse',
+        'performer_performs_in_event:reverse' => 'performer_performs_in_event:reverse',
       ),
       'user_register_form' => FALSE,
     ),
@@ -287,7 +287,7 @@ function oe_person_field_default_field_instances() {
         'node:event' => 'node:event',
       ),
       'relation_type' => array(
-        'person_performs_in_event' => 'person_performs_in_event',
+        'performer_performs_in_event' => 'performer_performs_in_event',
       ),
       'user_register_form' => FALSE,
     ),
@@ -781,9 +781,9 @@ function oe_person_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'relation-person_performs_in_event-endpoints'
-  $field_instances['relation-person_performs_in_event-endpoints'] = array(
-    'bundle' => 'person_performs_in_event',
+  // Exported field_instance: 'relation-performer_performs_in_event-endpoints'
+  $field_instances['relation-performer_performs_in_event-endpoints'] = array(
+    'bundle' => 'performer_performs_in_event',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -844,7 +844,7 @@ function oe_person_field_default_field_instances() {
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/jobTitle" target="_blank">jobTitle</a></code> Schema.org property.</p>');
   t('<p>Name title preceding the name.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificPrefix" target="_blank">honorificPrefix</a></code> Schema.org property.</p>');
-  t('<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
+  t('<p>Performers at the event—for example, a presenter, musician, musical group, actor or organization.</p>
 <p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>');
   t('<p>Surname of a person.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/familyName" target="_blank">familyName</a></code> Schema.org property.</p>');
