@@ -218,7 +218,7 @@ describe('The Person features of the CMS', function() {
 
        // string fields as input
        expect(json.name).toBe("Daenerys Targaryen");
-       expect(json.description).toEqual(null);
+       expect(json.description.length).toEqual(0);
        expect(json.jobTitle).toEqual(null);
        expect(json.familyName).toBe("Targaryen");
        expect(json.givenName).toBe("Daenerys");
