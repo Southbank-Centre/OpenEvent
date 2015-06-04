@@ -24,7 +24,8 @@ exports.config = {
     image: ['image/*.js'],
     place: ['place/*.js'],
     person: ['person/*.js'],
-    permissions: ['permissions/*.js']
+    permissions: ['permissions/*.js'],
+    organization: ['organization/*.js']
   },
 
   // Single Browser
