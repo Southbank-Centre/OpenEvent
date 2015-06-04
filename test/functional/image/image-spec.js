@@ -116,73 +116,37 @@ describe('Image', function() {
 
   });
 
-
-  it('outputs the Image data with the Event node JSON in the expected format', function () {
-
+  it('outputs the Image data with the Event node JSON in Schema.org format', function () {
+    // set correct filename for checking image upload
     var imageName = 'test-img.jpg';
     if (browser.params.isSauceLabs) {
       imageName = 'shot_0.png';
     }
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON({
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
-            },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        }
-      })
-      .afterJSON(function(imageJSON) {
+    // get Event JSON from API and parse it for the image field
+    browser.get(browser.params.url + '/api/event/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-        // Use data from previous result in next test
-
-        frisby.create('Image JSON')
-          .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
-          .expectStatus(200)
-          .expectHeaderContains('content-type', 'application/json')
-          .expectJSON({
-            "name": imageName
-          })
-          .after(CleanUp)
-          .toss();
-
-      })
-      .toss();
-
-      function CleanUp() {
-
-        describe('Clean up', function() {
-
-          it('will take place after all tests have passed', function() {
-
-            // CLEAN UP
-            // remove content
-            browser.get(browser.params.url + '/admin/content');
-            element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-            element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-            element(by.id('edit-submit--2')).click();
-            element(by.id('edit-submit')).click();
-            expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-          });
-
-        });
-
-      }
-
+       // image uploaded & fields filled out as expected
+       expect(json.image.contentUrl).toContain(browser.params.url);
+       expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
+       expect(json.image.alternateName).toBe("Test image ALT");
+       expect(json.image.caption).toBe("Test image TITLE");
+    });
   });
 
+  it('will take place after all tests have passed', function() {
+
+    // CLEAN UP
+    // remove content
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+  });
 
 });
