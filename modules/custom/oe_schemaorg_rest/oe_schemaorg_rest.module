@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * Implements hook_node_type_insert().
+ */
+function oe_schemaorg_rest_node_type_insert($info) {
+  $permissions = module_invoke('restws', 'permission');
+  drupal_static_reset('restws_get_resource_info');
+}
+
+/**
  * Return all mappings from Drupal node bundles to Schema.org types
  */
 function oe_schemaorg_rest_get_resource_mappings() {
