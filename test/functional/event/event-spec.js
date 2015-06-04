@@ -259,130 +259,56 @@ describe('The Event features of the CMS', function() {
 
   });
 
-  it('outputs Event node JSON in the expected format', function () {
+  it('outputs Event node JSON in Schema.org format', function () {
+    // get Event JSON from API and parse it
+    browser.get(browser.params.url + '/api/event/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON({
-        "field_description": {
-          "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
-          "format": "filtered_html"
-        },
-        "field_event_age_range": "4+",
-        "field_image": [],
-        "field_event_date_start": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_date_end": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_door_time": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_duration": "150",
-        "nid": nid,
-        "vid": nid,
-        "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
-        "type": "event",
-        "title": "Protractor event page",
-        "language": "und",
-        "url": browser.params.url + '/' + pathAlias,
-        "edit_url": browser.params.url + "/node/" + nid + "/edit",
-        "status": "1",
-        "promote": "0",
-        "sticky": "0",
-        "created": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "changed": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "body": {
-          "value": "",
-          "summary": "",
-          "format": null
-        }
-      })
-      .after(function() {
+       // string fields as input
+       expect(json.name).toBe("Protractor event page");
+       expect(json.description).toBe("<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n");
+       expect(json.typicalAgeRange).toBe("4+");
 
-        // Get the list of all relations of this type, because we don't yet have
-        // a way to filter by an item in the endpoints array
-        frisby.create('Get JSON for "event is located in place" relation')
-          .get(browser.params.url + '/relation.json?relation_type=event_is_located_in_place')
-          .expectStatus(200)
-          .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('list.0', {
-            "endpoints": [
-              {
-                "uri": browser.params.url + "/node/" + nid,
-                "id": nid,
-                "resource": "node"
-              },
-              {
-                "uri": browser.params.url + "/node/" + placeNid,
-                "id": placeNid,
-                "resource": "node"
-              }
-            ]
-          })
-          .after(function () {
+       // empty image
+       expect(json.image.length).toEqual(0);
 
-            // Get the list of all relations of this type, because we don't yet have
-            // a way to filter by an item in the endpoints array
-            frisby.create('Get JSON for "event is contained in event" relation')
-              .get(browser.params.url + '/relation.json?relation_type=event_is_contained_in_event')
-              .expectStatus(200)
-              .expectHeaderContains('content-type', 'application/json')
-              .expectJSON('list.0', {
-                "endpoints": [
-                  {
-                    "uri": browser.params.url + "/node/" + nid,
-                    "id": nid,
-                    "resource": "node"
-                  },
-                  {
-                    "uri": browser.params.url + "/node/" + parentNid,
-                    "id": parentNid,
-                    "resource": "node"
-                  }
-                ]
-              })
-              .after(CleanUp)
-              .toss();
+       // duration transformed into ISO8601 duration format
+       expect(json.duration).toBe("P0Y0M0DT2H30M0S");
 
-          })
-          .toss();
+       // check date fields are all parseable as ISO8601 Dates
+       var startParsed = Date.parse(json.startDate);
+       expect(isNaN(parseInt(startParsed, 10))).toBe(false);
 
-      })
-      .toss();
+       var endParsed = Date.parse(json.endDate);
+       expect(isNaN(parseInt(endParsed, 10))).toBe(false);
 
-    function CleanUp() {
+       var doorParsed = Date.parse(json.doorTime);
+       expect(isNaN(parseInt(doorParsed, 10))).toBe(false);
 
-      describe('Clean up', function() {
+       // URL of this item should be predictable based on NID
+       expect(json.url).toBe(browser.params.url + '/api/event/' + nid);
 
-        it('will take place after all tests have passed', function() {
+       // Relations to other items set up correctly
+       expect(json.superEvent.length).toEqual(1);
+       expect(json.superEvent[0]).toEqual(browser.params.url + "/api/event/" + parentNid);
+       expect(json.location.length).toEqual(1);
+       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid)
+       expect(json.subEvent.length).toEqual(0);
+       expect(json.performers.length).toEqual(0);
+    });
+  });
 
-          // CLEAN UP
-          // remove content
-          browser.get(browser.params.url + '/admin/content');
-          element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-          element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-          element(by.id('edit-submit--2')).click();
-          element(by.id('edit-submit')).click();
-          expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+  it('will take place after all tests have passed', function() {
 
-        });
-
-      });
-
-    }
+    // CLEAN UP
+    // remove content
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
   });
 
