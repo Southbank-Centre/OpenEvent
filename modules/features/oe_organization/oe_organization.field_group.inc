@@ -47,7 +47,7 @@ function oe_organization_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Events',
-    'weight' => '4',
+    'weight' => '3',
     'children' => array(
       0 => 'field_organization_events',
     ),
@@ -130,6 +130,11 @@ function oe_organization_field_group_info() {
     'weight' => '0',
     'children' => array(
       0 => 'field_description',
+      1 => 'field_organization_email',
+      2 => 'field_organization_legal_name',
+      3 => 'field_organization_address',
+      4 => 'field_organization_logo',
+      5 => 'field_organization_same_as',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -156,7 +161,12 @@ function oe_organization_field_group_info() {
     'weight' => '0',
     'children' => array(
       0 => 'field_description',
-      1 => 'title',
+      1 => 'field_organization_email',
+      2 => 'field_organization_legal_name',
+      3 => 'field_organization_address',
+      4 => 'field_organization_logo',
+      5 => 'field_organization_same_as',
+      6 => 'title',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

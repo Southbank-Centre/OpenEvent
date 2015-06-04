@@ -38,7 +38,7 @@ function oe_organization_strongarm() {
           'weight' => '1',
         ),
         'path' => array(
-          'weight' => '5',
+          'weight' => '4',
         ),
       ),
       'display' => array(),
