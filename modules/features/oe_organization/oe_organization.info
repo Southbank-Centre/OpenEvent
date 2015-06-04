@@ -1,7 +1,7 @@
 name = OE Organization
 description = Provides configuration allowing representation of organizations.
 core = 7.x
-package = Open Events
+package = Open Event Types
 version = 7.x-1.0
 project = oe_organization
 dependencies[] = addressfield

@@ -1,8 +1,8 @@
 name = OE Person
 description = Provides configuration allowing representation of persons.
 core = 7.x
-package = Open Events
-version = 7.x-1.7
+package = Open Event Types
+version = 7.x-1.8
 project = oe_person
 dependencies[] = auto_entitylabel
 dependencies[] = ctools
