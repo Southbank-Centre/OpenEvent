@@ -210,68 +210,47 @@ describe('The Person features of the CMS', function() {
 
   });
 
-  it('outputs JSON to the specified format', function() {
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-        .expectStatus(200)
-        .expectHeaderContains('content-type', 'application/json')
-        .expectJSON({
-          "field_description": [],
-          "field_image": [],
-          "field_person_awards": [],
-          "field_person_job": function(val) { expect(val).toBe(null); },
-          "field_person_name_alias": function(val) { expect(val).toBe(null); },
-          "field_person_name_family": "Targaryen",
-          "field_person_name_given": "Daenerys",
-          "field_person_name_middle": function(val) { expect(val).toBe(null); },
-          "field_person_name_suffix": function(val) { expect(val).toBe(null); },
-          "field_person_urls": [],
-          "nid": nid,
-          "vid": nid,
-          "relation_performs_in_node_reverse": [
-            {
-              "uri": browser.params.url + "/node/" + nid,
-              "id": nid,
-              "resource": "node"
-            },
-            {
-              "uri": browser.params.url + "/node/" + eid,
-              "id": eid,
-              "resource": "node"
-            }
-          ],
-          "relation_performs_in_node": [
-            {
-              "uri": browser.params.url + "/node/" + nid,
-              "id": nid,
-              "resource": "node"
-            },
-            {
-              "uri": browser.params.url + "/node/" + eid,
-              "id": eid,
-              "resource": "node"
-            }
-          ]
-        })
-      .after(cleanUp)
-      .toss();
+  it('outputs Person node JSON in Schema.org format', function () {
+    // get Person JSON from API and parse it
+    browser.get(browser.params.url + '/api/person/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-    // We run cleanUp after the last frisby test because they are asynchronous
-    // and could run after the cleanUp otherwise (this is something to improve on)
-    function cleanUp () {
-      // These tests are destructive and can only be performed on clean/empty sites [!]
-      // This cleanup function assumes that all content available is created by this test suite
+       // string fields as input
+       expect(json.name).toBe("Daenerys Targaryen");
+       expect(json.description).toEqual(null);
+       expect(json.jobTitle).toEqual(null);
+       expect(json.familyName).toBe("Targaryen");
+       expect(json.givenName).toBe("Daenerys");
+       expect(json.alternateName).toEqual(null);
+       expect(json.additionalName).toEqual(null);
+       expect(json.honorificSuffix).toEqual(null);
+       expect(json.sameAs).toEqual(null);
 
-      // CleanUp content
-      // It deletes ALL content in the site
-      browser.get(browser.params.url + '/admin/content');
-      element(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
-      element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-      element(by.id('edit-submit--2')).click();
-      element(by.id('edit-submit')).click();
-      //expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+       // empty image & award fields
+       expect(json.image.length).toEqual(0);
+       expect(json.award.length).toEqual(0);
 
-    }
+       // URL of this item should be predictable based on NID
+       expect(json.url).toBe(browser.params.url + '/api/person/' + nid);
+
+       // Relation to event item set up correctly
+       expect(json.performerIn.length).toEqual(1);
+       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid);
+    });
+  });
+
+  it('will take place after all tests have passed', function() {
+    // These tests are destructive and can only be performed on clean/empty sites [!]
+    // This cleanup function assumes that all content available is created by this test suite
+
+    // CleanUp content
+    // It deletes ALL content in the site
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
   });
 
 });
