@@ -5,6 +5,7 @@
 
 var url = require('url');
 var path = require('path');
+var eid = [];
 
 describe('The Place features of the CMS', function() {
 
@@ -62,11 +63,13 @@ describe('The Place features of the CMS', function() {
   });
 
   it('can create a full place page', function(){
+    var venueName = 'Protractor place';
+
     browser.get(browser.params.url + '/node/add/place');
 
     // fill out content on 'Main' tab
     element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
-    element(by.id('edit-title')).sendKeys('Protractor place');
+    element(by.id('edit-title')).sendKeys(venueName);
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
     var fileToUpload = 'test-img.jpg';
@@ -180,6 +183,10 @@ describe('The Place features of the CMS', function() {
               var currentUrlObj = url.parse(currentUrl);
               var currentUrlPath = currentUrlObj.pathname.split(path.sep);
               nid = currentUrlPath[currentUrlPath.length-2];
+
+              // create event so that we can test relating a place to it
+              var eventName = 'Test event';
+              addEvent(eventName, venueName);
             });
 
           });
@@ -252,8 +259,34 @@ describe('The Place features of the CMS', function() {
       expect(json.containedIn.length).toEqual(1);
       expect(json.containedIn[0]).toEqual(browser.params.url + "/api/place/" + parentNid);
 
-      // No related event specified
+      // Relation to related event item set up correctly
+      expect(json.event.length).toEqual(1);
+      expect(json.event[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+    });
+
+    // get minimal Place JSON from API and check the empty fields are output as expected
+    browser.get(browser.params.url + '/api/place/' + parentNid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+
+      expect(Object.keys(json.address).length).toEqual(1);
+      expect(json.address.addressCountry).toEqual("GB");
+      expect(json.description.length).toEqual(0);
+      expect(json.image.length).toEqual(0);
+      expect(json.geo.length).toEqual(0);
+      expect(json.hasMap).toBeUndefined();
+      expect(json.openingHoursSpecification.length).toEqual(0);
+      expect(json.containedIn.length).toEqual(0);
       expect(json.event.length).toEqual(0);
+    });
+
+    // check that both places are output by the endpoint
+    browser.get(browser.params.url + '/api/place.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+       expect(json.list.length).toEqual(2);
+       expect(json.list[0].url).toEqual(browser.params.url + "/api/place/" + parentNid);
+       expect(json.list[1].url).toEqual(browser.params.url + "/api/place/" + nid);
     });
   });
 
@@ -321,3 +354,78 @@ describe('The Place features of the CMS', function() {
   });
 
 });
+
+/**
+ * This is very similar to the identically-named function in person-spec.js.
+ *
+ * @todo Abstract helper functions to avoid redundancy
+ */
+function addEvent(eventName, venueName) {
+
+  // Selectors for adding venues to an event
+  var tabDetails = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']"));
+  var venueRelation = element(by.id('edit-field-event-places-und-0-relation-options-targets-target-2'));
+  var venueRelationAdd = element(by.id('edit-field-event-places-und-add-more'));
+
+  // Create a supporting event
+  browser.get(browser.params.url + '/node/add/event');
+  expect(element(by.css('.page-title')).getText()).toContain('Create Event');
+
+  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+  element(by.id('edit-title')).sendKeys(eventName);
+
+  // Date and time
+  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+
+  // start date/time
+  element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
+  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+  // end date/time
+  element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
+  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
+  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
+
+  // duration
+  element(by.id('edit-field-event-duration-und-0-value')).clear();
+
+  browser.executeScript('window.scrollTo(0,0);').then(function () {
+    // Add a relation between place and event
+    tabDetails.click();
+    var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
+    venueRelation.sendKeys(venueName);
+    browser.wait(function() {
+      return browser.isElementPresent(by.css('#autocomplete li div'));
+    }, 5000);
+    autocomplete.click();
+    venueRelationAdd.click();
+  });
+
+
+  // Publish it
+  var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));
+  var optionsPublished = element(by.id('edit-status'));
+  tabOptions.click();
+  optionsPublished.isSelected().then(function(selected) {
+    if (!selected) {
+      optionsPublished.click();
+    }
+  });
+
+  // save
+  element(by.id('edit-submit')).click();
+
+  // test successful save
+  expect(element(by.id('console')).getText()).toContain('Event '+ eventName + ' has been created.');
+
+  // Get the nid for the next test.
+  var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+  edit.click();
+
+  browser.getCurrentUrl().then(function(Url){
+    var parts = Url.split('/');
+    var size = parts.length;
+    eid.push(parts[size-2]);
+  });
+}
