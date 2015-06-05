@@ -44,9 +44,9 @@ describe('The Person features of the CMS', function() {
   var extraJobTitle = element(by.id('edit-field-person-job-und-0-value'));
   var extraAwards = element(by.id('edit-field-person-awards-und-0-value'));
   var extraAwardsAdd = element(by.id('edit-field-person-awards-und-add-more'));
-  var extraLinkTitle = element(by.id('edit-field-person-urls-und-0-title'));
-  var extraLinkUrl = element(by.id('edit-field-person-urls-und-0-url'));
-  var extraLinkAdd = element(by.id('edit-field-person-urls-und-add-more'));
+  var extraLinkTitle = element(by.id('edit-field-person-same-as-und-0-title'));
+  var extraLinkUrl = element(by.id('edit-field-person-same-as-und-0-url'));
+  var extraLinkAdd = element(by.id('edit-field-person-same-as-und-add-more'));
 
   // Tab Events
   var tabEvents = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Events']"));
@@ -69,7 +69,6 @@ describe('The Person features of the CMS', function() {
     personFamilyName.sendKeys('Snow');
     personNameSuffix.sendKeys('Commander');
     personAlias.sendKeys('Lord Commander of the night\'s watch');
-    personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
 
     // Save the node
     save.click();
@@ -130,7 +129,7 @@ describe('The Person features of the CMS', function() {
       extraLinkUrl.clear();
       extraLinkUrl.sendKeys(wrongUrl[i]);
       save.click();
-      expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person urls is not a valid URL.');
+      expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person links is not a valid URL.');
       i++;
     }
 
@@ -173,9 +172,11 @@ describe('The Person features of the CMS', function() {
     expect(pageTitle.getText()).toContain('Create Person');
     personGivenName.sendKeys(name);
     personFamilyName.sendKeys(surname);
-    personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
 
     browser.executeScript('window.scrollTo(0,0);').then(function () {
+
+      tabExtra.click();
+      personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
 
       // Add a relation between person and event
       var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
@@ -229,7 +230,7 @@ describe('The Person features of the CMS', function() {
           "field_person_name_given": "Daenerys",
           "field_person_name_middle": function(val) { expect(val).toBe(null); },
           "field_person_name_suffix": function(val) { expect(val).toBe(null); },
-          "field_person_urls": [],
+          "field_person_same_as": [],
           "field_person_email": "tywinrulezok@lannister.gov.rk",
           "nid": nid,
           "vid": nid,
