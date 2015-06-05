@@ -297,8 +297,40 @@ describe('The Event features of the CMS', function() {
        expect(json.location.length).toEqual(1);
        expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid)
        expect(json.subEvent.length).toEqual(0);
+
+       // performers are tested separately in the person test spec
        expect(json.performers.length).toEqual(0);
     });
+
+    // check the properties which differ between the minimal/maximal
+    // parent/child events
+    browser.get(browser.params.url + '/api/event/' + parentNid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+
+       expect(json.description.length).toEqual(0);
+       expect(json.typicalAgeRange).toBe(null);
+       expect(json.doorTime).toBe(null);
+       expect(json.duration).toBe(null);
+
+       expect(json.subEvent.length).toEqual(1);
+       expect(json.subEvent[0]).toEqual(browser.params.url + "/api/event/" + nid);
+       expect(json.superEvent.length).toEqual(0);
+       expect(json.location.length).toEqual(0);
+
+       // performers are tested separately in the person test spec
+       expect(json.performers.length).toEqual(0);
+    });
+
+    // check that both events are output by the endpoint
+    browser.get(browser.params.url + '/api/event.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+       expect(json.list.length).toEqual(2);
+       expect(json.list[0].url).toEqual(browser.params.url + "/api/event/" + parentNid);
+       expect(json.list[1].url).toEqual(browser.params.url + "/api/event/" + nid);
+    });
+
   });
 
   /* End of API output tests */
