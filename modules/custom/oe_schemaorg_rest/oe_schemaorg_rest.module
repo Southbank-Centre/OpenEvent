@@ -428,7 +428,7 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
     $taxonomy_terms = array();
 
     foreach ($properties as $field => $value) {
-      $type = $value['type'];
+      $type = isset($value['type']) ? $value['type'] : false;
       if ($type == 'taxonomy_term') {
         $taxonomy_terms[] = $field;
       }
