@@ -77,11 +77,11 @@ function oe_organization_field_group_info() {
     'weight' => '0',
     'children' => array(
       0 => 'field_description',
-      1 => 'field_organization_email',
+      1 => 'field_organization_address',
       2 => 'field_organization_legal_name',
-      3 => 'field_organization_address',
-      4 => 'field_organization_logo',
-      5 => 'field_organization_same_as',
+      3 => 'field_organization_logo',
+      4 => 'field_organization_same_as',
+      5 => 'field_organization_email',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -108,12 +108,12 @@ function oe_organization_field_group_info() {
     'weight' => '0',
     'children' => array(
       0 => 'field_description',
-      1 => 'field_organization_email',
+      1 => 'field_organization_address',
       2 => 'field_organization_legal_name',
-      3 => 'field_organization_address',
-      4 => 'field_organization_logo',
-      5 => 'field_organization_same_as',
-      6 => 'title',
+      3 => 'field_organization_logo',
+      4 => 'field_organization_same_as',
+      5 => 'title',
+      6 => 'field_organization_email',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

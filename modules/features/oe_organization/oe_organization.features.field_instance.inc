@@ -210,9 +210,9 @@ function oe_organization_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
+        'module' => 'email',
         'settings' => array(),
-        'type' => 'text_default',
+        'type' => 'email_default',
         'weight' => 16,
       ),
       'teaser' => array(
@@ -227,38 +227,15 @@ function oe_organization_field_default_field_instances() {
     'label' => 'Email address',
     'required' => 0,
     'settings' => array(
-      'better_formats' => array(
-        'allowed_formats' => array(
-          'filtered_html' => 'filtered_html',
-          'full_html' => 'full_html',
-          'plain_text' => 'plain_text',
-        ),
-        'allowed_formats_toggle' => 0,
-        'default_order_toggle' => 0,
-        'default_order_wrapper' => array(
-          'formats' => array(
-            'filtered_html' => array(
-              'weight' => 0,
-            ),
-            'full_html' => array(
-              'weight' => 1,
-            ),
-            'plain_text' => array(
-              'weight' => 10,
-            ),
-          ),
-        ),
-      ),
-      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'text',
+      'module' => 'email',
       'settings' => array(
         'size' => 255,
       ),
-      'type' => 'text_textfield',
+      'type' => 'email_textfield',
       'weight' => 4,
     ),
   );
@@ -458,8 +435,6 @@ function oe_organization_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('<p>A short description of the organization.</p>
 <p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">organization</a>.<a href="http://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
-  t('<p>Events in which this organization is a performer.</p>
-<p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">organization</a>.<a href="http://schema.org/performerIn" target="_blank">performerIn</a></code> Schema.org property.</p>');
   t('<p>Images that represent the organization. Multiple images are allowed.</p>
 <p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">organization</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.');
   t('<p>The address of the organization.</p>
@@ -473,7 +448,6 @@ function oe_organization_field_default_field_instances() {
   t('Address');
   t('Description');
   t('Email address');
-  t('Events');
   t('Image');
   t('Legal name');
   t('Logo');

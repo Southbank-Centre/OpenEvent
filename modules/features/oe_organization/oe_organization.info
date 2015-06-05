@@ -6,6 +6,7 @@ version = 7.x-1.0
 project = oe_organization
 dependencies[] = addressfield
 dependencies[] = ctools
+dependencies[] = email
 dependencies[] = features
 dependencies[] = field_group
 dependencies[] = image
