@@ -397,7 +397,7 @@ function oe_organization_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_organization_same_as',
-    'label' => 'Website link',
+    'label' => 'Organization links',
     'required' => 0,
     'settings' => array(
       'absolute_url' => 1,
@@ -451,7 +451,7 @@ function oe_organization_field_default_field_instances() {
   t('Image');
   t('Legal name');
   t('Logo');
-  t('Website link');
+  t('Organization links');
 
   return $field_instances;
 }
