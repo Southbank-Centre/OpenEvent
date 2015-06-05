@@ -20,12 +20,15 @@ describe('The Organization features of the CMS', function() {
   // Tab Main
   var tabMain = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']"));
 
-  // Main fields
   var name = element(by.id('edit-title'));
   var logo = element(by.id('edit-field-organization-logo-und-0-upload'));
   var logoUpload   = element(by.id('edit-field-organization-logo-und-0-upload-button'));
   var description = element(by.id('edit-field-description-und-0-value'));
   var legalName = element(by.id('edit-field-organization-legal-name-und-0-value'));
+
+  // Tab Contact
+  var tabContact = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Contact']"));
+
   var email = element(by.id('edit-field-organization-email-und-0-email'));
   var addressOrganisationName = element(by.id('edit-field-organization-address-und-0-organisation-name'));
   var addressThoroughfare = element(by.id('edit-field-organization-address-und-0-thoroughfare'));
@@ -118,36 +121,42 @@ describe('The Organization features of the CMS', function() {
     // description
     description.sendKeys("House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.");
 
-    // email
-
-    // Test email with invalid email address
-    email.sendKeys("tywinrulezok$lannister.gov.rk");
-    save.click();
-    expect(messages.getText()).toContain('"tywinrulezok$lannister.gov.rk" is not a valid email address');
-
-    // Add valid email address
-    email.clear();
-    email.sendKeys("tywinrulezok@lannister.gov.rk");
-
-    // address
-    // select country
-    element(by.cssContainingText('#edit-field-organization-address-und-0-country > option', 'United Kingdom')).click();
-    browser.wait(function () {
-        return browser.isElementPresent(by.id('edit-field-organization-address-und-0-thoroughfare'));
-    }, 5000);
-    addressOrganisationName.sendKeys('Lannister HQ');
-    addressThoroughfare.sendKeys('Southbank Centre');
-    addressPremise.sendKeys('Belvedere Road');
-    addressLocality.sendKeys('London');
-    addressAdministrativeArea.sendKeys('London (county)');
-    addressPostalCode.sendKeys('SE1 8XX');
-
     // legal name
     legalName.sendKeys('some thing off some TV show or something');
 
-    // same as
-    sameAsTitle.sendKeys('Lannister Wiki Page');
-    sameAsUrl.sendKeys('http://gameofthrones.wikia.com/wiki/House_Lannister');
+    // contact
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      
+      tabContact.click();
+
+      // email
+      // Test email with invalid email address
+      email.sendKeys("tywinrulezok$lannister.gov.rk");
+      save.click();
+      expect(messages.getText()).toContain('"tywinrulezok$lannister.gov.rk" is not a valid email address');
+
+      // Add valid email address
+      email.clear();
+      email.sendKeys("tywinrulezok@lannister.gov.rk");
+
+      // address
+      // select country
+      element(by.cssContainingText('#edit-field-organization-address-und-0-country > option', 'United Kingdom')).click();
+      browser.wait(function () {
+          return browser.isElementPresent(by.id('edit-field-organization-address-und-0-thoroughfare'));
+      }, 5000);
+      addressOrganisationName.sendKeys('Lannister HQ');
+      addressThoroughfare.sendKeys('Southbank Centre');
+      addressPremise.sendKeys('Belvedere Road');
+      addressLocality.sendKeys('London');
+      addressAdministrativeArea.sendKeys('London (county)');
+      addressPostalCode.sendKeys('SE1 8XX');
+
+      // same as
+      sameAsTitle.sendKeys('Lannister Wiki Page');
+      sameAsUrl.sendKeys('http://gameofthrones.wikia.com/wiki/House_Lannister');
+
+    });
 
     // images
     browser.executeScript('window.scrollTo(0,0);').then(function () {
