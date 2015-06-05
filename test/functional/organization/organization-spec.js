@@ -249,30 +249,16 @@ describe('The Organization features of the CMS', function() {
 
     frisby.create('Get JSON for Event page created in previous test')
       .get(browser.params.url + '/node/' + nid + '.json')
-        .expectHeaderContains('content-type', 'application/json')
-        .inspectJSON()
-        .expectJSON({
-          "field_description": {
-            "value": "<p>House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.</p>\n",
-            "format": "filtered_html"
-          },
-          "field_image": [
-            {
-              "file": {
-                "uri": function(val) {
-                  expect(val).toContain(browser.params.url + "/file/");
-                },
-                "id": function(val) {
-                  expect(val).toBeDefined();
-                  expect(isNaN(parseInt(val, 10))).toBe(false);
-                },
-                "resource": "file"
-              },
-              "alt": "Test image ALT",
-              "title": "Test image TITLE"
-            }
-          ],
-          "field_organization_logo": {
+      .expectStatus(200)
+      .expectHeaderContains('content-type', 'application/json')
+      // .inspectJSON() // uncomment to output JSON in console
+      .expectJSON({
+        "field_description": {
+          "value": "<p>House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.</p>\n",
+          "format": "filtered_html"
+        },
+        "field_image": [
+          {
             "file": {
               "uri": function(val) {
                 expect(val).toContain(browser.params.url + "/file/");
@@ -283,54 +269,71 @@ describe('The Organization features of the CMS', function() {
               },
               "resource": "file"
             },
-            "alt": "Test logo ALT",
-            "title": "Test logo TITLE"
+            "alt": "Test image ALT",
+            "title": "Test image TITLE"
+          }
+        ],
+        "field_organization_logo": {
+          "file": {
+            "uri": function(val) {
+              expect(val).toContain(browser.params.url + "/file/");
+            },
+            "id": function(val) {
+              expect(val).toBeDefined();
+              expect(isNaN(parseInt(val, 10))).toBe(false);
+            },
+            "resource": "file"
           },
-          "title": "Lannister",
-          "field_organization_legal_name": "some thing off some TV show or something",
-          "field_organization_email": "tywinrulezok@lannister.gov.rk",
-          "field_organization_same_as": { 
+          "alt": "Test logo ALT",
+          "title": "Test logo TITLE"
+        },
+        "title": "Lannister",
+        "field_organization_legal_name": "some thing off some TV show or something",
+        "field_organization_email": "tywinrulezok@lannister.gov.rk",
+        "field_organization_same_as": [
+          { 
             "title": 'Lannister Wiki Page',
             "url": 'http://gameofthrones.wikia.com/wiki/House_Lannister'
-          },
-          "field_organization_address": {
-            "country": "GB",
-            "organisation_name": "Lannister HQ",
-            "administrative_area": "London (county)",
-            "locality": "London",
-            "postal_code": "SE1 8XX",
-            "thoroughfare": "Southbank Centre",
-            "premise": "Belvedere Road"
-          },
-          "nid": nid,
-          "vid": nid
-          // "relation_performer_performs_in_event_node_reverse": [
-          //   {
-          //     "uri": browser.params.url + "/node/" + nid,
-          //     "id": nid,
-          //     "resource": "node"
-          //   },
-          //   {
-          //     "uri": browser.params.url + "/node/" + eid,
-          //     "id": eid,
-          //     "resource": "node"
-          //   }
-          // ],
-          // "relation_performer_performs_in_event_node": [
-          //   {
-          //     "uri": browser.params.url + "/node/" + nid,
-          //     "id": nid,
-          //     "resource": "node"
-          //   },
-          //   {
-          //     "uri": browser.params.url + "/node/" + eid,
-          //     "id": eid,
-          //     "resource": "node"
-          //   }
-          // ]
-        })
-      .after(cleanUp)
-      .toss();
+          }
+        ],
+        "field_organization_address": {
+          "country": "GB",
+          "organisation_name": "Lannister HQ",
+          "administrative_area": "London (county)",
+          "locality": "London",
+          "postal_code": "SE1 8XX",
+          "thoroughfare": "Southbank Centre",
+          "premise": "Belvedere Road"
+        },
+        "nid": nid,
+        "vid": nid
+        // "relation_performer_performs_in_event_node_reverse": [
+        //   {
+        //     "uri": browser.params.url + "/node/" + nid,
+        //     "id": nid,
+        //     "resource": "node"
+        //   },
+        //   {
+        //     "uri": browser.params.url + "/node/" + eid,
+        //     "id": eid,
+        //     "resource": "node"
+        //   }
+        // ],
+        // "relation_performer_performs_in_event_node": [
+        //   {
+        //     "uri": browser.params.url + "/node/" + nid,
+        //     "id": nid,
+        //     "resource": "node"
+        //   },
+        //   {
+        //     "uri": browser.params.url + "/node/" + eid,
+        //     "id": eid,
+        //     "resource": "node"
+        //   }
+        // ]
+      })
+    .after(cleanUp)
+    .toss();
 
     // We run cleanUp after the last frisby test because they are asynchronous
     // and could run after the cleanUp otherwise (this is something to improve on)
