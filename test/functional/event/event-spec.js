@@ -216,7 +216,7 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
       element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
       browser.sleep(5000);
       // check that there are no items in the autocomplete list
