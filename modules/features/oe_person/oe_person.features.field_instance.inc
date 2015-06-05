@@ -207,6 +207,46 @@ function oe_person_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-person-field_person_email'
+  $field_instances['node-person-field_person_email'] = array(
+    'bundle' => 'person',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '<p>The email address of the person.</p>
+<p>Maps to the <code><a href="https://schema.org/Person" target="_blank">Person</a>.<a href="https://schema.org/email" target="_blank">email</a></code> Schema.org property.</p>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'email',
+        'settings' => array(),
+        'type' => 'email_default',
+        'weight' => 14,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_person_email',
+    'label' => 'Email address',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'email',
+      'settings' => array(
+        'size' => 255,
+      ),
+      'type' => 'email_textfield',
+      'weight' => 9,
+    ),
+  );
+
   // Exported field_instance: 'node-person-field_person_job'
   $field_instances['node-person-field_person_job'] = array(
     'bundle' => 'person',
@@ -703,11 +743,14 @@ function oe_person_field_default_field_instances() {
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificPrefix" target="_blank">honorificPrefix</a></code> Schema.org property.</p>');
   t('<p>Surname of a person.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/familyName" target="_blank">familyName</a></code> Schema.org property.</p>');
+  t('<p>The email address of the person.</p>
+<p>Maps to the <code><a href="https://schema.org/Person" target="_blank">Person</a>.<a href="https://schema.org/email" target="_blank">email</a></code> Schema.org property.</p>');
   t('<p>URL of a reference web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>');
   t('Alias');
   t('Awards');
   t('Description');
+  t('Email address');
   t('Family name');
   t('Given name');
   t('Image');
