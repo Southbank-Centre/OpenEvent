@@ -221,7 +221,7 @@ describe('The Person features of the CMS', function() {
     expect(pageTitle.getText()).toContain('Create Person');
 
     // Fill in person details
-    personNamePrefixMr.click();
+    personNamePrefix.click();
     personGivenName.sendKeys('William');
     personMiddleName.sendKeys('S');
     personFamilyName.sendKeys('Preston');
@@ -347,6 +347,7 @@ describe('The Person features of the CMS', function() {
        expect(json.jobTitle).toEqual('Guitarist in Wyld Stallyns');
        expect(json.alternateName).toEqual('Bill');
        expect(json.additionalName).toEqual('S');
+       expect(json.honorificPrefix).toEqual('Sir');
        expect(json.honorificSuffix).toEqual('Esq.');
        expect(json.sameAs.length).toEqual(1);
        expect(json.sameAs[0]).toEqual('https://en.wikipedia.org/wiki/Socrates');
