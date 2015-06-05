@@ -34,6 +34,7 @@ dependencies[] = date
 dependencies[] = date_all_day
 dependencies[] = date_api
 dependencies[] = date_popup
+dependencies[] = email
 dependencies[] = entity
 dependencies[] = features
 dependencies[] = field_group
