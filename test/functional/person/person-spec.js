@@ -28,10 +28,11 @@ describe('The Person features of the CMS', function() {
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
   var personNameSuffix = element(by.id('edit-field-person-name-suffix-und-0-value'));
   var personAlias = element(by.id('edit-field-person-name-alias-und-0-value'));
-  var bioDescription = element(by.id('edit-field-description-und-0-value'));
+  var personDescription = element(by.id('edit-field-description-und-0-value'));
+  var personEmail = element(by.id('edit-field-person-email-und-0-email'));
 
   // Tab Images
-  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
+  var tabImages = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
@@ -68,6 +69,7 @@ describe('The Person features of the CMS', function() {
     personFamilyName.sendKeys('Snow');
     personNameSuffix.sendKeys('Commander');
     personAlias.sendKeys('Lord Commander of the night\'s watch');
+    personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
 
     // Save the node
     save.click();
@@ -171,22 +173,27 @@ describe('The Person features of the CMS', function() {
     expect(pageTitle.getText()).toContain('Create Person');
     personGivenName.sendKeys(name);
     personFamilyName.sendKeys(surname);
+    personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
 
-    // Add a relation between person and event
-    var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
-    tabEvents.click();
-    eventRelation.sendKeys(eventName);
-    browser.wait(function() {
-      return browser.isElementPresent(by.css('#autocomplete li div'));
-    }, 5000);
-    autocomplete.click();
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-    // Publish it
-    tabOptions.click();
-    optionsPublished.isSelected().then(function(selected) {
-      if (!selected) {
-        optionsPublished.click();
-      }
+      // Add a relation between person and event
+      var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
+      tabEvents.click();
+      eventRelation.sendKeys(eventName);
+      browser.wait(function() {
+        return browser.isElementPresent(by.css('#autocomplete li div'));
+      }, 5000);
+      autocomplete.click();
+
+      // Publish it
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
+
     });
 
     // Save the node
@@ -223,9 +230,10 @@ describe('The Person features of the CMS', function() {
           "field_person_name_middle": function(val) { expect(val).toBe(null); },
           "field_person_name_suffix": function(val) { expect(val).toBe(null); },
           "field_person_urls": [],
+          "field_person_email": "tywinrulezok@lannister.gov.rk",
           "nid": nid,
           "vid": nid,
-          "relation_person_performs_in_event_node_reverse": [
+          "relation_performer_performs_in_event_node_reverse": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,
@@ -237,7 +245,7 @@ describe('The Person features of the CMS', function() {
               "resource": "node"
             }
           ],
-          "relation_person_performs_in_event_node": [
+          "relation_performer_performs_in_event_node": [
             {
               "uri": browser.params.url + "/node/" + nid,
               "id": nid,

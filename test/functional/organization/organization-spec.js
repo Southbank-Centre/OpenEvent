@@ -26,7 +26,7 @@ describe('The Organization features of the CMS', function() {
   var logoUpload   = element(by.id('edit-field-organization-logo-und-0-upload-button'));
   var description = element(by.id('edit-field-description-und-0-value'));
   var legalName = element(by.id('edit-field-organization-legal-name-und-0-value'));
-  var email = element(by.id('edit-field-organization-email-und-0-value'));
+  var email = element(by.id('edit-field-organization-email-und-0-email'));
   var addressOrganisationName = element(by.id('edit-field-organization-address-und-0-organisation-name'));
   var addressThoroughfare = element(by.id('edit-field-organization-address-und-0-thoroughfare'));
   var addressPremise = element(by.id('edit-field-organization-address-und-0-premise'));
@@ -119,6 +119,14 @@ describe('The Organization features of the CMS', function() {
     description.sendKeys("House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.");
 
     // email
+
+    // Test email with invalid email address
+    email.sendKeys("tywinrulezok$lannister.gov.rk");
+    save.click();
+    expect(messages.getText()).toContain('"tywinrulezok$lannister.gov.rk" is not a valid email address');
+
+    // Add valid email address
+    email.clear();
     email.sendKeys("tywinrulezok@lannister.gov.rk");
 
     // address
