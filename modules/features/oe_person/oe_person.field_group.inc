@@ -178,12 +178,13 @@ function oe_person_field_group_info() {
     ),
     'format_type' => 'tab',
     'format_settings' => array(
-      'formatter' => 'closed',
+      'label' => 'Main',
       'instance_settings' => array(
-        'description' => '',
-        'classes' => 'group-person-main field-group-tab',
         'required_fields' => 1,
+        'classes' => 'group-person-main field-group-tab',
+        'description' => 'The title of a person node will be automatically generated from the <strong>Given name</strong> and the <strong>Family name</strong> fields below.',
       ),
+      'formatter' => 'closed',
     ),
   );
   $export['group_person_main|node|person|form'] = $field_group;
