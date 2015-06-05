@@ -663,8 +663,8 @@ function oe_person_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-person-field_person_urls'
-  $field_instances['node-person-field_person_urls'] = array(
+  // Exported field_instance: 'node-person-field_person_same_as'
+  $field_instances['node-person-field_person_same_as'] = array(
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
@@ -686,7 +686,7 @@ function oe_person_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_person_urls',
+    'field_name' => 'field_person_same_as',
     'label' => 'Person urls',
     'required' => 0,
     'settings' => array(

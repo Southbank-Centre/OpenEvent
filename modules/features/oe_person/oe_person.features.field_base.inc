@@ -198,13 +198,13 @@ function oe_person_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_person_urls'
-  $field_bases['field_person_urls'] = array(
+  // Exported field_base: 'field_person_same_as'
+  $field_bases['field_person_same_as'] = array(
     'active' => 1,
     'cardinality' => -1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_person_urls',
+    'field_name' => 'field_person_same_as',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'link',

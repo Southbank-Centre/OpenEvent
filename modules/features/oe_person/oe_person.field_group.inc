@@ -25,7 +25,7 @@ function oe_person_field_group_info() {
     'children' => array(
       0 => 'field_person_awards',
       1 => 'field_person_job',
-      2 => 'field_person_urls',
+      2 => 'field_person_same_as',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -53,7 +53,7 @@ function oe_person_field_group_info() {
     'children' => array(
       0 => 'field_person_awards',
       1 => 'field_person_job',
-      2 => 'field_person_urls',
+      2 => 'field_person_same_as',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
