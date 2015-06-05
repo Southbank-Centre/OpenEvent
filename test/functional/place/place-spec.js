@@ -262,6 +262,49 @@ describe('The Place features of the CMS', function() {
 
   /* API input tests */
 
+  it('outputs places listing JSON and sorts by different fields', function () {
+    /* name */
+    var nameAsc = '?sort=name&direction=ASC';
+    var nameDesc = '?sort=name&direction=DESC';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/place.json' + nameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Parent place");
+      expect(nameSecond).toBe("Protractor place");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/place.json' + nameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Protractor place");
+      expect(nameSecond).toBe("Parent place");
+     });
+
+
+  });
+
+  it('outputs places listing JSON and filters by different fields', function () {
+    /* name */
+    var nameQuery = '?name=Protractor%20place';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/place.json' + nameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Protractor place");
+      expect(json.list.length).toBe(1);
+     });
+
+  });
+
   /* End of API input tests */
 
   it('will take place after all tests have passed', function() {
