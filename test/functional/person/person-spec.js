@@ -22,7 +22,7 @@ describe('The Person features of the CMS', function() {
 
   // Main fields
   // @TODO add a rand to get one of these
-  var personNamePrefix = element(by.id('edit-field-person-name-prefix-und'));
+  var personNamePrefix = element(by.cssContainingText('#edit-field-person-name-prefix-und > option', 'Sir'));
   var personGivenName = element(by.id('edit-field-person-name-given-und-0-value'));
   var personMiddleName = element(by.id('edit-field-person-name-middle-und-0-value'));
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
@@ -66,6 +66,7 @@ describe('The Person features of the CMS', function() {
     expect(pageTitle.getText()).toContain('Create Person');
 
     // Fill in person details
+    personNamePrefix.click();
     personGivenName.sendKeys('Jon');
     personFamilyName.sendKeys('Snow');
     personNameSuffix.sendKeys('Commander');
@@ -107,6 +108,7 @@ describe('The Person features of the CMS', function() {
     expect(pageTitle.getText()).toContain('Create Person');
 
     // Fill in person details
+    personNamePrefix.click();
     personGivenName.sendKeys('Tyrion');
     personFamilyName.sendKeys('Lannister');
 
@@ -246,6 +248,128 @@ describe('The Person features of the CMS', function() {
 
 
   /* API input tests */
+
+  it('outputs people listing JSON and sorts by different fields', function () {
+
+    /* familyName, givenName, name */
+    var familyNameAsc = '?sort=familyName&direction=ASC';
+    var familyNameDesc = '?sort=familyName&direction=DESC';
+    var givenNameAsc = '?sort=givenName&direction=ASC';
+    var givenNameDesc = '?sort=givenName&direction=DESC';
+    var nameAsc = '?sort=name&direction=ASC';
+    var nameDesc = '?sort=name&direction=DESC';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + familyNameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].familyName;
+      var nameSecond = json.list[1].familyName;
+      expect(nameFirst).toBe("Lannister");
+      expect(nameSecond).toBe("Targaryen");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + familyNameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].familyName;
+      var nameSecond = json.list[1].familyName;
+      expect(nameFirst).toBe("Targaryen");
+      expect(nameSecond).toBe("Lannister");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + givenNameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].givenName;
+      var nameSecond = json.list[1].givenName;
+      expect(nameFirst).toBe("Daenerys");
+      expect(nameSecond).toBe("Tyrion");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + givenNameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].givenName;
+      var nameSecond = json.list[1].givenName;
+      expect(nameFirst).toBe("Tyrion");
+      expect(nameSecond).toBe("Daenerys");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + nameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Daenerys Targaryen");
+      expect(nameSecond).toBe("Tyrion Lannister");
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + nameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Tyrion Lannister");
+      expect(nameSecond).toBe("Daenerys Targaryen");
+     });
+
+  });
+
+  it('outputs people listing JSON and filters by different fields', function () {
+
+    /* Taxonomy term name */
+    var honorificPrefixQuery = '?honorificPrefix=Sir';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + honorificPrefixQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      var honorificPrefix = json.list[0].honorificPrefix;
+      expect(name).toBe("Tyrion Lannister");
+      expect(honorificPrefix).toBe("Sir");
+      expect(json.list.length).toBe(1);
+     });
+
+    /* name, givenName, familyName */
+    var nameQuery = '?name=Tyrion%20Lannister';
+    var givenNameQuery = '?givenName=Tyrion';
+    var familyNameQuery = '?familyName=Targaryen';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + nameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Tyrion Lannister");
+      expect(json.list.length).toBe(1);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + givenNameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Tyrion Lannister");
+      expect(json.list.length).toBe(1);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/person.json' + familyNameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Daenerys Targaryen");
+      expect(json.list.length).toBe(1);
+     });
+
+  });
 
   /* End of API input tests */
 
