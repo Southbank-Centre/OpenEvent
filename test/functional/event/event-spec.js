@@ -259,6 +259,8 @@ describe('The Event features of the CMS', function() {
 
   });
 
+  /* API output tests */
+
   it('outputs Event node JSON in Schema.org format', function () {
     // get Event JSON from API and parse it
     browser.get(browser.params.url + '/api/event/' + nid + '.json');
@@ -298,6 +300,13 @@ describe('The Event features of the CMS', function() {
        expect(json.performers.length).toEqual(0);
     });
   });
+
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  /* End of API input tests */
 
   it('will take place after all tests have passed', function() {
 

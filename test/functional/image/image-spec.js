@@ -116,6 +116,8 @@ describe('Image', function() {
 
   });
 
+  /* API output tests */
+
   it('outputs the Image data with the Event node JSON in Schema.org format', function () {
     // set correct filename for checking image upload
     var imageName = 'test-img.jpg';
@@ -135,6 +137,13 @@ describe('Image', function() {
        expect(json.image.caption).toBe("Test image TITLE");
     });
   });
+
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  /* End of API input tests */
 
   it('will take place after all tests have passed', function() {
 

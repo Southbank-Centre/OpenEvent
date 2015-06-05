@@ -192,6 +192,8 @@ describe('The Place features of the CMS', function() {
 
   });
 
+  /* API output tests */
+
   it('outputs Place node JSON in Schema.org format', function () {
     // set correct filename for checking image upload
     var imageName = 'test-img.jpg';
@@ -254,6 +256,13 @@ describe('The Place features of the CMS', function() {
       expect(json.event.length).toEqual(0);
     });
   });
+
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  /* End of API input tests */
 
   it('will take place after all tests have passed', function() {
 

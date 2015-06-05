@@ -210,6 +210,8 @@ describe('The Person features of the CMS', function() {
 
   });
 
+  /* API output tests */
+
   it('outputs Person node JSON in Schema.org format', function () {
     // get Person JSON from API and parse it
     browser.get(browser.params.url + '/api/person/' + nid + '.json');
@@ -239,6 +241,13 @@ describe('The Person features of the CMS', function() {
        expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid);
     });
   });
+
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  /* End of API input tests */
 
   it('will take place after all tests have passed', function() {
     // These tests are destructive and can only be performed on clean/empty sites [!]
