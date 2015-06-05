@@ -157,7 +157,7 @@ function oe_person_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -203,7 +203,7 @@ function oe_person_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -220,7 +220,7 @@ function oe_person_field_default_field_instances() {
         'module' => 'email',
         'settings' => array(),
         'type' => 'email_default',
-        'weight' => 14,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -243,7 +243,7 @@ function oe_person_field_default_field_instances() {
         'size' => 255,
       ),
       'type' => 'email_textfield',
-      'weight' => 9,
+      'weight' => 5,
     ),
   );
 
@@ -676,7 +676,7 @@ function oe_person_field_default_field_instances() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -687,7 +687,7 @@ function oe_person_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_person_same_as',
-    'label' => 'Person urls',
+    'label' => 'Person links',
     'required' => 0,
     'settings' => array(
       'absolute_url' => 1,
@@ -717,7 +717,7 @@ function oe_person_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -756,7 +756,7 @@ function oe_person_field_default_field_instances() {
   t('Image');
   t('Job title');
   t('Middle name');
-  t('Person urls');
+  t('Person links');
   t('Prefix');
   t('Suffix');
 

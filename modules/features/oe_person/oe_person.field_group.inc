@@ -24,8 +24,9 @@ function oe_person_field_group_info() {
     'weight' => '2',
     'children' => array(
       0 => 'field_person_awards',
-      1 => 'field_person_job',
-      2 => 'field_person_same_as',
+      1 => 'field_person_email',
+      2 => 'field_person_job',
+      3 => 'field_person_same_as',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -52,8 +53,9 @@ function oe_person_field_group_info() {
     'weight' => '3',
     'children' => array(
       0 => 'field_person_awards',
-      1 => 'field_person_job',
-      2 => 'field_person_same_as',
+      1 => 'field_person_email',
+      2 => 'field_person_job',
+      3 => 'field_person_same_as',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -140,7 +142,6 @@ function oe_person_field_group_info() {
       4 => 'field_person_name_middle',
       5 => 'field_person_name_prefix',
       6 => 'field_person_name_suffix',
-      7 => 'field_person_email',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -174,7 +175,6 @@ function oe_person_field_group_info() {
       5 => 'field_person_name_prefix',
       6 => 'field_person_name_suffix',
       7 => 'title',
-      8 => 'field_person_email',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
