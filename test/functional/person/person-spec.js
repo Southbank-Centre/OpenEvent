@@ -5,8 +5,9 @@
 
 var url = require('url');
 var path = require('path');
-var eid;
+var eid = [];
 var nid;
+var completeNid;
 
 describe('The Person features of the CMS', function() {
 
@@ -212,6 +213,91 @@ describe('The Person features of the CMS', function() {
 
   });
 
+  it('can create a complete person node', function() {
+    var eventName = 'Battle of Waterloo';
+    addEvent(eventName);
+
+    browser.get(browser.params.url + '/node/add/person');
+    expect(pageTitle.getText()).toContain('Create Person');
+
+    // Fill in person details
+    personNamePrefixMr.click();
+    personGivenName.sendKeys('William');
+    personMiddleName.sendKeys('S');
+    personFamilyName.sendKeys('Preston');
+    personNameSuffix.sendKeys('Esq.');
+    personAlias.sendKeys('Bill');
+
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      // Tab Biography and images
+      tabBio.click();
+      bioDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
+
+      // upload 'Image'
+      var fileToUpload = '../image/test-img.jpg';
+      var absolutePath = path.resolve(__dirname, fileToUpload);
+      if (browser.params.isSauceLabs) {
+        absolutePath = '/home/chef/job_assets/shot_0.png';
+      }
+      bioImage.sendKeys(absolutePath);
+      bioImageUpload.click();
+      // wait until image has uploaded
+      browser.wait(function() {
+       return browser.isElementPresent($('#edit-field-image-und-0-alt'));
+      }, 5000);
+      $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
+      $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
+    });
+
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      tabExtra.click();
+      extraJobTitle.sendKeys('Guitarist in Wyld Stallyns');
+      extraAwards.sendKeys('High school history class');
+      extraAwardsAdd.click();
+      extraLinkTitle.sendKeys('Socrates');
+      extraLinkUrl.sendKeys('https://en.wikipedia.org/wiki/Socrates');
+      extraLinkAdd.click();
+    });
+
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      // Add a relation between person and event
+      tabEvents.click();
+      var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
+      eventRelation.sendKeys(eventName);
+      browser.wait(function() {
+        return browser.isElementPresent(by.css('#autocomplete li div'));
+      }, 5000);
+      autocomplete.click();
+      eventRelationAdd.click();
+    });
+
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+      // Publish it
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
+    });
+
+    // Save the node
+    save.click();
+
+    // Expectations
+    expect(messages.getText()).toContain('Person William Preston has been created.');
+
+    // Get the nid for the next test
+    var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+    edit.click();
+
+    browser.getCurrentUrl().then(function(Url){
+      var parts = Url.split('/');
+      var size = parts.length;
+      completeNid = parts[size-2];
+    });
+  });
+
   /* API output tests */
 
   it('outputs Person node JSON in Schema.org format', function () {
@@ -238,9 +324,54 @@ describe('The Person features of the CMS', function() {
        // URL of this item should be predictable based on NID
        expect(json.url).toBe(browser.params.url + '/api/person/' + nid);
 
-       // Relation to event item set up correctly
        expect(json.performerIn.length).toEqual(1);
-       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid);
+       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+    });
+
+    // test that the performers relation has been correctly added to the event
+    browser.get(browser.params.url + '/api/event/' + eid[0] + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+       expect(json.performers.length).toEqual(1);
+       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + nid);
+    });
+  });
+
+  it('outputs complete Person node JSON in Schema.org format', function () {
+    // get Person JSON from API and parse it
+    browser.get(browser.params.url + '/api/person/' + completeNid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+
+       // check the properties which differ between the minimal/maximal person nodes
+       expect(json.jobTitle).toEqual('Guitarist in Wyld Stallyns');
+       expect(json.alternateName).toEqual('Bill');
+       expect(json.additionalName).toEqual('S');
+       expect(json.honorificSuffix).toEqual('Esq.');
+       expect(json.sameAs.length).toEqual(1);
+       expect(json.sameAs[0]).toEqual('https://en.wikipedia.org/wiki/Socrates');
+       expect(json.award.length).toEqual(1);
+       expect(json.award[0]).toEqual('High school history class');
+
+       // set correct filename for checking image upload
+       var imageName = 'test-img.jpg';
+       if (browser.params.isSauceLabs) {
+         imageName = 'shot_0.png';
+       }
+
+       // image uploaded & fields filled out as expected
+       expect(json.image.contentUrl).toContain(browser.params.url);
+       expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
+       expect(json.image.alternateName).toBe("Test image ALT");
+       expect(json.image.caption).toBe("Test image TITLE");
+    });
+
+    // test that the performers relation has been correctly added to the complete person's event
+    browser.get(browser.params.url + '/api/event/' + eid[1] + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+       expect(json.performers.length).toEqual(1);
+       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
     });
   });
 
@@ -436,7 +567,6 @@ function addEvent(eventName) {
   browser.getCurrentUrl().then(function(Url){
     var parts = Url.split('/');
     var size = parts.length;
-    eid = parts[size-2];
+    eid.push(parts[size-2]);
   });
-
 }
