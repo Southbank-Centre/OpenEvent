@@ -397,8 +397,10 @@ describe('The Person features of the CMS', function() {
       var json = JSON.parse(bodyText);
       var nameFirst = json.list[0].familyName;
       var nameSecond = json.list[1].familyName;
+      var nameThird = json.list[2].familyName;
       expect(nameFirst).toBe("Lannister");
-      expect(nameSecond).toBe("Targaryen");
+      expect(nameSecond).toBe("Preston");
+      expect(nameThird).toBe("Targaryen");
      });
 
     // get events listing JSON from API and parse it
@@ -407,8 +409,10 @@ describe('The Person features of the CMS', function() {
       var json = JSON.parse(bodyText);
       var nameFirst = json.list[0].familyName;
       var nameSecond = json.list[1].familyName;
+      var nameThird = json.list[2].familyName;
       expect(nameFirst).toBe("Targaryen");
-      expect(nameSecond).toBe("Lannister");
+      expect(nameSecond).toBe("Preston");
+      expect(nameThird).toBe("Lannister");
      });
 
     // get events listing JSON from API and parse it
@@ -417,8 +421,10 @@ describe('The Person features of the CMS', function() {
       var json = JSON.parse(bodyText);
       var nameFirst = json.list[0].givenName;
       var nameSecond = json.list[1].givenName;
+      var nameThird = json.list[2].givenName;
       expect(nameFirst).toBe("Daenerys");
       expect(nameSecond).toBe("Tyrion");
+      expect(nameThird).toBe("William");
      });
 
     // get events listing JSON from API and parse it
@@ -427,8 +433,10 @@ describe('The Person features of the CMS', function() {
       var json = JSON.parse(bodyText);
       var nameFirst = json.list[0].givenName;
       var nameSecond = json.list[1].givenName;
-      expect(nameFirst).toBe("Tyrion");
-      expect(nameSecond).toBe("Daenerys");
+      var nameThird = json.list[2].givenName;
+      expect(nameFirst).toBe("William");
+      expect(nameSecond).toBe("Tyrion");
+      expect(nameThird).toBe("Daenerys");
      });
 
     // get events listing JSON from API and parse it
@@ -447,8 +455,10 @@ describe('The Person features of the CMS', function() {
       var json = JSON.parse(bodyText);
       var nameFirst = json.list[0].name;
       var nameSecond = json.list[1].name;
-      expect(nameFirst).toBe("Tyrion Lannister");
-      expect(nameSecond).toBe("Daenerys Targaryen");
+      var nameThird = json.list[2].name;
+      expect(nameFirst).toBe("William Preston");
+      expect(nameSecond).toBe("Tyrion Lannister");
+      expect(nameThird).toBe("Daenerys Targaryen");
      });
 
   });
@@ -466,7 +476,7 @@ describe('The Person features of the CMS', function() {
       var honorificPrefix = json.list[0].honorificPrefix;
       expect(name).toBe("Tyrion Lannister");
       expect(honorificPrefix).toBe("Sir");
-      expect(json.list.length).toBe(1);
+      expect(json.list.length).toBe(2);
      });
 
     /* name, givenName, familyName */
