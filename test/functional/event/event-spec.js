@@ -57,7 +57,7 @@ describe('The Event features of the CMS', function() {
         element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
         // start date/time
-        element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('16/04/2015');
         element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
         element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
@@ -305,6 +305,140 @@ describe('The Event features of the CMS', function() {
 
 
   /* API input tests */
+
+  it('outputs events listing JSON and sorts by different fields', function () {
+
+    /* startDate, endDate */
+    var startDateAsc = '?sort=startDate&direction=ASC';
+    var startDateDesc = '?sort=startDate&direction=DESC';
+    var endDateAsc = '?sort=endDate&direction=ASC';
+    var endDateDesc = '?sort=endDate&direction=DESC';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + startDateAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].startDate);
+      var secondDate = Date.parse(json.list[1].startDate);
+      expect(firstDate).toBeLessThan(secondDate);
+     });
+
+      // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + startDateDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].startDate);
+      var secondDate = Date.parse(json.list[1].startDate);
+      expect(firstDate).toBeGreaterThan(secondDate);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + endDateAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].endDate);
+      var secondDate = Date.parse(json.list[1].endDate);
+      expect(firstDate).toEqual(secondDate);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + endDateDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].endDate);
+      var secondDate = Date.parse(json.list[1].endDate);
+      expect(firstDate).toEqual(secondDate);
+     });
+
+    /* name */
+    var nameAsc = '?sort=name&direction=ASC';
+    var nameDesc = '?sort=name&direction=Desc';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var titleFirst = json.list[0].name;
+        var titleSecond = json.list[1].name;
+        expect(titleFirst).toBe("Parent event page");
+        expect(titleSecond).toBe("Protractor event page");
+      });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var titleFirst = json.list[0].name;
+        var titleSecond = json.list[1].name;
+        expect(titleFirst).toBe("Protractor event page");
+        expect(titleSecond).toBe("Parent event page");
+      });
+
+    /* doorTime */
+    var doorTimeAsc = '?sort=doorTime&direction=ASC';
+    var doorTimeDesc = '?sort=doorTime&direction=DESC'
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + doorTimeAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var nameFirst = json.list[0].name;
+        expect(json.list.length).toBe(1);
+        expect(nameFirst).toBe("Protractor event page");
+      });
+
+        // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + doorTimeDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var nameFirst = json.list[0].name;
+        expect(json.list.length).toBe(1);
+        expect(nameFirst).toBe("Protractor event page");
+      });
+
+    /* duration */
+    var duration = '?sort=duration&direction=ASC';
+
+    browser.get(browser.params.url + '/api/event.json' + duration);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var duration = json.list[0].duration;
+        expect(json.list.length).toBe(1);
+        expect(duration).toBe("P0Y0M0DT2H30M0S");
+      });
+
+  });
+
+
+  it('outputs events listing JSON and filters by different fields', function () {
+
+    /* startDate, endDate */
+    var nameQuery = '?name=Protractor%20event%20page';
+    var ageRangeQuery = '?typicalAgeRange=4%2B';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Protractor event page");
+      expect(json.list.length).toBe(1);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + ageRangeQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var typicalAgeRange = json.list[0].typicalAgeRange;
+      expect(typicalAgeRange).toBe("4+");
+      expect(json.list.length).toBe(1);
+     });
+
+  });
 
   /* End of API input tests */
 
