@@ -42,9 +42,9 @@ function oe_schemaorg_rest_get_resource_mapping($resource) {
 /**
  * Return a Schema.org field map for a given entity type and bundle.
  *
- * @param $type
+ * @param string $type
  *   The entity type (e.g. 'node')
- * @param $bundle
+ * @param string $bundle
  *   The entity type bundle (e.g. 'article')
  * @return array
  *   A field map with keys the drupal field name and values the
@@ -67,8 +67,8 @@ function oe_schemaorg_rest_get_field_mappings($type, $bundle) {
         $predicate = trim($predicate);
 
         // If predicate starts with 'schema:' then add it to the map.
-        if (substr($predicate, 0, strlen($def)) === $def) {
-          $field_map[$mapping] = substr($predicate, strlen($def));
+        if (mb_substr($predicate, 0, mb_strlen($def)) === $def) {
+          $field_map[$mapping] = mb_substr($predicate, mb_strlen($def));
         }
       }
 
@@ -82,9 +82,9 @@ function oe_schemaorg_rest_get_field_mappings($type, $bundle) {
 /**
  * Returns the Entity field that corresponds to a Schema.org field.
  *
- * @param $schema_field
+ * @param string $schema_field
  *   The schema field name
- * @param $field_map
+ * @param array $field_map
  *   A field map for a given entity type and bundle as returned by
  *   oe_schemaorg_rest_get_field_mappings() function.
  * @return mixed
@@ -98,9 +98,9 @@ function oe_schemaorg_rest_get_field_name_entity($schema_field, $field_map) {
 /**
  * Returns the Schema.org field that corresponds to an Entity field
  *
- * @param $entity_field
+ * @param string $entity_field
  *   The entity field name.
- * @param $field_map
+ * @param array $field_map
  *   A field map for a given entity type and bundle as returned by
  *   oe_schemaorg_rest_get_field_mappings() function.
  * @return mixed
@@ -115,11 +115,13 @@ function oe_schemaorg_rest_get_field_name_schemaorg($entity_field, $field_map) {
  * Returns query string parameters from schemaorg field names to entity
  * field names.
  *
- * @param $parameters
+ * @param array $parameters
  *   Processed URL query parameters as returned from drupal_get_query_parameters().
- * @param $field_map
+ * @param array $field_map
  *   A field map for a given entity type and bundle as returned by
  *   oe_schemaorg_rest_get_field_mappings() function.
+ * @param array $taxonomy_terms
+ *   An array of taxonomy terms for the given entity bundle.
  * @return array
  *   Returns query string parameters array with schemaorg field names
  *   mapped to entity field names.
@@ -161,15 +163,15 @@ function oe_schemaorg_rest_map_query_parameters($parameters, $field_map, $taxono
 /**
  * Returns the term id of a term name
  *
- * @param $term_name
- * @return mixed
- *   Returns the term id of a term name, false
- *   otherwise
+ * @param string $term_name
+ * @return null
+ * @return number
+ *   Returns the term id of a term name, null otherwise
  */
 function oe_schemaorg_rest_get_term_tid($term_name) {
   $terms = taxonomy_get_term_by_name($term_name);
   if (empty($terms)){
-    return false;
+    return null;
   }
   $term = reset($terms);
   $tid = $term->tid;
@@ -177,7 +179,7 @@ function oe_schemaorg_rest_get_term_tid($term_name) {
 }
 
 /**
- * Define endpoints for all node bundles with a Schema.org mapping
+ * Implements hook_restws_resource_info().
  */
 function oe_schemaorg_rest_restws_resource_info() {
 
