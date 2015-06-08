@@ -216,7 +216,7 @@ function oe_schemaorg_rest_restws_resource_info() {
   {
     $endpoints[$schema_name] = array(
       'label' => t($schema_name),
-      'class' => 'OESchemaorgRestController',
+      'class' => 'OeSchemaorgRestController',
       'menu_path' => 'api/'.strtolower($schema_name),
     );
   }
@@ -238,7 +238,7 @@ function oe_schemaorg_rest_restws_resource_info() {
  */
 function oe_schemaorg_rest_restws_response_alter(&$response, $function, $format_name, $resource_controller) {
   // Capture any responses using our controller and send them for rewriting
-  if (is_a($resource_controller, 'OESchemaorgRestController')) {
+  if (is_a($resource_controller, 'OeSchemaorgRestController')) {
     // request for a single resource
     if ($function == 'viewResource') {
       $response = oe_schemaorg_rest_map_fields($response);
@@ -518,7 +518,7 @@ class OeSchemaorgRestWsFormatJson extends RestWSFormatJSON {
     $rest_controls = restws_meta_controls();
     $properties = $resourceController->propertyInfo();
 
-    // Override logic when the custom OESchemaorgRestController is set
+    // Override logic when the custom OeSchemaorgRestController is set
     if (is_a($resourceController, 'OeSchemaorgRestController')) {
 
       // Get controller info on the node we are dealing with.

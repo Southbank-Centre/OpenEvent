@@ -14,7 +14,7 @@
  */
 function oe_schemaorg_relation_restws_response_alter(&$response, $function, $formatName, $resourceController) {
   // Capture any responses using our controller and send them for rewriting
-  if (is_a($resourceController, 'OESchemaorgRestController')) {
+  if (is_a($resourceController, 'OeSchemaorgRestController')) {
     // request for a single resource
     if ($function == 'viewResource') {
       $response = oe_schemaorg_relation_add_mapped_relations($response);
