@@ -1,0 +1,42 @@
+<?php
+
+  /*
+   * @file
+   * OE Schema.org Office Hours module - Provides Schema.org mappings for Office Hours fields
+   */
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map office hours fields to Schema.org OpeningHoursSpecification
+   */
+  function oe_schemaorg_rest_office_hours_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($term == 'schema:openingHoursSpecification' && $field_info['type'] == 'office_hours') {
+      // mappings from office_hours representation to Schema.org representation
+      $openingMappings = array('day'=>'dayOfWeek', 'starthours'=>'opens', 'endhours'=>'closes');
+
+      // get full strings for the days of the week (0=>'Sunday', 1=>'Monday' etc.)
+      $daysOfWeek = date_week_days();
+
+      $newValue = array();
+      foreach ($value as $day) {
+        $newDay = array();
+        foreach ($openingMappings as $drupalField=>$schemaField) {
+          if ($drupalField == 'day') {
+            // Schema.org recommends using the purl.org links for DayOfWeek properties
+            $newDay[$schemaField] = 'http://purl.org/goodrelations/v1#' . $daysOfWeek[$day[$drupalField]];
+          }
+          else {
+            // office_hours strings are variable length numeric strings
+            // e.g. it would store 00:05 as 5, 00:55 as 55, 09:05 as 905, 23:05 as 2305
+            // we need to transform this to HH:MM:SS format for Schema.org
+            $normalisedTime = str_pad($day[$drupalField], 4, '0', STR_PAD_LEFT);
+            $date = DateTime::createFromFormat('Hi', $normalisedTime);
+            $newDay[$schemaField] = $date->format('H:i:s');
+          }
+        }
+        $newValue[] = $newDay;
+      }
+      $value = $newValue;
+    }
+  }

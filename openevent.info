@@ -50,6 +50,7 @@ dependencies[] = relation_add
 dependencies[] = relation_endpoint
 dependencies[] = relation_ui
 dependencies[] = restws
+dependencies[] = schemaorg
 dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
@@ -59,6 +60,16 @@ dependencies[] = oe_components
 dependencies[] = oe_event
 dependencies[] = oe_place
 dependencies[] = oe_person
+dependencies[] = oe_schemaorg_rest
+dependencies[] = oe_schemaorg_rest_address
+dependencies[] = oe_schemaorg_rest_date
+dependencies[] = oe_schemaorg_rest_duration
+dependencies[] = oe_schemaorg_rest_geo
+dependencies[] = oe_schemaorg_rest_image
+dependencies[] = oe_schemaorg_rest_link
+dependencies[] = oe_schemaorg_rest_office_hours
+dependencies[] = oe_schemaorg_rest_taxonomy
+dependencies[] = oe_schemaorg_relation
 
 ; File depedencies.
 files[] = openevent.profile
