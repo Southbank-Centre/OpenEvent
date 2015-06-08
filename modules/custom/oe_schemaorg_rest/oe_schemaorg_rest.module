@@ -411,6 +411,15 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    * Implements RestWSQueryResourceControllerInterface::query().
    *
    * Overrides the parent 'query' function to add the correct bundle as a filter
+   *
+   * @param array $filters
+   *   A list of properties to query for, or an empty array if all resources
+   *   should be counted.
+   * @param array $meta_controls
+   *   @see restws_meta_controls()
+   *
+   * @return array
+   *   An array containing the ids of the matching resources.
    */
   public function query($filters = array(), $meta_controls = array()) {
     $filters['type'] = $this->entityBundle;
@@ -421,6 +430,13 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    * Implements RestWSQueryResourceControllerInterface::count().
    *
    * Overrides the parent 'count' function to add the correct bundle as a filter
+   *
+   * @param array $filters
+   *   A list of properties to query for, or an empty array if all resources
+   *   should be returned.
+   *
+   * @return int
+   *   The number of resources available.
    */
   public function count($filters = array()) {
     $filters['type'] = $this->entityBundle;
@@ -430,6 +446,9 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
   /**
    * Overrides the parent 'resource' function to use the Schema.org name for
    * the resource, instead of the entityType
+   *
+   * @return string
+   *   The Schema.org name of the resource
    */
   public function resource() {
     return $this->entitySchema;
