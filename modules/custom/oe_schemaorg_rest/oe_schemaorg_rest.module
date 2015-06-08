@@ -10,14 +10,21 @@ function oe_schemaorg_rest_node_type_insert($info) {
 
 /**
  * Return all mappings from Drupal node bundles to Schema.org types
+ *
+ * @return array
+ *   A type map where keys are the drupal node bundle name
+ *   and values are the corresponding Schema.org type
  */
 function oe_schemaorg_rest_get_resource_mappings() {
-  $mappings = array();
-  $node_types = node_type_get_types();
-  foreach ($node_types as $bundle => $info) {
-    $schema_name = oe_schemaorg_rest_get_bundle_mapping($bundle);
-    if ($schema_name) {
-      $mappings[$bundle] = $schema_name;
+  $mappings = &drupal_static(__FUNCTION__);
+  if (!isset($mappings)) {
+    $mappings = array();
+    $entity_types = entity_get_info();
+    foreach($entity_types['node']['bundles'] as $bundle=>$info) {
+      $schema_name = oe_schemaorg_rest_get_bundle_mapping('node', $bundle);
+      if ($schema_name) {
+        $mappings[$bundle] = $schema_name;
+      }
     }
   }
   return $mappings;
@@ -25,9 +32,19 @@ function oe_schemaorg_rest_get_resource_mappings() {
 
 /**
  * Return the Schema.org type for a given node bundle
+ *
+ * @param $type
+ *   The entity type (e.g. 'node')
+ * @param $bundle
+ *   The entity type bundle (e.g. 'article')
+ * @return string
+ *   The name of the Schema.org type mapped to the node bundle
  */
-function oe_schemaorg_rest_get_bundle_mapping($bundle) {
-  $schema_name = schemaorg_ui_term_load('node', $bundle, 'rdftype');
+function oe_schemaorg_rest_get_bundle_mapping($type, $bundle) {
+  $schema_name = &drupal_static(__FUNCTION__ . "-" . $type . "-" . $bundle);
+  if (!isset($schema_name)) {
+    $schema_name = schemaorg_ui_term_load($type, $bundle, 'rdftype');
+  }
   return $schema_name;
 }
 
