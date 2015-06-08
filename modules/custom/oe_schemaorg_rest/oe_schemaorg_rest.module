@@ -355,8 +355,13 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
   /**
    * Helper function to respect node permissions while querying.
    *
-   * @param EntityFieldQuery $query
-   *   The query object.
+   * @param string $op
+   *   The operation being performed. One of 'view', 'update', 'create' or 'delete'.
+   * @param int $id
+   *   The ID of the node being requested
+   *   (or NULL if requesting access to all nodes)
+   * @return boolean
+   *   Whether access is allowed or not.
    */
   public function access($op, $id) {
     return entity_access($op, 'node', isset($id) ? $this->wrapper($id)->value() : NULL);
@@ -365,6 +370,11 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
   /**
    * Overrides the parent 'wrapper' function to ensure returned items are of the correct
    * content type for the requested resource
+   *
+   * @param int $id
+   *   The ID of a node to return a wrapper for
+   * @return EntityMetadataWrapper
+   *   The wrapped entity requested
    */
   public function wrapper($id) {
     $wrapper = entity_metadata_wrapper($this->entityType, $id, array('type'=>$this->entityBundle));
