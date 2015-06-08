@@ -2,7 +2,7 @@
 
 /**
  * @file
- * User interface for setting the schema.org mappings on Relations
+ * OpenEvent Schema.org Relation UI module - Provides UI for Schema.org mapping ability for the Relation module.
  */
 
 /**

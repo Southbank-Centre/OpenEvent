@@ -1,5 +1,11 @@
 <?php
 
+
+  /*
+   * @file
+   * OE Schema.org Image module - Provides Schema.org mappings for image fields
+   */
+
   /**
    * Implements hook_schemaorg_rest_field_alter
    *

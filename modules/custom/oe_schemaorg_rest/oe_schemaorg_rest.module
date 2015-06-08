@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * @file
+ * OE Schema.org REST module - Provides Schema.org mappings to Restful Web Services APIs
+ */
+
 /**
  * Implements hook_node_type_insert().
  */

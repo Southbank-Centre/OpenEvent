@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * @file
+ * OpenEvent Schema.org Relation module - Provides Schema.org mapping ability for the Relation module
+ */
+
 /**
  * Alter the outgoing response to add mapped data for RestWS - implements hook_restws_response_alter
  *
