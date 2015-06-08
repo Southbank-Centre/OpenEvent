@@ -201,6 +201,11 @@ function oe_schemaorg_rest_get_term_tid($term_name) {
 
 /**
  * Implements hook_restws_resource_info().
+ *
+ * Define endpoints for all node bundles with a Schema.org mapping
+ *
+ * @return array
+ *   Array defining new REST resources/endpoints, as expected for hook_restws_resource_info
  */
 function oe_schemaorg_rest_restws_resource_info() {
 
