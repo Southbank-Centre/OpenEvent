@@ -109,35 +109,38 @@ describe('The Person features of the CMS', function() {
     personGivenName.sendKeys('Tyrion');
     personFamilyName.sendKeys('Lannister');
 
-    // Test link without URL
-    tabExtra.click();
-    extraLinkTitle.sendKeys('Tywin');
-    save.click();
-    expect(messages.getText()).toContain('You cannot enter a title without a link url.');
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-    // Test link with malformed URL
-    tabExtra.click();
-    var wrongUrl = [
-      'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http//en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http://en.wikipedia/wiki/Tyrion_Lannister'
-    ];
-    extraLinkTitle.sendKeys('Wikipedia (wrong)');
-    var i = 0;
-    while (wrongUrl[i]) {
-      extraLinkUrl.clear();
-      extraLinkUrl.sendKeys(wrongUrl[i]);
+      // Test link without URL
+      tabExtra.click();
+      extraLinkTitle.sendKeys('Tywin');
       save.click();
-      expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person links is not a valid URL.');
-      i++;
-    }
+      expect(messages.getText()).toContain('You cannot enter a title without a link url.');
 
-    // Add good URL
-    extraLinkTitle.clear();
-    extraLinkTitle.sendKeys('Wikipedia');
-    extraLinkUrl.clear();
-    extraLinkUrl.sendKeys('http://en.wikipedia.org/wiki/Tyrion_Lannister');
+      // Test link with malformed URL
+      var wrongUrl = [
+        'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http//en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http://en.wikipedia/wiki/Tyrion_Lannister'
+      ];
+      extraLinkTitle.sendKeys('Wikipedia (wrong)');
+      var i = 0;
+      while (wrongUrl[i]) {
+        extraLinkUrl.clear();
+        extraLinkUrl.sendKeys(wrongUrl[i]);
+        save.click();
+        expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person links is not a valid URL.');
+        i++;
+      }
+
+      // Add good URL
+      extraLinkTitle.clear();
+      extraLinkTitle.sendKeys('Wikipedia');
+      extraLinkUrl.clear();
+      extraLinkUrl.sendKeys('http://en.wikipedia.org/wiki/Tyrion_Lannister');
+
+    });
 
     browser.executeScript('window.scrollTo(0,0);').then(function () {
 
