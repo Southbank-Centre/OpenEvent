@@ -339,6 +339,11 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
   /**
    *  Constructor - override the parent constructor so that the entity type
    *  is always 'node', and the correct Schema.org type and node bundle are set
+   *
+   * @param string $schema
+   *   The Schema.org type to be used by the controller
+   * @param string $info
+   *   Information about the endpoint calling the controller
    */
   public function __construct($schema, $info) {
     $this->entityType = 'node';
