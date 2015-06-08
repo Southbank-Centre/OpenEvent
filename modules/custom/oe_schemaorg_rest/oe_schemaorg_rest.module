@@ -274,7 +274,7 @@ function oe_schemaorg_rest_map_fields($response) {
   $newResponse = array();
 
   // get the mappings for the entire content type
-  $schema_name = oe_schemaorg_rest_get_bundle_mapping($response['type']);
+  $schema_name = oe_schemaorg_rest_get_bundle_mapping('node', $response['type']);
   $mappings = rdf_mapping_load('node', $response['type']);
 
   foreach($response as $field_name=>$value) {
