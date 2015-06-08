@@ -95,6 +95,8 @@ describe('OE API documentation', function() {
 
         var resourceName = schemaTypes[i-1];
         schemaPropertyMappings[resourceName] = [];
+        schemaPropertyMappings[resourceName]['name'] = {"description": ""};
+        schemaPropertyMappings[resourceName]['url'] = {"description": ""};
         var numFields = count;
         var j = 0;
         var getSchemaPropertyMappings = function() {
@@ -154,14 +156,30 @@ describe('OE API documentation', function() {
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(2) > h3 > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(1)')).getText()).toBe('Returns a list of ' + resourceName + ' items.');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(1)')).getText()).toBe('Filtering');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(2)')).getText()).toBe('You can filter on any of properties listed below, in the following way:');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(2)')).getText()).toBe('You can filter in the following way:');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(3) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?<propertyName>=<propertyValue>');
-      element.all(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > table:nth-of-type(2) > tbody > tr')).count(function(count) {
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(4) > em')).getText()).toBe('Note: Not all properties are available for filtering.');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(2)')).getText()).toBe('Sorting');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(5)')).getText()).toBe('You can sort by passing the sort parameter:');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(6) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?sort=<propertyName>');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(7)')).getText()).toBe('You can also specify the sort direction (ASC | DES):');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(8) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?sort=<propertyName>&direction=DES');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(3)')).getText()).toBe('Pagination');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(9)')).getText()).toBe('You can specify an offset to exclude the first N results:');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(10) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?offset=<N>');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(11)')).getText()).toBe('You can also specify a limit to the number of results returned by the call:');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(12) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?limit=<N>');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(13)')).getText()).toContain('There is a hard limit of');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(13)')).getText()).toContain('items per API call, which cannot be exceeded.');
+
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(3) > h3')).getText()).toBe('Properties');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > p:nth-of-type(1)')).getText()).toContain(resourceName + ' items contain some or all of the following properties:');
+      element.all(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > table:nth-of-type(2) > tbody > tr')).count(function(count) {
         // test that the number of properties displayed is the same as the number of
         // fields that have a schema.org mapping
         expect(count).toBe(Object.keys(schemaPropertyMappings[resourceName]).length);
       });
-      element.all(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > table:nth-of-type(2) > tbody > tr')).each(function(tableRow) {
+      element.all(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > table:nth-of-type(2) > tbody > tr')).each(function(tableRow) {
         tableRow.element(by.css('td:nth-of-type(1)')).getText().then(function(propertyName) {
           // test the property name is correct
           expect(schemaPropertyMappings[resourceName].hasOwnProperty(propertyName)).toBe(true);
@@ -171,23 +189,6 @@ describe('OE API documentation', function() {
           });
         });
       });
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(2)')).getText()).toBe('Sorting');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(4)')).getText()).toBe('You can sort by passing the sort parameter:');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(5) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?sort=<propertyName>');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(6)')).getText()).toBe('You can also specify the sort direction (ASC | DES):');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(7) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?sort=<propertyName>&direction=DES');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(3)')).getText()).toBe('Pagination');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(8)')).getText()).toBe('You can specify an offset to exclude the first N results:');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(9) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?offset=<N>');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(10)')).getText()).toBe('You can also specify a limit to the number of results returned by the call:');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(11) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?limit=<N>');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(12)')).getText()).toContain('There is a hard limit of');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(12)')).getText()).toContain('items per API call, which cannot be exceeded.');
-
-
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(3) > h3')).getText()).toBe('Permissions');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > p:nth-of-type(1)')).getText()).toContain('The following roles have permission to access the ' + resourceName + ' resource:');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3)')).getAttribute('innerHTML')).toContain('<ul>');
 
     });
   });

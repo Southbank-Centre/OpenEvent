@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * OpenEvent Self Documenting REST API module.
+ */
+
+/**
  * Implements hook_menu_alter()
  */
 function oe_rest_api_doc_menu_alter(&$items) {
@@ -24,6 +29,11 @@ function oe_rest_api_doc_permission() {
 
 /**
  * API documentation page.
+ *
+ * @param $format
+ *   The data format that is to be displayed
+ * @return array
+ *   The render array for the page
  */
 function oe_rest_api_doc_page($format = '') {
   $resources = oe_schemaorg_rest_restws_resource_info();
@@ -90,21 +100,9 @@ function oe_rest_api_doc_page($format = '') {
       $page['body']['#markup'] .= '<p>Returns a list of ' . $type . ' items.</p>';
       // Filtering
       $page['body']['#markup'] .= '<h4>Filtering</h4>';
-      $page['body']['#markup'] .= '<p>You can filter on any of properties listed below, in the following way:</p>';
+      $page['body']['#markup'] .= '<p>You can filter in the following way:</p>';
       $page['body']['#markup'] .= '<p><code>/' . $resource['menu_path'] . '.' . $format . '?&lt;propertyName&gt;=&lt;propertyValue&gt;</code></p>';
-      $property_rows = array();
-      $controller = restws_resource_controller($type);
-      foreach ($controller->propertyInfo() as $property => $property_info) {
-        if (substr($property, 0, 7) == 'schema:') {
-          $property = substr($property, 7);
-        }
-        $property_rows[] = array(
-          $property,
-          $property_info['description'],
-        );
-      }
-      $properties_table = theme('table', array('rows' => $property_rows, 'header' => array('Property', 'Description')));
-      $page['body']['#markup'] .= $properties_table;
+      $page['body']['#markup'] .= '<p><em>Note: Not all properties are available for filtering.</em></p>';
       // Sorting
       $page['body']['#markup'] .= '<h4>Sorting</h4>';
       $page['body']['#markup'] .= '<p>You can sort by passing the <code>sort</code> parameter:</p>';
@@ -121,18 +119,23 @@ function oe_rest_api_doc_page($format = '') {
 
       $page['body']['#markup'] .= '</dd>';
 
-      // Permissions
+      // Properties
       $page['body']['#markup'] .= '<dt>';
-      $page['body']['#markup'] .= '<h3>Permissions</h3>';
+      $page['body']['#markup'] .= '<h3>Properties</h3>';
       $page['body']['#markup'] .= '</dt>';
       $page['body']['#markup'] .= '<dd>';
-      $page['body']['#markup'] .= '<p>The following roles have permission to access the ' . $type . ' resource:</p>';
-      $page['body']['#markup'] .= '<ul>';
-      $roles = user_roles(FALSE, 'access resource ' . $type);
-      foreach($roles as $role) {
-        $page['body']['#markup'] .= '<li>' . $role . '</li>';
+      $page['body']['#markup'] .= '<p>' . $type . ' items contain some or all of the following properties:</p>';
+      $property_rows = array();
+      $controller = restws_resource_controller($type);
+      $properties = oe_rest_api_get_properties_with_description($controller);
+      foreach ($properties as $property => $property_info) {
+        $property_rows[] = array(
+          $property,
+          $property_info['field_description'],
+        );
       }
-      $page['body']['#markup'] .= '</ul>';
+      $properties_table = theme('table', array('rows' => $property_rows, 'header' => array('Property', 'Description')));
+      $page['body']['#markup'] .= $properties_table;
       $page['body']['#markup'] .= '</dd>';
 
       $page['body']['#markup'] .= '</dl>';
@@ -142,4 +145,22 @@ function oe_rest_api_doc_page($format = '') {
   }
 
   return $page;
+}
+
+/**
+ * Maps properties to schema.org and gets field description
+ */
+function oe_rest_api_get_properties_with_description($controller) {
+  $properties = $controller->propertyInfo();
+  $field_map = oe_schemaorg_rest_get_field_mappings($controller->type(), $controller->bundle());
+  $properties_mapped = array();
+  foreach($properties as $field_name => $property) {
+    $property_name = oe_schemaorg_rest_get_field_name_schemaorg($field_name, $field_map);
+    if ($property_name) {
+      $field_info = field_info_instance($controller->type(), $field_name, $controller->bundle());
+      $properties_mapped[$property_name] = $property;
+      $properties_mapped[$property_name]['field_description'] = $field_info['description'];
+    }
+  }
+  return $properties_mapped;
 }
