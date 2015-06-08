@@ -139,16 +139,20 @@ describe('The Person features of the CMS', function() {
     extraLinkUrl.clear();
     extraLinkUrl.sendKeys('http://en.wikipedia.org/wiki/Tyrion_Lannister');
 
-    // Publish it
-    tabOptions.click();
-    optionsPublished.isSelected().then(function(selected) {
-      if (!selected) {
-        optionsPublished.click();
-      }
-    });
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-    // Save the node
-    save.click();
+      // Publish it
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
+
+      // Save the node
+      save.click();
+
+    });
 
     // Expectations
     expect(messages.getText()).toContain('Person Tyrion Lannister has been created.');
