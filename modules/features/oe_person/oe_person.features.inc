@@ -30,7 +30,7 @@ function oe_person_node_info() {
       'description' => t('Open Event content type for a person (alive, dead, undead, or fictional).<br/>
 Designed in accordance with the <a href="http://schema.org/Person" target="_blank">Schema.org Person type</a>.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Person name'),
       'help' => '',
     ),
   );

@@ -30,7 +30,7 @@ function oe_organization_node_info() {
       'description' => t('Open Event content type for an organization, such as a school, NGO, corporation, club, etc.<br/>
 Designed in accordance with the <a href="http://schema.org/Organization" target="_blank">Schema.org organization type</a>.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Organization name'),
       'help' => '',
     ),
   );
