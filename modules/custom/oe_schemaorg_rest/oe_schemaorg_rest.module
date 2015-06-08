@@ -164,8 +164,7 @@ function oe_schemaorg_rest_map_query_parameters($parameters, $field_map, $taxono
  * Returns the term id of a term name
  *
  * @param string $term_name
- * @return null
- * @return number
+ * @return number|null
  *   Returns the term id of a term name, null otherwise
  */
 function oe_schemaorg_rest_get_term_tid($term_name) {
@@ -227,25 +226,12 @@ function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatN
 }
 
 /**
- * Alter available format information.
- *
- * @param array $format_info
- *   Format information as defined in hook_restws_format_info()
+ * Implements hook_restws_format_info().
  */
 function oe_schemaorg_rest_restws_format_info_alter(&$format_info) {
   unset($format_info['xml']);
   unset($format_info['rdf']);
   $format_info['json']['class'] = 'OESchemaorgRestWSFormatJSON';
-
-}
-
-/**
- * Alter the incoming request array.
- *
- * @param array $request
- *
- */
-function oe_schemaorg_rest_restws_request_alter(array &$request) {
 
 }
 
@@ -313,7 +299,7 @@ function oe_schemaorg_rest_schemaorg_rest_field_alter(&$value, &$term, &$field_i
 /**
  * Controller for Schema.org-mapped node bundle resources.
  */
-class OESchemaorgRestController extends RestWSEntityResourceController {
+class OeSchemaorgRestController extends RestWSEntityResourceController {
 
   // properties for tracking the Schema.org type & corresponding node bundle for a transaction
   protected $entitySchema, $entityBundle;
@@ -423,9 +409,9 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
   /**
    * Returns an array of term fields.
    *
-   * @return mixed
+   * @return array|null
    */
-  public function taxonomy_terms() {
+  public function taxonomyTerms() {
     $properties = $this->propertyInfo();
     $taxonomy_terms = array();
 
@@ -435,23 +421,28 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
         $taxonomy_terms[] = $field;
       }
     }
-    return !empty($taxonomy_terms) ? $taxonomy_terms : false;
+    return !empty($taxonomy_terms) ? $taxonomy_terms : null;
   }
 
 }
 
 /**
- * A formatter to format json.
+ * Class OeSchemaorgRestWsFormatJson
  *
- * Overrides RestWSFormatJSON.
+ * Extends RestWSFormatJSON class to provide field mappings to Schema.org fields
+ * in query string parameters.
  */
-class OESchemaorgRestWSFormatJSON extends RestWSFormatJSON {
-
+class OeSchemaorgRestWsFormatJson extends RestWSFormatJSON {
   /**
    * Implements RestWSFormatInterface::queryResource().
    *
    * Overrides the parent query resource function to provide field mappings from
    * Schema.org values back to content type fields.
+   *
+   * @param \RestWSResourceControllerInterface $resourceController
+   * @param array $payload
+   * @return string
+   * @throws \RestWSException
    */
   public function queryResource($resourceController, $payload) {
 
@@ -462,12 +453,12 @@ class OESchemaorgRestWSFormatJSON extends RestWSFormatJSON {
     $properties = $resourceController->propertyInfo();
 
     // Override logic when the custom OESchemaorgRestController is set
-    if (is_a($resourceController, 'OESchemaorgRestController')) {
+    if (is_a($resourceController, 'OeSchemaorgRestController')) {
 
       // Get controller info on the node we are dealing with.
       $type = $resourceController->type();
       $bundle = $resourceController->bundle();
-      $taxonomy_terms = $resourceController->taxonomy_terms();
+      $taxonomy_terms = $resourceController->taxonomyTerms();
 
       // Get field mapping definition for the given type and bundle.
       $field_map = oe_schemaorg_rest_get_field_mappings($type, $bundle);
