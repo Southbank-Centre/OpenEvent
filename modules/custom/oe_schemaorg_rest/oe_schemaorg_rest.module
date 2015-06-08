@@ -231,14 +231,14 @@ function oe_schemaorg_rest_restws_resource_info() {
  *   The response data being returned by the REST service (not yet serialized).
  * @param string $function
  *   The function being called on the REST service.
- * @param string $formatName
+ * @param string $format_name
  *   The name of the format serializing the response.
- * @param RestWSResourceControllerInterface $resourceController
+ * @param RestWSResourceControllerInterface $resource_controller
  *   The resource controller.
  */
-function oe_schemaorg_rest_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+function oe_schemaorg_rest_restws_response_alter(&$response, $function, $format_name, $resource_controller) {
   // Capture any responses using our controller and send them for rewriting
-  if (is_a($resourceController, 'OESchemaorgRestController')) {
+  if (is_a($resource_controller, 'OESchemaorgRestController')) {
     // request for a single resource
     if ($function == 'viewResource') {
       $response = oe_schemaorg_rest_map_fields($response);
