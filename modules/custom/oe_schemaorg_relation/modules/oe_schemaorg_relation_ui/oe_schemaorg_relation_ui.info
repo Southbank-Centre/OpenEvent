@@ -1,4 +1,4 @@
-name = OpenEvent Schema.org Relation
+name = OpenEvent Schema.org Relation UI
 description = Provides UI for Schema.org mapping ability for the Relation module.
 core = 7.x
 dependencies[] = schemaorg_ui
