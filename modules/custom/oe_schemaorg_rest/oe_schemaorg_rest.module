@@ -53,7 +53,7 @@ function oe_schemaorg_rest_get_bundle_mapping($type, $bundle) {
  *
  * @param $resource
  *   The name of the Schema.org type (e.g. 'Person')
- * @return string
+ * @return mixed
  *   The name of the corresponding node bundle, or FALSE if there is none
  */
 function oe_schemaorg_rest_get_resource_mapping($resource) {
