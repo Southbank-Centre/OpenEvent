@@ -264,6 +264,11 @@ function oe_schemaorg_rest_restws_format_info_alter(&$format_info) {
 
 /**
  * Map the fields in a returned item to its Schema.org representation
+ *
+ * @param array $response
+ *   Structure defining the response to be output by rest_ws
+ * @return array
+ *   Structure defining the response using Schema.org mappings
  */
 function oe_schemaorg_rest_map_fields($response) {
   $newResponse = array();
@@ -280,22 +285,22 @@ function oe_schemaorg_rest_map_fields($response) {
     else {
       $field_info = field_info_field($field_name);
       // load the field predicates (where the RDF mapping is stored)
-      $terms = array();
+      $mapped_terms = array();
       if (!empty($mappings[$field_name]['predicates'])) {
-        $terms = $mappings[$field_name]['predicates'];
+        $mapped_terms = $mappings[$field_name]['predicates'];
       }
       // if the field has a Schema.org mapping, add it with this to the output
-      foreach ($terms as $term) {
-        if (strpos(trim($term), 'schema:') === 0) {
+      foreach ($mapped_terms as $mapped_term) {
+        if (strpos(trim($mapped_term), 'schema:') === 0) {
           // alter the URL of the item to use the REST address
-          if ($term == 'schema:url') {
+          if ($mapped_term == 'schema:url') {
             $value = restws_resource_uri($schema_name, $response['nid']);
           }
 
           // call hook to allow other modules to modify the field contents
-          drupal_alter('schemaorg_rest_field', $value, $term, $field_info);
+          drupal_alter('schemaorg_rest_field', $value, $mapped_term, $field_info);
 
-          $newResponse[mb_substr($term,7)] = $value;
+          $newResponse[mb_substr($mapped_term,7)] = $value;
           break;
         }
       }
