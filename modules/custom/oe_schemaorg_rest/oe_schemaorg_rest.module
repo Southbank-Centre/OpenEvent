@@ -49,7 +49,12 @@ function oe_schemaorg_rest_get_bundle_mapping($type, $bundle) {
 }
 
 /**
- * Return the Drupal node bundle for a given Schema.org name
+ * Return the Drupal node bundle mapped to a given Schema.org type
+ *
+ * @param $resource
+ *   The name of the Schema.org type (e.g. 'Person')
+ * @return string
+ *   The name of the corresponding node bundle, or FALSE if there is none
  */
 function oe_schemaorg_rest_get_resource_mapping($resource) {
   $mappings = oe_schemaorg_rest_get_resource_mappings();
