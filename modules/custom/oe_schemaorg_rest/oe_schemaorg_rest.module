@@ -393,6 +393,9 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
 
   /**
    * Overrides parent 'create' method and returns an 'Non implemented' message.
+   *
+   * @param array $values
+   * @throws \RestWSException
    */
   public function create(array $values) {
     throw new RestWSException('Not implemented', 501);
@@ -400,6 +403,10 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
 
   /**
    * Overrides parent 'update' method and returns an 'Non implemented' message.
+   *
+   * @param int|string $id
+   * @param array $values
+   * @throws \RestWSException
    */
   public function update($id, array $values) {
     throw new RestWSException('Not implemented', 501);
@@ -407,6 +414,9 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
 
   /**
    * Overrides parent 'delete' method and returns a 'Non implemented' message.
+   *
+   * @param int|string $id
+   * @throws \RestWSException
    */
   public function delete($id) {
     throw new RestWSException('Non implemented', 501);
