@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * Implements hook_node_type_insert().
+ */
+function oe_schemaorg_rest_node_type_insert($info) {
+  $permissions = module_invoke('restws', 'permission');
+  drupal_static_reset('restws_get_resource_info');
+}
+
+/**
  * Return all mappings from Drupal node bundles to Schema.org types
  */
 function oe_schemaorg_rest_get_resource_mappings() {
@@ -293,7 +301,7 @@ function oe_schemaorg_rest_map_fields($response) {
  * Map default Drupal fields to Schema.org properties
  */
 function oe_schemaorg_rest_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
-  if ($term == 'schema:description' && $field_info['type'] == 'text_long') {
+  if (!empty($value) && $term == 'schema:description' && $field_info['type'] == 'text_long') {
     // map Drupal's description representation to Schema.org
     $value = $value['value'];
   }
@@ -439,7 +447,7 @@ class OESchemaorgRestController extends RestWSEntityResourceController {
     $taxonomy_terms = array();
 
     foreach ($properties as $field => $value) {
-      $type = $value['type'];
+      $type = isset($value['type']) ? $value['type'] : false;
       if ($type == 'taxonomy_term') {
         $taxonomy_terms[] = $field;
       }
