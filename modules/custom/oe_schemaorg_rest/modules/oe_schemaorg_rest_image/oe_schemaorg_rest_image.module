@@ -12,7 +12,7 @@
    * Map image fields to Schema.org ImageObject
    */
   function oe_schemaorg_rest_image_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
-    if ($term == 'schema:image' && $field_info['type'] == 'image') {
+    if (($term == 'schema:image' || $term == 'schema:logo') && $field_info['type'] == 'image') {
       // handle multi-value image fields
       if ($field_info['cardinality'] != 1 && !isset($value['file'])) {
         foreach(array_keys($value) as $index) {
