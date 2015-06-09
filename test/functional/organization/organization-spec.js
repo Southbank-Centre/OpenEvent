@@ -209,7 +209,7 @@ describe('The Organization features of the CMS', function() {
 
   it('sets relationship to Event', function() {
     // Organization
-    var orgName = 'Lannister';
+    var orgName = 'Bob';
 
     // Add event
     var eventName = 'Expunge (Targaryen)';
@@ -316,6 +316,50 @@ describe('The Organization features of the CMS', function() {
       expect(json.performerIn.length).toEqual(1);
       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
     });
+  });
+
+  it('outputs organization listing JSON and sorts by different fields', function () {
+
+    /* familyName, givenName, name */
+    var nameAsc = '?sort=name&direction=ASC';
+    var nameDesc = '?sort=name&direction=DESC';
+
+    // get organization listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/organization.json' + nameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Bob");
+      expect(nameSecond).toBe("Lannister");
+    });
+
+    // get organization listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/organization.json' + nameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var nameFirst = json.list[0].name;
+      var nameSecond = json.list[1].name;
+      expect(nameFirst).toBe("Lannister");
+      expect(nameSecond).toBe("Bob");
+    });
+
+  });
+
+  it('outputs organization listing JSON and filters by different fields', function () {
+
+    /* Filter name */
+    var nameQuery = '?name=Bob';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/organization.json' + nameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Bob");
+      expect(json.list.length).toBe(1);
+    });
+
   });
 
   it('will take place after all tests have passed', function() {
