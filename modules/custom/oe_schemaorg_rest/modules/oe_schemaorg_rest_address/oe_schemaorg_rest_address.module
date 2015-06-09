@@ -19,7 +19,7 @@
         "name_line"=>"",
         "first_name"=>"",
         "last_name"=>"",
-        "organisation_name"=>"",
+        "organisation_name"=>"name",
         "administrative_area"=>"addressRegion",
         "sub_administrative_area"=>"addressRegion",
         "locality"=>"addressLocality",
