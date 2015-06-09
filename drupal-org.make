@@ -46,6 +46,7 @@ projects[token][version] = 1.6
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
 projects[relation][version] = 1.0-rc7
+projects[schemaorg][version] = 1.0-rc1
 projects[table_element][version] = 1.0-beta1
 
 ; Defaults

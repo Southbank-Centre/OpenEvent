@@ -1,0 +1,78 @@
+<?php
+
+  /*
+   * @file
+   * OE Schema.org Address module - Provides Schema.org mappings for address fields
+   */
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map address fields to Schema.org PostalAddress
+   */
+  function oe_schemaorg_rest_address_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($term == 'schema:address' && $field_info['type'] == 'addressfield') {
+
+      // mappings from Drupal's addressfield representation to Schema.org PostalAddress representation
+      $addressMappings = array(
+        "country"=>"addressCountry",
+        "name_line"=>"",
+        "first_name"=>"",
+        "last_name"=>"",
+        "organisation_name"=>"",
+        "administrative_area"=>"addressRegion",
+        "sub_administrative_area"=>"addressRegion",
+        "locality"=>"addressLocality",
+        "dependent_locality"=>"addressLocality",
+        "postal_code"=>"postalCode",
+        "thoroughfare"=>"streetAddress",
+        "premise"=>"streetAddress",
+        "sub_premise"=>"streetAddress"
+      );
+
+      $newAddress = array();
+      foreach ($value as $key => $fieldValue) {
+        $fieldValue = trim($fieldValue);
+
+        // ensure the administrative area is fully expanded
+        if ($key == "administrative_area") {
+          $fieldValue = oe_schemaorg_rest_address_get_administrative_area($value['country'], $fieldValue);
+        }
+
+        if ($addressMappings[$key] != "" && $fieldValue != "") {
+          if (isset($newAddress[$addressMappings[$key]])) {
+            // some Schema.org fields have multiple addressfield fields mapping to
+            // them, so we need to handle appending these correctly
+            if ($key == "dependent_locality" || $key == "sub_administrative_area") {
+              $newAddress[$addressMappings[$key]] = $fieldValue . ", " . $newAddress[$addressMappings[$key]];
+            }
+            else {
+              $newAddress[$addressMappings[$key]] .= ", " . $fieldValue;
+            }
+          }
+          else {
+            $newAddress[$addressMappings[$key]] = $fieldValue;
+          }
+        }
+      }
+      $value = $newAddress;
+    }
+  }
+
+  /**
+   * Get the administrative area for a given country's address
+   */
+  function oe_schemaorg_rest_address_get_administrative_area($country, $area) {
+    // The addressfield module allows some address formats to use a select list
+    // for their administrative area. This needs to be rendered to text for Schema.org
+    module_load_include('inc', 'addressfield', 'addressfield.address_formats');
+    $format = addressfield_get_address_format($country);
+    if ($format['render_administrative_area_value']) {
+      module_load_include('inc', 'addressfield', 'addressfield.administrative_areas');
+      $administrative_areas = addressfield_get_administrative_areas($country);
+      if (isset($administrative_areas[$area])) {
+        $area = $administrative_areas[$area];
+      }
+    }
+    return $area;
+  }

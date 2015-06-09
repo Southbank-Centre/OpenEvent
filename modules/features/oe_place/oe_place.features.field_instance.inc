@@ -77,8 +77,12 @@ function oe_place_field_default_field_instances() {
   $field_instances['node-place-field_image'] = array(
     'bundle' => 'place',
     'deleted' => 0,
-    'description' => '<p>Images that represent the place. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>',
+    'description' => 'An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a> as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -247,15 +251,14 @@ function oe_place_field_default_field_instances() {
     'bundle' => 'place',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '<p>The opening hours of the place. Leave field blank when there are no opening hours for a particular day.</p>
-<p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/openingHoursSpecification" target="_blank">openingHoursSpecification</a></code> Schema.org property.</p>',
+    'description' => 'The opening hours of the place. Leave field blank when there are no opening hours for a particular day. <p>Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.openingHoursSpecification</code></a></p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'office_hours',
         'settings' => array(
           'closedformat' => 'Closed',
-          'compress' => 0,
+          'compress' => FALSE,
           'current_status' => array(
             'closed_text' => 'Currently closed',
             'open_text' => 'Currently open!',
@@ -274,7 +277,7 @@ function oe_place_field_default_field_instances() {
           'timezone_field' => '',
         ),
         'type' => 'office_hours',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -371,6 +374,12 @@ function oe_place_field_default_field_instances() {
 <p>Note that an place can be the child of multiple other place, but it cannot be the child of an place that lists it as a parent.</p>
 <p>Maps to the <code><a href="https://schema.org/Place" target="_blank">Place</a>.<a href="https://schema.org/containedIn" target="_blank">containedIn</a></code> Schema.org property.</p>');
   t('Address');
+  t('An image that represents the place. Maps to <a href="https://schema.org/Place" target="_blank">schema.org <code>Place.image</code></a> as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>');
   t('Description');
   t('Geolocation');
   t('Image');

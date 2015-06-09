@@ -31,7 +31,7 @@ function oe_event_node_info() {
       'name' => t('Event'),
       'base' => 'node_content',
       'description' => t('Open Event content type for an event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects.<br/>
-Designed in accordance with the <a href="https://schema.org/Event" target="_blank">Schema.org Event type</a>.'),
+Designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
       'has_title' => '1',
       'title_label' => t('Event name'),
       'help' => '',
@@ -39,4 +39,143 @@ Designed in accordance with the <a href="https://schema.org/Event" target="_blan
   );
   drupal_alter('node_info', $items);
   return $items;
+}
+
+/**
+ * Implements hook_rdf_default_mappings().
+ */
+function oe_event_rdf_default_mappings() {
+  $schemaorg = array();
+
+  // Exported RDF mapping: event
+  $schemaorg['node']['event'] = array(
+    'rdftype' => array(
+      0 => 'schema:Event',
+      1 => 'sioc:Item',
+      2 => 'foaf:Document',
+    ),
+    'title' => array(
+      'predicates' => array(
+        0 => 'schema:name',
+      ),
+    ),
+    'created' => array(
+      'predicates' => array(
+        0 => 'dc:date',
+        1 => 'dc:created',
+      ),
+      'datatype' => 'xsd:dateTime',
+      'callback' => 'date_iso8601',
+    ),
+    'changed' => array(
+      'predicates' => array(
+        0 => 'dc:modified',
+      ),
+      'datatype' => 'xsd:dateTime',
+      'callback' => 'date_iso8601',
+    ),
+    'body' => array(
+      'predicates' => array(
+        0 => 'content:encoded',
+      ),
+    ),
+    'uid' => array(
+      'predicates' => array(
+        0 => 'sioc:has_creator',
+      ),
+      'type' => 'rel',
+    ),
+    'name' => array(
+      'predicates' => array(
+        0 => 'schema:name',
+      ),
+    ),
+    'comment_count' => array(
+      'predicates' => array(
+        0 => 'sioc:num_replies',
+      ),
+      'datatype' => 'xsd:integer',
+    ),
+    'last_activity' => array(
+      'predicates' => array(
+        0 => 'sioc:last_activity_date',
+      ),
+      'datatype' => 'xsd:dateTime',
+      'callback' => 'date_iso8601',
+    ),
+    'field_event_performers' => array(
+      'predicates' => array(
+        0 => 'schema:performer',
+      ),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
+    ),
+    'field_event_date_start' => array(
+      'predicates' => array(
+        0 => 'schema:startDate',
+      ),
+    ),
+    'field_event_date_end' => array(
+      'predicates' => array(
+        0 => 'schema:endDate',
+      ),
+    ),
+    'field_description' => array(
+      'predicates' => array(
+        0 => 'schema:description',
+      ),
+    ),
+    'field_image' => array(
+      'predicates' => array(
+        0 => 'schema:image',
+      ),
+      'type' => 'rel',
+    ),
+    'field_event_parents' => array(
+      'predicates' => array(
+        0 => 'schema:superEvent',
+      ),
+    ),
+    'field_event_duration' => array(
+      'predicates' => array(
+        0 => 'schema:duration',
+      ),
+    ),
+    'field_event_door_time' => array(
+      'predicates' => array(
+        0 => 'schema:doorTime',
+      ),
+    ),
+    'field_event_age_range' => array(
+      'predicates' => array(
+        0 => 'schema:typicalAgeRange',
+      ),
+    ),
+  );
+
+  // Exported RDF mapping: event_is_contained_in_event
+  $schemaorg['relation']['event_is_contained_in_event'] = array(
+    'source_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:superEvent',
+      ),
+    ),
+    'target_bundles' => array(
+      'predicates' => array(
+        0 => 'schema:subEvent',
+      ),
+    ),
+    'url' => array(
+      'predicates' => array(
+        0 => 'schema:url',
+      ),
+      'type' => 'rel',
+    ),
+  );
+
+  return $schemaorg;
 }

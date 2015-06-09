@@ -1,0 +1,42 @@
+<?php
+
+  /*
+   * @file
+   * OE Schema.org Geo module - Provides Schema.org mappings for geo fields
+   */
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map geolocation fields to Schema.org GeoCoordinates
+   */
+  function oe_schemaorg_rest_geo_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($term == 'schema:geo' && $field_info['type'] == 'geolocation_latlng') {
+      // mappings from Drupal's geolocation representation to Schema.org representation
+      $geoMappings = array('lat'=>'latitude', 'lng'=>'longitude');
+
+      $newGeo = array();
+      foreach ($value as $key => $fieldValue) {
+        if (isset($geoMappings[$key])) {
+          $newGeo[$geoMappings[$key]] = $fieldValue;
+        }
+      }
+
+      $value = $newGeo;
+    }
+  }
+
+  /**
+   * Implements hook_schemaorg_rest_response_alter
+   *
+   * Adds a hasMap property containing an OpenStreetMap link to Place responses
+   * that have a geo property but no hasMap
+   */
+  function oe_schemaorg_rest_geo_schemaorg_rest_response_alter(&$response, $type) {
+    if ($type == 'place') {
+      if (sizeof($response['geo']) > 0 && !isset($response['hasMap'])) {
+        $osmLinkFormat = 'http://www.openstreetmap.org/?mlat=%1$s&mlon=%2$s#map=15/%1$s/%2$s';
+        $response['hasMap'] = sprintf($osmLinkFormat, $response['geo']['latitude'], $response['geo']['longitude']);
+      }
+    }
+  }

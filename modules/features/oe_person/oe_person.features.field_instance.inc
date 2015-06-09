@@ -77,8 +77,13 @@ function oe_person_field_default_field_instances() {
   $field_instances['node-person-field_image'] = array(
     'bundle' => 'person',
     'deleted' => 0,
-    'description' => '<p>Images that represent the person. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.',
+    'description' => 'Image or photo from the person. Multiple images are allowed.<br/>
+Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -735,8 +740,6 @@ function oe_person_field_default_field_instances() {
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/award" target="_blank">award</a></code> Schema.org property.</p>');
   t('<p>First name of a person.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/givenName" target="_blank">givenName</a></code> Schema.org property.</p>');
-  t('<p>Images that represent the person. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.');
   t('<p>Job titles of the person. Multiple values can be entered, and should be separated by commas.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/jobTitle" target="_blank">jobTitle</a></code> Schema.org property.</p>');
   t('<p>Name title preceding the name.</p>
@@ -754,6 +757,13 @@ function oe_person_field_default_field_instances() {
   t('Family name');
   t('Given name');
   t('Image');
+  t('Image or photo from the person. Multiple images are allowed.<br/>
+Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</code></a> in Schema.org as an ImageObject where:<br />
+<ul>
+<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
+<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
+<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
+</ul>');
   t('Job title');
   t('Middle name');
   t('Person links');

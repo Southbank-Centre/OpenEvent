@@ -1,0 +1,11 @@
+name = OpenEvent Schema.org Relation
+description = Provides Schema.org mapping ability for the Relation module.
+core = 7.x
+dependencies[] = schemaorg
+dependencies[] = oe_schemaorg_rest
+
+; Information added by Drupal.org packaging script on 2015-04-16
+version = "7.x-2.4"
+core = "7.x"
+project = "restws"
+datestamp = "1429195082"
