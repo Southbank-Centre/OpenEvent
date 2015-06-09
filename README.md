@@ -200,4 +200,5 @@ Current maintainers:
 * Jorge Lopez-Lago - [https://www.drupal.org/u/kurkuma](https://www.drupal.org/u/kurkuma)
 * Alex Bridge - [https://www.drupal.org/u/alxbridge](https://www.drupal.org/u/alxbridge)
 * Tassos Koutlas - [https://www.drupal.org/u/tassos](https://www.drupal.org/u/tassos)
-* please add more ...
+* Dave Vernon - [https://www.drupal.org/u/djvern](https://www.drupal.org/u/djvern)
+* Sam Murray - [https://www.drupal.org/u/samueljmurray](https://www.drupal.org/u/samueljmurray)
