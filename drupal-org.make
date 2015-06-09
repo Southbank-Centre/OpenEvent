@@ -24,13 +24,14 @@ projects[auto_entitylabel][version] = 1.3
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
 projects[entity][version] = 1.6
-projects[entityreference][version] = 1.1
 projects[features][version] = 2.5
 projects[field_group][version] = 1.4
 projects[field_validation][version] = 2.4
 projects[filefield_sources][version] = 1.9
 projects[geolocation][version] = 1.6
 projects[link][version] = 1.3
+; Fix URL validation
+projects[link][patch][2498983] = "https://www.drupal.org/files/issues/link-urls_not_validate-2498983-1.patch"
 projects[office_hours][version] = 1.4
 projects[pathauto][version] = 1.2
 projects[relation_add][version] = 1.4
@@ -38,21 +39,14 @@ projects[relation_add][version] = 1.4
 projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
 projects[restws][version] = 2.4
 projects[strongarm][version] = 2.0
-projects[taxonomy_access_fix][version] = 2.1
+projects[taxonomy_access_fix][version] = 2.2
 projects[token][version] = 1.6
-projects[view_unpublished][version] = 1.2
-projects[views][version] = 3.11
 
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
-projects[paragraphs][version] = 1.0-beta6
 projects[relation][version] = 1.0-rc7
 projects[schemaorg][version] = 1.0-rc1
 projects[table_element][version] = 1.0-beta1
-projects[varnish][version] = 1.0-beta3
-; The module gave undefined notices after installation in theme_varnish_status().
-projects[varnish][patch][2371907] = "http://www.drupal.org/files/issues/varnish-2371907-24.patch"
-projects[views_data_export][version] = 3.0-beta8
 
 ; Defaults
 defaults[projects][subdir] = contrib

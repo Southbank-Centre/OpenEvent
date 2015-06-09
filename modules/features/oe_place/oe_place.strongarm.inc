@@ -38,7 +38,7 @@ function oe_place_strongarm() {
           'weight' => '1',
         ),
         'path' => array(
-          'weight' => '3',
+          'weight' => '6',
         ),
       ),
       'display' => array(),

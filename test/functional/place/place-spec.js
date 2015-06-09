@@ -27,7 +27,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-submit')).click();
 
     // check for the error message explaining that required fields haven't been populated
-    expect(element(by.id('console')).getText()).toContain('Name field is required');
+    expect(element(by.id('console')).getText()).toContain('Place name field is required');
 
     // fill out content on 'Main' tab
     element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
@@ -72,6 +72,7 @@ describe('The Place features of the CMS', function() {
     element(by.id('edit-title')).sendKeys(venueName);
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
     // workaround for current inability to upload images through SauceLabs from Protractor:
@@ -89,6 +90,7 @@ describe('The Place features of the CMS', function() {
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Place parents']")).click();
     element(by.css('#edit-field-place-parents tr:last-of-type input[type="text"]')).sendKeys('Parent place');
     browser.wait(function () {
         return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
@@ -133,30 +135,30 @@ describe('The Place features of the CMS', function() {
 
         // fill out Opening Hours field
         // Monday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-hours > option', '07')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-hours > option', '15')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-starthours-hours > option', '07')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-endhours-hours > option', '15')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-0-endhours-minutes > option', '00')).click();
         // Tuesday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-hours > option', '08')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-hours > option', '16')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-hours > option', '08')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-hours > option', '16')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-2-endhours-minutes > option', '00')).click();
         // Wednesday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-hours > option', '09')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-hours > option', '17')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-hours > option', '09')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-hours > option', '17')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-4-endhours-minutes > option', '00')).click();
         // Thursday
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-hours > option', '10')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-hours > option', '18')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-hours > option', '10')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-hours > option', '18')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-6-endhours-minutes > option', '00')).click();
         // Friday (overnight)
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-hours > option', '11')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-starthours-minutes > option', '00')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-hours > option', '02')).click();
-        element(by.cssContainingText('#edit-field-place-opening-hours-und-10-endhours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-hours > option', '11')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-starthours-minutes > option', '00')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-hours > option', '02')).click();
+        element(by.cssContainingText('#edit-field-place-opening-hours-und-8-endhours-minutes > option', '00')).click();
 
         // fill out content on 'Publishing options' tab
         browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -200,7 +202,6 @@ describe('The Place features of the CMS', function() {
   });
 
   /* API output tests */
-
   it('outputs Place node JSON in Schema.org format', function () {
     // set correct filename for checking image upload
     var imageName = 'test-img.jpg';
@@ -218,10 +219,10 @@ describe('The Place features of the CMS', function() {
       expect(json.description).toBe("<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n");
 
       // image uploaded & fields filled out as expected
-      expect(json.image.contentUrl).toContain(browser.params.url);
-      expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
-      expect(json.image.alternateName).toBe("Test image ALT");
-      expect(json.image.caption).toBe("Test image TITLE");
+      expect(json.image[0].contentUrl).toContain(browser.params.url);
+      expect(json.image[0].contentUrl).toContain(imageName.split(".")[0]);
+      expect(json.image[0].alternateName).toBe("Test image ALT");
+      expect(json.image[0].caption).toBe("Test image TITLE");
 
       // address fields as input
       expect(json.address.addressCountry).toBe("GB");
@@ -363,7 +364,6 @@ describe('The Place features of the CMS', function() {
 function addEvent(eventName, venueName) {
 
   // Selectors for adding venues to an event
-  var tabDetails = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']"));
   var venueRelation = element(by.id('edit-field-event-places-und-0-relation-options-targets-target-2'));
   var venueRelationAdd = element(by.id('edit-field-event-places-und-add-more'));
 
@@ -374,25 +374,8 @@ function addEvent(eventName, venueName) {
   element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
   element(by.id('edit-title')).sendKeys(eventName);
 
-  // Date and time
-  element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
-
-  // start date/time
-  element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
-  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
-  element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-
-  // end date/time
-  element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
-
-  // duration
-  element(by.id('edit-field-event-duration-und-0-value')).clear();
-
   browser.executeScript('window.scrollTo(0,0);').then(function () {
     // Add a relation between place and event
-    tabDetails.click();
     var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
     venueRelation.sendKeys(venueName);
     browser.wait(function() {
@@ -402,6 +385,23 @@ function addEvent(eventName, venueName) {
     venueRelationAdd.click();
   });
 
+  browser.executeScript('window.scrollTo(0,0);').then(function () {
+    // Date and time
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
+
+    // start date/time
+    element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+    element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
+    element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
+
+    // end date/time
+    element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
+    element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
+    element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
+
+    // duration
+    element(by.id('edit-field-event-duration-und-0-value')).clear();
+  });
 
   // Publish it
   var tabOptions = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Publishing options']"));

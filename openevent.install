@@ -136,4 +136,12 @@ function openevent_install() {
   variable_set('admin_theme', 'seven');
   variable_set('node_admin_theme', '1');
   variable_set('theme_default', 'seven');
+
+  // Disable bartik theme
+  theme_disable(array('bartik'));
+
+  // Date settings
+  variable_set('date_first_day', '1');
+  variable_set('date_api_use_iso8601', 1);
+
 }

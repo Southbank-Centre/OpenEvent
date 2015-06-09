@@ -35,6 +35,7 @@ describe('Image', function() {
     element(by.id('edit-title')).sendKeys('Test event page');
 
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
 
@@ -131,10 +132,10 @@ describe('Image', function() {
        var json = JSON.parse(bodyText);
 
        // image uploaded & fields filled out as expected
-       expect(json.image.contentUrl).toContain(browser.params.url);
-       expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
-       expect(json.image.alternateName).toBe("Test image ALT");
-       expect(json.image.caption).toBe("Test image TITLE");
+       expect(json.image[0].contentUrl).toContain(browser.params.url);
+       expect(json.image[0].contentUrl).toContain(imageName.split(".")[0]);
+       expect(json.image[0].alternateName).toBe("Test image ALT");
+       expect(json.image[0].caption).toBe("Test image TITLE");
     });
   });
 

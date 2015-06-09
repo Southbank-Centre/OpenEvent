@@ -69,9 +69,6 @@ describe('The default permissions of the OE CMS', function() {
   var permViewAdminThemeAuth = element(by.id('edit-2-view-the-administration-theme'));
   var permAccessToolbarAuth = element(by.id('edit-2-access-toolbar'));
 
-  // View any unpublished content
-  var permViewAnyUnpublishedContentAuth = element(by.id('edit-2-view-any-unpublished-content'));
-
   
   // TESTS //
 
@@ -116,8 +113,6 @@ describe('The default permissions of the OE CMS', function() {
 
     expect(permViewAdminThemeAuth.isSelected()).toBe(true);
     expect(permAccessToolbarAuth.isSelected()).toBe(true);
-
-    expect(permViewAnyUnpublishedContentAuth.isSelected()).toBe(true);
 
   });
 

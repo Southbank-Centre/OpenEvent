@@ -15,7 +15,8 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>',
+    'description' => '<p>The full text information about the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -75,7 +76,7 @@ function oe_event_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 2,
     ),
   );
 
@@ -84,7 +85,8 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>',
+    'description' => '<p>The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/typicalAgeRange" target="_blank">typicalAgeRange</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -116,8 +118,6 @@ function oe_event_field_default_field_instances() {
         'allowed_formats' => array(
           'filtered_html' => 'filtered_html',
           'full_html' => 'full_html',
-          'iframe_html' => 0,
-          'limited_html' => 0,
           'plain_text' => 'plain_text',
         ),
         'allowed_formats_toggle' => 0,
@@ -129,12 +129,6 @@ function oe_event_field_default_field_instances() {
             ),
             'full_html' => array(
               'weight' => 1,
-            ),
-            'iframe_html' => array(
-              'weight' => 0,
-            ),
-            'limited_html' => array(
-              'weight' => 0,
             ),
             'plain_text' => array(
               'weight' => 10,
@@ -152,7 +146,7 @@ function oe_event_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 3,
     ),
   );
 
@@ -160,7 +154,8 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_date_end'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>',
+    'description' => '<p>The end date and time for the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/endDate" target="_blank">endDate</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -173,7 +168,7 @@ function oe_event_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 17,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -185,7 +180,7 @@ function oe_event_field_default_field_instances() {
     'entity_type' => 'node',
     'field_name' => 'field_event_date_end',
     'label' => 'End date/time',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'default_value' => 'blank',
       'default_value2' => 'same',
@@ -214,7 +209,8 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_date_start'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>',
+    'description' => '<p>The start date and time for the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/startDate" target="_blank">startDate</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -227,7 +223,7 @@ function oe_event_field_default_field_instances() {
           'multiple_to' => '',
         ),
         'type' => 'date_default',
-        'weight' => 16,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -268,7 +264,8 @@ function oe_event_field_default_field_instances() {
   $field_instances['node-event-field_event_door_time'] = array(
     'bundle' => 'event',
     'deleted' => 0,
-    'description' => 'The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>',
+    'description' => '<p>The date and time that the venue can be accessed before the event starts.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/doorTime" target="_blank">doorTime</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -323,7 +320,8 @@ function oe_event_field_default_field_instances() {
     'bundle' => 'event',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>',
+    'description' => '<p>The duration of the event in minutes.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/duration" target="_blank">duration</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -335,7 +333,7 @@ function oe_event_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 11,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -372,14 +370,14 @@ function oe_event_field_default_field_instances() {
 <p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
 <p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
 <p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>',
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/superEvent" target="_blank">superEvent</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'module' => 'relation_add',
         'settings' => array(),
         'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 15,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -390,7 +388,7 @@ function oe_event_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_event_parents',
-    'label' => 'Parents',
+    'label' => 'Event parents',
     'required' => 0,
     'settings' => array(
       'relation_target_bundles' => array(
@@ -413,56 +411,7 @@ function oe_event_field_default_field_instances() {
         'relation_endpoint_search_by_id' => 0,
       ),
       'type' => 'relation_add',
-      'weight' => 9,
-    ),
-  );
-
-  // Exported field_instance: 'node-event-field_event_places'
-  $field_instances['node-event-field_event_places'] = array(
-    'bundle' => 'event',
-    'deleted' => 0,
-    'description' => 'The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'relation_add',
-        'settings' => array(),
-        'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 14,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_places',
-    'label' => 'Venues',
-    'required' => 0,
-    'settings' => array(
-      'relation_target_bundles' => array(
-        'node:place' => 'node:place',
-      ),
-      'relation_type' => array(
-        'event_is_located_in_place' => 'event_is_located_in_place',
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'relation_add',
-      'settings' => array(
-        'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => 'Venue',
-        'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'custom',
-        'relation_endpoint_label_delta' => 0,
-        'relation_endpoint_search_by_id' => 0,
-      ),
-      'type' => 'relation_add',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -486,7 +435,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 13,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -584,16 +533,31 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('<p>Images that represent the event. Multiple images are allowed.</p>
+<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
+  t('<p>The date and time that the venue can be accessed before the event starts.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/doorTime" target="_blank">doorTime</a></code> Schema.org property.</p>');
+  t('<p>The duration of the event in minutes.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/duration" target="_blank">duration</a></code> Schema.org property.</p>');
+  t('<p>The end date and time for the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/endDate" target="_blank">endDate</a></code> Schema.org property.</p>');
+  t('<p>The full text information about the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
+  t('<p>The start date and time for the event.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/startDate" target="_blank">startDate</a></code> Schema.org property.</p>');
+  t('<p>The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only.</p>
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/typicalAgeRange" target="_blank">typicalAgeRange</a></code> Schema.org property.</p>');
   t('<p>This field allows you to determine which events this event is grouped within.</p>
 <p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
 <p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
 <p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
-<p>Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.superEvent</code></a></p>');
+<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/superEvent" target="_blank">superEvent</a></code> Schema.org property.</p>');
   t('Age range');
   t('Description');
   t('Door time');
   t('Duration');
   t('End date/time');
+  t('Event parents');
   t('Image');
   t('Images from the event.<br/>
 Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org as an ImageObject where:<br />

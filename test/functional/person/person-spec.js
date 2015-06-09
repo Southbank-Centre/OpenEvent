@@ -29,12 +29,10 @@ describe('The Person features of the CMS', function() {
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
   var personNameSuffix = element(by.id('edit-field-person-name-suffix-und-0-value'));
   var personAlias = element(by.id('edit-field-person-name-alias-und-0-value'));
-
-  // Tab Biography and images
-  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Biography and images']"));
-
-  // Biography and images fields
   var bioDescription = element(by.id('edit-field-description-und-0-value'));
+
+  // Tab Images
+  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
@@ -124,8 +122,7 @@ describe('The Person features of the CMS', function() {
     var wrongUrl = [
       'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
       'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
-      // Check bug #94383178 on Pivotal Tracker
-      // 'http//en.wikipedia.org/wiki/Tyrion_Lannister',
+      'http//en.wikipedia.org/wiki/Tyrion_Lannister',
       'http://en.wikipedia/wiki/Tyrion_Lannister'
     ];
     extraLinkTitle.sendKeys('Wikipedia (wrong)');
@@ -227,11 +224,11 @@ describe('The Person features of the CMS', function() {
     personFamilyName.sendKeys('Preston');
     personNameSuffix.sendKeys('Esq.');
     personAlias.sendKeys('Bill');
+    bioDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
 
     browser.executeScript('window.scrollTo(0,0);').then(function () {
       // Tab Biography and images
       tabBio.click();
-      bioDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
 
       // upload 'Image'
       var fileToUpload = '../image/test-img.jpg';
@@ -361,10 +358,10 @@ describe('The Person features of the CMS', function() {
        }
 
        // image uploaded & fields filled out as expected
-       expect(json.image.contentUrl).toContain(browser.params.url);
-       expect(json.image.contentUrl).toContain(imageName.split(".")[0]);
-       expect(json.image.alternateName).toBe("Test image ALT");
-       expect(json.image.caption).toBe("Test image TITLE");
+       expect(json.image[0].contentUrl).toContain(browser.params.url);
+       expect(json.image[0].contentUrl).toContain(imageName.split(".")[0]);
+       expect(json.image[0].alternateName).toBe("Test image ALT");
+       expect(json.image[0].caption).toBe("Test image TITLE");
     });
 
     // test that the performers relation has been correctly added to the complete person's event

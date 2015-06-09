@@ -28,7 +28,7 @@ function oe_person_node_info() {
       'name' => t('Person'),
       'base' => 'node_content',
       'description' => t('Open Event content type for a person (alive, dead, undead, or fictional).<br/>
-Designed in accordance with the <a href="http://schema.org/Person" target="_blank">schema.org Person type</a>.'),
+Designed in accordance with the <a href="http://schema.org/Person" target="_blank">Schema.org Person type</a>.'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',
@@ -170,8 +170,8 @@ function oe_person_rdf_default_mappings() {
     ),
   );
 
-  // Exported RDF mapping: performs_in
-  $schemaorg['relation']['performs_in'] = array(
+  // Exported RDF mapping: person_performs_in_event
+  $schemaorg['relation']['person_performs_in_event'] = array(
     'source_bundles' => array(
       'predicates' => array(
         0 => 'schema:performerIn',
