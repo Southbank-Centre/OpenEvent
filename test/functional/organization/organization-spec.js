@@ -5,8 +5,9 @@
 
 var url = require('url');
 var path = require('path');
-var eid;
+var eid = [];
 var nid;
+var pnid;
 
 describe('The Organization features of the CMS', function() {
 
@@ -206,160 +207,132 @@ describe('The Organization features of the CMS', function() {
 
   });
 
-  // it('sets relationship to Event', function() {
-  //   // Organization
-  //   var orgName = 'Lannister';
+  it('sets relationship to Event', function() {
+    // Organization
+    var orgName = 'Lannister';
 
-  //   // Add event
-  //   var eventName = 'Expunge (Targaryen)';
-  //   addEvent(eventName);
+    // Add event
+    var eventName = 'Expunge (Targaryen)';
+    addEvent(eventName);
 
-  //   // Add organization
-  //   browser.get(browser.params.url + '/node/add/organization');
-  //   expect(pageTitle.getText()).toContain('Create Organization');
-  //   name.sendKeys(orgName);
+    // Add organization
+    browser.get(browser.params.url + '/node/add/organization');
+    expect(pageTitle.getText()).toContain('Create Organization');
+    name.sendKeys(orgName);
 
-  //   // Add a relation between organzation and event
-  //   var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
-  //   tabEvents.click();
-  //   eventRelation.sendKeys(eventName);
-  //   browser.wait(function() {
-  //     return browser.isElementPresent(by.css('#autocomplete li div'));
-  //   }, 5000);
-  //   autocomplete.click();
+    // Add a relation between organzation and event
+    var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
+    tabEvents.click();
+    eventRelation.sendKeys(eventName);
+    browser.wait(function() {
+      return browser.isElementPresent(by.css('#autocomplete li div'));
+    }, 5000);
+    autocomplete.click();
 
-  //   // Publish it
-  //   tabOptions.click();
-  //   optionsPublished.isSelected().then(function(selected) {
-  //     if (!selected) {
-  //       optionsPublished.click();
-  //     }
-  //   });
+    // Publish it
+    tabOptions.click();
+    optionsPublished.isSelected().then(function(selected) {
+      if (!selected) {
+        optionsPublished.click();
+      }
+    });
 
-  //   // Save the node
-  //   save.click();
+    // Save the node
+    save.click();
 
-  //   // Expectations
-  //   expect(messages.getText()).toContain(orgName + ' has been created.');
+    browser.wait(function() {
+      return browser.isElementPresent(messages);
+    }, 5000);
 
-  //   // Get the nid for the next test
-  //   var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
-  //   edit.click();
+    // Expectations
+    expect(messages.getText()).toContain(orgName + ' has been created.');
 
-  //   browser.getCurrentUrl().then(function(Url){
-  //     var parts = Url.split('/');
-  //     var size = parts.length;
-  //     nid = parts[size-2];
-  //   });
+    // Get the nid for the next test
+    var edit = element(by.xpath("//ul[@class='tabs primary']/li[2]"));
+    edit.click();
 
-  // });
+    browser.getCurrentUrl().then(function(Url){
+      var parts = Url.split('/');
+      var size = parts.length;
+      pnid = parts[size-2];
+    });
 
-  it('outputs JSON to the specified format', function() {
+  });
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      // .inspectJSON() // uncomment to output JSON in console
-      .expectJSON({
-        "field_description": {
-          "value": "<p>House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.</p>\n",
-          "format": "filtered_html"
-        },
-        "field_image": [
-          {
-            "file": {
-              "uri": function(val) {
-                expect(val).toContain(browser.params.url + "/file/");
-              },
-              "id": function(val) {
-                expect(val).toBeDefined();
-                expect(isNaN(parseInt(val, 10))).toBe(false);
-              },
-              "resource": "file"
-            },
-            "alt": "Test image ALT",
-            "title": "Test image TITLE"
-          }
-        ],
-        "field_organization_logo": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
-            },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test logo ALT",
-          "title": "Test logo TITLE"
-        },
-        "title": "Lannister",
-        "field_organization_legal_name": "some thing off some TV show or something",
-        "field_organization_email": "tywinrulezok@lannister.gov.rk",
-        "field_organization_same_as": [
-          { 
-            "title": 'Lannister Wiki Page',
-            "url": 'http://gameofthrones.wikia.com/wiki/House_Lannister'
-          }
-        ],
-        "field_organization_address": {
-          "country": "GB",
-          "organisation_name": "Lannister HQ",
-          "administrative_area": "London (county)",
-          "locality": "London",
-          "postal_code": "SE1 8XX",
-          "thoroughfare": "Southbank Centre",
-          "premise": "Belvedere Road"
-        },
-        "nid": nid,
-        "vid": nid
-        // "relation_performer_performs_in_event_node_reverse": [
-        //   {
-        //     "uri": browser.params.url + "/node/" + nid,
-        //     "id": nid,
-        //     "resource": "node"
-        //   },
-        //   {
-        //     "uri": browser.params.url + "/node/" + eid,
-        //     "id": eid,
-        //     "resource": "node"
-        //   }
-        // ],
-        // "relation_performer_performs_in_event_node": [
-        //   {
-        //     "uri": browser.params.url + "/node/" + nid,
-        //     "id": nid,
-        //     "resource": "node"
-        //   },
-        //   {
-        //     "uri": browser.params.url + "/node/" + eid,
-        //     "id": eid,
-        //     "resource": "node"
-        //   }
-        // ]
-      })
-    .after(cleanUp)
-    .toss();
+  it('outputs Organization node JSON in Schema.org format', function () {
+    // get Person JSON from API and parse it
+    browser.get(browser.params.url + '/api/organization/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+
+      // string fields as input
+      expect(json.name).toBe("Lannister");
+      expect(json.description).toBe("<p>House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties. The major characters Jaime, Cersei, and Tyrion and the recurring characters Tywin, Kevan, and Lancel are members of the house. Tywin is the head of House Lannister and Lord of Casterly Rock.</p>\n");
+      expect(json.legalName).toBe("some thing off some TV show or something");
+      expect(json.email).toBe("tywinrulezok@lannister.gov.rk");
+      expect(json.sameAs[0]).toBe("http://gameofthrones.wikia.com/wiki/House_Lannister");
+
+      // address
+      expect(json.address.addressCountry).toBe("GB");
+      expect(json.address.addressRegion).toBe("London (county)");
+      expect(json.address.addressLocality).toBe("London");
+      expect(json.address.postalCode).toBe("SE1 8XX");
+      expect(json.address.streetAddress).toBe("Southbank Centre, Belvedere Road");
+      expect(json.address.name).toBe("Lannister HQ");
+
+      // set correct filename for checking image upload
+      var imageName = 'test-img.jpg';
+      if (browser.params.isSauceLabs) {
+       imageName = 'shot_0.png';
+      }
+
+      // image uploaded & fields filled out as expected
+      expect(json.image[0].contentUrl).toContain(browser.params.url);
+      expect(json.image[0].contentUrl).toContain(imageName.split(".")[0]);
+      expect(json.image[0].alternateName).toBe("Test image ALT");
+      expect(json.image[0].caption).toBe("Test image TITLE");
+
+      // logo uploaded & fields filled out as expected
+      expect(json.logo.contentUrl).toContain(browser.params.url);
+      expect(json.logo.contentUrl).toContain(imageName.split(".")[0]);
+      expect(json.logo.alternateName).toBe("Test logo ALT");
+      expect(json.logo.caption).toBe("Test logo TITLE");
+
+      // URL of this item should be predictable based on NID
+      expect(json.url).toBe(browser.params.url + '/api/organization/' + nid);
+
+    });
+
+    // test that the performers relation has been correctly added to the event
+    browser.get(browser.params.url + '/api/event/' + eid[0] + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      expect(json.performer.length).toEqual(1);
+      expect(json.performer[0]).toEqual(browser.params.url + "/api/organization/" + pnid);
+    });
+    browser.get(browser.params.url + '/api/organization/' + pnid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      expect(json.performerIn.length).toEqual(1);
+      expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+    });
+  });
+
+  it('will take place after all tests have passed', function() {
 
     // We run cleanUp after the last frisby test because they are asynchronous
     // and could run after the cleanUp otherwise (this is something to improve on)
-    function cleanUp () {
-      // These tests are destructive and can only be performed on clean/empty sites [!]
-      // This cleanup function assumes that all content available is created by this test suite
+    // These tests are destructive and can only be performed on clean/empty sites [!]
+    // This cleanup function assumes that all content available is created by this test suite
 
-      // CleanUp content
-      // It deletes ALL content in the site
-      browser.get(browser.params.url + '/admin/content');
-      element(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
-      element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-      element(by.id('edit-submit--2')).click();
-      element(by.id('edit-submit')).click();
-      //expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-    }
+    // CleanUp content
+    // It deletes ALL content in the site
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table.sticky-enabled.table-select-processed.tableheader-processed.sticky-table > thead > tr > th.select-all > input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
   });
 
 });
@@ -407,7 +380,6 @@ function addEvent(eventName) {
   browser.getCurrentUrl().then(function(Url){
     var parts = Url.split('/');
     var size = parts.length;
-    eid = parts[size-2];
+    eid.push(parts[size-2]);
   });
-
 }

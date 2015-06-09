@@ -239,11 +239,11 @@ describe('The Person features of the CMS', function() {
     personFamilyName.sendKeys('Preston');
     personNameSuffix.sendKeys('Esq.');
     personAlias.sendKeys('Bill');
-    bioDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
+    personDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
 
     browser.executeScript('window.scrollTo(0,0);').then(function () {
       // Tab Biography and images
-      tabBio.click();
+      tabImages.click();
 
       // upload 'Image'
       var fileToUpload = '../image/test-img.jpg';
@@ -344,8 +344,8 @@ describe('The Person features of the CMS', function() {
     browser.get(browser.params.url + '/api/event/' + eid[0] + '.json');
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
-       expect(json.performers.length).toEqual(1);
-       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + nid);
+       expect(json.performer.length).toEqual(1);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + nid);
     });
   });
 
@@ -383,8 +383,8 @@ describe('The Person features of the CMS', function() {
     browser.get(browser.params.url + '/api/event/' + eid[1] + '.json');
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
-       expect(json.performers.length).toEqual(1);
-       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
+       expect(json.performer.length).toEqual(1);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
     });
   });
 
@@ -558,11 +558,6 @@ function addEvent(eventName) {
   element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
   element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
   element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-
-  // end date/time
-  element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
 
   // duration
   element(by.id('edit-field-event-duration-und-0-value')).clear();
