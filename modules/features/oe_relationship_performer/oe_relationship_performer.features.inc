@@ -31,7 +31,7 @@ function oe_relationship_performer_rdf_default_mappings() {
     ),
     'target_bundles' => array(
       'predicates' => array(
-        0 => 'schema:performers',
+        0 => 'schema:performer',
       ),
     ),
     'url' => array(
