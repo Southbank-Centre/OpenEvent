@@ -163,6 +163,11 @@ function oe_person_rdf_default_mappings() {
         0 => 'schema:sameAs',
       ),
     ),
+    'field_person_same_as' => array(
+      'predicates' => array(
+        0 => 'schema:sameAs',
+      ),
+    ),
   );
 
   return $schemaorg;

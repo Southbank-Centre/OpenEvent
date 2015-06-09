@@ -22,7 +22,6 @@ dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = taxonomy_access_fix
 dependencies[] = text
-features[taxonomy][] = person_title
 features[ctools][] = field_group:field_group:1
 features[ctools][] = relation:relation_type_default:1
 features[ctools][] = strongarm:strongarm:1
