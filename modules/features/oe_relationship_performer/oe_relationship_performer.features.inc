@@ -19,7 +19,7 @@ function oe_relationship_performer_ctools_plugin_api($module = NULL, $api = NULL
 /**
  * Implements hook_rdf_default_mappings().
  */
-function oe_person_rdf_default_mappings() {
+function oe_relationship_performer_rdf_default_mappings() {
   $schemaorg = array();
 
 

@@ -19,7 +19,7 @@ function oe_relationship_location_ctools_plugin_api($module = NULL, $api = NULL)
 /**
  * Implements hook_rdf_default_mappings().
  */
-function oe_place_rdf_default_mappings() {
+function oe_relationship_location_rdf_default_mappings() {
   $schemaorg = array();
 
   // Exported RDF mapping: event_is_located_in_place
