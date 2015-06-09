@@ -1,0 +1,8 @@
+name = OpenEvent Self Documenting REST API
+description = "Customization of the Self Documenting REST API Module. Inspired by version 7.x-1.0-dev of the Self Documenting REST API module (https://www.drupal.org/project/rest_api_doc)"
+package = Open Events
+core = 7.x
+dependencies[] = restws
+dependencies[] = oe_schemaorg_rest
+
+stylesheets[all][] = oe_rest_api_doc.css

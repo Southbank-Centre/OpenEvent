@@ -25,7 +25,8 @@ exports.config = {
     place: ['place/*.js'],
     person: ['person/*.js'],
     permissions: ['permissions/*.js'],
-    organization: ['organization/*.js']
+    organization: ['organization/*.js'],
+    api_doc: ['api_doc/*.js']
   },
 
   // Single Browser
@@ -55,14 +56,14 @@ exports.config = {
     isSauceLabs: 0
   },
 
-  allScriptsTimeout: 120000,
+  allScriptsTimeout: 600000,
 
   // Options to be passed to jasmine-node.
   jasmineNodeOpts: {
     // If true, print colors to the terminal.
     showColors: true,
     // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 120000
+    defaultTimeoutInterval: 600000
   },
 
   // function to run before the tests - logs the browser into the CMS

@@ -55,6 +55,7 @@ dependencies[] = schemaorg
 dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
+dependencies[] = view_unpublished
 
 ; Open Event dependencies
 ; Features
@@ -66,6 +67,7 @@ dependencies[] = oe_person
 dependencies[] = oe_relationship_location
 dependencies[] = oe_relationship_performer
 ; Custom
+dependencies[] = oe_rest_api_doc
 dependencies[] = oe_schemaorg_rest
 dependencies[] = oe_schemaorg_rest_address
 dependencies[] = oe_schemaorg_rest_date

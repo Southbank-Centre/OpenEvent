@@ -1,0 +1,13 @@
+.page-api-doc .api-doc-resource {
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 0.6em;
+}
+
+.page-api-doc code {
+  color:#777777;
+}
+
+.page-api-doc nav ul {
+  list-style:none;
+  margin:0;
+}
