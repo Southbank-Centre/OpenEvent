@@ -80,7 +80,7 @@ function oe_event_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Images',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_image',
     ),
@@ -106,7 +106,7 @@ function oe_event_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Images',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'field_image',
     ),
@@ -137,7 +137,6 @@ function oe_event_field_group_info() {
     'children' => array(
       0 => 'field_description',
       1 => 'field_event_age_range',
-      2 => 'field_event_places',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -166,8 +165,7 @@ function oe_event_field_group_info() {
     'children' => array(
       0 => 'field_description',
       1 => 'field_event_age_range',
-      2 => 'field_event_places',
-      3 => 'title',
+      2 => 'title',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -192,7 +190,7 @@ function oe_event_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event parents',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_event_parents',
     ),
@@ -218,7 +216,7 @@ function oe_event_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Event parents',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_event_parents',
     ),

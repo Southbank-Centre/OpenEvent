@@ -10,56 +10,6 @@
 function oe_person_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-event-field_event_performers'
-  $field_instances['node-event-field_event_performers'] = array(
-    'bundle' => 'event',
-    'deleted' => 0,
-    'description' => '<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
-<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'relation_add',
-        'settings' => array(),
-        'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 4,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_event_performers',
-    'label' => 'Performers',
-    'required' => 0,
-    'settings' => array(
-      'relation_target_bundles' => array(
-        'node:person' => 'node:person',
-      ),
-      'relation_type' => array(
-        'person_performs_in_event:reverse' => 'person_performs_in_event:reverse',
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'relation_add',
-      'settings' => array(
-        'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => 'Performer',
-        'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'custom',
-        'relation_endpoint_label_delta' => 0,
-        'relation_endpoint_search_by_id' => 0,
-      ),
-      'type' => 'relation_add',
-      'weight' => 7,
-    ),
-  );
-
   // Exported field_instance: 'node-person-field_description'
   $field_instances['node-person-field_description'] = array(
     'bundle' => 'person',
@@ -212,7 +162,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -258,23 +208,24 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
-  // Exported field_instance: 'node-person-field_person_events'
-  $field_instances['node-person-field_person_events'] = array(
+  // Exported field_instance: 'node-person-field_person_email'
+  $field_instances['node-person-field_person_email'] = array(
     'bundle' => 'person',
+    'default_value' => NULL,
     'deleted' => 0,
-    'description' => '<p>Events in which this person is a performer.</p>
-<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/performerIn" target="_blank">performerIn</a></code> Schema.org property.</p>',
+    'description' => '<p>The email address of the person.</p>
+<p>Maps to the <code><a href="https://schema.org/Person" target="_blank">Person</a>.<a href="https://schema.org/email" target="_blank">email</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'relation_add',
+        'module' => 'email',
         'settings' => array(),
-        'type' => 'relation_add_endpoints_and_fields',
-        'weight' => 4,
+        'type' => 'email_default',
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -284,31 +235,20 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_person_events',
-    'label' => 'Events',
+    'field_name' => 'field_person_email',
+    'label' => 'Email address',
     'required' => 0,
     'settings' => array(
-      'relation_target_bundles' => array(
-        'node:event' => 'node:event',
-      ),
-      'relation_type' => array(
-        'person_performs_in_event' => 'person_performs_in_event',
-      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'relation_add',
+      'module' => 'email',
       'settings' => array(
-        'relation_endpoint_bundle_display' => 0,
-        'relation_endpoint_custom_label' => 'Event ',
-        'relation_endpoint_iso_language_codes' => 0,
-        'relation_endpoint_label' => 'custom',
-        'relation_endpoint_label_delta' => 0,
-        'relation_endpoint_search_by_id' => 0,
+        'size' => 255,
       ),
-      'type' => 'relation_add',
-      'weight' => 12,
+      'type' => 'email_textfield',
+      'weight' => 5,
     ),
   );
 
@@ -728,8 +668,8 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
     ),
   );
 
-  // Exported field_instance: 'node-person-field_person_urls'
-  $field_instances['node-person-field_person_urls'] = array(
+  // Exported field_instance: 'node-person-field_person_same_as'
+  $field_instances['node-person-field_person_same_as'] = array(
     'bundle' => 'person',
     'default_value' => NULL,
     'deleted' => 0,
@@ -741,7 +681,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_default',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -751,8 +691,8 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_person_urls',
-    'label' => 'Person urls',
+    'field_name' => 'field_person_same_as',
+    'label' => 'Person links',
     'required' => 0,
     'settings' => array(
       'absolute_url' => 1,
@@ -782,48 +722,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 6,
-    ),
-  );
-
-  // Exported field_instance: 'relation-person_performs_in_event-endpoints'
-  $field_instances['relation-person_performs_in_event-endpoints'] = array(
-    'bundle' => 'person_performs_in_event',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'relation_endpoint',
-        'settings' => array(
-          'view_modes' => array(
-            'cer' => 'default',
-            'file' => 'default',
-            'node' => 'default',
-            'paragraphs_item' => 'default',
-            'relation' => 'default',
-            'taxonomy_term' => 'default',
-            'taxonomy_vocabulary' => 'default',
-            'user' => 'default',
-          ),
-        ),
-        'type' => 'relation_endpoint',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'relation',
-    'field_name' => 'endpoints',
-    'label' => 'endpoints',
-    'required' => FALSE,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'module' => 'relation_endpoint',
-      'settings' => array(),
-      'type' => 'relation_endpoint',
-      'weight' => 0,
+      'weight' => 7,
     ),
   );
 
@@ -839,24 +738,22 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificSuffix" target="_blank">honorificSuffix</a></code> Schema.org property.</p>');
   t('<p>Awards won by this person for his/her work. Enter one award per line.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/award" target="_blank">award</a></code> Schema.org property.</p>');
-  t('<p>Events in which this person is a performer.</p>
-<p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/performerIn" target="_blank">performerIn</a></code> Schema.org property.</p>');
   t('<p>First name of a person.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/givenName" target="_blank">givenName</a></code> Schema.org property.</p>');
   t('<p>Job titles of the person. Multiple values can be entered, and should be separated by commas.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/jobTitle" target="_blank">jobTitle</a></code> Schema.org property.</p>');
   t('<p>Name title preceding the name.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/honorificPrefix" target="_blank">honorificPrefix</a></code> Schema.org property.</p>');
-  t('<p>Performers at the event—for example, a presenter, musician, musical group or actor.</p>
-<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/performer" target="_blank">performer</a></code> Schema.org property.</p>');
   t('<p>Surname of a person.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/familyName" target="_blank">familyName</a></code> Schema.org property.</p>');
+  t('<p>The email address of the person.</p>
+<p>Maps to the <code><a href="https://schema.org/Person" target="_blank">Person</a>.<a href="https://schema.org/email" target="_blank">email</a></code> Schema.org property.</p>');
   t('<p>URL of a reference web page that unambiguously indicates the person\'s identity. E.g. the URL of the person\'s Wikipedia page or official website. Multiple URLs can be provided.</p>
 <p>Maps to the <code><a href="http://schema.org/Person" target="_blank">Person</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>');
   t('Alias');
   t('Awards');
   t('Description');
-  t('Events');
+  t('Email address');
   t('Family name');
   t('Given name');
   t('Image');
@@ -869,11 +766,9 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
 </ul>');
   t('Job title');
   t('Middle name');
-  t('Performers');
-  t('Person urls');
+  t('Person links');
   t('Prefix');
   t('Suffix');
-  t('endpoints');
 
   return $field_instances;
 }

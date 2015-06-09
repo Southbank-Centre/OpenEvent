@@ -216,7 +216,7 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
       element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
       browser.sleep(5000);
       // check that there are no items in the autocomplete list
@@ -241,14 +241,13 @@ describe('The Event features of the CMS', function() {
       browser.executeScript('window.scrollTo(0,0);').then(function () {
         element(by.css('h1')).click();
         // save
-        element(by.id('edit-submit')).click().then(function() {
-          browser.wait(function () {
-            return browser.isElementPresent(by.id('console'));
-          }, 5000);
-          // verify save
-          expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
+        element(by.id('edit-submit')).click();
 
-        });
+        browser.wait(function () {
+          return browser.isElementPresent(by.id('console'));
+        }, 10000);
+        // verify save
+        expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
 
       });
 
@@ -296,7 +295,7 @@ describe('The Event features of the CMS', function() {
        expect(json.subEvent.length).toEqual(0);
 
        // performers are tested separately in the person test spec
-       expect(json.performers.length).toEqual(0);
+       expect(json.performer.length).toEqual(0);
     });
 
     // check the properties which differ between the minimal/maximal
@@ -316,7 +315,7 @@ describe('The Event features of the CMS', function() {
        expect(json.location.length).toEqual(0);
 
        // performers are tested separately in the person test spec
-       expect(json.performers.length).toEqual(0);
+       expect(json.performer.length).toEqual(0);
     });
 
     // check that both events are output by the endpoint

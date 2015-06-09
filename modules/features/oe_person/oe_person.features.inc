@@ -11,9 +11,6 @@ function oe_person_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "field_group" && $api == "field_group") {
     return array("version" => "1");
   }
-  if ($module == "relation" && $api == "relation_type_default") {
-    return array("version" => "1");
-  }
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -30,7 +27,7 @@ function oe_person_node_info() {
       'description' => t('Open Event content type for a person (alive, dead, undead, or fictional).<br/>
 Designed in accordance with the <a href="http://schema.org/Person" target="_blank">Schema.org Person type</a>.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Person name'),
       'help' => '',
     ),
   );
@@ -100,11 +97,6 @@ function oe_person_rdf_default_mappings() {
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
     ),
-    'field_person_events' => array(
-      'predicates' => array(
-        0 => 'schema:performerIn',
-      ),
-    ),
     'url' => array(
       'predicates' => array(
         0 => 'schema:url',
@@ -168,25 +160,10 @@ function oe_person_rdf_default_mappings() {
         0 => 'schema:sameAs',
       ),
     ),
-  );
-
-  // Exported RDF mapping: person_performs_in_event
-  $schemaorg['relation']['person_performs_in_event'] = array(
-    'source_bundles' => array(
+    'field_person_same_as' => array(
       'predicates' => array(
-        0 => 'schema:performerIn',
+        0 => 'schema:sameAs',
       ),
-    ),
-    'target_bundles' => array(
-      'predicates' => array(
-        0 => 'schema:performers',
-      ),
-    ),
-    'url' => array(
-      'predicates' => array(
-        0 => 'schema:url',
-      ),
-      'type' => 'rel',
     ),
   );
 

@@ -487,7 +487,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 4,
+      'weight' => 39,
     ),
   );
 
@@ -505,7 +505,6 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
           'view_modes' => array(
             'file' => 'default',
             'node' => 'default',
-            'paragraphs_item' => 'default',
             'relation' => 'default',
             'taxonomy_term' => 'default',
             'taxonomy_vocabulary' => 'default',

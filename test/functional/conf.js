@@ -25,6 +25,7 @@ exports.config = {
     place: ['place/*.js'],
     person: ['person/*.js'],
     permissions: ['permissions/*.js'],
+    organization: ['organization/*.js'],
     api_doc: ['api_doc/*.js']
   },
 

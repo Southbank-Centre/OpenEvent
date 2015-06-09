@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OE Relationship: Performer feature.
+ */
+
+include_once 'oe_relationship_performer.features.inc';

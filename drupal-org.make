@@ -23,6 +23,7 @@ projects[addressfield][version] = 1.1
 projects[auto_entitylabel][version] = 1.3
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
+projects[email][version] = 1.3
 projects[entity][version] = 1.6
 projects[features][version] = 2.5
 projects[field_group][version] = 1.4

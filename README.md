@@ -37,6 +37,7 @@ The following modules are required. They are packaged and automatically enabled 
 * Better Formats [https://www.drupal.org/project/better_formats](https://www.drupal.org/project/better_formats)
 * Ctools [https://www.drupal.org/project/ctools](https://www.drupal.org/project/ctools)
 * Date [https://www.drupal.org/project/date](https://www.drupal.org/project/date)
+* Email [https://www.drupal.org/project/email](https://www.drupal.org/project/email)
 * Entity [https://www.drupal.org/project/entity](https://www.drupal.org/project/entity)
 * <del>Entity Reference [https://www.drupal.org/project/entityreference](https://www.drupal.org/project/entityreference)</del>**NOT REQUIRED FOR OE??**
 * Features [https://www.drupal.org/project/features](https://www.drupal.org/project/features)
@@ -199,4 +200,5 @@ Current maintainers:
 * Jorge Lopez-Lago - [https://www.drupal.org/u/kurkuma](https://www.drupal.org/u/kurkuma)
 * Alex Bridge - [https://www.drupal.org/u/alxbridge](https://www.drupal.org/u/alxbridge)
 * Tassos Koutlas - [https://www.drupal.org/u/tassos](https://www.drupal.org/u/tassos)
-* please add more ...
+* Dave Vernon - [https://www.drupal.org/u/djvern](https://www.drupal.org/u/djvern)
+* Sam Murray - [https://www.drupal.org/u/samueljmurray](https://www.drupal.org/u/samueljmurray)

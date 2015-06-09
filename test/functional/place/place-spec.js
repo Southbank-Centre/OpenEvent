@@ -375,6 +375,8 @@ function addEvent(eventName, venueName) {
   element(by.id('edit-title')).sendKeys(eventName);
 
   browser.executeScript('window.scrollTo(0,0);').then(function () {
+
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
     // Add a relation between place and event
     var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
     venueRelation.sendKeys(venueName);

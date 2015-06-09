@@ -29,10 +29,11 @@ describe('The Person features of the CMS', function() {
   var personFamilyName = element(by.id('edit-field-person-name-family-und-0-value'));
   var personNameSuffix = element(by.id('edit-field-person-name-suffix-und-0-value'));
   var personAlias = element(by.id('edit-field-person-name-alias-und-0-value'));
-  var bioDescription = element(by.id('edit-field-description-und-0-value'));
+  var personDescription = element(by.id('edit-field-description-und-0-value'));
+  var personEmail = element(by.id('edit-field-person-email-und-0-email'));
 
   // Tab Images
-  var tabBio = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
+  var tabImages = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']"));
   var bioImage = element(by.id('edit-field-image-und-0-upload'));
   var bioImageUpload   = element(by.id('edit-field-image-und-0-upload-button'));
 
@@ -44,9 +45,9 @@ describe('The Person features of the CMS', function() {
   var extraJobTitle = element(by.id('edit-field-person-job-und-0-value'));
   var extraAwards = element(by.id('edit-field-person-awards-und-0-value'));
   var extraAwardsAdd = element(by.id('edit-field-person-awards-und-add-more'));
-  var extraLinkTitle = element(by.id('edit-field-person-urls-und-0-title'));
-  var extraLinkUrl = element(by.id('edit-field-person-urls-und-0-url'));
-  var extraLinkAdd = element(by.id('edit-field-person-urls-und-add-more'));
+  var extraLinkTitle = element(by.id('edit-field-person-same-as-und-0-title'));
+  var extraLinkUrl = element(by.id('edit-field-person-same-as-und-0-url'));
+  var extraLinkAdd = element(by.id('edit-field-person-same-as-und-add-more'));
 
   // Tab Events
   var tabEvents = element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Events']"));
@@ -111,46 +112,53 @@ describe('The Person features of the CMS', function() {
     personGivenName.sendKeys('Tyrion');
     personFamilyName.sendKeys('Lannister');
 
-    // Test link without URL
-    tabExtra.click();
-    extraLinkTitle.sendKeys('Tywin');
-    save.click();
-    expect(messages.getText()).toContain('You cannot enter a title without a link url.');
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-    // Test link with malformed URL
-    tabExtra.click();
-    var wrongUrl = [
-      'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http//en.wikipedia.org/wiki/Tyrion_Lannister',
-      'http://en.wikipedia/wiki/Tyrion_Lannister'
-    ];
-    extraLinkTitle.sendKeys('Wikipedia (wrong)');
-    var i = 0;
-    while (wrongUrl[i]) {
-      extraLinkUrl.clear();
-      extraLinkUrl.sendKeys(wrongUrl[i]);
+      // Test link without URL
+      tabExtra.click();
+      extraLinkTitle.sendKeys('Tywin');
       save.click();
-      expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person urls is not a valid URL.');
-      i++;
-    }
+      expect(messages.getText()).toContain('You cannot enter a title without a link url.');
 
-    // Add good URL
-    extraLinkTitle.clear();
-    extraLinkTitle.sendKeys('Wikipedia');
-    extraLinkUrl.clear();
-    extraLinkUrl.sendKeys('http://en.wikipedia.org/wiki/Tyrion_Lannister');
-
-    // Publish it
-    tabOptions.click();
-    optionsPublished.isSelected().then(function(selected) {
-      if (!selected) {
-        optionsPublished.click();
+      // Test link with malformed URL
+      var wrongUrl = [
+        'htt://en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http:/en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http//en.wikipedia.org/wiki/Tyrion_Lannister',
+        'http://en.wikipedia/wiki/Tyrion_Lannister'
+      ];
+      extraLinkTitle.sendKeys('Wikipedia (wrong)');
+      var i = 0;
+      while (wrongUrl[i]) {
+        extraLinkUrl.clear();
+        extraLinkUrl.sendKeys(wrongUrl[i]);
+        save.click();
+        expect(messages.getText()).toContain('The value ' + wrongUrl[i] + ' provided for Person links is not a valid URL.');
+        i++;
       }
+
+      // Add good URL
+      extraLinkTitle.clear();
+      extraLinkTitle.sendKeys('Wikipedia');
+      extraLinkUrl.clear();
+      extraLinkUrl.sendKeys('http://en.wikipedia.org/wiki/Tyrion_Lannister');
+
     });
 
-    // Save the node
-    save.click();
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
+
+      // Publish it
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
+
+      // Save the node
+      save.click();
+
+    });
 
     // Expectations
     expect(messages.getText()).toContain('Person Tyrion Lannister has been created.');
@@ -175,21 +183,28 @@ describe('The Person features of the CMS', function() {
     personGivenName.sendKeys(name);
     personFamilyName.sendKeys(surname);
 
-    // Add a relation between person and event
-    var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
-    tabEvents.click();
-    eventRelation.sendKeys(eventName);
-    browser.wait(function() {
-      return browser.isElementPresent(by.css('#autocomplete li div'));
-    }, 5000);
-    autocomplete.click();
+    browser.executeScript('window.scrollTo(0,0);').then(function () {
 
-    // Publish it
-    tabOptions.click();
-    optionsPublished.isSelected().then(function(selected) {
-      if (!selected) {
-        optionsPublished.click();
-      }
+      tabExtra.click();
+      personEmail.sendKeys("tywinrulezok@lannister.gov.rk");
+
+      // Add a relation between person and event
+      var autocomplete = element(by.xpath("//div[@id='autocomplete']//li[1]/div"));
+      tabEvents.click();
+      eventRelation.sendKeys(eventName);
+      browser.wait(function() {
+        return browser.isElementPresent(by.css('#autocomplete li div'));
+      }, 5000);
+      autocomplete.click();
+
+      // Publish it
+      tabOptions.click();
+      optionsPublished.isSelected().then(function(selected) {
+        if (!selected) {
+          optionsPublished.click();
+        }
+      });
+
     });
 
     // Save the node
@@ -224,11 +239,11 @@ describe('The Person features of the CMS', function() {
     personFamilyName.sendKeys('Preston');
     personNameSuffix.sendKeys('Esq.');
     personAlias.sendKeys('Bill');
-    bioDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
+    personDescription.sendKeys('Co-founder and guitarist of the rock-group Wyld Stallyns');
 
     browser.executeScript('window.scrollTo(0,0);').then(function () {
       // Tab Biography and images
-      tabBio.click();
+      tabImages.click();
 
       // upload 'Image'
       var fileToUpload = '../image/test-img.jpg';
@@ -329,8 +344,8 @@ describe('The Person features of the CMS', function() {
     browser.get(browser.params.url + '/api/event/' + eid[0] + '.json');
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
-       expect(json.performers.length).toEqual(1);
-       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + nid);
+       expect(json.performer.length).toEqual(1);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + nid);
     });
   });
 
@@ -368,8 +383,8 @@ describe('The Person features of the CMS', function() {
     browser.get(browser.params.url + '/api/event/' + eid[1] + '.json');
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
-       expect(json.performers.length).toEqual(1);
-       expect(json.performers[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
+       expect(json.performer.length).toEqual(1);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
     });
   });
 
@@ -543,11 +558,6 @@ function addEvent(eventName) {
   element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
   element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
   element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
-
-  // end date/time
-  element(by.id('edit-field-event-date-end-und-0-value-datepicker-popup-0')).sendKeys('23/04/2015');
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).click();
-  element(by.id('edit-field-event-date-end-und-0-value-timeEntry-popup-1')).sendKeys('22:30');
 
   // duration
   element(by.id('edit-field-event-duration-und-0-value')).clear();
