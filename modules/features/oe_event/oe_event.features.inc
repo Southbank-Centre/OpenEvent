@@ -103,11 +103,6 @@ function oe_event_rdf_default_mappings() {
       'datatype' => 'xsd:dateTime',
       'callback' => 'date_iso8601',
     ),
-    'field_event_performers' => array(
-      'predicates' => array(
-        0 => 'schema:performer',
-      ),
-    ),
     'url' => array(
       'predicates' => array(
         0 => 'schema:url',
@@ -153,11 +148,6 @@ function oe_event_rdf_default_mappings() {
     'field_event_age_range' => array(
       'predicates' => array(
         0 => 'schema:typicalAgeRange',
-      ),
-    ),
-    'field_event_performers' => array(
-      'predicates' => array(
-        0 => 'schema:performer',
       ),
     ),
   );

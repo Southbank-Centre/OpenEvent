@@ -163,11 +163,6 @@ function oe_person_rdf_default_mappings() {
         0 => 'schema:sameAs',
       ),
     ),
-    'field_person_events' => array(
-      'predicates' => array(
-        0 => 'schema:performerIn',
-      ),
-    ),
   );
 
   return $schemaorg;

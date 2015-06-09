@@ -23,7 +23,7 @@ function oe_relationship_performer_rdf_default_mappings() {
   $schemaorg = array();
 
   // Exported RDF mapping: person_performs_in_event
-  $schemaorg['relation']['person_performs_in_event'] = array(
+  $schemaorg['relation']['performer_performs_in_event'] = array(
     'source_bundles' => array(
       'predicates' => array(
         0 => 'schema:performerIn',
