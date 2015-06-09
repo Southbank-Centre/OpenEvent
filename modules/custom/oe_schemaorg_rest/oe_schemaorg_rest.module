@@ -77,6 +77,8 @@ function oe_schemaorg_rest_get_resource_mapping($resource) {
  * @return array
  *   A field map with keys the drupal field name and values the
  *   Schema.org corresponding field name
+ *
+ * @ingroup callbacks
  */
 function oe_schemaorg_rest_get_field_mappings($type, $bundle) {
   $field_map = array();
