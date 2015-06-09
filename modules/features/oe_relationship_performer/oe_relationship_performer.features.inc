@@ -22,25 +22,6 @@ function oe_relationship_performer_ctools_plugin_api($module = NULL, $api = NULL
 function oe_relationship_performer_rdf_default_mappings() {
   $schemaorg = array();
 
-
-  // Exported RDF mapping: event
-  $schemaorg['node']['event'] = array(
-    'field_event_performers' => array(
-      'predicates' => array(
-        0 => 'schema:performer',
-      ),
-    ),
-  );
-
-  // Exported RDF mapping: person
-  $schemaorg['node']['person'] = array(
-    'field_person_events' => array(
-      'predicates' => array(
-        0 => 'schema:performerIn',
-      ),
-    ),
-  );
-
   // Exported RDF mapping: person_performs_in_event
   $schemaorg['relation']['person_performs_in_event'] = array(
     'source_bundles' => array(

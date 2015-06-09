@@ -155,6 +155,11 @@ function oe_event_rdf_default_mappings() {
         0 => 'schema:typicalAgeRange',
       ),
     ),
+    'field_event_performers' => array(
+      'predicates' => array(
+        0 => 'schema:performer',
+      ),
+    ),
   );
 
   // Exported RDF mapping: event_is_contained_in_event
