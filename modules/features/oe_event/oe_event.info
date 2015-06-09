@@ -17,7 +17,6 @@ dependencies[] = oe_components
 dependencies[] = oe_place
 dependencies[] = oe_schemaorg_rest
 dependencies[] = options
-dependencies[] = paragraphs
 dependencies[] = rdf
 dependencies[] = relation
 dependencies[] = relation_add

@@ -505,7 +505,6 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
           'view_modes' => array(
             'file' => 'default',
             'node' => 'default',
-            'paragraphs_item' => 'default',
             'relation' => 'default',
             'taxonomy_term' => 'default',
             'taxonomy_vocabulary' => 'default',
