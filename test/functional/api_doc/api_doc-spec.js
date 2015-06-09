@@ -103,31 +103,35 @@ describe('OE API documentation', function() {
           j = j + 1;
 
           // go to content type edit form
-          element(by.xpath("(//table[@id='field-overview']//td/a[text()='edit'])[" + j + "]")).click();
-          
-          // get schema.org property mapping
-          element(by.id('edit-schemaorg-ui-field-property')).getAttribute('value').then(function(property) {
+          browser.executeScript('window.scrollTo(0,0);').then(function () {
+            
+            element(by.xpath("(//table[@id='field-overview']//td/a[text()='edit'])[" + j + "]")).click();
+            
+            // get schema.org property mapping
+            element(by.id('edit-schemaorg-ui-field-property')).getAttribute('value').then(function(property) {
 
-            // add property name to array
-            schemaPropertyMappings[resourceName][property] = {};
+              // add property name to array
+              schemaPropertyMappings[resourceName][property] = {};
 
-            element(by.id('edit-instance-description')).getText().then(function(description) {
+              element(by.id('edit-instance-description')).getText().then(function(description) {
 
-              // add field description to array
-              schemaPropertyMappings[resourceName][property]["description"] = description;
+                // add field description to array
+                schemaPropertyMappings[resourceName][property]["description"] = description;
 
-              // run getSchemaPropertyMappings() again if not the last field
-              if (j < numFields) {
-                browser.get(browser.params.url + '/admin/structure/types');
+                // run getSchemaPropertyMappings() again if not the last field
+                if (j < numFields) {
+                  browser.get(browser.params.url + '/admin/structure/types');
 
-                // go to content type edit form
-                element(by.css('#content > table:nth-of-type(2) > tbody > tr:nth-of-type(' + i + ') > td:nth-of-type(3) > a')).click();
-                getSchemaPropertyMappings();
-              }
-              // run viewContentTypeFields() again if not the last content type
-              else if (i < numContentTypes) {
-                viewContentTypeFields();
-              }
+                  // go to content type edit form
+                  element(by.css('#content > table:nth-of-type(2) > tbody > tr:nth-of-type(' + i + ') > td:nth-of-type(3) > a')).click();
+                  getSchemaPropertyMappings();
+                }
+                // run viewContentTypeFields() again if not the last content type
+                else if (i < numContentTypes) {
+                  viewContentTypeFields();
+                }
+
+              });
 
             });
 
