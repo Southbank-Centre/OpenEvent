@@ -42,7 +42,6 @@ describe('Image', function() {
     // workaround for current inability to upload images through SauceLabs from Protractor:
     // provide the path of an image which should always exist on a SauceLabs instance
     if (browser.params.isSauceLabs) {
-      fileToUpload = 'shot_o.png';
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
 
