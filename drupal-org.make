@@ -40,6 +40,7 @@ projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/re
 projects[restws][version] = 2.4
 projects[strongarm][version] = 2.0
 projects[taxonomy_access_fix][version] = 2.2
+projects[view_unpublished][version] = 1.2
 projects[token][version] = 1.6
 
 ; Contrib modules with non-stable releases
