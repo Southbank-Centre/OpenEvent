@@ -191,6 +191,13 @@ There are a full set of tests included with this distribution. Please refer to *
 
 
 
+
+# Entity Relationship Diagram
+An entity relationship diagram can be found in [https://github.com/Southbank-Centre/OpenEvent/blob/master/openevent-ERD.png](openevent-ERD.png)
+
+
+
+
 ## FAQ
 @TODO
 
