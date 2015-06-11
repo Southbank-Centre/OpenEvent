@@ -109,7 +109,6 @@ function openevent_install() {
     'access relations',
     'view the administration theme',
     'access toolbar',
-    'view any unpublished content',
     'access oe_rest_api_doc'
   ));
 

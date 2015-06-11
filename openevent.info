@@ -55,7 +55,6 @@ dependencies[] = schemaorg
 dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
-dependencies[] = view_unpublished
 
 ; Open Event dependencies
 ; Features
