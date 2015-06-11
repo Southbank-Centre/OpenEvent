@@ -26,16 +26,6 @@ describe('Image', function() {
   it('can be added to an Event page', function(){
     var deferment = protractor.promise.defer();
 
-    // Add test term (required to save an Event page)
-    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
-
-    // Test term 1
-    expect(element(by.css('.page-title')).getText()).toContain('Event class');
-    element(by.id('edit-name')).sendKeys('Test event class 1');
-    element(by.id('edit-description-value')).sendKeys('Test event class 1 description');
-    element(by.id('edit-submit')).click();
-
-
     // Create minimal Event page
 
     browser.get(browser.params.url + '/node/add/event');
@@ -45,13 +35,13 @@ describe('Image', function() {
     element(by.id('edit-title')).sendKeys('Test event page');
 
     // upload 'Image'
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Images']")).click();
     var fileToUpload = 'test-img.jpg';
     var absolutePath = path.resolve(__dirname, fileToUpload);
 
     // workaround for current inability to upload images through SauceLabs from Protractor:
     // provide the path of an image which should always exist on a SauceLabs instance
     if (browser.params.isSauceLabs) {
-      fileToUpload = 'shot_o.png';
       absolutePath = '/home/chef/job_assets/shot_0.png';
     }
 
@@ -65,12 +55,6 @@ describe('Image', function() {
 
     $('#edit-field-image-und-0-alt').sendKeys('Test image ALT');
     $('#edit-field-image-und-0-title').sendKeys('Test image TITLE');
-
-    // select event class
-    browser.executeScript('window.scrollTo(0,0);').then(function () {
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
-      element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-    });
 
     // fill out content on 'Date and time' tab
     browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -132,81 +116,46 @@ describe('Image', function() {
 
   });
 
+  /* API output tests */
 
-  it('outputs the Image data with the Event node JSON in the expected format', function () {
-
+  it('outputs the Image data with the Event node JSON in Schema.org format', function () {
+    // set correct filename for checking image upload
     var imageName = 'test-img.jpg';
     if (browser.params.isSauceLabs) {
       imageName = 'shot_0.png';
     }
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON({
-        "field_image": {
-          "file": {
-            "uri": function(val) {
-              expect(val).toContain(browser.params.url + "/file/");
-            },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "file"
-          },
-          "alt": "Test image ALT",
-          "title": "Test image TITLE"
-        }
-      })
-      .afterJSON(function(imageJSON) {
+    // get Event JSON from API and parse it for the image field
+    browser.get(browser.params.url + '/api/event/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-        // Use data from previous result in next test
-
-        frisby.create('Image JSON')
-          .get(browser.params.url + '/file/' + imageJSON.field_image.file.id + '.json')
-          .expectStatus(200)
-          .expectHeaderContains('content-type', 'application/json')
-          .expectJSON({
-            "name": imageName
-          })
-          .after(CleanUp)
-          .toss();
-
-      })
-      .toss();
-
-      function CleanUp() {
-
-        describe('Clean up', function() {
-
-          it('will take place after all tests have passed', function() {
-
-            // CLEAN UP
-
-            // remove event class terms
-            browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-            element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-            element(by.id('edit-delete')).click();
-            element(by.id('edit-submit')).click();
-            expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
-
-            // remove content
-            browser.get(browser.params.url + '/admin/content');
-            element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-            element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-            element(by.id('edit-submit--2')).click();
-            element(by.id('edit-submit')).click();
-            expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
-
-          });
-
-        });
-
-      }
-
+       // image uploaded & fields filled out as expected
+       expect(json.image[0].contentUrl).toContain(browser.params.url);
+       expect(json.image[0].contentUrl).toContain(imageName.split(".")[0]);
+       expect(json.image[0].alternateName).toBe("Test image ALT");
+       expect(json.image[0].caption).toBe("Test image TITLE");
+    });
   });
 
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  /* End of API input tests */
+
+  it('will take place after all tests have passed', function() {
+
+    // CLEAN UP
+    // remove content
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+
+  });
 
 });

@@ -200,4 +200,7 @@ There are a full set of tests included with this distribution. Please refer to *
 Current maintainers:
 
 * Jorge Lopez-Lago - [https://www.drupal.org/u/kurkuma](https://www.drupal.org/u/kurkuma)
-* please add...
+* Alex Bridge - [https://www.drupal.org/u/alxbridge](https://www.drupal.org/u/alxbridge)
+* Tassos Koutlas - [https://www.drupal.org/u/tassos](https://www.drupal.org/u/tassos)
+* Dave Vernon - [https://www.drupal.org/u/djvern](https://www.drupal.org/u/djvern)
+* Sam Murray - [https://www.drupal.org/u/samueljmurray](https://www.drupal.org/u/samueljmurray)

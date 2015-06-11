@@ -16,7 +16,7 @@ This is specified under the ***machine*** heading in *circle.yml*. Particular ve
 
 ### 2. Check out code
 
-CircleCI will automatically check out the code from the GitHub repository that its project is connected to - in this case, *Southbank-Centre/southbankcentre.org-CMS*.
+CircleCI will automatically check out the code from the GitHub repository that its project is connected to - in this case, *Southbank-Centre/OpenEvent.git*.
 
 By default, CircleCI will watch for commits to any branch. However, it's possible to limit it to only watch for commits to branches with particular names (or matching particular patterns). To see which - if any - branches are being watched, look for the heading ***general***, subheading ***branches*** in *circle.yml*.
 
@@ -30,7 +30,7 @@ This is specified under the ***dependencies*** heading in *circle.yml*. This is 
 
 ### 4. Run tests
 
-Tests for the system will be written using [Protractor](http://angular.github.io/protractor/#/). Some API also require [Frisby.js](http://frisbyjs.com/) to test JSON responses. See */test/functional/README.md* in this repository for more details.
+Tests for the system will be written using [Protractor](http://angular.github.io/protractor/#/).
 
 In order to run these tests against a CircleCI build server, it's necessary to connect to a service capable of providing WebDriverJS browser interaction. In this case, the project is using [SauceLabs](https://saucelabs.com]).
 

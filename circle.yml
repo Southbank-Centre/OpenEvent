@@ -16,9 +16,6 @@ checkout:
   override:
     - git clone -b $CIRCLE_BRANCH git@github.com:$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME $HOME/drupal/profiles/openevent
 
-  environment:
-    SAUCE_TUNNEL_ID: circle-$CIRCLE_BUILD_NUM
-
 dependencies:
   pre:
 
@@ -45,20 +42,17 @@ test:
   pre:
     # protractor setup
     - npm install -g protractor@1.8.0
-    # frisby setup
-    - npm install -g frisby@0.8.5
     # saucelabs setup
     - wget https://saucelabs.com/downloads/sc-latest-linux.tar.gz
-    - tar -xzf sc-latest-linux.tar.gz
+    - mkdir sc-latest
+    - tar -zxf sc-latest-linux.tar.gz --strip-components=1 -C sc-latest
   override:
     - ./bin/sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY -f ~/sc_ready -i $SAUCE_TUNNEL_ID:
         background: true
-        pwd: sc-*-linux
+        pwd: sc-latest
     # Wait for tunnel to be ready
     - while [ ! -e ~/sc_ready ]; do sleep 1; done
-    - npm link frisby:
-        pwd: ../drupal/profiles/openevent/test/functional
-    - node run_suites_synchronously --params.url 'http://openevent.sc.circle:8080' --params.isSauceLabs 1:
+    - protractor conf.js --params.url 'http://openevent.sc.circle:8080' --params.isSauceLabs 1:
         pwd: ../drupal/profiles/openevent/test/functional
 
 general:

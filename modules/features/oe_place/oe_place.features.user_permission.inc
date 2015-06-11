@@ -10,6 +10,16 @@
 function oe_place_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access resource Place'.
+  $permissions['access resource Place'] = array(
+    'name' => 'access resource Place',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+    ),
+    'module' => 'restws',
+  );
+
   // Exported permission: 'create place content'.
   $permissions['create place content'] = array(
     'name' => 'create place content',
