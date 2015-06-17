@@ -1,5 +1,5 @@
 # OPEN EVENT DISTRIBUTION
-v1.0
+v0.3
 
 ## CONTENTS OF THIS FILE
 
@@ -10,13 +10,12 @@ v1.0
  * Open Event API
  * Testing
  * Troubleshooting
- * FAQ
  * Maintainers
 
 
 
 ## Introduction
-Open Event is a Drupal distribution that has been created by Southbank Centre for use by other arts and events organisations. It's been built with an open approach and data architecture that will allow for collaboration and community activity. The data output maps to [Schema.org](http://schema.org) entities which allows for greater exposure and discovery across the wider internet.
+Open Event is a Drupal distribution that has been created by Southbank Centre for use by other arts and events organisations. It's been built with an open approach and data architecture that will allow for collaboration and community activity. The data output maps to [Schema.org](http://schema.org) entities which allows for greater exposure and discovery across the wider Internet.
 
 This distribution serves as a starting point for an events-based Content Management System which you are free to build upon for your individual needs.
 
@@ -25,7 +24,7 @@ Equally this distribution is intended to evolve and this can be greatly helped b
 
 
 ## Requirements
-Open Event requires Drupal 7 and version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
+Open Event requires Drupal 7. Version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
 
 *Please note: if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
 
@@ -46,7 +45,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Geolocation [https://www.drupal.org/project/geolocation](https://www.drupal.org/project/geolocation)
 * Link [https://www.drupal.org/project/link](https://www.drupal.org/project/link)
 * Office Hours [https://www.drupal.org/project/office_hours](https://www.drupal.org/project/office_hours)
-* Pathauto [https://www.drupal.org/project/pathauto](https://www.drupal.org/project/pathauto)
 * Relation [https://www.drupal.org/project/relation](https://www.drupal.org/project/relation)
 * Relation Add [https://www.drupal.org/project/relation_add](https://www.drupal.org/project/relation_add)
 * RESTful Web Services [https://www.drupal.org/project/restws](https://www.drupal.org/project/restws)
@@ -60,9 +58,9 @@ The following modules are required. They are packaged and automatically enabled 
 
 To set up a website using this distribution, do one of the following:
 
-A. *(Not currently supported)* Download the distribution from [https://www.drupal.org/project/openevent](https://www.drupal.org/project/openevent) and follow the Drupal installation guide: [https://www.drupal.org/documentation/install](https://www.drupal.org/documentation/install), or;
+A. Download the distribution from [https://www.drupal.org/project/openevent](https://www.drupal.org/project/openevent) and follow the Drupal installation guide: [https://www.drupal.org/documentation/install](https://www.drupal.org/documentation/install), or;
 
-B. *(Assuming you have Git and Drush installed)* Run the following commands from a console/terminal window:
+B. Run the following commands from a console/terminal window *(assuming you have Git and Drush installed)*:
 
 1. Clone the Open Event distribution branch from GitHub:
 
@@ -98,7 +96,8 @@ B. *(Assuming you have Git and Drush installed)* Run the following commands from
 7. Change the permissions of the files directory and the settings file
 
 		chgrp -R WWW-GROUP sites/default/files
-		chmod -R 775 sites/default/files
+		chmod 2775 sites/default/files
+    chmod g+w -R sites/default/files
 		chmod 444 sites/default/settings.php
 
     WWW-GROUP should be the group which your web server process belongs to, e.g. *www-data*.
@@ -141,8 +140,6 @@ Open Event includes the same roles as a standard Drupal installation, and they p
 * RestWS - Access the resource node
 * RestWS - Access the resource relation
 * RestWS - Access the resource file
-* RestWS - Access the resource taxonomy_term
-* RestWS - Access the resource taxonomy_vocabulary
 * Relation - View Relations
 
 #### Authenticated users
@@ -157,6 +154,7 @@ Open Event includes the same roles as a standard Drupal installation, and they p
 * Node - Event: Create/Edit/Delete any content
 * Node - Person: Create/Edit/Delete any content
 * Node - Place: Create/Edit/Delete any content
+* Node - Organization: Create/Edit/Delete any content
 * System - View the administration theme
 * Toolbar - Use the administration toolbar
 
@@ -169,19 +167,18 @@ Open Event includes the same roles as a standard Drupal installation, and they p
 
 
 ## Open Event API
-Open Event by default exposes all it's content data as JSON via an API provided by the RestWS module. It is currently a Read-Only API. In the future, it will be extended to provide a Create Once Publish Everywhere experience out of the box.
+Open Event by default exposes all it's content data as JSON via an API provided by the RestWS module. It is currently a Read-Only API. In the future, it may be extended to provide a Create Once Publish Everywhere experience out of the box.
 
-The API allows you to use an independent web application as a front-end for the site, use available Drupal themes, or consume data from a mobile app.
+The API allows you to use an independent web application as a front-end for the site or consume data from a mobile app.
 
 The API is also self-documenting. It's documentation can be found at **/api/doc**.
 
-If you create more content types and map them and their fields to schema.org types and properties, they will appear automatically in the API documentation.
-
+Any new content types (node bundles) mapped to schema.org types and properties will be available as a JSON endpoint and will appear automatically in the API documentation.
 
 
 ## Testing
 There are a full set of tests included with this distribution. Please refer to **TEST.md** for documentation.
-@TODO implement unit tests in SimpleTest
+@TODO implement unit tests in SimpleTest.
 
 
 
@@ -193,13 +190,8 @@ There are a full set of tests included with this distribution. Please refer to *
 
 
 # Entity Relationship Diagram
-An entity relationship diagram can be found in [https://github.com/Southbank-Centre/OpenEvent/blob/master/openevent-ERD.png](openevent-ERD.png)
+An entity relationship diagram can be found in [https://github.com/Southbank-Centre/OpenEvent/blob/master/openevent-ERD.png](openevent-ERD.png).
 
-
-
-
-## FAQ
-@TODO
 
 
 
