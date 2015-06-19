@@ -123,7 +123,7 @@ function oe_schemaorg_relation_get_resource_uri($relation_id, $reference_index) 
       if ($type) {
         $schema_name = schemaorg_ui_term_load('node', $type, 'rdftype');
         // construct the URI
-        return restws_resource_uri($schema_name, $endpoint['entity_id']);
+        return restws_resource_uri($schema_name, $endpoint['entity_id']) . ".json";
       }
     }
   }
