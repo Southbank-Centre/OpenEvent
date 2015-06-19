@@ -32,6 +32,11 @@
             $url = file_create_url($uri);
             $newImage[$imageMappings[$key]] = $url;
           }
+          // mapping empty fields to null for consistency (although it is wrong)
+          // Check for empty field (NULL, "", undefined, array(), false, 0)
+          elseif(empty($fieldValue)) {
+            $newImage[$imageMappings[$key]] = NULL;
+          }
           // other (text) fields can be mapped as-is
           else {
             $newImage[$imageMappings[$key]] = $fieldValue;
