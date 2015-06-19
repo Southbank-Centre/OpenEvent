@@ -299,7 +299,7 @@ describe('The Organization features of the CMS', function() {
       expect(json.logo.caption).toBe("Test logo TITLE");
 
       // URL of this item should be predictable based on NID
-      expect(json.url).toBe(browser.params.url + '/api/organization/' + nid);
+      expect(json.url).toBe(browser.params.url + '/api/organization/' + nid + '.json');
 
     });
 
@@ -308,13 +308,13 @@ describe('The Organization features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
       var json = JSON.parse(bodyText);
       expect(json.performer.length).toEqual(1);
-      expect(json.performer[0]).toEqual(browser.params.url + "/api/organization/" + pnid);
+      expect(json.performer[0]).toEqual(browser.params.url + "/api/organization/" + pnid + '.json');
     });
     browser.get(browser.params.url + '/api/organization/' + pnid + '.json');
     element(by.css('html')).getText().then(function(bodyText) {
       var json = JSON.parse(bodyText);
       expect(json.performerIn.length).toEqual(1);
-      expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+      expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0] + '.json');
     });
   });
 
