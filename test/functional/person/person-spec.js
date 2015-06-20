@@ -334,10 +334,10 @@ describe('The Person features of the CMS', function() {
        expect(json.award.length).toEqual(0);
 
        // URL of this item should be predictable based on NID
-       expect(json.url).toBe(browser.params.url + '/api/person/' + nid);
+       expect(json.url).toBe(browser.params.url + '/api/person/' + nid + '.json');
 
        expect(json.performerIn.length).toEqual(1);
-       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+       expect(json.performerIn[0]).toEqual(browser.params.url + "/api/event/" + eid[0] + '.json');
     });
 
     // test that the performers relation has been correctly added to the event
@@ -345,7 +345,7 @@ describe('The Person features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
        expect(json.performer.length).toEqual(1);
-       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + nid);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + nid + '.json');
     });
   });
 
@@ -384,7 +384,7 @@ describe('The Person features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
        expect(json.performer.length).toEqual(1);
-       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + completeNid);
+       expect(json.performer[0]).toEqual(browser.params.url + "/api/person/" + completeNid + '.json');
     });
   });
 
