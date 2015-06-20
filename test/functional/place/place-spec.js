@@ -254,15 +254,15 @@ describe('The Place features of the CMS', function() {
       expect(json.openingHoursSpecification[4].closes).toBe("02:00:00");
 
       // URL of this item should be predictable based on NID
-      expect(json.url).toBe(browser.params.url + '/api/place/' + nid);
+      expect(json.url).toBe(browser.params.url + '/api/place/' + nid + '.json');
 
       // Relation to parent place item set up correctly
       expect(json.containedIn.length).toEqual(1);
-      expect(json.containedIn[0]).toEqual(browser.params.url + "/api/place/" + parentNid);
+      expect(json.containedIn[0]).toEqual(browser.params.url + "/api/place/" + parentNid + '.json');
 
       // Relation to related event item set up correctly
       expect(json.event.length).toEqual(1);
-      expect(json.event[0]).toEqual(browser.params.url + "/api/event/" + eid[0]);
+      expect(json.event[0]).toEqual(browser.params.url + "/api/event/" + eid[0] + '.json');
     });
 
     // get minimal Place JSON from API and check the empty fields are output as expected
@@ -286,8 +286,8 @@ describe('The Place features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
        expect(json.list.length).toEqual(2);
-       expect(json.list[0].url).toEqual(browser.params.url + "/api/place/" + parentNid);
-       expect(json.list[1].url).toEqual(browser.params.url + "/api/place/" + nid);
+       expect(json.list[0].url).toEqual(browser.params.url + "/api/place/" + parentNid + '.json');
+       expect(json.list[1].url).toEqual(browser.params.url + "/api/place/" + nid + '.json');
     });
   });
 
