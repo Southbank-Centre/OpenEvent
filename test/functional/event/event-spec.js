@@ -285,13 +285,13 @@ describe('The Event features of the CMS', function() {
        expect(isNaN(parseInt(doorParsed, 10))).toBe(false);
 
        // URL of this item should be predictable based on NID
-       expect(json.url).toBe(browser.params.url + '/api/event/' + nid);
+       expect(json.url).toBe(browser.params.url + '/api/event/' + nid + '.json');
 
        // Relations to other items set up correctly
        expect(json.superEvent.length).toEqual(1);
-       expect(json.superEvent[0]).toEqual(browser.params.url + "/api/event/" + parentNid);
+       expect(json.superEvent[0]).toEqual(browser.params.url + "/api/event/" + parentNid + '.json');
        expect(json.location.length).toEqual(1);
-       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid)
+       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid + '.json')
        expect(json.subEvent.length).toEqual(0);
 
        // performers are tested separately in the person test spec
@@ -310,7 +310,7 @@ describe('The Event features of the CMS', function() {
        expect(json.duration).toBe(null);
 
        expect(json.subEvent.length).toEqual(1);
-       expect(json.subEvent[0]).toEqual(browser.params.url + "/api/event/" + nid);
+       expect(json.subEvent[0]).toEqual(browser.params.url + "/api/event/" + nid + '.json');
        expect(json.superEvent.length).toEqual(0);
        expect(json.location.length).toEqual(0);
 
@@ -323,8 +323,8 @@ describe('The Event features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
        var json = JSON.parse(bodyText);
        expect(json.list.length).toEqual(2);
-       expect(json.list[0].url).toEqual(browser.params.url + "/api/event/" + parentNid);
-       expect(json.list[1].url).toEqual(browser.params.url + "/api/event/" + nid);
+       expect(json.list[0].url).toEqual(browser.params.url + "/api/event/" + parentNid + '.json');
+       expect(json.list[1].url).toEqual(browser.params.url + "/api/event/" + nid + '.json');
     });
 
   });
