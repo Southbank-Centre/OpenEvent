@@ -1,0 +1,130 @@
+<?php
+
+/*
+ * @file
+ * OpenEvent Schema.org Relation module - Provides Schema.org mapping ability for the Relation module
+ */
+
+/**
+ * Alter the outgoing response to add mapped data for RestWS - implements hook_restws_response_alter
+ *
+ * @param mixed $response
+ *   The response data being returned by the REST service (not yet serialized).
+ * @param string $function
+ *   The function being called on the REST service.
+ * @param string $format
+ *   The name of the format serializing the response.
+ * @param RestWSResourceControllerInterface $resourceController
+ *   The resource controller.
+ */
+function oe_schemaorg_relation_restws_response_alter(&$response, $function, $formatName, $resourceController) {
+  // Capture any responses using our controller and send them for rewriting
+  if (is_a($resourceController, 'OeSchemaorgRestController')) {
+    // request for a single resource
+    if ($function == 'viewResource') {
+      $response = oe_schemaorg_relation_add_mapped_relations($response);
+    }
+    // query for multiple resources
+    else if ($function == 'queryResource') {
+      foreach ($response['list'] as $index => $item) {
+        $response['list'][$index] = oe_schemaorg_relation_add_mapped_relations($item);
+      }
+    }
+  }
+}
+
+
+/**
+ * Add Schema.org-mapped relations to resources
+ *
+ * @param mixed $resource
+ *   The response data being returned by the REST service (not yet serialized).
+ */
+function oe_schemaorg_relation_add_mapped_relations($resource) {
+  // An item can be referenced by Relations as either the 'source' or the 'target'.
+  // Internally, Relations sees these endpoints as an r_index of 0 and 1 respectively.
+  $reference_types = array('source', 'target');
+
+  foreach($reference_types as $reference_index=>$reference_type) {
+    // get all Relation types which may refer to the resource
+    $relations = relation_get_available_types('node', $resource['type'], $reference_type);
+    foreach($relations as $relation_type=>$relation) {
+      // filter these to only the ones which have a Schema.org mapping for the reference
+      $mapping = oe_schemaorg_relation_get_mapping($relation_type, $reference_type);
+      if ($mapping) {
+        // get all relations referring to the resource
+        $query = relation_query('node',$resource['nid'], $reference_index);
+        $results = $query->propertyCondition('relation_type', $relation_type)->execute();
+
+        // add the REST URI for each of these to the output array
+        $mapped_results = array();
+        foreach($results as $result) {
+          $uri = oe_schemaorg_relation_get_resource_uri($result->rid, !$reference_index);
+          if ($uri) {
+            $mapped_results[] = $uri;
+          }
+        }
+        $resource[$mapping] = $mapped_results;
+      }
+    }
+  }
+  return $resource;
+}
+
+
+/**
+ * Get the Schema.org mapping for one side of a relation
+ *
+ * @param string $relation_type
+ *   The type of Relation to look up
+ *
+ * @param string $reference_type
+ *   The side of the Relation to look up ('source' or 'target')
+ */
+function oe_schemaorg_relation_get_mapping($relation_type, $reference_type) {
+  $mappings = rdf_mapping_load('relation', $relation_type);
+  $terms = array();
+
+  if ($reference_type == 'source') {
+    $bundles = 'source_bundles';
+  }
+  else {
+    $bundles = 'target_bundles';
+  }
+
+  if (!empty($mappings[$bundles]['predicates'])) {
+    $terms = $mappings[$bundles]['predicates'];
+  }
+  foreach ($terms as $term) {
+    if (strpos(trim($term), 'schema:') === 0) {
+      return $term;
+    }
+  }
+  return false;
+}
+
+
+/**
+ * Get the REST URI for a resource on one side of a relation
+ *
+ * @param string $relation_id
+ *   The ID of the Relation to look up
+ *
+ * @param string $reference_index
+ *   The side of the Relation to look up (0='source', 1='target')
+ */
+function oe_schemaorg_relation_get_resource_uri($relation_id, $reference_index) {
+  // load the Relation object and look through its references ('endpoints')
+  $result_relation = relation_load($relation_id);
+  foreach($result_relation->endpoints[LANGUAGE_NONE] as $endpoint) {
+    // look up the node type & corresponding Schema.org mapping for the requested reference
+    if ($endpoint['r_index'] == $reference_index) {
+      $type = db_query('SELECT type FROM {node} n WHERE n.nid = :nid', array(':nid'=>$endpoint['entity_id']))->fetchField();
+      if ($type) {
+        $schema_name = schemaorg_ui_term_load('node', $type, 'rdftype');
+        // construct the URI
+        return restws_resource_uri($schema_name, $endpoint['entity_id']) . ".json";
+      }
+    }
+  }
+}

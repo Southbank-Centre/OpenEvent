@@ -1,0 +1,6 @@
+name = OpenEvent Schema.org Relation
+description = Provides Schema.org mapping ability for the Relation module.
+core = 7.x
+dependencies[] = schemaorg
+dependencies[] = oe_schemaorg_rest
+

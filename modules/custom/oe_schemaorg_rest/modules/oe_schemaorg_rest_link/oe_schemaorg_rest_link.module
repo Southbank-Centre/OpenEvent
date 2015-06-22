@@ -1,0 +1,31 @@
+<?php
+
+  /*
+   * @file
+   * OE Schema.org Link module - Provides Schema.org mappings for link fields
+   */
+
+  /**
+   * Implements hook_schemaorg_rest_field_alter
+   *
+   * Map Link fields to Schema.org-compliant URLS
+   */
+  function oe_schemaorg_rest_link_schemaorg_rest_field_alter(&$value, &$term, &$field_info) {
+    if ($field_info['type'] == 'link_field') {
+      // repeating link field - recurse onto each value
+      if (sizeof($value) && !isset($value['url'])) {
+        foreach(array_keys($value) as $index) {
+          oe_schemaorg_rest_link_schemaorg_rest_field_alter($value[$index], $term, $field_info);
+        }
+      }
+      // Check for empty field (NULL, "", undefined, array(), false, 0)
+      // In case we have the field passed but without a valid value
+      elseif(empty($value)) {
+        $value = NULL;
+      }
+      // single link field
+      else {
+        $value = $value['url'];
+      }
+    }
+  }

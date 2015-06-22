@@ -20,59 +20,12 @@ describe('The Event features of the CMS', function() {
     return browser.ignoreSynchronization = true;
   });
 
-  it('can create an event class terms', function(){
-    browser.get(browser.params.url + '/admin/structure/taxonomy/event_class/add');
-
-    // Test term 1
-    expect(element(by.css('.page-title')).getText()).toContain('Event class');
-    element(by.id('edit-name')).sendKeys('Test event class 1');
-    element(by.id('edit-description-value')).sendKeys('Test event class 1 description');
-    element(by.id('edit-submit')).click();
-
-    // Test term 2
-    expect(element(by.css('.page-title')).getText()).toContain('Event class');
-    element(by.id('edit-name')).sendKeys('Test event class 2');
-    element(by.id('edit-description-value')).sendKeys('Test event class 2 description');
-    element(by.id('edit-submit')).click();
-
-    // Test term 3
-    expect(element(by.css('.page-title')).getText()).toContain('Event class');
-    element(by.id('edit-name')).sendKeys('Test event class 3');
-    element(by.id('edit-description-value')).sendKeys('Test event class 3 description');
-    element(by.id('edit-submit')).click();
-
-  });
-
-  it('can create an event type terms', function(){
-
-    browser.get(browser.params.url + '/admin/structure/taxonomy/event_type/add');
-
-    // Test term 1
-    expect(element(by.css('.page-title')).getText()).toContain('Event type');
-    element(by.id('edit-name')).sendKeys('Test event type 1');
-    element(by.id('edit-description-value')).sendKeys('Test event type 1 description');
-    element(by.id('edit-submit')).click();
-
-    // Test term 2
-    expect(element(by.css('.page-title')).getText()).toContain('Event type');
-    element(by.id('edit-name')).sendKeys('Test event type 2');
-    element(by.id('edit-description-value')).sendKeys('Test event type 2 description');
-    element(by.id('edit-submit')).click();
-
-    // Test term 3
-    expect(element(by.css('.page-title')).getText()).toContain('Event type');
-    element(by.id('edit-name')).sendKeys('Test event type 3');
-    element(by.id('edit-description-value')).sendKeys('Test event type 3 description');
-    element(by.id('edit-submit')).click();
-
-  });
-
   it('can create a minimal event page', function(){
     browser.get(browser.params.url + '/node/add/event');
     expect(element(by.css('.page-title')).getText()).toContain('Create Event');
 
     // add a bad age range
-    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
     element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('+12');
 
     // add bad duration
@@ -85,24 +38,14 @@ describe('The Event features of the CMS', function() {
       element(by.id('edit-submit')).click();
 
       // check for the error message explaining that required fields haven't been populated
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Title field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Class field is required');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for End date/time.');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
-      expect(dvr.findElement(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
+      expect(element(by.id('console')).getText()).toContain('A valid date is required for Start date/time.');
+      expect(element(by.id('console')).getText()).toContain('An age range should be one of the following three formats: Either "5+" (ages 5 and above), "0-12" (ages 0 to 12), or "16" (age 16 only).');
+      expect(element(by.id('console')).getText()).toContain('Only numbers are allowed in Duration');
 
       // fill out content on 'Main' tab
       element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
       element(by.id('edit-title')).sendKeys('Parent event page');
-
-      // fill out content on 'Details' tab
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).clear();
-      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-      browser.executeScript('window.scrollTo(0,0);').then(function () {
-        element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-      });
 
       // fill out content on 'Date and time' tab
       browser.executeScript('window.scrollTo(0,0);').then(function () {
@@ -110,7 +53,7 @@ describe('The Event features of the CMS', function() {
         element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Date and time']")).click();
 
         // start date/time
-        element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('15/04/2015');
+        element(by.id('edit-field-event-date-start-und-0-value-datepicker-popup-0')).sendKeys('16/04/2015');
         element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).click();
         element(by.id('edit-field-event-date-start-und-0-value-timeEntry-popup-1')).sendKeys('19:30');
 
@@ -164,6 +107,7 @@ describe('The Event features of the CMS', function() {
     element(by.id('edit-field-description-und-0-value')).sendKeys('Here is some content in the description field <em>that contains emphasis</em> but <script>doesNotContainJavascript();</script>');
 
     // type in the title of the page created in the above test and wait for the autocomplete list to load
+    element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Event parents']")).click();
     element(by.css('#edit-field-event-parents tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
     browser.wait(function () {
         return browser.isElementPresent(by.css('#autocomplete li:first-of-type div'));
@@ -177,16 +121,10 @@ describe('The Event features of the CMS', function() {
     // check that more parents can be added
     expect(element(by.id('edit-field-event-parents-und-add-more')).isPresent()).toBe(true);
 
-    // fill out content on 'Details' tab
+    // fill out content on 'Main' tab
     browser.executeScript('window.scrollTo(0,0);').then(function () {
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Main']")).click();
       element(by.id('edit-field-event-age-range-und-0-value')).sendKeys('4+');
-      expect(element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > label')).getText()).toContain('Test event class 1');
-      element(by.css('#edit-field-event-class-und > .form-item-field-event-class-und:nth-of-type(1) > input')).click();
-      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > label')).getText()).toContain('Test event type 1');
-      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(1) > input')).click();
-      expect(element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > label')).getText()).toContain('Test event type 3');
-      element(by.css('#edit-field-event-type-und > .form-type-checkbox:nth-of-type(3) > input')).click();
     });
 
     // fill out content on 'Date and time' tab
@@ -278,7 +216,7 @@ describe('The Event features of the CMS', function() {
 
       // try to select an event - shouldn't be possible
       // type in the title of the event and wait for the autocomplete list to load
-      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Details']")).click();
+      element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Location']")).click();
       element(by.css('#edit-field-event-places tr:last-of-type input[type="text"]')).sendKeys('Parent event page');
       browser.sleep(5000);
       // check that there are no items in the autocomplete list
@@ -303,14 +241,13 @@ describe('The Event features of the CMS', function() {
       browser.executeScript('window.scrollTo(0,0);').then(function () {
         element(by.css('h1')).click();
         // save
-        element(by.id('edit-submit')).click().then(function() {
-          browser.wait(function () {
-            return browser.isElementPresent(by.id('console'));
-          }, 5000);
-          // verify save
-          expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
+        element(by.id('edit-submit')).click();
 
-        });
+        browser.wait(function () {
+          return browser.isElementPresent(by.id('console'));
+        }, 10000);
+        // verify save
+        expect(element(by.id('console')).getText()).toContain('Event Protractor event page has been updated.');
 
       });
 
@@ -318,182 +255,231 @@ describe('The Event features of the CMS', function() {
 
   });
 
-  it('outputs Event node JSON in the expected format', function () {
+  /* API output tests */
 
-    frisby.create('Get JSON for Event page created in previous test')
-      .get(browser.params.url + '/node/' + nid + '.json')
-      .expectStatus(200)
-      .expectHeaderContains('content-type', 'application/json')
-      .expectJSON({
-        "field_description": {
-          "value": "<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n",
-          "format": "filtered_html"
-        },
-        "field_event_age_range": "4+",
-        "field_event_class": {
-          "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-          "id": function(val) {
-            expect(val).toBeDefined();
-            expect(isNaN(parseInt(val, 10))).toBe(false);
-          },
-          "resource": "taxonomy_term"
-        },
-        "field_event_type": [
-          {
-            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "taxonomy_term"
-          },
-          {
-            "uri": function(val) { expect(val).toContain(browser.params.url + "/taxonomy_term/"); },
-            "id": function(val) {
-              expect(val).toBeDefined();
-              expect(isNaN(parseInt(val, 10))).toBe(false);
-            },
-            "resource": "taxonomy_term"
-          }
-        ],
-        "field_image": [],
-        "field_event_date_start": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_date_end": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_door_time": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "field_event_duration": "150",
-        "nid": nid,
-        "vid": nid,
-        "is_new": function(val) { expect(typeof val).toEqual("boolean"); },
-        "type": "event",
-        "title": "Protractor event page",
-        "language": "und",
-        "url": browser.params.url + '/' + pathAlias,
-        "edit_url": browser.params.url + "/node/" + nid + "/edit",
-        "status": "1",
-        "promote": "0",
-        "sticky": "0",
-        "created": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "changed": function(val) {
-          expect(val.length).toEqual(10);
-          expect(isNaN(parseInt(val, 10))).toBe(false);
-        },
-        "body": {
-          "value": "",
-          "summary": "",
-          "format": null
-        }
-      })
-      .after(function() {
+  it('outputs Event node JSON in Schema.org format', function () {
+    // get Event JSON from API and parse it
+    browser.get(browser.params.url + '/api/event/' + nid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-        // Get the list of all relations of this type, because we don't yet have
-        // a way to filter by an item in the endpoints array
-        frisby.create('Get JSON for "event is located in place" relation')
-          .get(browser.params.url + '/relation.json?relation_type=event_is_located_in_place')
-          .expectStatus(200)
-          .expectHeaderContains('content-type', 'application/json')
-          .expectJSON('list.0', {
-            "endpoints": [
-              {
-                "uri": browser.params.url + "/node/" + nid,
-                "id": nid,
-                "resource": "node"
-              },
-              {
-                "uri": browser.params.url + "/node/" + placeNid,
-                "id": placeNid,
-                "resource": "node"
-              }
-            ]
-          })
-          .after(function () {
+       // string fields as input
+       expect(json.name).toBe("Protractor event page");
+       expect(json.description).toBe("<p>Here is some content in the description field <em>that contains emphasis</em> but doesNotContainJavascript();</p>\n");
+       expect(json.typicalAgeRange).toBe("4+");
 
-            // Get the list of all relations of this type, because we don't yet have
-            // a way to filter by an item in the endpoints array
-            frisby.create('Get JSON for "event is contained in event" relation')
-              .get(browser.params.url + '/relation.json?relation_type=event_is_contained_in_event')
-              .expectStatus(200)
-              .expectHeaderContains('content-type', 'application/json')
-              .expectJSON('list.0', {
-                "endpoints": [
-                  {
-                    "uri": browser.params.url + "/node/" + nid,
-                    "id": nid,
-                    "resource": "node"
-                  },
-                  {
-                    "uri": browser.params.url + "/node/" + parentNid,
-                    "id": parentNid,
-                    "resource": "node"
-                  }
-                ]
-              })
-              .after(CleanUp)
-              .toss();
+       // empty image
+       expect(json.image.length).toEqual(0);
 
-          })
-          .toss();
+       // duration transformed into ISO8601 duration format
+       expect(json.duration).toBe("P0Y0M0DT2H30M0S");
 
-      })
-      .toss();
+       // check date fields are all parseable as ISO8601 Dates
+       var startParsed = Date.parse(json.startDate);
+       expect(isNaN(parseInt(startParsed, 10))).toBe(false);
 
-    function CleanUp() {
+       var endParsed = Date.parse(json.endDate);
+       expect(isNaN(parseInt(endParsed, 10))).toBe(false);
 
-      describe('Clean up', function() {
+       var doorParsed = Date.parse(json.doorTime);
+       expect(isNaN(parseInt(doorParsed, 10))).toBe(false);
 
-        it('will take place after all tests have passed', function() {
+       // URL of this item should be predictable based on NID
+       expect(json.url).toBe(browser.params.url + '/api/event/' + nid + '.json');
 
-          // CLEAN UP
-          // remove event class terms
-          browser.get(browser.params.url + '/admin/structure/taxonomy/event_class');
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+       // Relations to other items set up correctly
+       expect(json.superEvent.length).toEqual(1);
+       expect(json.superEvent[0]).toEqual(browser.params.url + "/api/event/" + parentNid + '.json');
+       expect(json.location.length).toEqual(1);
+       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid + '.json')
+       expect(json.subEvent.length).toEqual(0);
 
-          // remove event type terms
-          browser.get(browser.params.url + '/admin/structure/taxonomy/event_type');
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          element(by.css('#taxonomy tr:first-of-type td:nth-of-type(3) a')).click();
-          element(by.id('edit-delete')).click();
-          element(by.id('edit-submit')).click();
-          expect(element(by.css('#taxonomy tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No terms available.');
+       // performers are tested separately in the person test spec
+       expect(json.performer.length).toEqual(0);
+    });
 
-          // remove content
-          browser.get(browser.params.url + '/admin/content');
-          element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
-          element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
-          element(by.id('edit-submit--2')).click();
-          element(by.id('edit-submit')).click();
-          expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
+    // check the properties which differ between the minimal/maximal
+    // parent/child events
+    browser.get(browser.params.url + '/api/event/' + parentNid + '.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
 
-        });
+       expect(json.description.length).toEqual(0);
+       expect(json.typicalAgeRange).toBe(null);
+       expect(json.doorTime).toBe(null);
+       expect(json.duration).toBe(null);
 
+       expect(json.subEvent.length).toEqual(1);
+       expect(json.subEvent[0]).toEqual(browser.params.url + "/api/event/" + nid + '.json');
+       expect(json.superEvent.length).toEqual(0);
+       expect(json.location.length).toEqual(0);
+
+       // performers are tested separately in the person test spec
+       expect(json.performer.length).toEqual(0);
+    });
+
+    // check that both events are output by the endpoint
+    browser.get(browser.params.url + '/api/event.json');
+    element(by.css('html')).getText().then(function(bodyText) {
+       var json = JSON.parse(bodyText);
+       expect(json.list.length).toEqual(2);
+       expect(json.list[0].url).toEqual(browser.params.url + "/api/event/" + parentNid + '.json');
+       expect(json.list[1].url).toEqual(browser.params.url + "/api/event/" + nid + '.json');
+    });
+
+  });
+
+  /* End of API output tests */
+
+
+  /* API input tests */
+
+  it('outputs events listing JSON and sorts by different fields', function () {
+
+    /* startDate, endDate */
+    var startDateAsc = '?sort=startDate&direction=ASC';
+    var startDateDesc = '?sort=startDate&direction=DESC';
+    var endDateAsc = '?sort=endDate&direction=ASC';
+    var endDateDesc = '?sort=endDate&direction=DESC';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + startDateAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].startDate);
+      var secondDate = Date.parse(json.list[1].startDate);
+      expect(firstDate).toBeLessThan(secondDate);
+     });
+
+      // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + startDateDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].startDate);
+      var secondDate = Date.parse(json.list[1].startDate);
+      expect(firstDate).toBeGreaterThan(secondDate);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + endDateAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].endDate);
+      var secondDate = Date.parse(json.list[1].endDate);
+      expect(firstDate).toEqual(secondDate);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + endDateDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      // Get date values.
+      var firstDate = Date.parse(json.list[0].endDate);
+      var secondDate = Date.parse(json.list[1].endDate);
+      expect(firstDate).toEqual(secondDate);
+     });
+
+    /* name */
+    var nameAsc = '?sort=name&direction=ASC';
+    var nameDesc = '?sort=name&direction=Desc';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var titleFirst = json.list[0].name;
+        var titleSecond = json.list[1].name;
+        expect(titleFirst).toBe("Parent event page");
+        expect(titleSecond).toBe("Protractor event page");
       });
 
-    }
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var titleFirst = json.list[0].name;
+        var titleSecond = json.list[1].name;
+        expect(titleFirst).toBe("Protractor event page");
+        expect(titleSecond).toBe("Parent event page");
+      });
+
+    /* doorTime */
+    var doorTimeAsc = '?sort=doorTime&direction=ASC';
+    var doorTimeDesc = '?sort=doorTime&direction=DESC'
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + doorTimeAsc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var nameFirst = json.list[0].name;
+        expect(json.list.length).toBe(1);
+        expect(nameFirst).toBe("Protractor event page");
+      });
+
+        // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + doorTimeDesc);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var nameFirst = json.list[0].name;
+        expect(json.list.length).toBe(1);
+        expect(nameFirst).toBe("Protractor event page");
+      });
+
+    /* duration */
+    var duration = '?sort=duration&direction=ASC';
+
+    browser.get(browser.params.url + '/api/event.json' + duration);
+    element(by.css('html')).getText().then(function(bodyText) {
+        var json = JSON.parse(bodyText);
+        var duration = json.list[0].duration;
+        expect(json.list.length).toBe(1);
+        expect(duration).toBe("P0Y0M0DT2H30M0S");
+      });
+
+  });
+
+
+  it('outputs events listing JSON and filters by different fields', function () {
+
+    /* startDate, endDate */
+    var nameQuery = '?name=Protractor%20event%20page';
+    var ageRangeQuery = '?typicalAgeRange=4%2B';
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + nameQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var name = json.list[0].name;
+      expect(name).toBe("Protractor event page");
+      expect(json.list.length).toBe(1);
+     });
+
+    // get events listing JSON from API and parse it
+    browser.get(browser.params.url + '/api/event.json' + ageRangeQuery);
+    element(by.css('html')).getText().then(function(bodyText) {
+      var json = JSON.parse(bodyText);
+      var typicalAgeRange = json.list[0].typicalAgeRange;
+      expect(typicalAgeRange).toBe("4+");
+      expect(json.list.length).toBe(1);
+     });
+
+  });
+
+  /* End of API input tests */
+
+  it('will take place after all tests have passed', function() {
+
+    // CLEAN UP
+    // remove content
+    browser.get(browser.params.url + '/admin/content');
+    element(by.css('#node-admin-content > div > table:nth-of-type(2) > thead:first-of-type > tr:first-of-type > th:first-of-type input')).click();
+    element(by.cssContainingText('#edit-operation > option', 'Delete selected content')).click();
+    element(by.id('edit-submit--2')).click();
+    element(by.id('edit-submit')).click();
+    expect(element(by.css('#node-admin-content > div > table:nth-of-type(2) > tbody > tr:first-of-type td:nth-of-type(1)')).getText()).toContain('No content available.');
 
   });
 

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OE Relationship: Location feature.
+ */
+
+include_once 'oe_relationship_location.features.inc';

@@ -83,6 +83,7 @@ function openevent_install() {
 
   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array(
     'access content', 
+    'access oe_rest_api_doc',
     'access resource node',
     'access resource relation',
     'access resource file',
@@ -108,7 +109,7 @@ function openevent_install() {
     'access relations',
     'view the administration theme',
     'access toolbar',
-    'view any unpublished content' 
+    'access oe_rest_api_doc'
   ));
 
   // Create a default role for site administrators, with all available permissions assigned.
@@ -134,4 +135,12 @@ function openevent_install() {
   variable_set('admin_theme', 'seven');
   variable_set('node_admin_theme', '1');
   variable_set('theme_default', 'seven');
+
+  // Disable bartik theme
+  theme_disable(array('bartik'));
+
+  // Date settings
+  variable_set('date_first_day', '1');
+  variable_set('date_api_use_iso8601', 1);
+
 }
