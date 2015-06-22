@@ -302,7 +302,7 @@ function oe_schemaorg_rest_map_fields($response) {
         if (strpos(trim($mapped_term), 'schema:') === 0) {
           // alter the URL of the item to use the REST address
           if ($mapped_term == 'schema:url') {
-            $value = restws_resource_uri($schema_name, $response['nid']);
+            $value = restws_resource_uri($schema_name, $response['nid']) . ".json";
           }
 
           // call hook to allow other modules to modify the field contents

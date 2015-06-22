@@ -1,5 +1,7 @@
 # OPEN EVENT DISTRIBUTION
-v0.3
+Version: 7.0.3
+
+License: GPL 2.0+
 
 ## CONTENTS OF THIS FILE
 
