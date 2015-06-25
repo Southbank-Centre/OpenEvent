@@ -1,7 +1,5 @@
 name = Open Event
 description = Open Event distibution provided by Southbank Centre.
-core = 7.x
-version = "7.x-0.1"
 
 ; Core dependencies.
 dependencies[] = contextual
