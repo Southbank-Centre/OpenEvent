@@ -71,4 +71,3 @@ features[variable][] = menu_parent_event
 features[variable][] = node_options_event
 features[variable][] = node_preview_event
 features[variable][] = node_submitted_event
-features_exclude[field_base][endpoints] = endpoints
