@@ -10,6 +10,17 @@
 function oe_organization_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: 'access resource Organization'.
+  $permissions['access resource Organization'] = array(
+    'name' => 'access resource Organization',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'restws',
+  );
+
   // Exported permission: 'create organization content'.
   $permissions['create organization content'] = array(
     'name' => 'create organization content',

@@ -71,4 +71,3 @@ features[variable][] = menu_parent_person
 features[variable][] = node_options_person
 features[variable][] = node_preview_person
 features[variable][] = node_submitted_person
-features_exclude[field_group][group_person_biography|node|person|form] = group_person_biography|node|person|form

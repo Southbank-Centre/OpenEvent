@@ -31,7 +31,7 @@ function oe_event_node_info() {
       'name' => t('Event'),
       'base' => 'node_content',
       'description' => t('Open Event content type for an event happening at a certain time and location, such as a concert, lecture, or festival. Repeated events may be structured as separate Event objects.<br/>
-Designed in accordance with the <a href="https://schema.org/Event" target="_blank">schema.org Event type</a>.'),
+Designed in accordance with the <a href="https://schema.org/Event" target="_blank">Schema.org Event type</a>.'),
       'has_title' => '1',
       'title_label' => t('Event name'),
       'help' => '',

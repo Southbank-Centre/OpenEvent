@@ -328,9 +328,9 @@ function oe_event_field_default_field_instances() {
         'module' => 'number',
         'settings' => array(
           'decimal_separator' => '.',
-          'prefix_suffix' => TRUE,
+          'prefix_suffix' => 1,
           'scale' => 0,
-          'thousand_separator' => ' ',
+          'thousand_separator' => '',
         ),
         'type' => 'number_integer',
         'weight' => 9,
@@ -532,8 +532,6 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('<p>Images that represent the event. Multiple images are allowed.</p>
-<p>Maps to the <code><a href="http://schema.org/Event" target="_blank">Event</a>.<a href="http://schema.org/image" target="_blank">image</a></code> Schema.org property.</p>');
   t('<p>The date and time that the venue can be accessed before the event starts.</p>
 <p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/doorTime" target="_blank">doorTime</a></code> Schema.org property.</p>');
   t('<p>The duration of the event in minutes.</p>
@@ -565,16 +563,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 <li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
 <li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
 </ul>');
-  t('Parents');
   t('Start date/time');
-  t('The date and time that the venue can be accessed before the event starts. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.doorTime</code></a>');
-  t('The duration of the event in minutes. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.duration</code></a>');
-  t('The end date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.endDate</code></a>');
-  t('The full text information about the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.description</code></a>');
-  t('The location or locations of the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.location</code></a>');
-  t('The start date and time for the event. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.startDate</code></a>');
-  t('The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only. Maps to <a href="https://schema.org/Event" target="_blank">schema.org <code>Event.typicalAgeRange</code></a>');
-  t('Venues');
   t('endpoints');
 
   return $field_instances;
