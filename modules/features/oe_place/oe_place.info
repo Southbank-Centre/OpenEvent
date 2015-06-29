@@ -62,6 +62,3 @@ features[variable][] = menu_parent_place
 features[variable][] = node_options_place
 features[variable][] = node_preview_place
 features[variable][] = node_submitted_place
-features_exclude[field_group][group_location|node|place|form] = group_location|node|place|form
-features_exclude[field_group][group_main|node|place|form] = group_main|node|place|form
-features_exclude[field_group][group_opening_hours|node|place|form] = group_opening_hours|node|place|form
