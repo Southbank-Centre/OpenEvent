@@ -47,6 +47,8 @@ projects[token][version] = 1.6
 projects[better_formats][version] = 1.0-beta1
 projects[relation][version] = 1.0-rc7
 projects[schemaorg][version] = 1.0-rc1
+; Preserve field mappings that aren't defined by a feature when revertin that feature, rather than removing them
+projects[schemaorg][patch][2533906] = "https://www.drupal.org/files/issues/schemaorg-features-capture-certain-mappings-2533906-1.patch"
 projects[table_element][version] = 1.0-beta1
 
 ; Defaults
