@@ -99,10 +99,10 @@ B. Run the following commands from a console/terminal window *(assuming you have
 
 		chgrp -R WWW-GROUP sites/default/files
 		chmod 2775 sites/default/files
-    chmod g+w -R sites/default/files
+		chmod -R g+w sites/default/files
 		chmod 444 sites/default/settings.php
 
-    WWW-GROUP should be the group which your web server process belongs to, e.g. *www-data*.
+	WWW-GROUP should be the group which your web server process belongs to, e.g. *www-data*.
 
 
 ## Configuration
