@@ -25,9 +25,11 @@ Equally this distribution is intended to evolve and this can be greatly helped b
 
 
 ## Requirements
-Open Event requires Drupal 7. Version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
+1) Open Event requires Drupal 7. Version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
 
 *Please note: if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
+
+2) Clean URLS must be enabled, otherwise the API filtering will not work.
 
 ### Modules
 The following modules are required. They are packaged and automatically enabled with this  distribution:
