@@ -43,7 +43,6 @@ dependencies[] = geolocation
 dependencies[] = geolocation_googlemaps
 dependencies[] = link
 dependencies[] = office_hours
-dependencies[] = pathauto
 dependencies[] = relation
 dependencies[] = relation_add
 dependencies[] = relation_endpoint

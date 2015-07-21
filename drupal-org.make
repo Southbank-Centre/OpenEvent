@@ -34,7 +34,6 @@ projects[link][version] = 1.3
 ; Fix URL validation
 projects[link][patch][2498983] = "https://www.drupal.org/files/issues/link-urls_not_validate-2498983-1.patch"
 projects[office_hours][version] = 1.4
-projects[pathauto][version] = 1.2
 projects[relation_add][version] = 1.4
 ; When adding a new Relation Add field to a Content Type, after clicking the initial Save Field Settings button, we are taken to the Settings page and there is a warning
 projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
