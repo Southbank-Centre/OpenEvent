@@ -379,7 +379,7 @@ function oe_organization_field_default_field_instances() {
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '<p>URL of a reference Web page that indicates the organization\'s identity. E.g. the URL of the organization\'s Wikipedia page or official website.</p>
-<p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">Organization</a>.<a href="http://schema.org/sameAs" target="_blank">image</a></code> Schema.org property.</p>',
+<p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">Organization</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -444,7 +444,7 @@ function oe_organization_field_default_field_instances() {
   t('<p>The official name of the organization. E.g. the registered company name.</p>
 <p>Maps to the <code><a href="https://schema.org/Organization" target="_blank">Organization</a>.<a href="https://schema.org/legalName" target="_blank">legalName</a></code> Schema.org property.</p>');
   t('<p>URL of a reference Web page that indicates the organization\'s identity. E.g. the URL of the organization\'s Wikipedia page or official website.</p>
-<p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">Organization</a>.<a href="http://schema.org/sameAs" target="_blank">image</a></code> Schema.org property.</p>');
+<p>Maps to the <code><a href="http://schema.org/Organization" target="_blank">Organization</a>.<a href="http://schema.org/sameAs" target="_blank">sameAs</a></code> Schema.org property.</p>');
   t('Address');
   t('Description');
   t('Email address');
