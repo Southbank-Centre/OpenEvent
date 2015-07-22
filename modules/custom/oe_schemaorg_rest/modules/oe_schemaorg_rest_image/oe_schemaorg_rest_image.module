@@ -45,5 +45,6 @@
 
         $value = $newImage;
       }
+      $value = array_merge(array('@type' => 'ImageObject'), $value);
     }
   }
