@@ -6,4 +6,3 @@ package = Open Events
 dependencies[] = restws
 dependencies[] = schemaorg
 dependencies[] = schemaorg_ui
-dependencies[] = oe_schemaorg_rest
