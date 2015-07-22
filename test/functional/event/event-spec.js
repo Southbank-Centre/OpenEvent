@@ -291,7 +291,7 @@ describe('The Event features of the CMS', function() {
        expect(json.superEvent.length).toEqual(1);
        expect(json.superEvent[0]).toEqual(browser.params.url + "/api/event/" + parentNid + '.json');
        expect(json.location.length).toEqual(1);
-       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid + '.json')
+       expect(json.location[0]).toEqual(browser.params.url + "/api/place/" + placeNid + '.json');
        expect(json.subEvent.length).toEqual(0);
 
        // performers are tested separately in the person test spec
