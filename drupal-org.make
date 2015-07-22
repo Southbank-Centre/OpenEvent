@@ -23,6 +23,7 @@ projects[addressfield][version] = 1.1
 projects[auto_entitylabel][version] = 1.3
 projects[ctools][version] = 1.7
 projects[date][version] = 2.8
+projects[date][patch] = https://www.drupal.org/files/issues/date-migrate-undefined-timezone-2451027-1.patch
 projects[email][version] = 1.3
 projects[entity][version] = 1.6
 projects[features][version] = 2.6
