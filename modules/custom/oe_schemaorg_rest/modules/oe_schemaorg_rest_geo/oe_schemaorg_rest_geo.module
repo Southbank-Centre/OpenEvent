@@ -21,7 +21,11 @@
           $newGeo[$geoMappings[$key]] = $fieldValue;
         }
       }
-      $value = array_merge(array('@type' => 'GeoCoordinates'), $newGeo);
+      if (empty($newGeo)) {
+        $value = $newGeo;
+      } else {
+        $value = array_merge(array('@type' => 'GeoCoordinates'), $newGeo);
+      }
     }
   }
 
