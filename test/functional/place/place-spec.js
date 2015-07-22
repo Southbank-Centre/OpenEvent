@@ -270,7 +270,7 @@ describe('The Place features of the CMS', function() {
     element(by.css('html')).getText().then(function(bodyText) {
       var json = JSON.parse(bodyText);
 
-      expect(Object.keys(json.address).length).toEqual(1);
+      expect(Object.keys(json.address).length).toEqual(2); // Take into account @type
       expect(json.address.addressCountry).toEqual("GB");
       expect(json.description.length).toEqual(0);
       expect(json.image.length).toEqual(0);
