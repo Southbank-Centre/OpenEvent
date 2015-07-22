@@ -55,7 +55,7 @@
           }
         }
       }
-      $value = $newAddress;
+      $value = array_merge(array('@type' => 'PostalAddress'), $newAddress);
     }
   }
 
