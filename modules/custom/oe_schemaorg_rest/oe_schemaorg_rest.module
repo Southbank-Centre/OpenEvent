@@ -252,13 +252,16 @@ function oe_schemaorg_rest_restws_response_alter(&$response, $function, $format_
     // request for a single resource
     if ($function == 'viewResource') {
       $response = oe_schemaorg_rest_map_fields($response);
+      $response = array_merge(array('@type' => $resource_controller->schemaorg()),$response);
     }
     // query for multiple resources
     else if ($function == 'queryResource') {
       foreach ($response['list'] as $index => $item) {
-        $response['list'][$index] = oe_schemaorg_rest_map_fields($item);
+        $response['list'][$index] = array_merge(array('@type' => $resource_controller->schemaorg()), oe_schemaorg_rest_map_fields($item));
       }
     }
+    // todo: @context is hard coded
+    $response = array_merge(array('@context' => 'http://schema.org'),$response);
   }
 }
 
@@ -501,6 +504,15 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    */
   public function bundle() {
     return $this->entityBundle;
+  }
+
+  /**
+   * Returns the entity schema.org assigned to the controller.
+   *
+   * @return mixed
+   */
+  public function schemaorg() {
+    return $this->entitySchema;
   }
 
   /**
