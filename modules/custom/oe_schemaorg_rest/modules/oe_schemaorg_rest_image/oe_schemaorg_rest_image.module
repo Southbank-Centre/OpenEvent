@@ -42,9 +42,8 @@
             $newImage[$imageMappings[$key]] = $fieldValue;
           }
         }
-
-        $value = $newImage;
+        $value = array_merge(array('@type' => 'ImageObject'), $newImage);
       }
-      $value = array_merge(array('@type' => 'ImageObject'), $value);
+
     }
   }
