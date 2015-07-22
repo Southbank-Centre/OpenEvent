@@ -361,16 +361,14 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    *  Constructor - override the parent constructor so that the entity type
    *  is always 'node', and the correct Schema.org type and node bundle are set
    *
-   * @param string $schema
-   *   The Schema.org type to be used by the controller
+   * @param string name
+   *   The Bundle to be used by the controller
    * @param string $info
    *   Information about the endpoint calling the controller
    */
   public function __construct($name, $info) {
-//    public function __construct($schema, $info) {
     $this->entityType = 'node';
     $this->entitySchema = $info['schemaorg_type'];
-//    $this->entityBundle = oe_schemaorg_rest_get_resource_mapping($schema);
     $this->entityBundle = $name;
     $this->entityInfo = entity_get_info('node');
   }
@@ -484,7 +482,6 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    *   The bundle name of the resource
    */
   public function resource() {
-//    return $this->entitySchema;
     return $this->entityBundle;
   }
 
@@ -599,24 +596,11 @@ class OeSchemaorgRestWsFormatJson extends RestWSFormatJSON {
   }
 
   /**
-   * Overwrites the method to control the uris output.
+   * Overwrites the parent method to control the uris output.
+   *
    * Generates all navigation links for querying.
    *
-   * @param RestWSResourceControllerInterface $resourceController
-   *   The controller used to query the resource.
-   *
-   * @param array $parameters
-   *   The HTTP GET parameters for the query.
-   *
-   * @param array $filters
-   *   The filters for the query.
-   *
-   * @return array
-   *   An array containing all navigation links.
-   *
-   * @throws RestWSException
-   *   If the page is out of range the function will throw a new RestWSException
-   *   with HTTP status code 404.
+   * @see RestWSFormatJSON::generateQueryURIs()
    */
   protected function generateQueryURIs(RestWSResourceControllerInterface $resourceController, array $parameters, array $filters) {
     $rest_controls = restws_meta_controls();
