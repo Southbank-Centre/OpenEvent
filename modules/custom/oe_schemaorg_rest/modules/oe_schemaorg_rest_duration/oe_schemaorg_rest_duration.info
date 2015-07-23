@@ -2,6 +2,5 @@ name = OE Schema.org Duration
 description = Provides Schema.org mappings for duration fields
 core = 7.x
 package = Open Events
-version = 7.x-1.0
 
 dependencies[] = oe_schemaorg_rest

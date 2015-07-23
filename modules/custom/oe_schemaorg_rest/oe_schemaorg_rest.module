@@ -220,12 +220,22 @@ function oe_schemaorg_rest_restws_resource_info() {
   $endpoints = array();
   $mappings = oe_schemaorg_rest_get_resource_mappings();
 
+  // Get bundles labels
+  // Remove the hard coded "node" entity type
+  $entity_info = entity_get_info('node');
+  $bundle_label = array();
+  foreach($entity_info['bundles'] as $bundle_system_name => $bundle_data) {
+    $bundle_label[$bundle_system_name] = $bundle_data['label'];
+  }
+
   foreach ($mappings as $bundle => $schema_name)
   {
-    $endpoints[$schema_name] = array(
-      'label' => t($schema_name),
+    $endpoints[$bundle] = array(
+      'label' => t($bundle_label[$bundle]),
       'class' => 'OeSchemaorgRestController',
-      'menu_path' => 'api/'.strtolower($schema_name),
+      'menu_path' => 'api/'.strtolower($bundle),
+      // Added element to pass schemaorg information to the object constructor
+      'schemaorg_type' => $schema_name,
     );
   }
 
@@ -250,13 +260,16 @@ function oe_schemaorg_rest_restws_response_alter(&$response, $function, $format_
     // request for a single resource
     if ($function == 'viewResource') {
       $response = oe_schemaorg_rest_map_fields($response);
+      $response = array_merge(array('@type' => $resource_controller->schemaorg()),$response);
     }
     // query for multiple resources
     else if ($function == 'queryResource') {
       foreach ($response['list'] as $index => $item) {
-        $response['list'][$index] = oe_schemaorg_rest_map_fields($item);
+        $response['list'][$index] = array_merge(array('@type' => $resource_controller->schemaorg()), oe_schemaorg_rest_map_fields($item));
       }
     }
+    // todo: @context is hard coded
+    $response = array_merge(array('@context' => 'http://schema.org'),$response);
   }
 }
 
@@ -302,7 +315,8 @@ function oe_schemaorg_rest_map_fields($response) {
         if (strpos(trim($mapped_term), 'schema:') === 0) {
           // alter the URL of the item to use the REST address
           if ($mapped_term == 'schema:url') {
-            $value = restws_resource_uri($schema_name, $response['nid']) . ".json";
+//            $value = restws_resource_uri($schema_name, $response['nid']) . ".json";
+            $value = oe_schemaorg_rest_restws_resource_uri($response['type'], $response['nid']);
           }
 
           // call hook to allow other modules to modify the field contents
@@ -335,6 +349,16 @@ function oe_schemaorg_rest_schemaorg_rest_field_alter(&$value, &$term, &$field_i
   }
 }
 
+/**
+ * Returns the URI used for the given resource.
+ * Drop in replacement function for restws_resource_uri() whcih adds .json suffix
+ *
+ * @see restws_resource_uri()
+ */
+function oe_schemaorg_rest_restws_resource_uri($resource, $id = NULL, array $options = array()) {
+  return restws_resource_uri($resource, $id, $options) . '.json';
+}
+
 
 /**
  * Controller for Schema.org-mapped node bundle resources.
@@ -348,15 +372,15 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    *  Constructor - override the parent constructor so that the entity type
    *  is always 'node', and the correct Schema.org type and node bundle are set
    *
-   * @param string $schema
-   *   The Schema.org type to be used by the controller
+   * @param string $name
+   *   The Bundle to be used by the controller
    * @param string $info
    *   Information about the endpoint calling the controller
    */
-  public function __construct($schema, $info) {
+  public function __construct($name, $info) {
     $this->entityType = 'node';
-    $this->entitySchema = $schema;
-    $this->entityBundle = oe_schemaorg_rest_get_resource_mapping($schema);
+    $this->entitySchema = $info['schemaorg_type'];
+    $this->entityBundle = $name;
     $this->entityInfo = entity_get_info('node');
   }
 
@@ -462,14 +486,14 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
   }
 
   /**
-   * Overrides the parent 'resource' function to use the Schema.org name for
+   * Overrides the parent 'resource' function to use the bundle name for
    * the resource, instead of the entityType
    *
    * @return string
-   *   The Schema.org name of the resource
+   *   The bundle name of the resource
    */
   public function resource() {
-    return $this->entitySchema;
+    return $this->entityBundle;
   }
 
   /**
@@ -488,6 +512,15 @@ class OeSchemaorgRestController extends RestWSEntityResourceController {
    */
   public function bundle() {
     return $this->entityBundle;
+  }
+
+  /**
+   * Returns the entity schema.org assigned to the controller.
+   *
+   * @return mixed
+   */
+  public function schemaorg() {
+    return $this->entitySchema;
   }
 
   /**
@@ -582,4 +615,49 @@ class OeSchemaorgRestWsFormatJson extends RestWSFormatJSON {
 
   }
 
+  /**
+   * Overwrites the parent method to control the uris output.
+   *
+   * Generates all navigation links for querying.
+   *
+   * @see RestWSFormatJSON::generateQueryURIs()
+   */
+  protected function generateQueryURIs(RestWSResourceControllerInterface $resourceController, array $parameters, array $filters) {
+    $rest_controls = restws_meta_controls();
+
+    $count = $resourceController->count($filters);
+    $limit = isset($parameters[$rest_controls['limit']]) ? $parameters[$rest_controls['limit']] : NULL;
+    $limit = $resourceController->limit($limit);
+    $page = isset($parameters[$rest_controls['page']]) ? $parameters[$rest_controls['page']] : 0;
+
+    $last = floor($count / $limit);
+
+    if ($page > $last || $page < 0) {
+      throw new RestWSException('Page doesn\'t exist.', 404);
+    }
+
+    $uris = array();
+    $options = array(
+      'query' => &$parameters,
+    );
+
+    $uris['self'] = oe_schemaorg_rest_restws_resource_uri($resourceController->resource(), null, $options);
+    $parameters['page'] = 0;
+    $uris['first'] = oe_schemaorg_rest_restws_resource_uri($resourceController->resource(), null, $options);
+    $parameters['page'] = $last;
+    $uris['last'] = oe_schemaorg_rest_restws_resource_uri($resourceController->resource(), null, $options);
+
+
+    if ($page != 0) {
+      $parameters['page'] = $page - 1;
+      $uris['prev'] = oe_schemaorg_rest_restws_resource_uri($resourceController->resource(), null, $options);
+    }
+
+    if ($page != $last) {
+      $parameters['page'] = $page + 1;
+      $uris['next'] = oe_schemaorg_rest_restws_resource_uri($resourceController->resource(), null, $options);
+    }
+
+    return $uris;
+  }
 }

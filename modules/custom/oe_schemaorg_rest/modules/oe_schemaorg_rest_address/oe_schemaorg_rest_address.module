@@ -55,7 +55,11 @@
           }
         }
       }
-      $value = $newAddress;
+      if(empty($newAddress)) {
+        $value = $newAddress;
+      } else {
+        $value = array_merge(array('@type' => 'PostalAddress'), $newAddress);
+      }
     }
   }
 

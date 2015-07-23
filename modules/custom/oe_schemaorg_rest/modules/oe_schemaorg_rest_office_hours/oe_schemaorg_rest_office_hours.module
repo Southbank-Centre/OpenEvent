@@ -34,6 +34,11 @@
             $date = DateTime::createFromFormat('Hi', $normalisedTime);
             $newDay[$schemaField] = $date->format('H:i:s');
           }
+          if(empty($newDay)) {
+            $value = $newDay;
+          } else {
+            $newDay = array_merge(array('@type' => 'OpeningHoursSpecification'), $newDay);
+          }
         }
         $newValue[] = $newDay;
       }
