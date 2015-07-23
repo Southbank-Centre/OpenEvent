@@ -48,10 +48,12 @@ describe('OE API documentation', function() {
         element(by.css('#content > table:nth-of-type(2) > tbody > tr:nth-of-type(' + (i + 1) + ') > td:nth-of-type(2) > a')).click();
 
         // click on Schema.org settings tab
-        element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Schema.org settings']")).click();
+        //element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='Schema.org settings']")).click();
 
         // get schema.org type
-        element(by.id('edit-schemaorg-ui-type')).getAttribute('value').then(function(type) {
+        //element(by.id('edit-schemaorg-ui-type')).getAttribute('value').then(function(type) {
+        //element(by.css('#edit-name-machine-name-suffix > span.machine-name-value')).getText().toUpperCase().then(function(type) {
+        element(by.id('edit-name')).getAttribute('value').then(function(type) {
           // push to array
           schemaTypes.push(type);
 
@@ -152,13 +154,13 @@ describe('OE API documentation', function() {
 
       var resourceName = schemaTypes[index];
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(1) > h3 > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '/<ID>.json');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(1)')).getText()).toBe('Returns a single ' + resourceName + ' item based on the <ID> passed in.');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(1)')).getText()).toBe('Returns a single ' + resourceName.toLowerCase() + ' item based on the <ID> passed in.');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > h4:nth-of-type(1)')).getText()).toBe('Example call');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(2)')).getText()).toBe('This call will return the ' + resourceName + ' item whose ID is 12.');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(2)')).getText()).toBe('This call will return the ' + resourceName.toLowerCase() + ' item whose ID is 12.');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(3) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '/12.json');
 
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(2) > h3 > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(1)')).getText()).toBe('Returns a list of ' + resourceName + ' items.');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(1)')).getText()).toBe('Returns a list of ' + resourceName.toLowerCase() + ' items.');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > h4:nth-of-type(1)')).getText()).toBe('Filtering');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(2)')).getText()).toBe('You can filter in the following way:');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(3) > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '.json?<propertyName>=<propertyValue>');
@@ -177,7 +179,7 @@ describe('OE API documentation', function() {
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(2) > p:nth-of-type(13)')).getText()).toContain('items per API call, which cannot be exceeded.');
 
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(3) > h3')).getText()).toBe('Properties');
-      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > p:nth-of-type(1)')).getText()).toContain(resourceName + ' items contain some or all of the following properties:');
+      expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > p:nth-of-type(1)')).getText()).toContain(resourceName.toLowerCase() + ' items contain some or all of the following properties:');
       element.all(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(3) > table:nth-of-type(2) > tbody > tr')).count(function(count) {
         // test that the number of properties displayed is the same as the number of
         // fields that have a schema.org mapping
