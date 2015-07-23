@@ -220,10 +220,18 @@ function oe_schemaorg_rest_restws_resource_info() {
   $endpoints = array();
   $mappings = oe_schemaorg_rest_get_resource_mappings();
 
+  // Get bundles labels
+  // Remove the hard coded "node" entity type
+  $entity_info = entity_get_info('node');
+  $bundle_label = array();
+  foreach($entity_info['bundles'] as $bundle_system_name => $bundle_data) {
+    $bundle_label[$bundle_system_name] = $bundle_data['label'];
+  }
+
   foreach ($mappings as $bundle => $schema_name)
   {
     $endpoints[$bundle] = array(
-      'label' => t($bundle),
+      'label' => t($bundle_label[$bundle]),
       'class' => 'OeSchemaorgRestController',
       'menu_path' => 'api/'.strtolower($bundle),
       // Added element to pass schemaorg information to the object constructor
