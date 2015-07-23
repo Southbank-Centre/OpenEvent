@@ -6,7 +6,7 @@
 describe('OE API documentation', function() {
 
   var numContentTypes = 0;
-  var schemaTypes = [];
+  var contentTypes = [];
   var schemaPropertyMappings = {};
   var resourcesAnonCanAccess = [];
 
@@ -40,7 +40,7 @@ describe('OE API documentation', function() {
 
       numContentTypes = count;
       var i = 0;
-      var getSchemaTypes = function() {
+      var getContentTypes = function() {
 
         browser.get(browser.params.url + '/admin/structure/types');
 
@@ -55,24 +55,24 @@ describe('OE API documentation', function() {
         //element(by.css('#edit-name-machine-name-suffix > span.machine-name-value')).getText().toUpperCase().then(function(type) {
         element(by.id('edit-name')).getAttribute('value').then(function(type) {
           // push to array
-          schemaTypes.push(type);
+          contentTypes.push(type);
 
           // run this function again if not the last content type
           i = i + 1;
           if (i < numContentTypes) {
-            getSchemaTypes();
+            getContentTypes();
           }
 
         });
 
       }
-      getSchemaTypes();
+      getContentTypes();
 
       browser.get(browser.params.url + '/api/doc');
       // compare the contents of the documentation to the schema types defined in the CMS
       element.all(by.css('#content > nav > ul > li')).each(function(element, index) {
         element.getText().then(function(elementText) {
-          expect(elementText).toBe(schemaTypes[index]);
+          expect(elementText).toBe(contentTypes[index]);
         });
       });
 
@@ -95,7 +95,7 @@ describe('OE API documentation', function() {
       // get the number of editable fields
       element.all(by.cssContainingText('#field-overview tr > td:nth-of-type(7) > a', 'edit')).count().then(function(count) {
 
-        var resourceName = schemaTypes[i-1];
+        var resourceName = contentTypes[i-1];
         schemaPropertyMappings[resourceName] = [];
         schemaPropertyMappings[resourceName]['name'] = {"description": ""};
         schemaPropertyMappings[resourceName]['url'] = {"description": ""};
@@ -152,7 +152,7 @@ describe('OE API documentation', function() {
     expect(element.all(by.css('.api-doc-resource')).count()).toBe(numContentTypes);
     element.all(by.css('.api-doc-resource')).each(function(item, index) {
 
-      var resourceName = schemaTypes[index];
+      var resourceName = contentTypes[index];
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dt:nth-of-type(1) > h3 > code')).getText()).toBe('/api/' + resourceName.toLowerCase() + '/<ID>.json');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > p:nth-of-type(1)')).getText()).toBe('Returns a single ' + resourceName.toLowerCase() + ' item based on the <ID> passed in.');
       expect(element(by.css('.api-doc-resource:nth-of-type(' + (index + 1) + ') + dl dd:nth-of-type(1) > h4:nth-of-type(1)')).getText()).toBe('Example call');
@@ -225,7 +225,7 @@ describe('OE API documentation', function() {
     var i = 0;
     var grantAnonResourcePermissions = function() {
 
-      var resourceName = schemaTypes[i];
+      var resourceName = contentTypes[i];
       element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).isSelected().then(function(selected) {
         if (!selected) {
           element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
@@ -233,7 +233,7 @@ describe('OE API documentation', function() {
           resourcesAnonCanAccess.push(resourceName);
         }
         i = i + 1;
-        if (i < schemaTypes.length) {
+        if (i < contentTypes.length) {
           grantAnonResourcePermissions();
         }
       });
@@ -272,13 +272,13 @@ describe('OE API documentation', function() {
     var j = 0;
     var revokeAnonResourcePermissions = function() {
 
-      var resourceName = schemaTypes[j];
+      var resourceName = contentTypes[j];
       element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).isSelected().then(function(selected) {
         if (selected) {
           element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
         }
         j = j + 1;
-        if (j < schemaTypes.length) {
+        if (j < contentTypes.length) {
           revokeAnonResourcePermissions();
         }
       });
@@ -317,14 +317,14 @@ describe('OE API documentation', function() {
     var k = 0;
     var resetAnonResourcePermissions = function() {
 
-      var resourceName = schemaTypes[k];
+      var resourceName = contentTypes[k];
       // if the resource name is in list of resources that anon user
       // can access, grant their permission to access that resource
       if (resourcesAnonCanAccess.indexOf(resourceName) > -1) {
         element(by.id('edit-1-access-resource-' + resourceName.toLowerCase())).click();
       }
       k = k + 1;
-      if (k < schemaTypes.length) {
+      if (k < contentTypes.length) {
         resetAnonResourcePermissions();
       }
 
