@@ -10,9 +10,9 @@
 function oe_organization_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'access resource Organization'.
-  $permissions['access resource Organization'] = array(
-    'name' => 'access resource Organization',
+  // Exported permission: 'access resource organization'.
+  $permissions['access resource organization'] = array(
+    'name' => 'access resource organization',
     'roles' => array(
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',

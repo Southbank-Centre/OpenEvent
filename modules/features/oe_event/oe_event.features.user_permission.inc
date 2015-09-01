@@ -10,9 +10,9 @@
 function oe_event_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'access resource Event'.
-  $permissions['access resource Event'] = array(
-    'name' => 'access resource Event',
+  // Exported permission: 'access resource event'.
+  $permissions['access resource event'] = array(
+    'name' => 'access resource event',
     'roles' => array(
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
