@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the OE Content Components module.
+ */
+
+include_once 'oe_components.field_base.inc';
