@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * Code for the OE Relationship: Location module.
+ */
+
+include_once 'oe_relationship_location.field_base.inc';
+include_once 'oe_relationship_location.field_instance.inc';
+include_once 'oe_relationship_location.rdf_mapping.inc';
+
+/**
+ * Implements hook_install().
+ */
+function oe_relationship_location_install() {
+
+  oe_relationship_location_field_bases();
+  oe_relationship_location_field_instances();
+  oe_relationship_location_rdf_mapping();
+
+}
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function oe_relationship_location_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "field_group" && $api == "field_group") {
+    return array("version" => "1");
+  }
+  if ($module == "relation" && $api == "relation_type_default") {
+    return array("version" => "1");
+  }
+}
