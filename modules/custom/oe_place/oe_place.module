@@ -16,6 +16,41 @@ function oe_place_install() {
   oe_place_user_permissions();
   oe_place_rdf_mapping();
 
+  // Set default variables
+  variable_set('field_bundle_settings_node__place', array(
+    'view_modes' => array(
+      'teaser' => array(
+        'custom_settings' => TRUE,
+      ),
+      'full' => array(
+        'custom_settings' => FALSE,
+      ),
+      'rss' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+    ),
+    'extra_fields' => array(
+      'form' => array(
+        'title' => array(
+          'weight' => '1',
+        ),
+        'path' => array(
+          'weight' => '6',
+        ),
+      ),
+      'display' => array(),
+    ),
+  ));
+
+  variable_set('menu_options_place', array());
+  variable_set('menu_parent_place', 'main-menu:0');
+  variable_set('node_options_place', array());
+  variable_set('node_preview_place', '0');
+  variable_set('node_submitted_place', 0);
+
 }
 
 /**
