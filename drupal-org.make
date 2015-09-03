@@ -15,7 +15,7 @@ api = 2
 ;   - 1.x-dev for a development version (be careful as it results in different code each time
 ;     it runs)
 ;
-; Add patches with the following:
+; Add patches with the following syntax:
 ;   projects[ctools][patch][1023606] = "http://drupal.org/files/issues/1023606-qid-to-name-6.patch"
 
 ; Contrib modules
@@ -49,7 +49,7 @@ projects[token][version] = 1.6
 ; Contrib modules with non-stable releases
 projects[better_formats][version] = 1.0-beta1
 projects[schemaorg][version] = 1.0-rc1
-; Preserve field mappings that aren't defined by a feature when revertin that feature, rather than removing them
+; Preserve field mappings that aren't defined by a feature when reverting that feature, rather than removing them
 projects[schemaorg][patch][2533906] = "https://www.drupal.org/files/issues/schemaorg-features-capture-certain-mappings-2533906-1.patch"
 projects[table_element][version] = 1.0-beta1
 
@@ -57,6 +57,5 @@ projects[table_element][version] = 1.0-beta1
 defaults[projects][subdir] = contrib
 
 ; Open bugs
-;
 ; 2484657 - Breaking behaviour when a filefield source field is used within a paragraph bundle.
 ;
