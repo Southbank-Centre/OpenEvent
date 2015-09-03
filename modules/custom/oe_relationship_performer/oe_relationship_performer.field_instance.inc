@@ -1,13 +1,11 @@
 <?php
 /**
  * @file
- * oe_relationship_performer.features.field_instance.inc
+ * oe_relationship_performer.field_instance.inc
  */
 
-/**
- * Implements hook_field_default_field_instances().
- */
-function oe_relationship_performer_field_default_field_instances() {
+function oe_relationship_performer_field_instances() {
+  
   $field_instances = array();
 
   // Exported field_instance: 'node-event-field_event_performers'
@@ -172,5 +170,8 @@ function oe_relationship_performer_field_default_field_instances() {
   t('Events');
   t('Performers');
 
-  return $field_instances;
+  foreach($field_instances as $field_instance) {
+    field_create_instance($field_instance);
+  }
+  
 }

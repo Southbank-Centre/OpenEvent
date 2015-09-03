@@ -1,13 +1,11 @@
 <?php
 /**
  * @file
- * oe_relationship_performer.features.field_base.inc
+ * oe_relationship_performer.field_base.inc
  */
 
-/**
- * Implements hook_field_default_field_bases().
- */
-function oe_relationship_performer_field_default_field_bases() {
+function oe_relationship_performer_field_bases() {
+  
   $field_bases = array();
 
   // Exported field_base: 'field_event_performers'
@@ -55,5 +53,8 @@ function oe_relationship_performer_field_default_field_bases() {
     'type' => 'relation_add',
   );
 
-  return $field_bases;
+  foreach($field_bases as $field_base) {
+    field_create_field($field_base);
+  }
+
 }
