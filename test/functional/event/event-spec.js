@@ -77,6 +77,9 @@ describe('The Event features of the CMS', function() {
 
         // go back to edit page
         element(by.xpath("//ul[@class='tabs primary']/li/a[text()='Edit']")).click();
+        browser.wait(function () {
+          return browser.isElementPresent(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']"));
+        }, 5000);
         element(by.xpath("//ul[@class='vertical-tabs-list']/li/a[strong='URL path settings']")).click();
         element(by.id('edit-path-alias')).getAttribute('value').then(function(alias) {
 
