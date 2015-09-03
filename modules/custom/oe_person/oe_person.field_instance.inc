@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * oe_person.features.field_instance.inc
+ * oe_person.field_instance.inc
  */
 
 function oe_person_field_instances() {

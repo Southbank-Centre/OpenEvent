@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * oe_relationship_location.features.field_instance.inc
+ * oe_relationship_location.field_instance.inc
  */
 
 function oe_relationship_location_field_instances() {

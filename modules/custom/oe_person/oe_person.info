@@ -17,7 +17,6 @@ dependencies[] = options
 dependencies[] = rdf
 dependencies[] = restws
 dependencies[] = schemaorg
-dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = taxonomy_access_fix
 dependencies[] = text

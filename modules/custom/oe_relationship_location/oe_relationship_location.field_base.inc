@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * oe_relationship_location.features.field_base.inc
+ * oe_relationship_location.field_base.inc
  */
 
 function oe_relationship_location_field_bases() {

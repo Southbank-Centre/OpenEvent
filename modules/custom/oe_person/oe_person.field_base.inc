@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * oe_person.features.field_base.inc
+ * oe_person.field_base.inc
  */
 
 function oe_person_field_bases() {

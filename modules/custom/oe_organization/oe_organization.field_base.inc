@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * oe_organization.features.field_base.inc
+ * oe_organization.field_base.inc
  */
 
 function oe_organization_field_bases() {
