@@ -232,9 +232,11 @@ describe('The Place features of the CMS', function() {
       expect(json.address.streetAddress).toBe("Southbank Centre, Belvedere Road");
 
       // geolocation & map link as expected for the address input
-      expect(json.geo.latitude).toBe("51.5066566");
-      expect(json.geo.longitude).toBe("-0.11511270000005425");
-      expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.5066566&mlon=-0.11511270000005425#map=15/51.5066566/-0.11511270000005425");
+      // added approximation calculation in case the 
+      expect(json.geo.latitude).toBeCloseTo("51.5066566", 1);
+      expect(json.geo.longitude).toBeCloseTo("-0.11511270000005425", 1);
+      //expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.5066566&mlon=-0.11511270000005425#map=15/51.5066566/-0.11511270000005425");
+      expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=" + json.geo.latitude + "&mlon=" + json.geo.longitude + "#map=15/" + json.geo.latitude + "/" + json.geo.longitude);
 
       // opening hours as input
       expect(json.openingHoursSpecification[0].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Monday");
