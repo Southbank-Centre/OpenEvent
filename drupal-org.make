@@ -29,7 +29,7 @@ projects[entity][version] = 1.6
 projects[features][version] = 2.6
 projects[field_group][version] = 1.4
 projects[field_validation][version] = 2.6
-projects[filefield_sources][version] = 1.9
+projects[filefield_sources][version] = 1.10
 projects[geolocation][version] = 1.6
 projects[link][version] = 1.3
 ; Fix URL validation
