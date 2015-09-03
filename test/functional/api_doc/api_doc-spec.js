@@ -108,7 +108,10 @@ describe('OE API documentation', function() {
           browser.executeScript('window.scrollTo(0,0);').then(function () {
             
             element(by.xpath("(//table[@id='field-overview']//td/a[text()='edit'])[" + j + "]")).click();
-            
+
+            browser.wait(function () {
+              return browser.isElementPresent(by.id('edit-schemaorg-ui-field-property'));
+            }, 5000);
             // get schema.org property mapping
             element(by.id('edit-schemaorg-ui-field-property')).getAttribute('value').then(function(property) {
 
