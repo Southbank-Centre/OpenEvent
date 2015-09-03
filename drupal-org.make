@@ -36,9 +36,7 @@ projects[link][version] = 1.3
 projects[link][patch][2498983] = "https://www.drupal.org/files/issues/link-urls_not_validate-2498983-1.patch"
 projects[office_hours][version] = 1.4
 projects[relation][version] = 1.0
-projects[relation_add][version] = 1.4
-; When adding a new Relation Add field to a Content Type, after clicking the initial Save Field Settings button, we are taken to the Settings page and there is a warning
-projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
+projects[relation_add][version] = 1.5
 projects[restws][version] = 2.4
 ; Specifying the resource format via a URL extension (like "node/1.json") no longer works in Drupal 7.37
 projects[restws][patch][2484829] = "https://www.drupal.org/files/issues/restws-fix-format-extension-2484829-67_1.patch"
