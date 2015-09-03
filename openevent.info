@@ -34,7 +34,6 @@ dependencies[] = date_api
 dependencies[] = date_popup
 dependencies[] = email
 dependencies[] = entity
-; dependencies[] = features
 dependencies[] = field_group
 dependencies[] = field_validation
 dependencies[] = field_validation_ui
@@ -49,7 +48,6 @@ dependencies[] = relation_endpoint
 dependencies[] = relation_ui
 dependencies[] = restws
 dependencies[] = schemaorg
-; dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
 
