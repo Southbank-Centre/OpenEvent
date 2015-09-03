@@ -232,7 +232,7 @@ describe('The Place features of the CMS', function() {
       expect(json.address.streetAddress).toBe("Southbank Centre, Belvedere Road");
 
       // geolocation & map link as expected for the address input
-      // added approximation calculation in case the 
+      // added approximation calculation in case the coordinates returned for the address are not exactly what we expect
       expect(json.geo.latitude).toBeCloseTo("51.5066566", 1);
       expect(json.geo.longitude).toBeCloseTo("-0.11511270000005425", 1);
       //expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.5066566&mlon=-0.11511270000005425#map=15/51.5066566/-0.11511270000005425");
