@@ -4,10 +4,7 @@
  * oe_person.features.field_instance.inc
  */
 
-/**
- * Implements hook_field_default_field_instances().
- */
-function oe_person_field_default_field_instances() {
+function oe_person_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'node-person-field_description'
@@ -770,5 +767,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
   t('Prefix');
   t('Suffix');
 
-  return $field_instances;
+  foreach($field_instances as $field_instance) {
+    field_create_instance($field_instance);
+  }
 }

@@ -4,10 +4,7 @@
  * oe_person.features.field_base.inc
  */
 
-/**
- * Implements hook_field_default_field_bases().
- */
-function oe_person_field_default_field_bases() {
+function oe_person_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'field_person_awards'
@@ -227,5 +224,8 @@ function oe_person_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  return $field_bases;
+  foreach($field_bases as $field_base) {
+    field_create_field($field_base);
+  }
+
 }

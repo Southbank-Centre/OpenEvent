@@ -1,19 +1,42 @@
 <?php
-
 /**
  * @file
- * Install, update and uninstall functions for the oe_person module/feature.
+ * oe_person.taxonomy.inc
  */
 
 /**
- * Implements hook_install()
- *
- * Check for vocabulary and create it if it doesn't exist
- * Add terms to the vocabulary if they don't exist
- * Vocabulary and terms are checked by name, not by id [!]
+ * Implements hook_taxonomy_default_vocabularies().
  */
-function oe_person_install() {
-  // Vocabulary details
+function oe_person_taxonomy_default_vocabularies() {
+  return array(
+    'person_title' => array(
+      'name' => 'Person title',
+      'machine_name' => 'person_title',
+      'description' => 'A title is a prefix or suffix added to someone\'s name in certain contexts.',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+      'rdf_mapping' => array(
+        'rdftype' => array(
+          0 => 'skos:ConceptScheme',
+        ),
+        'name' => array(
+          'predicates' => array(
+            0 => 'dc:title',
+          ),
+        ),
+        'description' => array(
+          'predicates' => array(
+            0 => 'rdfs:comment',
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+function oe_person_taxonomy_title() {
+// Vocabulary details
   $vocab = new stdClass();
   $vocab->name = 'Person title';
   $vocab->description = 'A title is a prefix or suffix added to someone\'s name in certain contexts.';
@@ -58,9 +81,6 @@ function oe_person_install() {
       )));
     }
   }
+
 }
 
-/**
- * Implements hook uninstall()
- */
-//function oe_person_uninstall() {}
