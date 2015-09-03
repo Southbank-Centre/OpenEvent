@@ -21,7 +21,7 @@ function oe_components_install() {
  * @param int $rid
  * @param array $permissions
  */
-function oe_event_grant_permissions($rid, array $permissions = array()) {
+function oe_grant_permissions($rid, array $permissions = array()) {
     // this line doesn't work on install / enable hooks
     // $modules = user_permission_get_modules();
     // Grant new permissions for the role.
