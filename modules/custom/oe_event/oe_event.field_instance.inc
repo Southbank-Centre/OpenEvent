@@ -1,12 +1,9 @@
 <?php
 /**
  * @file
- * oe_event.features.field_instance.inc
+ * oe_event.field_instance.inc
  */
 
-/**
- * Implements hook_field_default_field_instances().
- */
 function oe_event_field_instances() {
 
   // field instance: node-event-field_description
@@ -583,41 +580,4 @@ function oe_event_field_instances() {
 
   }
 
-  // Translatables
-  // Included for use with string extractors like potx.
-  t('<p>The date and time that the venue can be accessed before the event starts.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/doorTime" target="_blank">doorTime</a></code> Schema.org property.</p>');
-  t('<p>The duration of the event in minutes.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/duration" target="_blank">duration</a></code> Schema.org property.</p>');
-  t('<p>The end date and time for the event.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/endDate" target="_blank">endDate</a></code> Schema.org property.</p>');
-  t('<p>The full text information about the event.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/description" target="_blank">description</a></code> Schema.org property.</p>');
-  t('<p>The start date and time for the event.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/startDate" target="_blank">startDate</a></code> Schema.org property.</p>');
-  t('<p>The suggested or required age range for an event. It should be specified as an age range, a minimum age, or a single age. For example, <i>5+</i> specifies ages 5 and above; <i>0-12</i> specifies ages 0 to 12; <i>16</i> specifies age 16 only.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/typicalAgeRange" target="_blank">typicalAgeRange</a></code> Schema.org property.</p>');
-  t('<p>This field allows you to determine which events this event is grouped within.</p>
-<p>Events can be structured hierarchically, with events being \'parents\' of others events that may in turn be \'parents\' of other events, and so on. This makes it possible to structure events into groupings.</p>
-<p>For example, a festival is an event that takes place often over a number of days. Within a festival is a series of shorter events. Once an Event has been created to represent the festival, it is then possible to group the events it contains by specifying the festival Event in their \'Event parents\' field.</p>
-<p>Note that an event can be the child of multiple other events, but it cannot be the child of an event that lists it as a parent.</p>
-<p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/superEvent" target="_blank">superEvent</a></code> Schema.org property.</p>');
-  t('Age range');
-  t('Description');
-  t('Door time');
-  t('Duration');
-  t('End date/time');
-  t('Event parents');
-  t('Image');
-  t('Images from the event.<br/>
-Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</code></a> in Schema.org as an ImageObject where:<br />
-<ul>
-<li>Image maps to ImageObject.<a href="https://schema.org/contentUrl">contentUrl</a></li>
-<li>Alternate Text maps to ImageObject.<a href="https://schema.org/alternateName">alternateName</a></li>
-<li>Title maps to ImageObject.<a href="https://schema.org/caption">caption</a></li>
-</ul>');
-  t('Start date/time');
-  t('endpoints');
-
-  // return $field_instances;
 }
