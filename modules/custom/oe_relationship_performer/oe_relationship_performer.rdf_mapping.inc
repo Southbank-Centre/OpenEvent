@@ -11,7 +11,7 @@ function oe_relationship_performer_rdf_mapping() {
   return array(
     array(
       'type' => 'relation',
-      'bundle' => 'event_is_located_in_place',
+      'bundle' => 'performer_performs_in_event',
       'mapping' => array(
         'source_bundles' => array(
           'predicates' => array(
