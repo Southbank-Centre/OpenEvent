@@ -22,6 +22,7 @@ function oe_place_field_bases() {
       'translatable' => 0,
       'type' => 'addressfield',
     );
+
     field_create_field($field_place_address);
 
   };
@@ -49,6 +50,7 @@ function oe_place_field_bases() {
       'translatable' => 0,
       'type' => 'geolocation_latlng',
     );
+
     field_create_field($field_place_geolocation);
 
   };
@@ -76,6 +78,7 @@ function oe_place_field_bases() {
       'translatable' => 0,
       'type' => 'office_hours',
     );
+
     field_create_field($field_place_opening_hours);
 
   };
@@ -96,6 +99,7 @@ function oe_place_field_bases() {
       'translatable' => 0,
       'type' => 'relation_add',
     );
+    
     field_create_field($field_place_parents);
 
   };

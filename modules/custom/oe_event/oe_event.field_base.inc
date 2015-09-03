@@ -28,6 +28,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'text',
     );
+
     field_create_field($field_event_age_range);
 
   };
@@ -62,6 +63,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'date',
     );
+
     field_create_field($field_event_date_end);
 
   };
@@ -96,6 +98,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'date',
     );
+
     field_create_field($field_event_date_start);
 
   };
@@ -130,6 +133,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'date',
     );
+
     field_create_field($field_event_door_time);
 
   };
@@ -150,6 +154,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'number_integer',
     );
+
     field_create_field($field_event_duration);
 
   };
@@ -170,6 +175,7 @@ function oe_event_field_bases() {
       'translatable' => 0,
       'type' => 'relation_add',
     );
+    
     field_create_field($field_event_parents);
 
   };

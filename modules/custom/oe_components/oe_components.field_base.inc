@@ -26,6 +26,7 @@ function oe_components_field_bases() {
       'translatable' => 0,
       'type' => 'text_long',
     );
+
     field_create_field($field_description);
 
   };
@@ -53,6 +54,7 @@ function oe_components_field_bases() {
       'translatable' => 0,
       'type' => 'image',
     );
+
     field_create_field($field_image);
 
   };
@@ -79,6 +81,7 @@ function oe_components_field_bases() {
       'translatable' => 0,
       'type' => 'text',
     );
+
     field_create_field($field_file_image_alt_text);
 
   };
@@ -105,6 +108,7 @@ function oe_components_field_bases() {
       'translatable' => 0,
       'type' => 'text',
     );
+    
     field_create_field($field_file_image_title_text);
 
   };
