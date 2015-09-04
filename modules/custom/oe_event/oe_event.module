@@ -9,50 +9,6 @@ include_once 'oe_event.field_instance.inc';
 include_once 'oe_event.user_permission.inc';
 include_once 'oe_event.rdf_mapping.inc';
 
-function oe_event_install() {
-
-  oe_event_field_bases();
-  oe_event_field_instances();
-  oe_event_user_permissions();
-  oe_event_rdf_mapping();
-
-  // Set default variables
-  variable_set('field_bundle_settings_node__event', array(
-    'view_modes' => array(
-      'teaser' => array(
-        'custom_settings' => TRUE,
-      ),
-      'full' => array(
-        'custom_settings' => FALSE,
-      ),
-      'rss' => array(
-        'custom_settings' => FALSE,
-      ),
-      'token' => array(
-        'custom_settings' => FALSE,
-      ),
-    ),
-    'extra_fields' => array(
-      'form' => array(
-        'title' => array(
-          'weight' => '1',
-        ),
-        'path' => array(
-          'weight' => '6',
-        ),
-      ),
-      'display' => array(),
-    ),
-  ));
-
-  variable_set('menu_options_event', array());
-  variable_set('menu_parent_event', 'main-menu:0');
-  variable_set('node_options_event', array());
-  variable_set('node_preview_event', '0');
-  variable_set('node_submitted_event', 0);
-
-}
-
 /**
  * Implements hook_ctools_plugin_api().
  */

@@ -5,13 +5,6 @@
  */
 
 include_once 'oe_components.field_base.inc';
-// module_load_include('inc', 'oe_components', 'oe_components.field_base');
-
-function oe_components_install() {
-
-  oe_components_field_bases();
-
-}
 
 /**
  * Custom user_role_grant_permissions function

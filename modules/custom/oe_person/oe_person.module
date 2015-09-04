@@ -11,58 +11,6 @@ include_once 'oe_person.user_permission.inc';
 include_once 'oe_person.rdf_mapping.inc';
 
 /**
- * Implements hook_install().
- */
-function oe_person_install() {
-
-  oe_person_field_bases();
-  oe_person_field_instances();
-  oe_person_user_permissions();
-  oe_person_rdf_mapping();
-  oe_person_taxonomy_title();
-
-  // Set default variables
-  variable_set('auto_entitylabel_node_person', '1');
-  variable_set('auto_entitylabel_pattern_node_person', '[node:field_person_name_given] [node:field_person_name_family]');
-  variable_set('auto_entitylabel_php_node_person', 0);
-
-  variable_set('field_bundle_settings_node__person', array(
-    'view_modes' => array(
-      'teaser' => array(
-        'custom_settings' => TRUE,
-      ),
-      'full' => array(
-        'custom_settings' => FALSE,
-      ),
-      'rss' => array(
-        'custom_settings' => FALSE,
-      ),
-      'token' => array(
-        'custom_settings' => FALSE,
-      ),
-    ),
-    'extra_fields' => array(
-      'form' => array(
-        'title' => array(
-          'weight' => '1',
-        ),
-        'path' => array(
-          'weight' => '5',
-        ),
-      ),
-      'display' => array(),
-    ),
-  ));
-
-  variable_set('menu_options_person', array());
-  variable_set('menu_parent_person', 'main-menu:0');
-  variable_set('node_options_person', array());
-  variable_set('node_preview_person', '0');
-  variable_set('node_submitted_person', 0);
-
-}
-
-/**
  * Implements hook_ctools_plugin_api().
  */
 function oe_person_ctools_plugin_api($module = NULL, $api = NULL) {

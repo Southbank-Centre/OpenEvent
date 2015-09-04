@@ -9,50 +9,6 @@ include_once 'oe_organization.field_instance.inc';
 include_once 'oe_organization.user_permission.inc';
 include_once 'oe_organization.rdf_mapping.inc';
 
-function oe_organization_install() {
-
-  oe_organization_field_bases();
-  oe_organization_field_instances();
-  oe_organization_user_permissions();
-  oe_organization_rdf_mapping();
-
-  // Set default variables
-  variable_set('field_bundle_settings_node__organization', array(
-    'view_modes' => array(
-      'teaser' => array(
-        'custom_settings' => TRUE,
-      ),
-      'full' => array(
-        'custom_settings' => FALSE,
-      ),
-      'rss' => array(
-        'custom_settings' => FALSE,
-      ),
-      'token' => array(
-        'custom_settings' => FALSE,
-      ),
-    ),
-    'extra_fields' => array(
-      'form' => array(
-        'title' => array(
-          'weight' => '1',
-        ),
-        'path' => array(
-          'weight' => '4',
-        ),
-      ),
-      'display' => array(),
-    ),
-  ));
-
-  variable_set('menu_options_organization', array());
-  variable_set('menu_parent_organization', 'main-menu:0');
-  variable_set('node_options_organization', array());
-  variable_set('node_preview_organization', '0');
-  variable_set('node_submitted_organization', 0);
-
-}
-
 /**
  * Implements hook_ctools_plugin_api().
  */
