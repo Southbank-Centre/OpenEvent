@@ -18,7 +18,6 @@ function oe_event_user_permissions(){
         ),
     );
     oe_components_grant_permissions(DRUPAL_AUTHENTICATED_RID, $auth_permissions);
-    // user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
     $anon_permissions = array(
         'oe_event' => array(
