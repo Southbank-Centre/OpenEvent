@@ -6,10 +6,10 @@
 
 function oe_event_user_permissions(){
     $auth_permissions = array(
-        // module key
         'oe_event' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource event',
+          // permissions automatically created by creation of the content type
           'create event content',
           'delete any event content',
           'delete own event content',
@@ -21,9 +21,8 @@ function oe_event_user_permissions(){
     // user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
     $anon_permissions = array(
-        // module key
         'oe_event' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource event'
         ),
     );

@@ -6,10 +6,10 @@
 
 function oe_person_user_permissions(){
     $auth_permissions = array(
-        // module key
         'oe_person' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource person',
+          // permissions automatically created by the creation of content type
           'create person content',
           'delete any person content',
           'delete own person content',
@@ -21,9 +21,8 @@ function oe_person_user_permissions(){
     // user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
     $anon_permissions = array(
-        // module key
         'oe_person' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource person'
         ),
     );

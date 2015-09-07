@@ -6,10 +6,10 @@
 
 function oe_place_user_permissions(){
     $auth_permissions = array(
-        // module key
         'oe_place' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource place',
+          // permissions automatically created by the creation of content type
           'create place content',
           'delete any place content',
           'delete own place content',
@@ -21,9 +21,8 @@ function oe_place_user_permissions(){
     // user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
     $anon_permissions = array(
-        // module key
         'oe_place' => array(
-           // permissions in the module
+          // permission automatically created by the restws module
           'access resource place'
         ),
     );
