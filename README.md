@@ -41,7 +41,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Date [https://www.drupal.org/project/date](https://www.drupal.org/project/date)
 * Email [https://www.drupal.org/project/email](https://www.drupal.org/project/email)
 * Entity [https://www.drupal.org/project/entity](https://www.drupal.org/project/entity)
-* Features [https://www.drupal.org/project/features](https://www.drupal.org/project/features)
 * Field Group [https://www.drupal.org/project/field_group](https://www.drupal.org/project/field_group)
 * Field Validation [https://www.drupal.org/project/field_validation](https://www.drupal.org/project/field_validation)
 * FileField Sources [https://www.drupal.org/project/filefield_sources](https://www.drupal.org/project/filefield_sources)
@@ -51,7 +50,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Relation [https://www.drupal.org/project/relation](https://www.drupal.org/project/relation)
 * Relation Add [https://www.drupal.org/project/relation_add](https://www.drupal.org/project/relation_add)
 * RESTful Web Services [https://www.drupal.org/project/restws](https://www.drupal.org/project/restws)
-* Strongarm [https://www.drupal.org/project/strongarm](https://www.drupal.org/project/strongarm)
 * Taxonomy Access Fix [https://www.drupal.org/project/taxonomy_access_fix](https://www.drupal.org/project/taxonomy_access_fix)
 * Token [https://www.drupal.org/project/token](https://www.drupal.org/project/token)
 

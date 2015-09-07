@@ -1,0 +1,16 @@
+name = OE Relationship: Location
+description = Provides configuration allowing Places to be defined as locations for other types.
+core = 7.x
+package = Open Event Components
+version = 7.x-2.0
+project = oe_components
+dependencies[] = ctools
+dependencies[] = field_group
+dependencies[] = oe_event
+dependencies[] = oe_place
+dependencies[] = oe_schemaorg_rest
+dependencies[] = rdf
+dependencies[] = relation
+dependencies[] = relation_add
+dependencies[] = restws
+dependencies[] = schemaorg

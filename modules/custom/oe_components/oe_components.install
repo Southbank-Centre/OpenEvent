@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file
+ * Install function for the OE Content Components module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function oe_components_install() {
+
+  oe_components_field_bases();
+
+}

@@ -34,7 +34,6 @@ dependencies[] = date_api
 dependencies[] = date_popup
 dependencies[] = email
 dependencies[] = entity
-dependencies[] = features
 dependencies[] = field_group
 dependencies[] = field_validation
 dependencies[] = field_validation_ui
@@ -49,20 +48,18 @@ dependencies[] = relation_endpoint
 dependencies[] = relation_ui
 dependencies[] = restws
 dependencies[] = schemaorg
-dependencies[] = strongarm
 dependencies[] = taxonomy_access_fix
 dependencies[] = token
 
 ; Open Event dependencies
-; Features
+; Custom
 dependencies[] = oe_components
 dependencies[] = oe_event
 dependencies[] = oe_organization
-dependencies[] = oe_place
 dependencies[] = oe_person
+dependencies[] = oe_place
 dependencies[] = oe_relationship_location
 dependencies[] = oe_relationship_performer
-; Custom
 dependencies[] = oe_rest_api_doc
 dependencies[] = oe_schemaorg_rest
 dependencies[] = oe_schemaorg_rest_address

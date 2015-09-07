@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the OE Person feature.
- */
-
-include_once 'oe_person.features.inc';

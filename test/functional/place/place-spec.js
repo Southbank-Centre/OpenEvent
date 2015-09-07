@@ -120,7 +120,7 @@ describe('The Place features of the CMS', function() {
       element(by.id('edit-field-place-address-und-0-postal-code')).sendKeys('SE1 8XX');
 
       // add geolocation
-      element(by.id('edit-field-place-geolocation-und-0-address-field')).sendKeys('Southbank Centre London');
+      element(by.id('edit-field-place-geolocation-und-0-address-field')).sendKeys('Southbank Centre Belvedere Rd, London SE1 8XX');
       element(by.css('.geolocation-address-geocode')).click();
 
       // wait for Google Maps
@@ -232,9 +232,9 @@ describe('The Place features of the CMS', function() {
       expect(json.address.streetAddress).toBe("Southbank Centre, Belvedere Road");
 
       // geolocation & map link as expected for the address input
-      expect(json.geo.latitude).toBe("51.5066566");
-      expect(json.geo.longitude).toBe("-0.11511270000005425");
-      expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.5066566&mlon=-0.11511270000005425#map=15/51.5066566/-0.11511270000005425");
+      expect(json.geo.latitude).toBe("51.50532159999999");
+      expect(json.geo.longitude).toBe("-0.11605420000000777");
+      expect(json.hasMap).toBe("http://www.openstreetmap.org/?mlat=51.50532159999999&mlon=-0.11605420000000777#map=15/51.50532159999999/-0.11605420000000777");
 
       // opening hours as input
       expect(json.openingHoursSpecification[0].dayOfWeek).toBe("http://purl.org/goodrelations/v1#Monday");

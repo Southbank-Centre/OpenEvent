@@ -26,7 +26,6 @@ projects[date][version] = 2.8
 projects[date][patch] = https://www.drupal.org/files/issues/date-migrate-undefined-timezone-2451027-1.patch
 projects[email][version] = 1.3
 projects[entity][version] = 1.6
-projects[features][version] = 2.6
 projects[field_group][version] = 1.4
 projects[field_validation][version] = 2.6
 projects[filefield_sources][version] = 1.9
@@ -39,7 +38,6 @@ projects[relation_add][version] = 1.4
 ; When adding a new Relation Add field to a Content Type, after clicking the initial Save Field Settings button, we are taken to the Settings page and there is a warning
 projects[relation_add][patch][2460131] = "https://www.drupal.org/files/issues/relation_add-php-warning-add-relation-2460131-1.patch"
 projects[restws][version] = 2.4
-projects[strongarm][version] = 2.0
 projects[taxonomy_access_fix][version] = 2.2
 projects[token][version] = 1.6
 
