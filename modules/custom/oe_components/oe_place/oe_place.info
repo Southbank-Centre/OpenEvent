@@ -1,9 +1,9 @@
 name = OE Place
 description = Provides configuration allowing representation of places.
 core = 7.x
-package = Open Event Types
-version = 7.x-1.9
-project = oe_place
+package = Open Event Components
+version = 7.x-2.0
+project = oe_components
 dependencies[] = addressfield
 dependencies[] = ctools
 dependencies[] = field_group

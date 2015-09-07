@@ -1,8 +1,8 @@
 name = OE Components
-description = Provides field bases that are shared across multiple other content types.
+description = Provides shared field bases and utility functions for other Open Event modules.
 core = 7.x
-package = Open Event
-version = 7.x-1.9
+package = Open Event Components
+version = 7.x-2.0
 project = oe_components
 dependencies[] = ctools
 dependencies[] = image

@@ -17,7 +17,7 @@ function oe_place_user_permissions(){
           'edit own place content'
         ),
     );
-    oe_grant_permissions(DRUPAL_AUTHENTICATED_RID, $auth_permissions);
+    oe_components_grant_permissions(DRUPAL_AUTHENTICATED_RID, $auth_permissions);
     // user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
     $anon_permissions = array(
@@ -27,5 +27,5 @@ function oe_place_user_permissions(){
           'access resource place'
         ),
     );
-    oe_grant_permissions(DRUPAL_ANONYMOUS_RID, $anon_permissions);
+    oe_components_grant_permissions(DRUPAL_ANONYMOUS_RID, $anon_permissions);
 }
