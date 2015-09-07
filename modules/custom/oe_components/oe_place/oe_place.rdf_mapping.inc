@@ -106,7 +106,7 @@ function oe_place_rdf_mapping() {
         ),
       ),
     ),
-    array (
+    array(
       'type' => 'relation',
       'bundle' => 'place_is_contained_in_place',
       'mapping' => array(

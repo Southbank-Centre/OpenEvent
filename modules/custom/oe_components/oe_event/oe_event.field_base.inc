@@ -4,6 +4,9 @@
  * oe_event.field_base.inc
  */
 
+/**
+ * Create field bases for use by the Event content type.
+ */
 function oe_event_field_bases() {
 
   $field_bases = array();
@@ -146,7 +149,7 @@ function oe_event_field_bases() {
     'type' => 'relation_add',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 

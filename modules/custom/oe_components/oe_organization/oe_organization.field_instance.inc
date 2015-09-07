@@ -4,8 +4,11 @@
  * oe_organization.field_instance.inc
  */
 
+/**
+ * Create field instances for use by the Organization content type.
+ */
 function oe_organization_field_instances() {
-  
+
   $field_instances = array();
 
   // Exported field_instance: 'node-organization-field_description'
@@ -451,7 +454,7 @@ function oe_organization_field_instances() {
   t('Logo');
   t('Organization links');
 
-  foreach($field_instances as $field_instance) {
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
 

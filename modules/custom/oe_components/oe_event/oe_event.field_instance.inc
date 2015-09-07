@@ -4,6 +4,9 @@
  * oe_event.field_instance.inc
  */
 
+/**
+ * Create field instances for use by the Event content type.
+ */
 function oe_event_field_instances() {
 
   $field_instances = array();
@@ -563,8 +566,8 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Event:image</cod
 </ul>');
   t('Start date/time');
   t('endpoints');
-  
-  foreach($field_instances as $field_instance) {
+
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
 

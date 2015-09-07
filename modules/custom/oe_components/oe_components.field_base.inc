@@ -4,10 +4,13 @@
  * oe_components.field_base.inc
  */
 
+/**
+ * Create field bases for use across multiple content types.
+ */
 function oe_components_field_bases() {
 
   $field_bases = array();
-  
+
   // Exported field_base: 'field_description'
   $field_bases['field_description'] = array(
     'active' => 1,
@@ -49,7 +52,7 @@ function oe_components_field_bases() {
     'type' => 'image',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 

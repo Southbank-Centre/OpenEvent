@@ -4,8 +4,11 @@
  * oe_person.field_instance.inc
  */
 
+/**
+ * Create field instances for use by the Person content type.
+ */
 function oe_person_field_instances() {
-  
+
   $field_instances = array();
 
   // Exported field_instance: 'node-person-field_description'
@@ -768,7 +771,7 @@ Maps to <a href="http://schema.org/image" target="_blank"><code>Person:image</co
   t('Prefix');
   t('Suffix');
 
-  foreach($field_instances as $field_instance) {
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
 }

@@ -14,7 +14,7 @@ function oe_organization_install() {
   oe_organization_user_permissions();
   oe_organization_rdf_mapping();
 
-  // Set default variables
+  // Set default variables.
   variable_set('field_bundle_settings_node__organization', array(
     'view_modes' => array(
       'teaser' => array(

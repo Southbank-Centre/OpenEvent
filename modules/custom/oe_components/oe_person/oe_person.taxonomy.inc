@@ -35,14 +35,17 @@ function oe_person_taxonomy_default_vocabularies() {
   );
 }
 
+/**
+ * Create person title taxonomy.
+ */
 function oe_person_taxonomy_title() {
-// Vocabulary details
+  // Vocabulary details.
   $vocab = new stdClass();
   $vocab->name = 'Person title';
   $vocab->description = 'A title is a prefix or suffix added to someone\'s name in certain contexts.';
   $vocab->machine_name = 'person_title';
 
-  // Default terms list
+  // Default terms list.
   $terms = array(
     'Dame' => "Used by dames and baronetesses. <em>Sir</em> and <em>Dame</em> differ from titles such as <em>Mr</em> and <em>Mrs</em> in that they can only be used before a person's first name, and not immediately before their surname.",
     'Dr' => "Short for doctor, a title used by those with doctoral degrees, such as MD (Doctor of Medicine), PhD/DPhil (Doctor of Philosophy), EdD (Doctor of Education), PharmD (Doctor of Pharmacy) and LLD (Legum Doctor). Those with JD (Juris Doctor) degrees do not use this as a title.",
@@ -58,15 +61,15 @@ function oe_person_taxonomy_title() {
     'Sir' => "Used by knights and baronets. <em>Sir</em> and <em>Dame</em> differ from titles such as <em>Mr</em> and <em>Mrs</em> in that they can only be used before a person's first name, and not immediately before their surname.",
   );
 
-  // Vocabulary creation, if necessary
+  // Vocabulary creation, if necessary.
   if (!taxonomy_vocabulary_machine_name_load($vocab->machine_name)) {
     taxonomy_vocabulary_save($vocab);
     drupal_set_message(st('New vocabulary %vocab created.', array('%vocab' => $vocab->name)));
   }
 
-  // Terms creation or addition
+  // Terms creation or addition.
   $parent_title = taxonomy_vocabulary_machine_name_load($vocab->machine_name);
-  // Iterate through the terms and add non existent ones
+  // Iterate through the terms and add non existent ones.
   foreach ($terms as $name => $description) {
     $match = taxonomy_get_term_by_name($name, $parent_title->machine_name);
     if (empty($match)) {
@@ -77,10 +80,9 @@ function oe_person_taxonomy_title() {
       taxonomy_term_save($term);
       drupal_set_message(st('New term %term added to vocabulary %vocab.', array(
         '%term' => $name,
-        '%vocab'=> $parent_title->name,
+        '%vocab' => $parent_title->name,
       )));
     }
   }
 
 }
-

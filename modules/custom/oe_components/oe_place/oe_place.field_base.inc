@@ -4,6 +4,9 @@
  * oe_place.field_base.inc
  */
 
+/**
+ * Create field bases for use by the Place content type.
+ */
 function oe_place_field_bases() {
 
   $field_bases = array();
@@ -82,7 +85,7 @@ function oe_place_field_bases() {
     'type' => 'relation_add',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 

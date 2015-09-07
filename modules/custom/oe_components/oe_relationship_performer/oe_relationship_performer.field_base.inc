@@ -4,8 +4,11 @@
  * oe_relationship_performer.field_base.inc
  */
 
+/**
+ * Create field base for use by the Performer Relationship.
+ */
 function oe_relationship_performer_field_bases() {
-  
+
   $field_bases = array();
 
   // Exported field_base: 'field_event_performers'
@@ -53,7 +56,7 @@ function oe_relationship_performer_field_bases() {
     'type' => 'relation_add',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 

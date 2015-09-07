@@ -116,7 +116,7 @@ function oe_event_rdf_mapping() {
         ),
       ),
     ),
-    array (
+    array(
       'type' => 'relation',
       'bundle' => 'event_is_contained_in_event',
       'mapping' => array(

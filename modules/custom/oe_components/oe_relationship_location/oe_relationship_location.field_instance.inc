@@ -4,8 +4,11 @@
  * oe_relationship_location.field_instance.inc
  */
 
+/**
+ * Create field instance for use by the Location Relationship.
+ */
 function oe_relationship_location_field_instances() {
-  
+
   $field_instances = array();
 
   // Exported field_instance: 'node-event-field_event_places'
@@ -64,7 +67,7 @@ function oe_relationship_location_field_instances() {
 <p>Maps to the <code><a href="https://schema.org/Event" target="_blank">Event</a>.<a href="https://schema.org/location" target="_blank">location</a></code> Schema.org property.</p>');
   t('Venues');
 
-  foreach($field_instances as $field_instance) {
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
 

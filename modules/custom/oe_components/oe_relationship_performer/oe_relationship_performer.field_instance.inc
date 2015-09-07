@@ -4,8 +4,11 @@
  * oe_relationship_performer.field_instance.inc
  */
 
+/**
+ * Create field instance for use by the Performer Relationship.
+ */
 function oe_relationship_performer_field_instances() {
-  
+
   $field_instances = array();
 
   // Exported field_instance: 'node-event-field_event_performers'
@@ -170,8 +173,8 @@ function oe_relationship_performer_field_instances() {
   t('Events');
   t('Performers');
 
-  foreach($field_instances as $field_instance) {
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
-  
+
 }

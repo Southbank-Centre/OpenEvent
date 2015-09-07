@@ -15,7 +15,7 @@ function oe_person_install() {
   oe_person_rdf_mapping();
   oe_person_taxonomy_title();
 
-  // Set default variables
+  // Set default variables.
   variable_set('auto_entitylabel_node_person', '1');
   variable_set('auto_entitylabel_pattern_node_person', '[node:field_person_name_given] [node:field_person_name_family]');
   variable_set('auto_entitylabel_php_node_person', 0);

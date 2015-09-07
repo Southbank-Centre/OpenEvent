@@ -4,8 +4,11 @@
  * oe_person.field_base.inc
  */
 
+/**
+ * Create field bases for use by the Person content type.
+ */
 function oe_person_field_bases() {
-  
+
   $field_bases = array();
 
   // Exported field_base: 'field_person_awards'
@@ -225,7 +228,7 @@ function oe_person_field_bases() {
     'type' => 'link_field',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 

@@ -4,6 +4,9 @@
  * oe_place.field_instance.inc
  */
 
+/**
+ * Create field instances for use by the Place content type.
+ */
 function oe_place_field_instances() {
 
   $field_instances = array();
@@ -384,7 +387,7 @@ function oe_place_field_instances() {
   t('Opening hours');
   t('Place parents');
 
-  foreach($field_instances as $field_instance) {
+  foreach ($field_instances as $field_instance) {
     field_create_instance($field_instance);
   }
 

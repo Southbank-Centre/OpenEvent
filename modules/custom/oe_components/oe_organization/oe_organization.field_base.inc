@@ -4,6 +4,9 @@
  * oe_organization.field_base.inc
  */
 
+/**
+ * Create field bases for use by the Organization content type.
+ */
 function oe_organization_field_bases() {
 
   $field_bases = array();
@@ -110,7 +113,7 @@ function oe_organization_field_bases() {
     'type' => 'link_field',
   );
 
-  foreach($field_bases as $field_base) {
+  foreach ($field_bases as $field_base) {
     field_create_field($field_base);
   }
 
