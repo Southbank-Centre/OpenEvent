@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * Install function for the OE Relationship: Location module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function oe_relationship_location_install() {
+
+  oe_relationship_location_field_bases();
+  oe_relationship_location_field_instances();
+  oe_relationship_location_rdf_mapping();
+
+}

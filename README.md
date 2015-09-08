@@ -25,9 +25,7 @@ Equally this distribution is intended to evolve and this can be greatly helped b
 
 
 ## Requirements
-1) Open Event requires Drupal 7. Version 7.36 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
-
-*Please note: if you intend to use the API to access data (rather than a standard Drupal theme) then do not update to Drupal 7.37 until the following bug with RestWS has been addressed: [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829)*
+1) Open Event requires Drupal 7. Version 7.39 is packaged with this distribution. Detailed system requirements can be found here: [https://www.drupal.org/requirements](https://www.drupal.org/requirements)
 
 2) Clean URLS must be enabled, otherwise the API filtering will not work.
 
@@ -41,7 +39,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Date [https://www.drupal.org/project/date](https://www.drupal.org/project/date)
 * Email [https://www.drupal.org/project/email](https://www.drupal.org/project/email)
 * Entity [https://www.drupal.org/project/entity](https://www.drupal.org/project/entity)
-* Features [https://www.drupal.org/project/features](https://www.drupal.org/project/features)
 * Field Group [https://www.drupal.org/project/field_group](https://www.drupal.org/project/field_group)
 * Field Validation [https://www.drupal.org/project/field_validation](https://www.drupal.org/project/field_validation)
 * FileField Sources [https://www.drupal.org/project/filefield_sources](https://www.drupal.org/project/filefield_sources)
@@ -51,7 +48,6 @@ The following modules are required. They are packaged and automatically enabled 
 * Relation [https://www.drupal.org/project/relation](https://www.drupal.org/project/relation)
 * Relation Add [https://www.drupal.org/project/relation_add](https://www.drupal.org/project/relation_add)
 * RESTful Web Services [https://www.drupal.org/project/restws](https://www.drupal.org/project/restws)
-* Strongarm [https://www.drupal.org/project/strongarm](https://www.drupal.org/project/strongarm)
 * Taxonomy Access Fix [https://www.drupal.org/project/taxonomy_access_fix](https://www.drupal.org/project/taxonomy_access_fix)
 * Token [https://www.drupal.org/project/token](https://www.drupal.org/project/token)
 
@@ -187,7 +183,7 @@ There are a full set of tests included with this distribution. Please refer to *
 
 
 ## Troubleshooting
-* **Drupal 404 Page not found response for API resources**: This happens due to a fix with Drupal core that broke the capacity of RestWS to deliver API resources  [https://www.drupal.org/node/2484829](https://www.drupal.org/node/2484829).
+* **Drupal tests for RestWS Basic Auth module do not pass due to patch applied.** The patch fixes broken RestWS functionality with Drupal 7.37 and allows to upgrade the distribution to 7.39.
 
 
 

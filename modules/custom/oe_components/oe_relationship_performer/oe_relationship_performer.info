@@ -1,0 +1,17 @@
+name = OE Relationship: Performer
+description = Provides configuration allowing types to be related to Events as performers.
+core = 7.x
+package = Open Event Components
+version = 7.x-2.0
+project = oe_components
+dependencies[] = ctools
+dependencies[] = field_group
+dependencies[] = oe_organization
+dependencies[] = oe_person
+dependencies[] = oe_schemaorg_rest
+dependencies[] = rdf
+dependencies[] = relation
+dependencies[] = relation_add
+dependencies[] = relation_endpoint
+dependencies[] = restws
+dependencies[] = schemaorg

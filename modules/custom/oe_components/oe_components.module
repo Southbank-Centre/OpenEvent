@@ -1,0 +1,37 @@
+<?php
+/**
+ * @file
+ * Code for the OE Content Components module.
+ */
+
+include_once 'oe_components.field_base.inc';
+
+/**
+ * Custom user_role_grant_permissions function.
+ *
+ * Similar to user_role_grant_permissions but it can run at install time.
+ *
+ * @see user_role_grant_permissions
+ */
+function oe_components_grant_permissions($rid, array $permissions = array()) {
+  // This line doesn't work on install / enable hooks
+  // $modules = user_permission_get_modules();
+  // Grant new permissions for the role.
+  foreach ($permissions as $module => $permission_list) {
+    foreach ($permission_list as $name) {
+      db_merge('role_permission')
+        ->key(array(
+            'rid' => $rid,
+            'permission' => $name,
+        ))
+        ->fields(array(
+            'module' => $module,
+        ))
+        ->execute();
+    }
+  }
+
+  // Clear the user access cache.
+  drupal_static_reset('user_access');
+  drupal_static_reset('user_role_permissions');
+}

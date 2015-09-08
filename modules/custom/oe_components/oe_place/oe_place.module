@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Code for the OE Place module.
+ */
+
+include_once 'oe_place.field_base.inc';
+include_once 'oe_place.field_instance.inc';
+include_once 'oe_place.user_permission.inc';
+include_once 'oe_place.rdf_mapping.inc';
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function oe_place_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "field_group" && $api == "field_group") {
+    return array("version" => "1");
+  }
+  if ($module == "relation" && $api == "relation_type_default") {
+    return array("version" => "1");
+  }
+}
+
+/**
+ * Implements hook_node_info().
+ */
+function oe_place_node_info() {
+  $items = array(
+    'place' => array(
+      'name' => t('Place'),
+      'base' => 'node_content',
+      'description' => t('Open Event content type for a place (entities that have a somewhat fixed, physical extension).<br />Designed in accordance with the <a href="https://schema.org/Place" target="_blank">Schema.org Place type</a>.'),
+      'has_title' => '1',
+      'title_label' => t('Place name'),
+      'help' => '',
+    ),
+  );
+  drupal_alter('node_info', $items);
+  return $items;
+}
